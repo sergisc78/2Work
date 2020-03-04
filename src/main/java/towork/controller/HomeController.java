@@ -24,7 +24,7 @@ public class HomeController {
     @RequestMapping(value="/",method=RequestMethod.GET)
     public ModelAndView homeRequest (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ModelAndView modelview=new ModelAndView("Benvinguts");
+        ModelAndView modelview=new ModelAndView("home");
         modelview.getModelMap().addAttribute("presentacio","Benvinguts a 2Work");
         modelview.getModelMap().addAttribute("tagline", "2Work és una web de recerca de feina");
         modelview.getModelMap().addAttribute("footer", "2Work 2020 Copyright");
