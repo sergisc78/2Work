@@ -12,24 +12,42 @@
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
          <!-- Latest compiled and minified JavaScript -->
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <link rel="styleheet" type="text/css" href="resources/css/home.css">
+
         <title>2Work</title>
+
     </head>
     <body>
         <section>
             <div class="jumbotron">
-                <div class="container">
-                    <h1> ${presentacio} </h1>
+                <div class="container ">
+                    <h1> ${banner} </h1>
                     <p> ${tagline} </p>
                 </div>
+        </section> 
 
-                <div class="alta text-center">
-                    <p>Estàs buscant feina o vols millorar o canviar la que tens?<button type="button" class="btn btn-primary">Dona´t d´alta </button></p>
-                    <p>Ets empresari i busques treballadors?<button type="button" class="btn btn-primary">Dona´t alta </button></p>
-                </div>
+
+        <section class="container">
+            <div class="row">
+
+                <c:forEach items="${options}" var="item">
+                    <div class="col-sm-6 col-md-3" style="padding-bottom: 15px; margin-left:200px">
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <h3>${item.desc}</h3>
+                                <a href=" <spring:url value= "${item.url}" /> " class="btn btn-primary">Dona´t d´alta</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>                                    
             </div>
-        </section>       
+        </section>
+
+        <br>
+        <br>
         <div class="container">
-            <footer>${footer}</footer>
+            <footer class="text-center">${footer}</footer>
         </div>
     </body>
 </html>
