@@ -12,7 +12,7 @@
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
          <!-- Latest compiled and minified JavaScript -->
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <link rel="styleheet" type="text/css" href="resources/css/home.css">
+         <link href="<c:url value="resources/css/home.css"/>" rel="styleheet"/>
 
         <title>2Work</title>
 
@@ -31,11 +31,11 @@
             <div class="row">
 
                 <c:forEach items="${options}" var="item">
-                    <div class="col-sm-6 col-md-3" style="padding-bottom: 15px; margin-left:200px">
+                    <div class="col-md" style="padding-bottom: 15px; margin-left:200px;margin-right: 200px">
                         <div class="thumbnail">
                             <div class="caption">
-                                <h3>${item.desc}</h3>
-                                <a href=" <spring:url value= "${item.url}" /> " class="btn btn-primary">Dona´t d´alta</a>
+                                <h3 class="text-center">${item.desc}</h3>
+                                <a href=" <spring:url value= "${item.url}" /> " class="btn btn-primary" style="margin-left: 300px">Dona´t d´alta</a>
                                 </p>
                             </div>
                         </div>

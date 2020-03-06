@@ -34,24 +34,32 @@ public class HomeController {
         List<Map<String, String>> list = new ArrayList<Map<String, String>>();
         Map<String, String> map = new HashMap();
         map.put("desc", "Estàs buscant feina o vols millorar o canviar la que tens?");
-        map.put("url", "/candidat");
+        map.put("url", "/altaCandidat");
         list.add(map);
         Map<String, String> map2 = new HashMap();
         map2.put("desc", "Ets empresari i busques treballadors?");
-        map2.put("url", "/empresa");
+        map2.put("url", "/altaEmpresa");
         list.add(map2);
-        modelview.getModelMap().addAttribute("footer", "2Work 2020 Copyright");
+        modelview.getModelMap().addAttribute("footer", "2Work Copyright 2020");
         modelview.getModelMap().addAttribute("options", list);
         return modelview;
     }
 
-    /*@RequestMapping(value = "/candidat", method = RequestMethod.GET)
+    @RequestMapping(value = "/altaCandidat", method = RequestMethod.GET)
     public ModelAndView addcandidatRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ModelAndView modelview = new ModelAndView("home");
-        modelview.getModelMap().addAttribute("presentacio", "Benvinguts a 2Work");
-        modelview.getModelMap().addAttribute("tagline", "2Work és una web de recerca de feina");
-        modelview.getModelMap().addAttribute("footer", "2Work 2020 Copyright");
+        ModelAndView modelview = new ModelAndView("altaCandidat");
+        modelview.getModelMap().addAttribute("banner", "2work");
+        modelview.getModelMap().addAttribute("tagline", "La teva web de recerca de feina");
         return modelview;
-    }*/
+    }
+    
+    @RequestMapping(value = "/altaEmpresa", method = RequestMethod.GET)
+    public ModelAndView addempresaRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ModelAndView modelview = new ModelAndView("altaEmpresa");
+        modelview.getModelMap().addAttribute("banner", "2work");
+        modelview.getModelMap().addAttribute("tagline", "La teva web de recerca de feina");
+        return modelview;
+    }
 }
