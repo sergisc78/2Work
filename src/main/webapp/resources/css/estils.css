@@ -1,3 +1,7 @@
+body {
+      font-family: 'Montserrat', sans-serif;
+}
+
 .navbar {
 	background: rgb(45,170,225);
 	background: linear-gradient(90deg, rgba(29,112,183,1) 0%, rgba(45,170,225,1) 100%); 
