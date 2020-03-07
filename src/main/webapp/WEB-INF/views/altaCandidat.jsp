@@ -14,7 +14,7 @@
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
         
-        <spring:url value="/resources/css/home.css" var="mainCss" />  
+        <spring:url value="/resources/css/estils.css" var="mainCss" />  
         <link href="${mainCss}" rel="stylesheet" />
 
         <title>2Work</title>
