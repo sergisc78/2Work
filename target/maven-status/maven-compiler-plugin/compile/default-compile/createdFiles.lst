@@ -1,1 +1,3 @@
 towork\controller\HomeController.class
+towork\domain\Candidat.class
+towork\domain\Empresa.class

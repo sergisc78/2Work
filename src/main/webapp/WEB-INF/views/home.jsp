@@ -12,7 +12,8 @@
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
          <!-- Latest compiled and minified JavaScript -->
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-         <link href="<c:url value="resources/css/home.css"/>" rel="styleheet"/>
+        <spring:url value="/resources/css/home.css" var="mainCss" />
+        <link href="${mainCss}" rel="stylesheet" />
 
         <title>2Work</title>
 
@@ -23,6 +24,10 @@
                 <div class="container ">
                     <h1> ${banner} </h1>
                     <p> ${tagline} </p>
+                   
+
+                        <button class="btn btn-primary" style="float: right">Espai candidat</button><button class="btn btn-primary "style="float: right">Espai empresa</button> 
+                   
                 </div>
         </section> 
 
