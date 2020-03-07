@@ -40,8 +40,8 @@
         <section>
             <div class="jumbotron">
                 <div class="container ">
-                    <h1> ${banner} </h1>
-                    <p> ${tagline} </p>
+                    <!-- <h1> ${banner} </h1> -->
+                    <h1> ${tagline} </h1>
                 </div>
         </section> 
 
