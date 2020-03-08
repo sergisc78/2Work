@@ -77,9 +77,11 @@
 
         <br>
         <br>
-        <div class="container">
-            <footer class="text-center">${footer}</footer>
-        </div>
+        <footer class="footer">
+              <div class="container">
+                  <span class="text-muted">${footer}</footer>
+              </div>
+        </footer>
         
     </body>
     

@@ -1,3 +1,8 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
       font-family: 'Montserrat', sans-serif;
 }
@@ -13,10 +18,24 @@ body+nav.navbar {
 }
 
 .jumbotron {
+      border-radius: 0 !important;
+      
       background: -moz-linear-gradient(top, rgba(29,112,183,0.2) 0% , rgba(45,170,225,0.5) 100%), url("../img/portatil.jpg") no-repeat;
       background: -webkit-linear-gradient(180deg, rgba(29,112,183,0.2) 0%, rgba(45,170,225,0.5) 100%), url("../img/portatil.jpg") no-repeat;
       background: linear-gradient(180deg, rgba(29,112,183,0.2) 0%, rgba(45,170,225,0.5) 100%), url("../img/portatil.jpg") no-repeat;
       background-blend-mode: multiply;
       background-size: cover;
       color: #fff;
+}
+
+footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      /* Alçada fixa */
+      height: 50px;
+      line-height: 50px; /* Centrem el text verticalment */
+      background-color: #f5f5f5;
+      font-size: 0.9em;
+      text-align: center;
 }
