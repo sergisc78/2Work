@@ -51,9 +51,10 @@ public class HomeController {
         ModelAndView modelview = new ModelAndView("altaCandidat");
         modelview.getModelMap().addAttribute("banner", "2work");
         modelview.getModelMap().addAttribute("tagline", "La teva web de recerca de feina");
+        
         return modelview;
     }
-    
+
     @RequestMapping(value = "/altaEmpresa", method = RequestMethod.GET)
     public ModelAndView addempresaRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -62,4 +63,5 @@ public class HomeController {
         modelview.getModelMap().addAttribute("tagline", "La teva web de recerca de feina");
         return modelview;
     }
+
 }

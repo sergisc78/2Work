@@ -1,0 +1,21 @@
+body {
+      font-family: 'Montserrat', sans-serif;
+}
+
+.navbar {
+	background: rgb(45,170,225);
+	background: linear-gradient(90deg, rgba(29,112,183,1) 0%, rgba(45,170,225,1) 100%); 
+}
+
+#navbarlogo {
+	width: 48%;
+}
+
+.jumbotron {
+      background: -moz-linear-gradient(top, rgba(29,112,183,0.2) 0% , rgba(45,170,225,0.5) 100%), url("../img/portatil.jpg") no-repeat;
+      background: -webkit-linear-gradient(180deg, rgba(29,112,183,0.2) 0%, rgba(45,170,225,0.5) 100%), url("../img/portatil.jpg") no-repeat;
+      background: linear-gradient(180deg, rgba(29,112,183,0.2) 0%, rgba(45,170,225,0.5) 100%), url("../img/portatil.jpg") no-repeat;
+      background-blend-mode: multiply;
+      background-size: cover;
+      color: #fff;
+}

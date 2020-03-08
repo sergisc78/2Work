@@ -32,45 +32,59 @@
 
 
         <form>
+
             <div class="form-group" style="margin-left:500px;margin-right:500px">
                 <label for="nom">Nom</label>
                 <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Introdueix el nom" required>
 
             </div>
+
             <div class="form-group"style="margin-left:500px;margin-right:500px" required>
                 <label for="cognoms">Cognoms</label>
                 <input type="text" class="form-control" id="cognoms" placeholder="Introdueix els cognoms" required>
             </div>
+
             <div class="form-group" style="margin-left:500px;margin-right:500px">
                 <label for="data">Data de naixament</label>
                 <input type="date" class="form-control" id="data" required>
 
             </div>
+
             <div class="form-group" style="margin-left:500px;margin-right:500px" >
                 <label for="adreça">Adreça</label>
                 <input type="text" class="form-control" id="adreça"  placeholder="Introdueix l´adreça" required>
 
             </div>
+
             <div class="form-group" style="margin-left:500px;margin-right:500px">
                 <label for="telefon">Telèfon</label>
                 <input type="text" class="form-control" id="telefon"  placeholder="Introdueix el telèfon" required>
 
             </div>
+
             <div class="form-group" style="margin-left:500px;margin-right:500px" >
                 <label for="mail">E-mail</label>
                 <input type="email" class="form-control" id="mail" placeholder="Introdueix l´e-mail" required>
 
             </div>
+
+            <div class="form-group" style="margin-left:500px;margin-right:500px" >
+                <label for="mail">E-mail</label>
+                <input type="email" class="form-control" id="mail" placeholder="Introdueix l´e-mail" required>
+
+            </div>
+
             <div class="form-group" style="margin-left:500px;margin-right:500px" >
                 <label for="pass">Password</label>
                 <input type="password" class="form-control" id="pass" placeholder="Mínim 8 caràcters" required>
 
             </div>
-            <div class="form-group" style="margin-left:500px;margin-right:500px" >
-                <label for="mail">E-mail</label>
-                <input type="email" class="form-control" id="mail" placeholder="Introdueix l´e-mail" required>
 
+            <div class="form-group" style="margin-left:500px;margin-right:500px" >
+                <label for="pass">Validar password</label>
+                <input type="password" class="form-control" id="pass" placeholder="Validar password" required>
             </div>
+
             <div class="form-group" style="margin-left:500px;margin-right:500px">
                 <label for="exampleFormControlSelect1">Elegeix el sector laboral</label>
                 <select class="form-control" id="exampleFormControlSelect2">
@@ -99,12 +113,13 @@
 
                 </select>
             </div>
+
             <div class="form-group" style="margin-left:500px;margin-right:500px" >
                 <label for="cv">Adjunta el teu CV</label>
                 <input type="file" class="form-control-file" id="cv">
-
             </div>
-            <button type="submit" style="margin-left:650px;margin-right:650px" class="btn btn-primary">Submit</button>
+
+            <button type="submit" style="margin-left:650px;margin-right:650px" class="btn btn-primary">Enviar</button>
         </form>
 
 
