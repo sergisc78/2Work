@@ -4,10 +4,10 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
     <head>
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+          
+          <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+        
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <!-- Latest compiled and minified JavaScript -->
@@ -27,6 +27,27 @@
     </head>
 
     <body>
+          
+        <!--- Barra de navegació -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                         
+              <a class="navbar-brand" href="#">
+                    <img src="${pageContext.request.contextPath}/resources/svg/logo_2work.svg" id="navbarlogo" alt="logo2Work">
+              </a>
+                              
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+       
+               <div class="collapse navbar-collapse" id="navbarHomeToggler">
+                  <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                              <a class="nav-link" href="#">Login</a>
+                        </li>
+                  </ul>
+              </div>
+
+        </nav>
 
         <section>
             <div class="jumbotron">
@@ -112,6 +133,13 @@
             </div>
             <button type="submit" style="margin-left:650px;margin-right:650px" class="btn btn-primary">Submit</button>
         </form>
+                
+        <footer class="footer">
+            <div class="container">
+                  <!-- No li estem passant la variable! -->
+                  <span class="text-muted">${footer}</footer>
+              </div>
+        </footer>
 
 
     </body>

@@ -75,8 +75,6 @@
             </div>
         </section>
 
-        <br>
-        <br>
         <footer class="footer">
               <div class="container">
                   <span class="text-muted">${footer}</footer>
