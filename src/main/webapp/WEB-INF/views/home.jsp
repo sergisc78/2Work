@@ -43,7 +43,10 @@
                  <div class="collapse navbar-collapse" id="navbarHomeToggler">
                         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                               <li class="nav-item">
-                                    <a class="nav-link" href="#">Login</a>
+                                    <a class="nav-link" href="#">Empresa</a>
+                              </li>
+                              <li class="nav-item">
+                                    <a class="nav-link" href="<spring:url value='/login'/>">Candidat</a>
                               </li>
                         </ul>
                   </div>
@@ -84,4 +87,3 @@
     </body>
     
 </html>
-
