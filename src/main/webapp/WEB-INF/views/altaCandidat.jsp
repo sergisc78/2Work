@@ -305,7 +305,7 @@
                     <option>Doctorat</option>
                 </select>
             </div>
-            
+
             <div class="form-group" style="margin-left:500px;margin-right:500px" >
                 <label for="cv">Adjunta el teu CV</label>
                 <input type="file" class="form-control-file" id="cv">
@@ -314,6 +314,13 @@
             <button type="submit" style="margin-left:650px;margin-right:650px" class="btn btn-primary">Enviar</button>
         </form>
 
+        <footer class="footer">
+            <div class="container">
+                <!-- No li estem passant la variable! -->
+                <span class="text-muted">${footer}</footer>
+            </div>
+        </footer>
+        
         <script>
             // Example starter JavaScript for disabling form submissions if there are invalid fields
             (function () {
