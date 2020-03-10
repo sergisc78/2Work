@@ -40,6 +40,19 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarHomeToggler">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<spring:url value='/'/>">Inici</a>
+                    </li>
+                </ul>
+            </div>  
+
 
         </nav>
 
@@ -58,6 +71,14 @@
                 <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Introdueix el nom" required>
                 <div class="invalid-feedback">
                     Introdueix el nom de l'empresa
+                </div>
+            </div>
+            
+            <div class="form-group " style="margin-left:500px;margin-right:500px">
+                <label for="nom">NIF</label>
+                <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Introdueix el NIF" required>
+                <div class="invalid-feedback">
+                    Introdueix el NIF
                 </div>
             </div>
 
