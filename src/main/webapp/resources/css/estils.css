@@ -8,15 +8,21 @@ body {
       padding-bottom: 8em;
 }
 
-body+nav.navbar {
-      /* pendent d'esmena'*/
+body > nav:first-of-type {
       background: rgb(45,170,225);
-      background: linear-gradient(90deg, rgba(29,112,183,1) 0%, rgba(45,170,225,1) 100%);; 
+      background: linear-gradient(90deg, rgba(29,112,183,1) 0%, rgba(45,170,225,1) 100%); 
+}
+
+body > nav:first-of-type .nav-link {
+      padding-top: 0;
+      padding-bottom: 0;
 }
 
 #navbarlogo {
 	width: 46%;
 }
+
+
 
 .jumbotron {
       border-radius: 0 !important;

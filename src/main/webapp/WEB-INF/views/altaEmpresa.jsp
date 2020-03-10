@@ -31,7 +31,7 @@
     <body>
 
         <!--- Barra de navegació -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <nav class="navbar navbar-expand-lg navbar-dark">
 
             <a class="navbar-brand" href="#">
                 <img src="${pageContext.request.contextPath}/resources/svg/logo_2work.svg" id="navbarlogo" alt="logo2Work">
@@ -50,22 +50,22 @@
                 </div>
         </section>
                 
-        <h3 class="text-center">Registra´t com empresa</h3><br>
+        <h3 class="text-center">Registra't com empresa</h3><br>
         <form class="needs-validation" novalidate>
 
             <div class="form-group " style="margin-left:500px;margin-right:500px">
-                <label for="nom">Nom de l´empresa</label>
+                <label for="nom">Nom de l'empresa</label>
                 <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Introdueix el nom" required>
                 <div class="invalid-feedback">
-                    Introdueix el nom de l´empresa
+                    Introdueix el nom de l'empresa
                 </div>
             </div>
 
             <div class="form-group" style="margin-left:500px;margin-right:500px" >
                 <label for="adreça">Adreça</label>
-                <input type="text" class="form-control" id="adreça"  placeholder="Introdueix l´adreça" required>
+                <input type="text" class="form-control" id="adreça"  placeholder="Introdueix l'adreça" required>
                 <div class="invalid-feedback">
-                    Introdueix l´adreça
+                    Introdueix l'adreça
                 </div>
             </div>
 
@@ -92,9 +92,9 @@
             </div>
             <div class="form-group" style="margin-left:500px;margin-right:500px" >
                 <label for="mail">E-mail</label>
-                <input type="email" class="form-control" id="mail" placeholder="Introdueix l´e-mail" required>
+                <input type="email" class="form-control" id="mail" placeholder="Introdueix l'e-mail" required>
                 <div class="invalid-feedback">
-                    Introdueix l´email
+                    Introdueix l'email
                 </div>
             </div>
 
@@ -115,13 +115,13 @@
             </div>
 
             <div class="form-group" style="margin-left:500px;margin-right:500px">
-                <label for="exampleFormControlSelect1">Sector laboral de l´empresa</label>
+                <label for="exampleFormControlSelect1">Sector laboral de l'empresa</label>
                 <select class="form-control" id="exampleFormControlSelect2" required>
                     <option value="" selected="true"></option>
-                    <option>Activitats físiques i esportves</option>
+                    <option>Activitats físiques i esportives</option>
                     <option>Adminstració i gestió</option>
-                    <option>Agricultura i ganaderia</option>
-                    <option>Industria alimentària</option>
+                    <option>Agricultura i ramaderia</option>
+                    <option>Indústria alimentària</option>
                     <option>Comerç</option>
                     <option>Construcció</option>
                     <option>Disseny i arts gràfiques</option>
@@ -130,17 +130,15 @@
                     <option>Informàtica</option>
                     <option>Enyingeria</option>
                     <option>Legal</option>
-                    <option>Marketing i comunicació</option>
+                    <option>Màrqueting i comunicació</option>
                     <option>Recursos humans</option>
                     <option>Sanitari</option>
                     <option>Turisme</option>
-                    <option>Hosteleria i turisme</option>
+                    <option>Hostaleria i turisme</option>
                     <option>Mediambiental</option>
                     <option>Pesca i agricultura</option>
                     <option>Química</option>
                     <option>Estètica i perruqueria</option>
-
-
                 </select>
             </div>
 
