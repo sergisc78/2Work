@@ -5,12 +5,13 @@ html {
 
 body {
       font-family: 'Montserrat', sans-serif;
+      padding-bottom: 8em;
 }
 
 body+nav.navbar {
       /* pendent d'esmena'*/
       background: rgb(45,170,225);
-      background: linear-gradient(90deg, rgba(29,112,183,1) 0%, rgba(45,170,225,1) 100%); 
+      background: linear-gradient(90deg, rgba(29,112,183,1) 0%, rgba(45,170,225,1) 100%);; 
 }
 
 #navbarlogo {
