@@ -36,11 +36,7 @@
             <a class="navbar-brand" href="#">
                 <img src="${pageContext.request.contextPath}/resources/svg/logo_2work.svg" id="navbarlogo" alt="logo2Work">
             </a>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
+        
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -62,114 +58,117 @@
                     <h1> ${tagline} </h1>
                 </div>
         </section>
+        
                 
-        <h3 class="text-center">Registra't com empresa</h3><br>
-        <form class="needs-validation" novalidate>
+        <section class="container-sm formulari-alta">       
+            <h3 class="text-center blau">Enregistra't com empresa</h3><br>
 
-            <div class="form-group " style="margin-left:500px;margin-right:500px">
-                <label for="nom">Nom de l'empresa</label>
-                <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Introdueix el nom" required>
-                <div class="invalid-feedback">
-                    Introdueix el nom de l'empresa
-                </div>
-            </div>
-            
-            <div class="form-group " style="margin-left:500px;margin-right:500px">
-                <label for="nom">NIF</label>
-                <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Introdueix el NIF" required>
-                <div class="invalid-feedback">
-                    Introdueix el NIF
-                </div>
-            </div>
+                <form class="needs-validation" novalidate>
 
-            <div class="form-group" style="margin-left:500px;margin-right:500px" >
-                <label for="adreça">Adreça</label>
-                <input type="text" class="form-control" id="adreça"  placeholder="Introdueix l'adreça" required>
-                <div class="invalid-feedback">
-                    Introdueix l'adreça
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label for="nom">Nom de l'empresa</label>
+                        <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Introdueix el nom" required>
+                        <div class="invalid-feedback">
+                            Introdueix el nom de l'empresa
+                        </div>
+                    </div>
 
-            <div class="form-group" style="margin-left:500px;margin-right:500px">
-                <label for="telefon">Telèfon</label>
-                <input type="text" class="form-control" id="telefon"  placeholder="Introdueix el telèfon" required>
-                <div class="invalid-feedback">
-                    Introdueix el telèfon
-                </div>
-            </div>
+                    <div class="form-group ">
+                        <label for="nom">NIF</label>
+                        <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Introdueix el NIF" required>
+                        <div class="invalid-feedback">
+                            Introdueix el NIF
+                        </div>
+                    </div>
 
-            <div class="form-group" style="margin-left:500px;margin-right:500px" >
-                <label for="mail">Web de l´empresa (* Camp no obligatori)</label>
-                <input type="email" class="form-control" id="mail" placeholder="Introdueix la web">
+                    <div class="form-group">
+                        <label for="adreça">Adreça</label>
+                        <input type="text" class="form-control" id="adreça"  placeholder="Introdueix l'adreça" required>
+                        <div class="invalid-feedback">
+                            Introdueix l'adreça
+                        </div>
+                    </div>
 
-            </div>
-            <div class="form-group" style="margin-left:500px;margin-right:500px" >
-                <label for="tamany">Tamany l´empresa</label><p></p>
-                <input type="text" class="form-control" id="mail" placeholder="Introdueix el número de treballadors" required>
-                <div class="invalid-feedback">
-                    Introdueix el tamany
-                </div>
+                    <div class="form-group">
+                        <label for="telefon">Telèfon</label>
+                        <input type="text" class="form-control" id="telefon"  placeholder="Introdueix el telèfon" required>
+                        <div class="invalid-feedback">
+                            Introdueix el telèfon
+                        </div>
+                    </div>
 
-            </div>
-            <div class="form-group" style="margin-left:500px;margin-right:500px" >
-                <label for="mail">E-mail</label>
-                <input type="email" class="form-control" id="mail" placeholder="Introdueix l'e-mail" required>
-                <div class="invalid-feedback">
-                    Introdueix l'email
-                </div>
-            </div>
+                    <div class="form-group">
+                          <label for="mail">Web de l'empresa <small>(* Camp no obligatori)</small></label>
+                        <input type="email" class="form-control" id="mail" placeholder="Introdueix la web">
 
-            <div class="form-group" style="margin-left:500px;margin-right:500px" >
-                <label for="pass1">Password</label>
-                <input type="password" class="form-control" id="pass" placeholder="Mínim 8 caràcters" required>
-                <div class="invalid-feedback">
-                    Introdueix password
-                </div>
-            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tamany">Tamany l'empresa</label>
+                        <input type="text" class="form-control" id="mail" placeholder="Introdueix el número de treballadors" required>
+                        <div class="invalid-feedback">
+                            Introdueix el tamany
+                        </div>
 
-            <div class="form-group" style="margin-left:500px;margin-right:500px" >
-                <label for="pass2">Validar password</label>
-                <input type="password" class="form-control" id="pass" placeholder="Validar password" required>
-                <div class="invalid-feedback">
-                    Confirma password
-                </div>
-            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mail">E-mail</label>
+                        <input type="email" class="form-control" id="mail" placeholder="Introdueix l'e-mail" required>
+                        <div class="invalid-feedback">
+                            Introdueix l'email
+                        </div>
+                    </div>
 
-            <div class="form-group" style="margin-left:500px;margin-right:500px">
-                <label for="exampleFormControlSelect1">Sector laboral de l'empresa</label>
-                <select class="form-control" id="exampleFormControlSelect2" required>
-                    <option value="" selected="true"></option>
-                    <option>Activitats físiques i esportives</option>
-                    <option>Adminstració i gestió</option>
-                    <option>Agricultura i ramaderia</option>
-                    <option>Indústria alimentària</option>
-                    <option>Comerç</option>
-                    <option>Construcció</option>
-                    <option>Disseny i arts gràfiques</option>
-                    <option>Educació</option>
-                    <option>Finances</option>
-                    <option>Informàtica</option>
-                    <option>Enyingeria</option>
-                    <option>Legal</option>
-                    <option>Màrqueting i comunicació</option>
-                    <option>Recursos humans</option>
-                    <option>Sanitari</option>
-                    <option>Turisme</option>
-                    <option>Hostaleria i turisme</option>
-                    <option>Mediambiental</option>
-                    <option>Pesca i agricultura</option>
-                    <option>Química</option>
-                    <option>Estètica i perruqueria</option>
-                </select>
-            </div>
+                    <div class="form-group">
+                        <label for="pass1">Password</label>
+                        <input type="password" class="form-control" id="pass" placeholder="Mínim 8 caràcters" required>
+                        <div class="invalid-feedback">
+                            Introdueix password
+                        </div>
+                    </div>
 
-            <button type="submit" style="margin-left:650px;margin-right:650px" class="btn btn-primary">Enviar</button>
-        </form>
+                    <div class="form-group">
+                        <label for="pass2">Validar password</label>
+                        <input type="password" class="form-control" id="pass" placeholder="Validar password" required>
+                        <div class="invalid-feedback">
+                            Confirma password
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Sector laboral de l'empresa</label>
+                        <select class="form-control" id="exampleFormControlSelect2" required>
+                            <option value="" selected="true"></option>
+                            <option>Activitats físiques i esportives</option>
+                            <option>Adminstració i gestió</option>
+                            <option>Agricultura i ramaderia</option>
+                            <option>Indústria alimentària</option>
+                            <option>Comerç</option>
+                            <option>Construcció</option>
+                            <option>Disseny i arts gràfiques</option>
+                            <option>Educació</option>
+                            <option>Finances</option>
+                            <option>Informàtica</option>
+                            <option>Enyingeria</option>
+                            <option>Legal</option>
+                            <option>Màrqueting i comunicació</option>
+                            <option>Recursos humans</option>
+                            <option>Sanitari</option>
+                            <option>Turisme</option>
+                            <option>Hostaleria i turisme</option>
+                            <option>Mediambiental</option>
+                            <option>Pesca i agricultura</option>
+                            <option>Química</option>
+                            <option>Estètica i perruqueria</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+        </section>
 
         <footer class="footer">
             <div class="container">
-                <!-- No li estem passant la variable! -->
-                <span class="text-muted">${footer}</footer>
+                <span class="text-muted">2Work Copyright 2020</footer>
             </div>
         </footer>
 
@@ -195,5 +194,4 @@
 
         </script>
     </body>
-
 </html>

@@ -56,26 +56,79 @@
         <section>
             <div class="jumbotron">
                 <div class="container ">
-                    <!-- <h1> ${banner} </h1> -->
-                    <h1> ${tagline} </h1>
+                        <h1> ${tagline} </h1>
                 </div>
         </section> 
 
-        <section class="container">
-            <div class="row">
-
+        <section id="cta">
+            
                 <c:forEach items="${options}" var="item">
-                    <div class="col-md" style="padding-bottom: 15px; margin-left:200px;margin-right: 200px">
-                        <div class="thumbnail">
-                            <div class="caption">
-                                <h3 class="text-center">${item.desc}</h3>
-                                <a href=" <spring:url value= "${item.url}" /> " class="btn btn-primary" style="margin-left: 300px">Dona't d'alta</a>
-                                </p>
-                            </div>
+                      <div class="row">
+                        <div class="col-md">
+                              <div class="thumbnail">
+                                 <div class="caption">
+                                      <h3 class="text-center">${item.desc}</h3>
+                                      <p class="text-center"><a href=" <spring:url value= "${item.url}" />" class="text-center btn btn-primary" role="button">Dona't d'alta</a></p>
+                                </div>
                         </div>
                     </div>
+                  </div>
                 </c:forEach>                                    
-            </div>
+            
+        </section>
+                
+        <section class="container" id="motius">
+              
+              <h3 class="text-center blau">Per què 2Work?</h3>
+              
+              <div class="row">
+                    
+                    <div class="col-lg-6">
+                          <div class="media">
+                              <img src="<spring:url value='/resources/svg/cercle_2work.svg'/>" class="mr-3" alt="bullet">
+                              <div class="media-body">
+                                    <h5 class="mt-0 mb-1">No discriminem</h5>
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                              </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                          <div class="media">
+                              <img src="<spring:url value='/resources/svg/cercle_2work.svg'/>" class="mr-3" alt="bullet">
+                              <div class="media-body">
+                                    <h5 class="mt-0 mb-1">Treballem per uns sous justos</h5>
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                              </div>
+                        </div>
+                    </div>
+                    
+              </div>
+              
+              <div class="row">
+                    
+                    <div class="col-lg-6">
+                          <div class="media">
+                              <img src="<spring:url value='/resources/svg/cercle_2work.svg'/>" class="mr-3" alt="bullet">
+                              <div class="media-body">
+                                    <h5 class="mt-0 mb-1">Preu just</h5>
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                              </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                          <div class="media">
+                              <img src="<spring:url value='/resources/svg/cercle_2work.svg'/>" class="mr-3" alt="bullet">
+                              <div class="media-body">
+                                    <h5 class="mt-0 mb-1">Trobes allò que busques</h5>
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                              </div>
+                        </div>
+                    </div>
+                    
+              </div>
+              
         </section>
 
         <footer class="footer">

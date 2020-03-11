@@ -8,9 +8,14 @@ body {
       padding-bottom: 8em;
 }
 
+.blau {
+      color: #1d70b7;
+}
+
 body > nav:first-of-type {
       background: rgb(45,170,225);
-      background: linear-gradient(90deg, rgba(29,112,183,1) 0%, rgba(45,170,225,1) 100%); 
+      background: linear-gradient(90deg, rgba(29,112,183,1) 0%, rgba(45,170,225,1) 100%);
+      box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.40);
 }
 
 body > nav:first-of-type .nav-link {
@@ -19,7 +24,16 @@ body > nav:first-of-type .nav-link {
 }
 
 #navbarlogo {
-	width: 46%;
+      width: 46%;
+}
+
+.btn-primary {
+      background: #1d70b7;
+}
+
+.btn-primary:hover {
+      background: #2daae1;
+      border-color: #63c0e9;
 }
 
 
@@ -33,7 +47,46 @@ body > nav:first-of-type .nav-link {
       background-blend-mode: multiply;
       background-size: cover;
       color: #fff;
+      margin: 0;
 }
+
+section#cta {
+      background-color: #f5f5f5;
+      padding: 2rem 0;
+}
+
+section#cta > div:not(:last-child) {
+      margin-bottom: 1rem;
+}
+
+.formulari-alta {
+      padding-top: 3rem;
+}
+
+.formulari-alta form {
+      padding-top: 1rem;
+}
+
+@media only screen and (min-width: 720px) {
+      
+      .formulari-alta {
+            max-width: 50%;
+      }
+  
+}
+
+section#motius {
+      padding-top: 4rem;
+}
+
+section#motius div[class^="col"] {
+      margin-top: 3rem;
+}
+
+section#motius img {
+      width: 2rem;
+}
+
 
 footer {
       position: absolute;
