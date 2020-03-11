@@ -43,10 +43,10 @@
                  <div class="collapse navbar-collapse" id="navbarHomeToggler">
                         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                               <li class="nav-item">
-                                    <a class="nav-link" href="#">Empresa</a>
+                                    <a class="nav-link" href="<spring:url value='/loginEmpresa'/>">Empresa</a>
                               </li>
                               <li class="nav-item">
-                                    <a class="nav-link" href="<spring:url value='/login'/>">Candidat</a>
+                                    <a class="nav-link" href="<spring:url value='/loginCandidat'/>">Candidat</a>
                               </li>
                         </ul>
                   </div>
