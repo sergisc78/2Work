@@ -58,7 +58,7 @@
                 </div>
         </section> 
 
-        <h3 class="text-center">Introdueix les dades per fer login</h3><br>
+        <h3 class="text-center">Login Candidat</h3><br>
         <form class="needs-validation" novalidate>
 
             <div class="form-group " style="margin-left:500px;margin-right:500px">

@@ -120,7 +120,7 @@
 
                     <div class="form-group">
                         <label for="pass1">Password</label>
-                        <input type="password" class="form-control" id="pass" placeholder="Mínim 8 caràcters" required>
+                        <input type="password" class="form-control" id="pass" pattern=".{8,}"  placeholder="Mínim 8 caràcters" required>
                         <div class="invalid-feedback">
                             Introdueix password
                         </div>
@@ -128,7 +128,7 @@
 
                     <div class="form-group">
                         <label for="pass2">Validar password</label>
-                        <input type="password" class="form-control" id="pass" placeholder="Validar password" required>
+                        <input type="password" class="form-control" id="cpass" placeholder="Validar password" required>
                         <div class="invalid-feedback">
                             Confirma password
                         </div>
@@ -136,8 +136,8 @@
 
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Sector laboral de l'empresa</label>
-                        <select class="form-control" id="exampleFormControlSelect2" required>
-                            <option value="" selected="true"></option>
+                        <select class="form-control" id="sectorLaboral" required>
+                            <option value="" selected="true" selected="false"></option>
                             <option>Activitats físiques i esportives</option>
                             <option>Adminstració i gestió</option>
                             <option>Agricultura i ramaderia</option>
@@ -161,6 +161,18 @@
                             <option>Estètica i perruqueria</option>
                         </select>
                     </div>
+                    
+                     <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" required>
+                        <label class="form-check-label" for="invalidCheck3">
+                            D´acord amb la política de privacitat i protecció de dades
+                        </label>
+                        <div class="invalid-feedback">
+                            Has d´estar d´acord, abans d´enviar el formulari
+                        </div>
+                    </div>
+                </div>
 
                     <button type="submit" class="btn btn-primary">Enviar</button>
                 </form>
