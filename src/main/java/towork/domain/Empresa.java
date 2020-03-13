@@ -1,15 +1,35 @@
 
 package towork.domain;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-public class Empresa extends Usuari{
+@Entity
+@Table(name="empreses")
+public class Empresa extends Usuari implements Serializable{
+    
+    private static final long serialVersionUID=1L;
+    
+    @NotNull
+    @Column(name="codiEmp")
     protected String codiEmp;
+    
+    @NotNull
+    @Size(max=100)
+    @Column(name="web")
     protected String web;
+    
+    @Column(name="tamany")
     protected Integer tamany;
     
-    public Empresa(String nom, String adreca, String telefon, String email, 
+    public Empresa(String dniNif,String nom, String adreca, String telefon, String email, 
             String pass, String cPass, String sector,String codiEmp, String web,Integer tamany){
-        super(nom,adreca,telefon,email,pass,cPass,sector);
+        super(dniNif,nom,adreca,telefon,email,pass,cPass,sector);
         this.codiEmp=codiEmp;
         this.web=web;
         this.tamany=tamany;

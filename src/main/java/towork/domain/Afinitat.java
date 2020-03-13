@@ -1,10 +1,34 @@
 
 package towork.domain;
 
-public class Afinitat {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name="afinitats")
+public class Afinitat implements Serializable{
+    
+    private static final long serialVersionUID=1L;
+    
+    @Id
+    @NotNull
+    @Column(name="codiAfin")
     private String codiAfin;
+    
+    @NotNull
+    @Column(name="refOferta")
     private String refOferta;
+    
+    @NotNull
+    @Column(name="codiCand")
     private String codiCand;
+    
+    @NotNull
+    @Column(name="estat")
     private String estat;
     
     public Afinitat(String codiAfin, String refOferta, String codiCand, String estat){

@@ -1,17 +1,59 @@
 
 package towork.domain;
 
-public class Usuari {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+@Entity
+
+public class Usuari implements Serializable{
+    
+    private static final long serialVersionUID=1L;
+    
+    @Id
+    @NotNull
+    @Column (name="dniNif")            
+    String dniNif;
+    
+    @NotNull
+    @Column (name="nom")
     String nom;
+    
+    @NotNull
+    @Size(max=100)
+    @Column (name="adreca")
     String adreca;
+    
+    @NotNull
+    @Size(max=20)
+    @Column (name="telefon")
     String telefon;
+    
+    @Size(max=100)
+    @Column (name="email")
     String email;
+    
+    @NotNull
+    @Size(max=30, min=5)
+    @Column (name="pass")
     String pass;
+    
+    @NotNull
+    @Size(max=30, min=5)
+    @Column (name="cPass")
     String cPass;
+    
+    @NotNull
+    @Column (name="sector")
     String sector;
+    
 
-    public Usuari(String nom, String adreca, String telefon, String email, String pass, String cPass, String sector) {
+    public Usuari(String dniNif,String nom, String adreca, String telefon, String email, String pass, String cPass, String sector) {
+        this.dniNif=dniNif;
         this.nom = nom;
         this.adreca = adreca;
         this.telefon = telefon;
@@ -22,11 +64,19 @@ public class Usuari {
     }
     public Usuari(){
     }
-    // GETTERS
-    
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getDniNif() {
+        return dniNif;
+    }
+
     public String getNom() {
         return nom;
     }
+
     public String getAdreca() {
         return adreca;
     }
@@ -50,8 +100,11 @@ public class Usuari {
     public String getSector() {
         return sector;
     }
-    
-    //SETTERS
+
+    public void setDniNif(String dniNif) {
+        this.dniNif = dniNif;
+    }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -79,5 +132,6 @@ public class Usuari {
     public void setSector(String sector) {
         this.sector = sector;
     }
+   
 
 }

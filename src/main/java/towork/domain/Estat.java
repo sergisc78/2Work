@@ -1,8 +1,27 @@
 
 package towork.domain;
 
-public class Estat {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name="estats")
+public class Estat implements Serializable{
+    
+    private static final long serialVersionUID=1L;
+    
+    @Id
+    @NotNull
+    @Column(name="codiEstat")
     private String codiEstat;
+    
+    @Size(max=75)
+    @Column(name="descripcio")
     private String descripcio;
     
     public Estat(String codiEstat, String descripcio){

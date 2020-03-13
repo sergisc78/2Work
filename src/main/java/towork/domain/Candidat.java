@@ -1,42 +1,59 @@
 
 package towork.domain;
 
-import java.util.Date;
 
-public class Candidat extends Usuari{
-    protected String codiCand;
-    protected String cognoms;
-    protected Date dataNaix;
-    protected String formacio;
-    protected String formPostUni;
-    protected String habilitat1;
-    protected String habilitat2;
-    protected String habilitat3;
-    protected String habilitat4;
-    protected String habilitat5;
-    protected String habilitat6;
-    protected String habilitat7;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name="candidats")
+public class Candidat extends Usuari implements Serializable{
     
-    public Candidat(String nom, String adreca, String telefon, 
+    private static final long serialVersionUID=1L;
+    
+    @NotNull
+    @Column(name="codiCand")
+    protected String codiCand;
+    
+    @NotNull
+    @Size(max=75)
+    @Column(name="cognoms")
+    protected String cognoms;
+    
+    @NotNull
+    @Column(name="dataNaix")
+    protected Date dataNaix;
+    
+    @Column(name="formacio")
+    protected String formacio;
+    
+    @Column(name="formPostUni")
+    protected String formPostUni;
+    
+    @Column(name="habilitats")
+    protected ArrayList<Habilitat> habilitats = new ArrayList();
+    
+    
+    public Candidat(String dniNif,String nom, String adreca, String telefon, 
             String email, String pass, String cPass, String sector,
             String codiCand,String cognoms,Date dataNaix,String formacio,
-            String formPostUni, String habilitat1,String habilitat2,
-            String habilitat3, String habilitat4, String habilitat5,
-            String habilitat6,String habilitat7){
+            String formPostUni,ArrayList<Habilitat> habilitats ){
         
-            super(nom,adreca,telefon,email,pass,cPass,sector);
+            super(dniNif,nom,adreca,telefon,email,pass,cPass,sector);
             this.codiCand=codiCand;
             this.cognoms=cognoms;
             this.dataNaix=dataNaix;
             this.formacio=formacio;
             this.formPostUni=formPostUni;
-            this.habilitat1=habilitat1;
-            this.habilitat2=habilitat2;
-            this.habilitat3=habilitat3;
-            this.habilitat4=habilitat4;
-            this.habilitat5=habilitat5;
-            this.habilitat6=habilitat6;
-            this.habilitat7=habilitat7;
+            this.habilitats=habilitats;
+            
     }
     public Candidat(){
         super();
@@ -62,32 +79,8 @@ public class Candidat extends Usuari{
         return formPostUni;
     }
 
-    public String getHabilitat1() {
-        return habilitat1;
-    }
-
-    public String getHabilitat2() {
-        return habilitat2;
-    }
-
-    public String getHabilitat3() {
-        return habilitat3;
-    }
-
-    public String getHabilitat4() {
-        return habilitat4;
-    }
-
-    public String getHabilitat5() {
-        return habilitat5;
-    }
-
-    public String getHabilitat6() {
-        return habilitat6;
-    }
-
-    public String getHabilitat7() {
-        return habilitat7;
+    public ArrayList<Habilitat> getHabilitats() {
+        return habilitats;
     }
 
     public void setCodiCand(String codiCand) {
@@ -110,32 +103,9 @@ public class Candidat extends Usuari{
         this.formPostUni = formPostUni;
     }
 
-    public void setHabilitat1(String habilitat1) {
-        this.habilitat1 = habilitat1;
+    public void setHabilitats(ArrayList<Habilitat> habilitats) {
+        this.habilitats = habilitats;
     }
 
-    public void setHabilitat2(String habilitat2) {
-        this.habilitat2 = habilitat2;
-    }
-
-    public void setHabilitat3(String habilitat3) {
-        this.habilitat3 = habilitat3;
-    }
-
-    public void setHabilitat4(String habilitat4) {
-        this.habilitat4 = habilitat4;
-    }
-
-    public void setHabilitat5(String habilitat5) {
-        this.habilitat5 = habilitat5;
-    }
-
-    public void setHabilitat6(String habilitat6) {
-        this.habilitat6 = habilitat6;
-    }
-
-    public void setHabilitat7(String habilitat7) {
-        this.habilitat7 = habilitat7;
-    }
-    
+   
 }
