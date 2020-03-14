@@ -57,18 +57,14 @@ public class Oferta implements Serializable{
     @Size(max=100)
     @Column(name="formacio")
     private String formacio;
-    
-    @NotNull   
-    @Column(name="afinitat")
-    private Afinitat afinitat;
-    
+      
     @Column(name="habilitats")
     protected ArrayList<Habilitat> habilitats = new ArrayList();
     
     @Column(name="afinitats")
     protected ArrayList<Afinitat> afinitats = new ArrayList();
 
-    public Oferta(String refOferta, Empresa empresa, String titolOferta, String localitat, Integer sou, Integer horesDia, String torn, String tipusContracte, String formacio, Afinitat afinitat) {
+    public Oferta(String refOferta, Empresa empresa, String titolOferta, String localitat, Integer sou, Integer horesDia, String torn, String tipusContracte, String formacio) {
         this.refOferta = refOferta;
         this.empresa = empresa;
         this.titolOferta = titolOferta;
@@ -78,7 +74,6 @@ public class Oferta implements Serializable{
         this.torn = torn;
         this.tipusContracte = tipusContracte;
         this.formacio = formacio;
-        this.afinitat = afinitat;
     }
 
     public Oferta() {
@@ -122,10 +117,6 @@ public class Oferta implements Serializable{
 
     public String getFormacio() {
         return formacio;
-    }
-
-    public Afinitat getAfinitat() {
-        return afinitat;
     }
 
     public ArrayList<Habilitat> getHabilitats() {
@@ -172,10 +163,6 @@ public class Oferta implements Serializable{
         this.formacio = formacio;
     }
 
-    public void setAfinitat(Afinitat afinitat) {
-        this.afinitat = afinitat;
-    }
-
     public void setHabilitats(ArrayList<Habilitat> habilitats) {
         this.habilitats = habilitats;
     }
@@ -183,7 +170,6 @@ public class Oferta implements Serializable{
     public void setAfinitats(ArrayList<Afinitat> afinitats) {
         this.afinitats = afinitats;
     }
-    
-    
-    
+
+   
 }
