@@ -165,9 +165,9 @@
                      <div class="form-group">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" required>
-                        <label class="form-check-label" for="invalidCheck3">
+                        <a href="#"<label class="form-check-label" for="invalidCheck3">
                             D´acord amb la política de privacitat i protecció de dades
-                        </label>
+                            </label></a>
                         <div class="invalid-feedback">
                             Has d´estar d´acord, abans d´enviar el formulari
                         </div>

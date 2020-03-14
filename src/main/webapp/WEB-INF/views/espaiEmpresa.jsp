@@ -45,69 +45,35 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<spring:url value='/'/>">Inici</a>
                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="<spring:url value='/espaiCandidat'/>">Espai</a>
-                    </li>
                 </ul>
             </div>  
 
         </nav>
-
         <section>
             <div class="jumbotron">
                 <div class="container ">
-                    <!-- <h1> ${banner} </h1> -->
                     <h1> ${tagline} </h1>
                 </div>
-        </section> 
+        </section>
+        <h2 class="text-center">Benvingut a l´espai empresa</h2><br>
+        <h3 class="text-center">Què desitges fer?</h3><br>
+        <div class="container" style="border:#ccc 2px solid;padding: 10px">
+            <ul class="text-center">
+                <a href="#"><li sytle="list-style:none">Editar dades</li></a>
+                <a href="#"><li sytle="list-style:none">Afegir oferta</li></a>
+                <a href="#"><li sytle="list-style:none">Consultar ofertes creades</li></a>
+                <a href="#"><li sytle="list-style:none">Newsletter</li></a>
+                <a href="#"><li sytle="list-style:none">Posa´t en contacte amb nosaltres</li></a>
+                <a href="#"><li sytle="list-style:none">Donar-se de baixa</li></a>
 
-        <h3 class="text-center">Login Candidat</h3><br>
-        <form class="needs-validation" novalidate>
+            </ul>
+        </div>
 
-            <div class="form-group " style="margin-left:500px;margin-right:500px">
-                <label for="nom">Email</label>
-                <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" required>
-                <div class="invalid-feedback">
-                    Introdueix l´email
-                </div>
-            </div>
-
-            <div class="form-group" style="margin-left:500px;margin-right:500px" >
-                <label for="pass1">Password</label>
-                <input type="password" class="form-control" id="pass"  required>
-                <div class="invalid-feedback">
-                    Introdueix password
-                </div>
-            </div>
-            <button type="submit" style="margin-left:650px;margin-right:650px" class="btn btn-primary">Entra</button>
-        </form>
         <footer class="footer">
             <div class="container">
                 <!-- No li estem passant la variable! -->
                 <span class="text-muted">${footer}</footer>
             </div>
         </footer>
-
-        <script>
-            // Example starter JavaScript for disabling form submissions if there are invalid fields
-            (function () {
-                'use strict';
-                window.addEventListener('load', function () {
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    var forms = document.getElementsByClassName('needs-validation');
-                    // Loop over them and prevent submission
-                    var validation = Array.prototype.filter.call(forms, function (form) {
-                        form.addEventListener('submit', function (event) {
-                            if (form.checkValidity() === false) {
-                                event.preventDefault();
-                                event.stopPropagation();
-                            }
-                            form.classList.add('was-validated');
-                        }, false);
-                    });
-                }, false);
-            })();
-
-        </script>
     </body>
 </html>

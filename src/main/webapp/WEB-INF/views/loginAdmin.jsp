@@ -46,6 +46,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<spring:url value='/'/>">Inici</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<spring:url value='/espaiAdmin'/>">Espai</a>
+                    </li>
                 </ul>
             </div>  
 
