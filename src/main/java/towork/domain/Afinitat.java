@@ -2,6 +2,7 @@
 package towork.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,57 +21,67 @@ public class Afinitat implements Serializable{
     private String codiAfin;
     
     @NotNull
-    @Column(name="refOferta")
-    private String refOferta;
+    @Column(name="oferta")
+    private Oferta oferta;
     
     @NotNull
-    @Column(name="codiCand")
-    private String codiCand;
+    @Column(name="empresa")
+    private Empresa empresa;
     
     @NotNull
     @Column(name="estat")
-    private String estat;
+    private Estat estat;
     
-    public Afinitat(String codiAfin, String refOferta, String codiCand, String estat){
+    @Column(name="candidats")
+    protected ArrayList<Habilitat> candidats = new ArrayList();
+    
+    
+    public Afinitat(String codiAfin, Oferta oferta, Empresa empresa,Estat estat,
+            ArrayList<Habilitat> candidats){
         this.codiAfin=codiAfin;
-        this.refOferta=refOferta;
-        this.codiCand=codiAfin;
+        this.oferta=oferta;
+        this.empresa=empresa;
         this.estat=estat;
-    
+        this.candidats=candidats;
     }
     public Afinitat(){
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public String getCodiAfin() {
         return codiAfin;
     }
 
-    public String getRefOferta() {
-        return refOferta;
+    public Oferta getOferta() {
+        return oferta;
     }
 
-    public String getCodiCand() {
-        return codiCand;
-    }
-
-    public String getEstat() {
+    public Estat getEstat() {
         return estat;
+    }
+
+    public ArrayList<Habilitat> getCandidats() {
+        return candidats;
     }
 
     public void setCodiAfin(String codiAfin) {
         this.codiAfin = codiAfin;
     }
 
-    public void setRefOferta(String refOferta) {
-        this.refOferta = refOferta;
+    public void setOferta(Oferta oferta) {
+        this.oferta = oferta;
     }
 
-    public void setCodiCand(String codiCand) {
-        this.codiCand = codiCand;
-    }
-
-    public void setEstat(String estat) {
+    public void setEstat(Estat estat) {
         this.estat = estat;
     }
-    
+
+    public void setCandidats(ArrayList<Habilitat> candidats) {
+        this.candidats = candidats;
+    }
+
+  
 }

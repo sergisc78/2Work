@@ -24,12 +24,21 @@ public class Estat implements Serializable{
     @Column(name="descripcio")
     private String descripcio;
     
-    public Estat(String codiEstat, String descripcio){
-        this.codiEstat=codiEstat;
-        this.descripcio=descripcio;
+    @Size(max=75)
+    @Column(name="afinitat")
+    private Afinitat afinitat;
+
+    public Estat(String codiEstat, String descripcio, Afinitat afinitat) {
+        this.codiEstat = codiEstat;
+        this.descripcio = descripcio;
+        this.afinitat = afinitat;
     }
-    public Estat(){
-    
+
+    public Estat() {
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public String getCodiEstat() {
@@ -40,6 +49,10 @@ public class Estat implements Serializable{
         return descripcio;
     }
 
+    public Afinitat getAfinitat() {
+        return afinitat;
+    }
+
     public void setCodiEstat(String codiEstat) {
         this.codiEstat = codiEstat;
     }
@@ -47,5 +60,8 @@ public class Estat implements Serializable{
     public void setDescripcio(String descripcio) {
         this.descripcio = descripcio;
     }
-    
+
+    public void setAfinitat(Afinitat afinitat) {
+        this.afinitat = afinitat;
+    }
 }

@@ -40,11 +40,17 @@ public class Candidat extends Usuari implements Serializable{
     @Column(name="habilitats")
     protected ArrayList<Habilitat> habilitats = new ArrayList();
     
+    @Column(name="experiencies")
+    protected ArrayList<Habilitat> experiencies = new ArrayList();
+    
+    @Column(name="afinitats")
+    protected ArrayList<Afinitat> afinitats = new ArrayList();    
     
     public Candidat(String dniNif,String nom, String adreca, String telefon, 
             String email, String pass, String cPass, String sector,
             String codiCand,String cognoms,Date dataNaix,String formacio,
-            String formPostUni,ArrayList<Habilitat> habilitats ){
+            String formPostUni,ArrayList<Habilitat> habilitats,
+            ArrayList<Habilitat> experiencies,ArrayList<Afinitat> afinitats){
         
             super(dniNif,nom,adreca,telefon,email,pass,cPass,sector);
             this.codiCand=codiCand;
@@ -53,10 +59,15 @@ public class Candidat extends Usuari implements Serializable{
             this.formacio=formacio;
             this.formPostUni=formPostUni;
             this.habilitats=habilitats;
-            
+            this.experiencies=experiencies;
+            this.afinitats=afinitats;
     }
     public Candidat(){
         super();
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public String getCodiCand() {
@@ -83,6 +94,14 @@ public class Candidat extends Usuari implements Serializable{
         return habilitats;
     }
 
+    public ArrayList<Habilitat> getExperiencies() {
+        return experiencies;
+    }
+
+    public ArrayList<Afinitat> getAfinitats() {
+        return afinitats;
+    }
+
     public void setCodiCand(String codiCand) {
         this.codiCand = codiCand;
     }
@@ -105,6 +124,14 @@ public class Candidat extends Usuari implements Serializable{
 
     public void setHabilitats(ArrayList<Habilitat> habilitats) {
         this.habilitats = habilitats;
+    }
+
+    public void setExperiencies(ArrayList<Habilitat> experiencies) {
+        this.experiencies = experiencies;
+    }
+
+    public void setAfinitats(ArrayList<Afinitat> afinitats) {
+        this.afinitats = afinitats;
     }
 
    

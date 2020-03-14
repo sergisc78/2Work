@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -17,39 +18,40 @@ public class Usuari implements Serializable{
     @Id
     @NotNull
     @Column (name="dniNif")            
-    String dniNif;
+    protected String dniNif;
     
     @NotNull
     @Column (name="nom")
-    String nom;
+    protected String nom;
     
     @NotNull
     @Size(max=100)
     @Column (name="adreca")
-    String adreca;
+    protected String adreca;
     
     @NotNull
     @Size(max=20)
     @Column (name="telefon")
-    String telefon;
+    protected String telefon;
     
     @Size(max=100)
+    @Pattern(regexp="^(.+)@(.+)$",message="El correu no és vàlid")
     @Column (name="email")
-    String email;
+    protected String email;
     
     @NotNull
     @Size(max=30, min=5)
     @Column (name="pass")
-    String pass;
+    protected String pass;
     
     @NotNull
     @Size(max=30, min=5)
     @Column (name="cPass")
-    String cPass;
+    protected String cPass;
     
     @NotNull
     @Column (name="sector")
-    String sector;
+    protected String sector;
     
 
     public Usuari(String dniNif,String nom, String adreca, String telefon, String email, String pass, String cPass, String sector) {

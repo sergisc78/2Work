@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="ofertes")
@@ -21,45 +22,168 @@ public class Oferta implements Serializable{
     private String refOferta;
     
     @NotNull
-    @Column(name="codiEmp")
-    private String codiEmp;
+    @Column(name="empresa")
+    private Empresa empresa;
+    
+    @NotNull
+    @Size(max=100)
+    @Column(name="titolOferta")
+    private String titolOferta;
+    
+    @NotNull
+    @Size(max=100)
+    @Column(name="localitat")
+    private String localitat;
+    
+    @NotNull    
+    @Column(name="sou")
+    private Integer sou;
+    
+    @NotNull
+    @Column(name="horesDia")
+    private Integer horesDia;
+    
+    @NotNull
+    @Size(max=10)
+    @Column(name="torn")
+    private String torn;
+    
+    @NotNull
+    @Size(max=50)
+    @Column(name="tipusContracte")
+    private String tipusContracte;
+    
+    @NotNull
+    @Size(max=100)
+    @Column(name="formacio")
+    private String formacio;
+    
+    @NotNull   
+    @Column(name="afinitat")
+    private Afinitat afinitat;
     
     @Column(name="habilitats")
     protected ArrayList<Habilitat> habilitats = new ArrayList();
     
-    public Oferta(String refOferta, String codiEmp,ArrayList<Habilitat> habilitats){
-        
-        this.refOferta=refOferta;
-        this.codiEmp=codiEmp;
-        this.habilitats=habilitats;        
+    @Column(name="afinitats")
+    protected ArrayList<Afinitat> afinitats = new ArrayList();
+
+    public Oferta(String refOferta, Empresa empresa, String titolOferta, String localitat, Integer sou, Integer horesDia, String torn, String tipusContracte, String formacio, Afinitat afinitat) {
+        this.refOferta = refOferta;
+        this.empresa = empresa;
+        this.titolOferta = titolOferta;
+        this.localitat = localitat;
+        this.sou = sou;
+        this.horesDia = horesDia;
+        this.torn = torn;
+        this.tipusContracte = tipusContracte;
+        this.formacio = formacio;
+        this.afinitat = afinitat;
     }
-    public Oferta(){
-    
+
+    public Oferta() {
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public String getRefOferta() {
         return refOferta;
     }
 
-    public String getCodiEmp() {
-        return codiEmp;
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public String getTitolOferta() {
+        return titolOferta;
+    }
+
+    public String getLocalitat() {
+        return localitat;
+    }
+
+    public Integer getSou() {
+        return sou;
+    }
+
+    public Integer getHoresDia() {
+        return horesDia;
+    }
+
+    public String getTorn() {
+        return torn;
+    }
+
+    public String getTipusContracte() {
+        return tipusContracte;
+    }
+
+    public String getFormacio() {
+        return formacio;
+    }
+
+    public Afinitat getAfinitat() {
+        return afinitat;
     }
 
     public ArrayList<Habilitat> getHabilitats() {
         return habilitats;
     }
 
+    public ArrayList<Afinitat> getAfinitats() {
+        return afinitats;
+    }
+
     public void setRefOferta(String refOferta) {
         this.refOferta = refOferta;
     }
 
-    public void setCodiEmp(String codiEmp) {
-        this.codiEmp = codiEmp;
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public void setTitolOferta(String titolOferta) {
+        this.titolOferta = titolOferta;
+    }
+
+    public void setLocalitat(String localitat) {
+        this.localitat = localitat;
+    }
+
+    public void setSou(Integer sou) {
+        this.sou = sou;
+    }
+
+    public void setHoresDia(Integer horesDia) {
+        this.horesDia = horesDia;
+    }
+
+    public void setTorn(String torn) {
+        this.torn = torn;
+    }
+
+    public void setTipusContracte(String tipusContracte) {
+        this.tipusContracte = tipusContracte;
+    }
+
+    public void setFormacio(String formacio) {
+        this.formacio = formacio;
+    }
+
+    public void setAfinitat(Afinitat afinitat) {
+        this.afinitat = afinitat;
     }
 
     public void setHabilitats(ArrayList<Habilitat> habilitats) {
         this.habilitats = habilitats;
     }
 
+    public void setAfinitats(ArrayList<Afinitat> afinitats) {
+        this.afinitats = afinitats;
+    }
+    
+    
     
 }
