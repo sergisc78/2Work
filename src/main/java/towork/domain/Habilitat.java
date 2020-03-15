@@ -26,20 +26,26 @@ public class Habilitat implements Serializable{
     @Column(name="nomHab")
     private String nomHab;
     
+    @NotNull
+    @Column (name="codiSector")
+    protected String codiSector;
+
     @Column(name="candidats")
     protected ArrayList<Habilitat> candidats = new ArrayList();
     
     @Column(name="ofertes")
     protected ArrayList<Oferta> ofertes=new ArrayList();
-    
-    public Habilitat(String codiHab, String nomHab,ArrayList<Habilitat> candidats,
-            ArrayList<Oferta> ofertes){
-        this.codiHab=codiHab;
-        this.nomHab=nomHab;
+
+    public Habilitat(String codiHab, String nomHab, String codiSector,
+            ArrayList<Habilitat> candidats,ArrayList<Oferta> ofertes) {
+        this.codiHab = codiHab;
+        this.nomHab = nomHab;
+        this.codiSector = codiSector;
         this.candidats=candidats;
         this.ofertes=ofertes;
     }
-    public Habilitat(){
+
+    public Habilitat() {
     }
 
     public static long getSerialVersionUID() {
@@ -52,6 +58,10 @@ public class Habilitat implements Serializable{
 
     public String getNomHab() {
         return nomHab;
+    }
+
+    public String getCodiSector() {
+        return codiSector;
     }
 
     public ArrayList<Habilitat> getCandidats() {
@@ -70,6 +80,10 @@ public class Habilitat implements Serializable{
         this.nomHab = nomHab;
     }
 
+    public void setCodiSector(String codiSector) {
+        this.codiSector = codiSector;
+    }
+
     public void setCandidats(ArrayList<Habilitat> candidats) {
         this.candidats = candidats;
     }
@@ -77,5 +91,5 @@ public class Habilitat implements Serializable{
     public void setOfertes(ArrayList<Oferta> ofertes) {
         this.ofertes = ofertes;
     }
-    
+   
 }

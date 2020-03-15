@@ -17,20 +17,24 @@ public class Experiencia implements Serializable{
     @Id
     @NotNull
     @Column(name="anyos")
-    private String anyos;
+    private Integer anyos;
     
     @NotNull
     @Column(name="nomEmpresa")
     private String nomEmpresa;
     
     @NotNull
-    @Column(name="candidat")
-    private Candidat candidat;
+    @Column(name="dniCandidat")
+    private String dniCandidat;
 
-    public Experiencia(String anyos, String nomEmpresa, Candidat candidat) {
+    @Column(name="descripcio")
+    private String descripcio;
+
+    public Experiencia(Integer anyos, String nomEmpresa, String dniCandidat, String descripcio) {
         this.anyos = anyos;
         this.nomEmpresa = nomEmpresa;
-        this.candidat = candidat;
+        this.dniCandidat = dniCandidat;
+        this.descripcio = descripcio;
     }
 
     public Experiencia() {
@@ -40,7 +44,7 @@ public class Experiencia implements Serializable{
         return serialVersionUID;
     }
 
-    public String getAnyos() {
+    public Integer getAnyos() {
         return anyos;
     }
 
@@ -48,11 +52,15 @@ public class Experiencia implements Serializable{
         return nomEmpresa;
     }
 
-    public Candidat getCandidat() {
-        return candidat;
+    public String getDniCandidat() {
+        return dniCandidat;
     }
 
-    public void setAnyos(String anyos) {
+    public String getDescripcio() {
+        return descripcio;
+    }
+
+    public void setAnyos(Integer anyos) {
         this.anyos = anyos;
     }
 
@@ -60,10 +68,13 @@ public class Experiencia implements Serializable{
         this.nomEmpresa = nomEmpresa;
     }
 
-    public void setCandidat(Candidat candidat) {
-        this.candidat = candidat;
+    public void setDniCandidat(String dniCandidat) {
+        this.dniCandidat = dniCandidat;
     }
-    
+
+    public void setDescripcio(String descripcio) {
+        this.descripcio = descripcio;
+    }
     
     
 }

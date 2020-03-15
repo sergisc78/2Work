@@ -17,9 +17,9 @@ public class Empresa extends Usuari implements Serializable{
     private static final long serialVersionUID=1L;
     
     @NotNull
-    @Column(name="codiEmp")
-    protected String codiEmp;
-    
+    @Column (name="codiSector")
+    protected String codiSector;
+     
     @NotNull
     @Size(max=100)
     @Column(name="web")
@@ -30,30 +30,26 @@ public class Empresa extends Usuari implements Serializable{
     
     @Column(name="ofertes")
     protected ArrayList<Oferta> ofertes=new ArrayList();
-    
-    @Column(name="afinitats")
-    protected ArrayList<Afinitat> afinitats = new ArrayList();    
-    
-    public Empresa(String dniNif,String nom, String adreca, String telefon, String email, 
-            String pass, String cPass, String sector,String codiEmp, String web,Integer tamany,ArrayList<Oferta> ofertes,
-            ArrayList<Afinitat> afinitats){
-        super(dniNif,nom,adreca,telefon,email,pass,cPass,sector);
-        this.codiEmp=codiEmp;
-        this.web=web;
-        this.tamany=tamany;
+
+    public Empresa(String dniNif, String nom, String adreca, String telefon, String email, 
+            String pass, String cPass, String codiSector,String web, Integer tamany, 
+            ArrayList<Oferta> ofertes) {
+        super(dniNif, nom, adreca, telefon, email, pass, cPass);
+        this.codiSector=codiSector;
+        this.web = web;
+        this.tamany = tamany;
         this.ofertes=ofertes;
-        this.afinitats=afinitats;                
     }
-    public Empresa(){
-        super();
+
+    public Empresa() {
     }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-    public String getCodiEmp() {
-        return codiEmp;
+    public String getCodiSector() {
+        return codiSector;
     }
 
     public String getWeb() {
@@ -68,12 +64,8 @@ public class Empresa extends Usuari implements Serializable{
         return ofertes;
     }
 
-    public ArrayList<Afinitat> getAfinitats() {
-        return afinitats;
-    }
-
-    public void setCodiEmp(String codiEmp) {
-        this.codiEmp = codiEmp;
+    public void setCodiSector(String codiSector) {
+        this.codiSector = codiSector;
     }
 
     public void setWeb(String web) {
@@ -88,11 +80,5 @@ public class Empresa extends Usuari implements Serializable{
         this.ofertes = ofertes;
     }
 
-    public void setAfinitats(ArrayList<Afinitat> afinitats) {
-        this.afinitats = afinitats;
-    }
-
    
-    
-    
 }

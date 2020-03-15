@@ -19,10 +19,6 @@ public class Candidat extends Usuari implements Serializable{
     private static final long serialVersionUID=1L;
     
     @NotNull
-    @Column(name="codiCand")
-    protected String codiCand;
-    
-    @NotNull
     @Size(max=75)
     @Column(name="cognoms")
     protected String cognoms;
@@ -31,47 +27,50 @@ public class Candidat extends Usuari implements Serializable{
     @Column(name="dataNaix")
     protected Date dataNaix;
     
-    @Column(name="formacio")
-    protected String formacio;
+    @Column(name="codiFormacio")
+    protected String codiFormacio;
     
-    @Column(name="formPostUni")
-    protected String formPostUni;
+    @Column(name="codiFormPostUni")
+    protected String codiFormPostUni;
+    
+    @Column(name="sectors")
+    protected ArrayList<Sector> sectors = new ArrayList();
+    
+    @Column(name="formacions")
+    protected ArrayList<Formacio> formacions = new ArrayList();
+     
+    @Column(name="formacionsPostUni")
+    protected ArrayList<FormPostUni> formacionsPostUni = new ArrayList();
     
     @Column(name="habilitats")
     protected ArrayList<Habilitat> habilitats = new ArrayList();
     
     @Column(name="experiencies")
-    protected ArrayList<Habilitat> experiencies = new ArrayList();
-    
-    @Column(name="afinitats")
-    protected ArrayList<Afinitat> afinitats = new ArrayList();    
-    
-    public Candidat(String dniNif,String nom, String adreca, String telefon, 
-            String email, String pass, String cPass, String sector,
-            String codiCand,String cognoms,Date dataNaix,String formacio,
-            String formPostUni,ArrayList<Habilitat> habilitats,
-            ArrayList<Habilitat> experiencies,ArrayList<Afinitat> afinitats){
-        
-            super(dniNif,nom,adreca,telefon,email,pass,cPass,sector);
-            this.codiCand=codiCand;
-            this.cognoms=cognoms;
-            this.dataNaix=dataNaix;
-            this.formacio=formacio;
-            this.formPostUni=formPostUni;
-            this.habilitats=habilitats;
-            this.experiencies=experiencies;
-            this.afinitats=afinitats;
+    protected ArrayList<Experiencia> experiencies = new ArrayList();
+
+    public Candidat( String dniNif, String nom, String adreca, String telefon,
+            String email, String pass, String cPass, 
+            String cognoms, Date dataNaix, String codiFormacio, String codiFormPostUni,
+            ArrayList<Sector> sectors,ArrayList<Formacio> formacions,
+            ArrayList<FormPostUni> formacionsPostUni,ArrayList<Habilitat> habilitats ,
+            ArrayList<Experiencia> experiencies) {
+        super(dniNif, nom, adreca, telefon, email, pass, cPass);
+        this.cognoms = cognoms;
+        this.dataNaix = dataNaix;
+        this.codiFormacio = codiFormacio;
+        this.codiFormPostUni = codiFormPostUni;
+        this.sectors=sectors;
+        this.formacions=formacions;
+        this.formacionsPostUni=formacionsPostUni;
+        this.habilitats=habilitats;
+        this.experiencies=experiencies;
     }
-    public Candidat(){
-        super();
+
+    public Candidat() {
     }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
-    }
-
-    public String getCodiCand() {
-        return codiCand;
     }
 
     public String getCognoms() {
@@ -82,28 +81,32 @@ public class Candidat extends Usuari implements Serializable{
         return dataNaix;
     }
 
-    public String getFormacio() {
-        return formacio;
+    public String getCodiFormacio() {
+        return codiFormacio;
     }
 
-    public String getFormPostUni() {
-        return formPostUni;
+    public String getCodiFormPostUni() {
+        return codiFormPostUni;
+    }
+
+    public ArrayList<Sector> getSectors() {
+        return sectors;
+    }
+
+    public ArrayList<Formacio> getFormacions() {
+        return formacions;
+    }
+
+    public ArrayList<FormPostUni> getFormacionsPostUni() {
+        return formacionsPostUni;
     }
 
     public ArrayList<Habilitat> getHabilitats() {
         return habilitats;
     }
 
-    public ArrayList<Habilitat> getExperiencies() {
+    public ArrayList<Experiencia> getExperiencies() {
         return experiencies;
-    }
-
-    public ArrayList<Afinitat> getAfinitats() {
-        return afinitats;
-    }
-
-    public void setCodiCand(String codiCand) {
-        this.codiCand = codiCand;
     }
 
     public void setCognoms(String cognoms) {
@@ -114,25 +117,33 @@ public class Candidat extends Usuari implements Serializable{
         this.dataNaix = dataNaix;
     }
 
-    public void setFormacio(String formacio) {
-        this.formacio = formacio;
+    public void setCodiFormacio(String codiFormacio) {
+        this.codiFormacio = codiFormacio;
     }
 
-    public void setFormPostUni(String formPostUni) {
-        this.formPostUni = formPostUni;
+    public void setCodiFormPostUni(String codiFormPostUni) {
+        this.codiFormPostUni = codiFormPostUni;
+    }
+
+    public void setSectors(ArrayList<Sector> sectors) {
+        this.sectors = sectors;
+    }
+
+    public void setFormacions(ArrayList<Formacio> formacions) {
+        this.formacions = formacions;
+    }
+
+    public void setFormacionsPostUni(ArrayList<FormPostUni> formacionsPostUni) {
+        this.formacionsPostUni = formacionsPostUni;
     }
 
     public void setHabilitats(ArrayList<Habilitat> habilitats) {
         this.habilitats = habilitats;
     }
 
-    public void setExperiencies(ArrayList<Habilitat> experiencies) {
+    public void setExperiencies(ArrayList<Experiencia> experiencies) {
         this.experiencies = experiencies;
     }
 
-    public void setAfinitats(ArrayList<Afinitat> afinitats) {
-        this.afinitats = afinitats;
-    }
-
-   
+    
 }

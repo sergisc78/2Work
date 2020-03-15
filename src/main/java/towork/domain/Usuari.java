@@ -21,6 +21,7 @@ public class Usuari implements Serializable{
     protected String dniNif;
     
     @NotNull
+    @Size(max=75)
     @Column (name="nom")
     protected String nom;
     
@@ -49,22 +50,19 @@ public class Usuari implements Serializable{
     @Column (name="cPass")
     protected String cPass;
     
-    @NotNull
-    @Column (name="sector")
-    protected String sector;
-    
+   
 
-    public Usuari(String dniNif,String nom, String adreca, String telefon, String email, String pass, String cPass, String sector) {
-        this.dniNif=dniNif;
+    public Usuari(String dniNif, String nom, String adreca, String telefon, String email, String pass, String cPass) {
+        this.dniNif = dniNif;
         this.nom = nom;
         this.adreca = adreca;
         this.telefon = telefon;
         this.email = email;
         this.pass = pass;
         this.cPass = cPass;
-        this.sector = sector;
     }
-    public Usuari(){
+
+    public Usuari() {
     }
 
     public static long getSerialVersionUID() {
@@ -99,10 +97,6 @@ public class Usuari implements Serializable{
         return cPass;
     }
 
-    public String getSector() {
-        return sector;
-    }
-
     public void setDniNif(String dniNif) {
         this.dniNif = dniNif;
     }
@@ -131,9 +125,5 @@ public class Usuari implements Serializable{
         this.cPass = cPass;
     }
 
-    public void setSector(String sector) {
-        this.sector = sector;
-    }
-   
-
+    
 }

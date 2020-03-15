@@ -22,8 +22,8 @@ public class Oferta implements Serializable{
     private String refOferta;
     
     @NotNull
-    @Column(name="empresa")
-    private Empresa empresa;
+    @Column(name="nifEmpresa")
+    private String nifEmpresa;
     
     @NotNull
     @Size(max=100)
@@ -58,15 +58,28 @@ public class Oferta implements Serializable{
     @Column(name="formacio")
     private String formacio;
       
+    @NotNull
+    @Size(max=50)
+    @Column(name="estat")
+    private String estat;
+    
+    @Column(name="descripcio")
+    private String descripcio;
+    
+    
     @Column(name="habilitats")
     protected ArrayList<Habilitat> habilitats = new ArrayList();
     
-    @Column(name="afinitats")
-    protected ArrayList<Afinitat> afinitats = new ArrayList();
+    @Column(name="candidats")
+    protected ArrayList<Candidat> candidats = new ArrayList();
 
-    public Oferta(String refOferta, Empresa empresa, String titolOferta, String localitat, Integer sou, Integer horesDia, String torn, String tipusContracte, String formacio) {
+    public Oferta(String refOferta, String nifEmpresa, String titolOferta, 
+            String localitat, Integer sou, Integer horesDia, String torn, 
+            String tipusContracte, String formacio, String estat, 
+            String descripcio,ArrayList<Habilitat> habilitats,
+            ArrayList<Candidat> candidats) {
         this.refOferta = refOferta;
-        this.empresa = empresa;
+        this.nifEmpresa = nifEmpresa;
         this.titolOferta = titolOferta;
         this.localitat = localitat;
         this.sou = sou;
@@ -74,6 +87,10 @@ public class Oferta implements Serializable{
         this.torn = torn;
         this.tipusContracte = tipusContracte;
         this.formacio = formacio;
+        this.estat = estat;
+        this.descripcio = descripcio;
+        this.habilitats=habilitats;
+        this.candidats=candidats;
     }
 
     public Oferta() {
@@ -87,8 +104,8 @@ public class Oferta implements Serializable{
         return refOferta;
     }
 
-    public Empresa getEmpresa() {
-        return empresa;
+    public String getNifEmpresa() {
+        return nifEmpresa;
     }
 
     public String getTitolOferta() {
@@ -119,20 +136,28 @@ public class Oferta implements Serializable{
         return formacio;
     }
 
+    public String getEstat() {
+        return estat;
+    }
+
+    public String getDescripcio() {
+        return descripcio;
+    }
+
     public ArrayList<Habilitat> getHabilitats() {
         return habilitats;
     }
 
-    public ArrayList<Afinitat> getAfinitats() {
-        return afinitats;
+    public ArrayList<Candidat> getCandidats() {
+        return candidats;
     }
 
     public void setRefOferta(String refOferta) {
         this.refOferta = refOferta;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setNifEmpresa(String nifEmpresa) {
+        this.nifEmpresa = nifEmpresa;
     }
 
     public void setTitolOferta(String titolOferta) {
@@ -163,13 +188,21 @@ public class Oferta implements Serializable{
         this.formacio = formacio;
     }
 
+    public void setEstat(String estat) {
+        this.estat = estat;
+    }
+
+    public void setDescripcio(String descripcio) {
+        this.descripcio = descripcio;
+    }
+
     public void setHabilitats(ArrayList<Habilitat> habilitats) {
         this.habilitats = habilitats;
     }
 
-    public void setAfinitats(ArrayList<Afinitat> afinitats) {
-        this.afinitats = afinitats;
+    public void setCandidats(ArrayList<Candidat> candidats) {
+        this.candidats = candidats;
     }
 
-   
+    
 }
