@@ -70,11 +70,7 @@
             </ul>
         </div>
 
-        <footer class="footer">
-            <div class="container">
-                <!-- No li estem passant la variable! -->
-                <span class="text-muted">${footer}</footer>
-            </div>
-        </footer>
+        <%@include  file='/resources/html/footer.html' %>
+        
     </body>
 </html>

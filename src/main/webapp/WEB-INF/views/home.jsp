@@ -135,12 +135,8 @@
 
         </section>
 
-        <footer class="footer">
-            <div class="container">
-                <span class="text-muted">${footer}</footer>
-            </div>
-        </footer>
-
+        <%@include  file='/resources/html/footer.html' %>
+        
     </body>
 
 </html>

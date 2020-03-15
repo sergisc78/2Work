@@ -335,11 +335,7 @@
             </form>
         </section>
 
-        <footer class="footer">
-            <div class="container">
-                <span class="text-muted">2Work Copyright 2020</footer>
-            </div>
-        </footer>
+        <%@include  file='/resources/html/footer.html' %>
 
         <script>
             // Example starter JavaScript for disabling form submissions if there are invalid fields

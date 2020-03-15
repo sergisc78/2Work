@@ -85,12 +85,7 @@
             </form>
         </section>
             
-        <footer class="footer">
-            <div class="container">
-                <!-- No li estem passant la variable! -->
-                <span class="text-muted">${footer}</footer>
-            </div>
-        </footer>
+        <%@include  file='/resources/html/footer.html' %>
 
         <script>
             // Example starter JavaScript for disabling form submissions if there are invalid fields
