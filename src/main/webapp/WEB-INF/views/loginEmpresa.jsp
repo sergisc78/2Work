@@ -62,26 +62,29 @@
                 </div>
         </section> 
 
-        <h3 class="text-center">Login Empresa</h3><br>
-        <form class="needs-validation" novalidate>
+        <section class="container-sm formulari-login">
+            <h3 class="text-center blau">Login Empresa</h3>
+            <form class="needs-validation" novalidate>
 
-            <div class="form-group " style="margin-left:500px;margin-right:500px">
-                <label for="nom">Email</label>
-                <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" required>
-                <div class="invalid-feedback">
-                    Introdueix l´email
+                <div class="form-group">
+                    <label for="nom">Email</label>
+                    <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" required>
+                    <div class="invalid-feedback">
+                        Introdueix l´email
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group" style="margin-left:500px;margin-right:500px" >
-                <label for="pass1">Password</label>
-                <input type="password" class="form-control" id="pass"  required>
-                <div class="invalid-feedback">
-                    Introdueix password
+                <div class="form-group">
+                    <label for="pass1">Password</label>
+                    <input type="password" class="form-control" id="pass"  required>
+                    <div class="invalid-feedback">
+                        Introdueix password
+                    </div>
                 </div>
-            </div>
-            <button type="submit" style="margin-left:650px;margin-right:650px" class="btn btn-primary">Entra</button>
-        </form>
+                <button type="submit" class="btn btn-primary">Entra</button>
+            </form>
+        </section>
+            
         <footer class="footer">
             <div class="container">
                 <!-- No li estem passant la variable! -->

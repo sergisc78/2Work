@@ -59,17 +59,17 @@ section#cta > div:not(:last-child) {
       margin-bottom: 1rem;
 }
 
-.formulari-alta {
+.formulari-alta, .formulari-login {
       padding-top: 3rem;
 }
 
-.formulari-alta form {
+.formulari-alta form, .formulari-login form {
       padding-top: 1rem;
 }
 
 @media only screen and (min-width: 720px) {
       
-      .formulari-alta {
+      .formulari-alta, .formulari-login {
             max-width: 50%;
       }
   
