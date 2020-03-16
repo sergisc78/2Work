@@ -20,74 +20,24 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
         <!-- Estils afegits -->
-        <spring:url value="/resources/css/estils.css" var="estilsCSS" />
+        <spring:url value="/resources/css/login.css" var="estilsCSS" />
         <link href="${estilsCSS}" rel="stylesheet" />
 
         <title>2Work</title>
-
-
     </head>
 
     <body>
 
-        <!--- Barra de navegació -->
-        <nav class="navbar navbar-expand-lg navbar-dark">
-
-            <a class="navbar-brand" href="#">
-                <img src="${pageContext.request.contextPath}/resources/svg/logo_2work.svg" id="navbarlogo" alt="logo2Work">
-            </a>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarHomeToggler">
-                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<spring:url value='/'/>">Inici</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<spring:url value='/espaiAdmin'/>">Espai</a>
-                    </li>
-                </ul>
-            </div>  
-
-
-        </nav>
-
-        <section>
-            <div class="jumbotron">
-                <div class="container ">
-                    <h1> ${tagline} </h1>
-                </div>
+        <section class="text-center">
+              <h3 class="blau">Login administrador</h3>
+              <form class="form-signin">
+                  <label for="inputEmail" class="sr-only">Adreça d'e-mail</label>
+                  <input type="email" id="inputEmail" class="form-control" placeholder="Adreça d'e-mail" required autofocus>
+                  <label for="inputPassword" class="sr-only">Password</label>
+                  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                  <button class="btn btn-lg btn-primary btn-block" type="submit">Entra</button>  
+              </form>
         </section>
-          
-        <section class="container-sm formulari-login">        
-              
-            <h3 class="text-center blau">Login Administrador</h3><br>
-            <form class="needs-validation" novalidate>
-                  
-                <div class="form-group">
-                    <label for="nom">Email</label>
-                    <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" required>
-                    <div class="invalid-feedback">
-                        Introdueix l´email
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="pass1">Password</label>
-                    <input type="password" class="form-control" id="pass"  required>
-                    <div class="invalid-feedback">
-                        Introdueix password
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Entra</button>
-            </form>
-            
-        </section>
-            
-        <%@include  file='/resources/html/footer.html' %>
         
     </body>
 </html>

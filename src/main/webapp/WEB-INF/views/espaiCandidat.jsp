@@ -49,12 +49,7 @@
             </div>  
 
         </nav>
-        <section>
-            <div class="jumbotron">
-                <div class="container ">
-                    <h1> ${tagline} </h1>
-                </div>
-        </section>
+
         <h2 class="text-center">Benvingut a l´espai candidat</h2><br>
         <h3 class="text-center">Què desitges fer?</h3><br>
         <div class="container" style="border:#ccc 2px solid;padding: 10px">
