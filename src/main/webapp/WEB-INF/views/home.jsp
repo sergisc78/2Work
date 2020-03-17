@@ -1,7 +1,7 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<!-- <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> -->
 <html>
 
     <head>
@@ -42,7 +42,6 @@
 
             <div class="collapse navbar-collapse" id="navbarHomeToggler">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
                     <li class="nav-item">
                         <a class="nav-link" href="<spring:url value='/loginAdmin'/>">Administrador</a>
                     </li>

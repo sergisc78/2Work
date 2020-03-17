@@ -32,7 +32,7 @@
         <!--- Barra de navegació -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="<spring:url value='/'/>">
                 <img src="${pageContext.request.contextPath}/resources/svg/logo_2work.svg" id="navbarlogo" alt="logo2Work">
             </a>
 
@@ -43,27 +43,39 @@
             <div class="collapse navbar-collapse" id="navbarHomeToggler">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="<spring:url value='/'/>">Inici</a>
+                         <a class="nav-link" href="<spring:url value='/perfil'/>">Perfil</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="<spring:url value='/logout'/>">Logout</a>
                     </li>
                 </ul>
             </div>  
 
         </nav>
+                    
+        <section class="container" id="ofertes">
+              
+              <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+                  <c:forEach begin="0" end="18" varStatus="loop">
+                  <div class="col">      
+                        <div class="card">
+                            <div class="card-header">
+                                   <h6 class="card-title">Títol de l'oferta ${loop.index+1}
+                                          <c:if test="${loop.index % 4 == 0}">  <span class="badge badge-warning">NOVA</span> </c:if>
+                                   </h6>
+                            </div>
+                            <div class="card-body">
+                                  <p class="card-text">Breu descripció de l'oferta</p>
+                                  <a href="#" class="btn btn-primary">Veure</a>
+                            </div>
+                      </div>
+                  </div>
+                </c:forEach>
+              </div>
+              
+        </section>
 
-        <h2 class="text-center">Benvingut a l´espai candidat</h2><br>
-        <h3 class="text-center">Què desitges fer?</h3><br>
-        <div class="container" style="border:#ccc 2px solid;padding: 10px">
-            <ul class="text-center">
-                <a href="#"><li sytle="list-style:none">Editar CV</li></a>
-                <a href="#"><li sytle="list-style:none">Afegir experiències laborals</li></a>
-                <a href="#"><li sytle="list-style:none">Buscar ofertes</li></a>
-                <a href="#"><li sytle="list-style:none">Formació</li></a>
-                <a href="#"><li sytle="list-style:none">Newsletter</li></a>
-                <a href="#"><li sytle="list-style:none">Posa´t en contacte amb nosaltres</li></a>
-                <a href="#"><li sytle="list-style:none">Donar-se de baixa</li></a>
 
-            </ul>
-        </div>
 
         <%@include  file='/resources/html/footer.html' %>
         

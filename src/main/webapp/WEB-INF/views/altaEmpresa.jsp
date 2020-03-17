@@ -33,7 +33,7 @@
         <!--- Barra de navegació -->
         <nav class="navbar navbar-expand-lg navbar-dark">
 
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="<spring:url value='/'/>">
                 <img src="${pageContext.request.contextPath}/resources/svg/logo_2work.svg" id="navbarlogo" alt="logo2Work">
             </a>
         
