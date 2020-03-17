@@ -3,9 +3,12 @@ package towork.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -37,7 +40,7 @@ public class Oferta implements Serializable{
     
     @NotNull    
     @Column(name="sou")
-    private Integer sou;
+    private Double sou;
     
     @NotNull
     @Column(name="horesDia")
@@ -67,14 +70,14 @@ public class Oferta implements Serializable{
     private String descripcio;
     
     
-    @Column(name="habilitats")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Habilitat> habilitats = new ArrayList();
     
-    @Column(name="candidats")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Candidat> candidats = new ArrayList();
 
     public Oferta(String refOferta, String nifEmpresa, String titolOferta, 
-            String localitat, Integer sou, Integer horesDia, String torn, 
+            String localitat, Double sou, Integer horesDia, String torn, 
             String tipusContracte, String formacio, String estat, 
             String descripcio,ArrayList<Habilitat> habilitats,
             ArrayList<Candidat> candidats) {
@@ -116,7 +119,7 @@ public class Oferta implements Serializable{
         return localitat;
     }
 
-    public Integer getSou() {
+    public Double getSou() {
         return sou;
     }
 
@@ -168,7 +171,7 @@ public class Oferta implements Serializable{
         this.localitat = localitat;
     }
 
-    public void setSou(Integer sou) {
+    public void setSou(Double sou) {
         this.sou = sou;
     }
 

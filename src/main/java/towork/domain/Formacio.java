@@ -3,9 +3,12 @@ package towork.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,7 +28,7 @@ public class Formacio implements Serializable {
     @Column (name="nomFormPostUni")
     protected String nomFormPostUni;
     
-    @Column(name="candidats")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Candidat> candidats=new ArrayList();
 
     public Formacio(String codiFormPostUni, String nomFormPostUni,ArrayList<Candidat> candidats) {

@@ -3,9 +3,12 @@ package towork.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,13 +28,13 @@ public class Sector implements Serializable{
     @Column (name="nomSector")
     protected String nomSector;
     
-    @Column(name="empreses")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Empresa> empreses=new ArrayList();
     
-    @Column(name="candidats")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Candidat> candidats=new ArrayList();
    
-    @Column(name="habilitats")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Habilitat> habilitats = new ArrayList();
 
     public Sector(String codiSector, String nomSector,ArrayList<Empresa> empreses,

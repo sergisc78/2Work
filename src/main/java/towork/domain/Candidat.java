@@ -5,9 +5,12 @@ package towork.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -33,19 +36,19 @@ public class Candidat extends Usuari implements Serializable{
     @Column(name="codiFormPostUni")
     protected String codiFormPostUni;
     
-    @Column(name="sectors")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Sector> sectors = new ArrayList();
     
-    @Column(name="formacions")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Formacio> formacions = new ArrayList();
      
-    @Column(name="formacionsPostUni")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<FormPostUni> formacionsPostUni = new ArrayList();
     
-    @Column(name="habilitats")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Habilitat> habilitats = new ArrayList();
     
-    @Column(name="experiencies")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Experiencia> experiencies = new ArrayList();
 
     public Candidat( String dniNif, String nom, String adreca, String telefon,

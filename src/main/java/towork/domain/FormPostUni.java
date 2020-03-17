@@ -3,9 +3,12 @@ package towork.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,7 +28,7 @@ public class FormPostUni implements Serializable{
     @Column (name="nomFormacio")
     protected String nomFormacio;
     
-    @Column(name="candidats")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Candidat> candidats=new ArrayList();
 
     public FormPostUni(String codiFormacio, String nomFormacio,ArrayList<Candidat> candidats) {
