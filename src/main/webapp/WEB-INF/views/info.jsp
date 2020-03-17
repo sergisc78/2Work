@@ -43,39 +43,28 @@
             <div class="collapse navbar-collapse" id="navbarHomeToggler">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                         <a class="nav-link" href="<spring:url value='/perfil'/>">Perfil</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="<spring:url value='/logout'/>">Logout</a>
+                         <a class="nav-link" href="<spring:url value='/'/>">Inici</a>
                     </li>
                 </ul>
             </div>  
 
         </nav>
                     
-        <section class="container" id="ofertes">
+        <section class="container" id="info">
               
-              <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-                  <c:forEach begin="0" end="18" varStatus="loop">
-                  <div class="col">      
-                        <div class="card">
-                            <div class="card-header">
-                                   <h6 class="card-title">Títol de l'oferta ${loop.index+1}
-                                          <c:if test="${loop.index % 4 == 0}">  <span class="badge badge-warning">NOVA</span> </c:if>
-                                   </h6>
-                            </div>
-                            <div class="card-body">
-                                  <p class="card-text">Breu descripció de l'oferta</p>
-                                  <a href="<spring:url value='/ofertes/'/>${loop.index}" class="btn btn-primary">Veure</a>
-                            </div>
-                      </div>
-                  </div>
-                </c:forEach>
-              </div>
+              <section class="container-sm">
+                  <h3 class="text-center blau">Informació sobre nosaltres</h3><br>
+              </section>
+              
+              <section class="container-sm">
+                  <h3 class="text-center blau">Dona't d'alta a la newsletter de 2Work</h3><br>
+              </section>
+              
+              <section class="container-sm">
+                  <h3 class="text-center blau">Informació sobre protecció de dades</h3><br>
+              </section>
               
         </section>
-
-
 
         <%@include  file='/resources/html/footer.html' %>
         

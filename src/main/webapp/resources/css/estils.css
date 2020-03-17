@@ -76,7 +76,7 @@ section#cta > div:not(:last-child) {
   
 }
 
-section#motius, section#ofertes{
+section#motius, section#info, section#ofertes{
       padding-top: 4rem;
 }
 

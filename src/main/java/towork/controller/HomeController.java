@@ -62,4 +62,11 @@ public class HomeController {
         modelview.getModelMap().addAttribute("tagline", "La teva web de recerca de feina");
         return modelview;
     }
+    
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public ModelAndView infoRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ModelAndView modelview = new ModelAndView("info");
+        return modelview;
+    }
 }
