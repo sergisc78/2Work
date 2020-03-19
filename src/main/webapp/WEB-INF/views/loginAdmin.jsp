@@ -37,6 +37,7 @@
                   <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                   <button class="btn btn-lg btn-primary btn-block" type="submit">Entra</button>  
               </form>
+              <p><a class="small-text text-muted" href="<spring:url value='/'/>">Tornar</a></p>
         </section>
         
     </body>

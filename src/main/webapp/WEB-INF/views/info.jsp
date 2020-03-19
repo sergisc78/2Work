@@ -61,7 +61,11 @@
               </section>
               
               <section class="container-sm">
-                  <h3 class="text-center blau">Informació sobre protecció de dades</h3><br>
+                  <h3 class="text-center blau">Informació sobre protecció de dades</h3>
+                  <p>Les dades de caràcter personal sol·licitades i facilitades pels clients, són incorporades a un fitxer de titularitat privada, el responsable i únic destinatari del qual és 2Work.</p>
+                  <p>Només seran sol·licitades aquelles dades estrictament necessàries per prestar adequadament els serveis sol·licitats.</p>
+                  <p>En relació al CV, el titular de les dades personals permet que les seves dades personals es cedeixin a altres organitzacions interessades en determinats perfils de treball.</p>
+                  <p>Totes les dades recollides compten amb el compromís de confidencialitat, amb les mesures de seguretat establertes legalment, i en cap cas seran cedides a terceres persones, físiques o jurídiques, sense el previ consentiment del client, tutor o representant legal, excepte en aquells casos en què sigui imprescindible per a la correcta prestació el servei .</p>
               </section>
               
         </section>

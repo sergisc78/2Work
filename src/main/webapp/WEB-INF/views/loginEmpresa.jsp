@@ -33,14 +33,13 @@
               
               <h3 class="blau">Login empresa</h3>
               <form class="form-signin">
-                    
                   <label for="inputEmail" class="sr-only">Adreça d'e-mail</label>
                   <input type="email" id="inputEmail" class="form-control" placeholder="Adreça d'e-mail" required autofocus>
                   <label for="inputPassword" class="sr-only">Password</label>
                   <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                   <button class="btn btn-lg btn-primary btn-block" type="submit">Entra</button>  
-                  
               </form>
+              <p><a class="small-text text-muted" href="<spring:url value='/'/>">Tornar</a></p>
         </section>
 
         <script>

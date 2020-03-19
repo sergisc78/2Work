@@ -45,6 +45,9 @@
                     <li class="nav-item">
                          <a class="nav-link" href="<spring:url value='/perfil'/>">Perfil</a>
                     </li>
+                    <li class="nav-item">
+                         <a class="nav-link" href="<spring:url value='/candidatures'/>">Candidatures</a>
+                    </li>
                     <li>
                         <a class="nav-link" href="<spring:url value='/logout'/>">Logout</a>
                     </li>
