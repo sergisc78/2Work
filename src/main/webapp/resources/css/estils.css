@@ -118,3 +118,15 @@ section#ofertes .card .card-title{
       font-weight: 900;
       margin-bottom: 0;
 }
+
+section#info section {
+      text-align: justify;
+}
+
+section#info h3 {
+      margin-bottom: 1em;
+}
+
+section#info section:not(:first-child) {
+      margin-top: 3em;
+}

@@ -165,9 +165,8 @@
                      <div class="form-group">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" required>
-                        <a href="#"<label class="form-check-label" for="invalidCheck3">
-                            D´acord amb la política de privacitat i protecció de dades
-                            </label></a>
+                        <label class="form-check-label" for="invalidCheck3">D'acord amb la política de privacitat i protecció de dades</label>
+                        <a href="<spring:url value='/info'/>#politicaprivacitat" target="_blank"><span class="badge badge-pill badge-primary">Llegir</span></a>
                         <div class="invalid-feedback">
                             Has d´estar d´acord, abans d´enviar el formulari
                         </div>
