@@ -60,7 +60,7 @@
                   <h3 class="text-center blau">Dona't d'alta a la newsletter de 2Work</h3><br>
               </section>
               
-              <section class="container-sm">
+            <section class="container-sm" style="text-align: justify">
                   <h3 class="text-center blau">Informació sobre protecció de dades</h3>
                   <p>Les dades de caràcter personal sol·licitades i facilitades pels clients, són incorporades a un fitxer de titularitat privada, el responsable i únic destinatari del qual és 2Work.</p>
                   <p>Només seran sol·licitades aquelles dades estrictament necessàries per prestar adequadament els serveis sol·licitats.</p>
