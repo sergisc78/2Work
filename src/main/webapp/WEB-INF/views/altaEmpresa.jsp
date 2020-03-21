@@ -22,7 +22,8 @@
         <!-- Estils afegits -->
         <spring:url value="/resources/css/estils.css" var="estilsCSS" />
         <link href="${estilsCSS}" rel="stylesheet" />
-
+        <script type="text/javascript" src="resources/validarForm.js"></script>
+        
         <title>2Work</title>
 
 
@@ -63,80 +64,80 @@
         <section class="container-sm formulari-alta">       
             <h3 class="text-center blau">Enregistra't com empresa</h3><br>
 
-                <form class="needs-validation" novalidate>
+                <form class="needs-validation" novalidate onsubmit="return validarEmp();">
 
                     <div class="form-group">
-                        <label for="nom">Nom de l'empresa</label>
-                        <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Introdueix el nom" required>
+                        <label for="nomEmp">Nom de l'empresa</label>
+                        <input type="text" class="form-control" id="nomEmp" aria-describedby="emailHelp" placeholder="Introdueix el nom" required>
                         <div class="invalid-feedback">
                             Introdueix el nom de l'empresa
                         </div>
                     </div>
 
                     <div class="form-group ">
-                        <label for="nom">NIF</label>
-                        <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Introdueix el NIF" required>
+                        <label for="nifEmp">NIF</label>
+                        <input type="text" class="form-control" id="nifEmp" aria-describedby="emailHelp" placeholder="Introdueix el NIF" required>
                         <div class="invalid-feedback">
                             Introdueix el NIF
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="adreça">Adreça</label>
-                        <input type="text" class="form-control" id="adreça"  placeholder="Introdueix l'adreça" required>
+                        <label for="adrecaEmp">Adreça</label>
+                        <input type="text" class="form-control" id="adrecaEmp"  placeholder="Introdueix l'adreça" required>
                         <div class="invalid-feedback">
                             Introdueix l'adreça
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="telefon">Telèfon</label>
-                        <input type="text" class="form-control" id="telefon"  placeholder="Introdueix el telèfon" required>
+                        <label for="telfEmp">Telèfon</label>
+                        <input type="text" class="form-control" id="telfEmp"  placeholder="Introdueix el telèfon" required>
                         <div class="invalid-feedback">
                             Introdueix el telèfon
                         </div>
                     </div>
 
                     <div class="form-group">
-                          <label for="mail">Web de l'empresa <small>(* Camp no obligatori)</small></label>
-                        <input type="email" class="form-control" id="mail" placeholder="Introdueix la web">
+                          <label for="webEmp">Web de l'empresa <small>(* Camp no obligatori)</small></label>
+                        <input type="text" class="form-control" id="webEmp" placeholder="Introdueix la web">
 
                     </div>
                     <div class="form-group">
-                        <label for="tamany">Tamany l'empresa</label>
-                        <input type="text" class="form-control" id="mail" placeholder="Introdueix el número de treballadors" required>
+                        <label for="tamanyEmp">Tamany l'empresa</label>
+                        <input type="text" class="form-control" id="tamanyEmp" placeholder="Introdueix el número de treballadors" required>
                         <div class="invalid-feedback">
                             Introdueix el tamany
                         </div>
 
                     </div>
                     <div class="form-group">
-                        <label for="mail">E-mail</label>
-                        <input type="email" class="form-control" id="mail" placeholder="Introdueix l'e-mail" required>
+                        <label for="mailEmp">E-mail</label>
+                        <input type="email" class="form-control" id="mailEmp" placeholder="Introdueix l'e-mail" required>
                         <div class="invalid-feedback">
                             Introdueix l'email
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="pass1">Password</label>
-                        <input type="password" class="form-control" id="pass" pattern=".{8,}"  placeholder="Mínim 8 caràcters" required>
+                        <label for="passEmp">Password</label>
+                        <input type="password" class="form-control" id="passEmp" pattern=".{8,}"  placeholder="Mínim 8 caràcters" required>
                         <div class="invalid-feedback">
                             Introdueix password
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="pass2">Validar password</label>
-                        <input type="password" class="form-control" id="cpass" placeholder="Validar password" required>
+                        <label for="cpassEmp">Validar password</label>
+                        <input type="password" class="form-control" id="cpassEmp" placeholder="Validar password" required>
                         <div class="invalid-feedback">
                             Confirma password
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Sector laboral de l'empresa</label>
-                        <select class="form-control" id="sectorLaboral" required>
+                        <label for="sectorEmp">Sector laboral de l'empresa</label>
+                        <select class="form-control" id="sectorEmp" required>
                             <option value="" selected="true" selected="false"></option>
                             <option>Activitats físiques i esportives</option>
                             <option>Adminstració i gestió</option>

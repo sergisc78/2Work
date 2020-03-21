@@ -22,7 +22,8 @@
         <!-- Estils afegits -->
         <spring:url value="/resources/css/estils.css" var="estilsCSS" />
         <link href="${estilsCSS}" rel="stylesheet" />
-
+        <script type="text/javascript" src="resources/validarForm.js"></script>
+        
         <title>2Work</title>
 
 
@@ -62,82 +63,82 @@
         <section class="container-sm formulari-alta">        
             <h3 class="text-center blau">Enregistra't com a candidat</h3><br>
 
-            <form class="needs-validation" novalidate>
+            <form class="needs-validation" novalidate onsubmit="return validarCand();">
 
                 <div class="form-group">
-                    <label for="nom">Nom</label>
-                    <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Introdueix el nom" required>
+                    <label for="nomCand">Nom</label>
+                    <input type="text" class="form-control" id="nomCand" aria-describedby="emailHelp" placeholder="Introdueix el nom" required>
                     <div class="invalid-feedback">
                         Introdueix el teu nom
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="nom">Cognoms</label>
-                    <input type="text" class="form-control" id="cognoms" aria-describedby="emailHelp" placeholder="Introdueix els cognoms" required>
+                    <label for="cognomsCand">Cognoms</label>
+                    <input type="text" class="form-control" id="cognomsCand" aria-describedby="emailHelp" placeholder="Introdueix els cognoms" required>
                     <div class="invalid-feedback">
                         Introdueix el cognoms
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="nom">DNI</label>
-                    <input type="text" class="form-control" id="dni" aria-describedby="emailHelp" placeholder="Introdueix el DNI" required>
+                    <label for="dniCand">DNI</label>
+                    <input type="text" class="form-control" id="dniCand" aria-describedby="emailHelp" placeholder="Introdueix el DNI" required>
                     <div class="invalid-feedback">
                         Introdueix el DNI
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="data">Data de naixament</label>
-                    <input type="date" class="form-control" id="data" required>
+                    <label for="dataCand">Data de naixament</label>
+                    <input type="date" class="form-control" id="dataCand" required>
                     <div class="invalid-feedback">
                         Introdueix la data de naixament
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="adreça">Adreça</label>
-                    <input type="text" class="form-control" id="adreça"  placeholder="Introdueix l´adreça" required>
+                    <label for="adrecaCand">Adreça</label>
+                    <input type="text" class="form-control" id="adrecaCand"  placeholder="Introdueix l´adreça" required>
                     <div class="invalid-feedback">
                         Introdueix l'adreça
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="telefon">Telèfon</label>
-                    <input type="text" class="form-control" id="telefon"  placeholder="Introdueix el telèfon" required>
+                    <label for="telfCand">Telèfon</label>
+                    <input type="text" class="form-control" id="telfCand"  placeholder="Introdueix el telèfon" required>
                     <div class="invalid-feedback">
                         Introdueix el telèfon
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="mail">E-mail</label>
-                    <input type="email" class="form-control" id="mail" placeholder="Introdueix l´e-mail" required>
+                    <label for="mailCand">E-mail</label>
+                    <input type="email" class="form-control" id="mailCand" placeholder="Introdueix l´e-mail" required>
                     <div class="invalid-feedback">
                         Introdueix l'email
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="pass">Password</label>
-                    <input type="password" class="form-control" id="pass"  pattern=".{8,}"  placeholder="Mínim 8 caràcters" required>
+                    <label for="passCand">Password</label>
+                    <input type="password" class="form-control" id="passCand"  pattern=".{8,}"  placeholder="Mínim 8 caràcters" required>
                     <div class="invalid-feedback">
                         Introdueix password
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="pass">Confirmar password</label>
-                    <input type="password" class="form-control" id="cpass" placeholder="Torna a escriure el password" required>
+                    <label for="cpassCand">Confirmar password</label>
+                    <input type="password" class="form-control" id="cpassCand" placeholder="Torna a escriure el password" required>
                     <div class="invalid-feedback">
                         Confirma el password
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Elegeix el sector laboral</label>
-                    <select class="form-control" id="sectorLaboral" required>
+                    <label for="sectorCand">Elegeix el sector laboral</label>
+                    <select class="form-control" id="sectorCand" required>
                         <option value="" selected="true" disabled="disabled"></option>
                         <option>Activitats físiques i esportives</option>
                         <option>Adminstració i gestió</option>
@@ -164,8 +165,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Formació</label>
-                    <select class="form-control" id="formacio" required>
+                    <label for="formacioCand">Formació</label>
+                    <select class="form-control" id="formacioCand" required>
                         <option value="" selected="true" selected="false"></option>
                         <option>Graduat escolar</option>
                         <option>Batxillerat</option>
@@ -306,8 +307,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Formació postuniversitària</label>
-                    <select class="form-control" id="formaciopu">
+                    <label for="formaciopuCand">Formació postuniversitària</label>
+                    <select class="form-control" id="formaciopuCand">
                         <option value="" selected="true" selected="false">No</option>
                         <option>Màster</option>
                         <option>Postgrau</option>
