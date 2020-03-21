@@ -1,132 +1,93 @@
+/* 
+    Created on : 20/03/2020, 20:33:07
+    Author     : Daniel Sevilla i Junyent
+*/
 html {
   position: relative;
-  min-height: 100%;
-}
+  min-height: 100%; }
 
 body {
-      font-family: 'Montserrat', sans-serif;
-      padding-bottom: 8em;
-      color: #666;
-}
+  font-family: 'Montserrat', sans-serif;
+  padding-bottom: 8em;
+  color: #666; }
 
 .blau {
-      color: #1d70b7;
-}
+  color: #1d70b7; }
 
 body > nav:first-of-type {
-      background: rgb(45,170,225);
-      background: linear-gradient(90deg, rgba(29,112,183,1) 0%, rgba(45,170,225,1) 100%);
-      /* box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.40); */
-}
-
-body > nav:first-of-type .nav-link {
-      padding-top: 0;
-      padding-bottom: 0;
-}
+  background: #2daae1;
+  background: linear-gradient(90deg, #1d70b7 0%, #2daae1 100%); }
+  body > nav:first-of-type .nav-link {
+    padding-top: 0;
+    padding-bottom: 0; }
 
 #navbarlogo {
-      width: 46%;
-}
+  width: 46%; }
 
 .btn-primary {
-      background: #1d70b7;
-}
-
-.btn-primary:hover {
-      background: #2daae1;
-      border-color: #63c0e9;
-}
-
-
+  background: #1d70b7; }
+  .btn-primary :hover {
+    background: #2daae1;
+    border-color: rgba(45, 170, 225, 0.3); }
 
 .jumbotron {
-      border-radius: 0 !important;
-      
-      background: -moz-linear-gradient(top, rgba(29,112,183,0.2) 0% , rgba(45,170,225,0.5) 100%), url("../img/portatil.jpg") no-repeat;
-      background: -webkit-linear-gradient(180deg, rgba(29,112,183,0.2) 0%, rgba(45,170,225,0.5) 100%), url("../img/portatil.jpg") no-repeat;
-      background: linear-gradient(180deg, rgba(29,112,183,0.2) 0%, rgba(45,170,225,0.5) 100%), url("../img/portatil.jpg") no-repeat;
-      background-blend-mode: multiply;
-      background-size: cover;
-      color: #fff;
-      margin: 0;
-}
+  border-radius: 0 !important;
+  background: -moz-linear-gradient(top, rgba(29, 112, 183, 0.2) 0%, rgba(45, 170, 225, 0.5) 100%), url("../img/portatil.jpg") no-repeat;
+  background: -webkit-linear-gradient(180deg, rgba(29, 112, 183, 0.2) 0%, rgba(45, 170, 225, 0.5) 100%), url("../img/portatil.jpg") no-repeat;
+  background: linear-gradient(180deg, rgba(29, 112, 183, 0.2) 0%, rgba(45, 170, 225, 0.5) 100%), url("../img/portatil.jpg") no-repeat;
+  background-blend-mode: multiply;
+  background-size: cover;
+  color: #fff;
+  margin: 0; }
 
 section#cta {
-      background-color: #f5f5f5;
-      padding: 2rem 0;
-}
-
-section#cta > div:not(:last-child) {
-      margin-bottom: 1rem;
-}
+  background-color: #f5f5f5;
+  padding: 2rem 0; }
+  section#cta > div:not(:last-child) {
+    margin-bottom: 1rem; }
 
 .formulari-alta, .formulari-login {
-      padding-top: 3rem;
-}
+  padding-top: 3rem; }
+  @media only screen and (min-width: 720px) {
+    .formulari-alta, .formulari-login {
+      max-width: 50%; } }
+  .formulari-alta form, .formulari-login form {
+    padding-top: 1rem; }
 
-.formulari-alta form, .formulari-login form {
-      padding-top: 1rem;
-}
-
-@media only screen and (min-width: 720px) {
-      
-      .formulari-alta, .formulari-login {
-            max-width: 50%;
-      }
-  
-}
-
-section#motius, section#info, section#ofertes{
-      padding-top: 4rem;
-}
+section#motius, section#info, section#ofertes {
+  padding-top: 4rem; }
 
 section#motius div[class^="col"] {
-      margin-top: 3rem;
-}
-
+  margin-top: 3rem; }
 section#motius img {
-      width: 2rem;
-}
-
+  width: 2rem; }
 
 footer {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      /* Alçada fixa */
-      height: 50px;
-      line-height: 50px; /* Centrem el text verticalment */
-      background-color: #f5f5f5;
-      font-size: 0.9em;
-      text-align: center;
-}
-
-footer .container *:not(:last-child):after {
-      content: " | ";
-}
-
-footer a {
-      color: inherit;
-      text-decoration: none;
-}
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  background-color: #f5f5f5;
+  font-size: 0.9em;
+  text-align: center; }
+  footer a {
+    color: inherit;
+    text-decoration: none; }
+  footer .container *:not(:last-child):after {
+    content: " | "; }
 
 section#ofertes .card {
-      margin-bottom: 1.8em;
-}
-
-section#ofertes .card .card-title{
-      font-weight: 900;
-      margin-bottom: 0;
-}
-
-section#info section {
-      text-align: justify;
-}
+  margin-bottom: 1.8em; }
+  section#ofertes .card .card-title {
+    font-weight: 900;
+    margin-bottom: 0; }
 
 section#info h3 {
-      margin-bottom: 1em;
-}
+  margin-bottom: 1em; }
+section#info section {
+  text-align: justify; }
+  section#info section:not(:first-child) {
+    margin-top: 3em; }
 
-section#info section:not(:first-child) {
-      margin-top: 3em;
-}
+/*# sourceMappingURL=estils.css.map */
