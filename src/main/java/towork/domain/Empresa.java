@@ -23,7 +23,7 @@ public class Empresa extends Usuari implements Serializable{
     @Column (name="codiSector")
     protected String codiSector;
      
-    @NotNull
+    
     @Size(max=100)
     @Column(name="web")
     protected String web;

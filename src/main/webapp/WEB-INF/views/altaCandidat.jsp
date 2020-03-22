@@ -115,7 +115,7 @@
 
                 <div class="form-group">
                     <label for="mailCand">E-mail</label>
-                    <input type="email" class="form-control" id="mailCand" placeholder="Introdueix l´e-mail" required>
+                    <input type="email" class="form-control" id="mailCand" placeholder="Introdueix l´e-mail" >
                     <div class="invalid-feedback">
                         Introdueix l'email
                     </div>

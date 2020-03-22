@@ -105,7 +105,7 @@
                     </div>
                     <div class="form-group">
                         <label for="tamanyEmp">Tamany l'empresa</label>
-                        <input type="text" class="form-control" id="tamanyEmp" placeholder="Introdueix el número de treballadors" required>
+                        <input type="text" class="form-control" id="tamanyEmp" placeholder="Introdueix el número de treballadors" >
                         <div class="invalid-feedback">
                             Introdueix el tamany
                         </div>
@@ -113,7 +113,7 @@
                     </div>
                     <div class="form-group">
                         <label for="mailEmp">E-mail</label>
-                        <input type="email" class="form-control" id="mailEmp" placeholder="Introdueix l'e-mail" required>
+                        <input type="email" class="form-control" id="mailEmp" placeholder="Introdueix l'e-mail" >
                         <div class="invalid-feedback">
                             Introdueix l'email
                         </div>
