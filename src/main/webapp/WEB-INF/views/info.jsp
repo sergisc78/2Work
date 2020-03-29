@@ -27,7 +27,7 @@
         <title>2Work</title>
     </head>
 
-    <body>
+    <body id="info_body">
 
         <!--- Barra de navegació -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">

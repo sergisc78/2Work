@@ -13,6 +13,8 @@ $color-basic-taronja: #e1642d;
 
 $color-gris-text: #666;
 
+$blanc: #fff;
+
 //////////////////////////////////////////////////////////////////
 
 html {
@@ -22,8 +24,16 @@ html {
 
 body {
       font-family: 'Montserrat', sans-serif;
-      padding-bottom: 8em;
+      padding-bottom: 10em;
       color: $color-gris-text;
+      
+      background: url('../img/background_2work.png');
+      background-position: bottom center;
+      background-repeat: no-repeat;
+      -webkit-background-size: auto;
+      -moz-background-size: auto;
+      -o-background-size: auto;
+      background-size: auto;
 }
 
 .blau {
@@ -48,7 +58,7 @@ body > nav:first-of-type {
 .btn-primary {
       background: $color-basic-blau-fosc;
       
-      :hover {
+      &:hover {
             background: $color-basic-blau-clar;
             border-color: rgba($color-basic-blau-clar,0.3)
       }
@@ -67,6 +77,17 @@ body > nav:first-of-type {
       margin: 0;
 }
 
+section.barra-ubicacio {
+      background-color: $color-basic-gris-clar;
+      padding: 1em 0;
+      
+      p { 
+            font-weight: 900;
+            color: $color-gris-text; 
+            margin: 0;
+      }
+}
+
 section#cta {
       background-color: $color-basic-gris-clar;
       padding: 2rem 0;
@@ -74,6 +95,19 @@ section#cta {
       > div:not(:last-child) {
             margin-bottom: 1rem;
       }
+      
+      a svg {
+            margin-bottom: 0.1em;
+      }
+                  
+      a:hover svg {
+             transform: translateX(5px);
+            -webkit-transition: ease-in 0.2s;
+            -moz-transition: ease-in 0.2s;
+             -o-transition: ease-in 0.2s;
+              transition: ease-in 0.2s;
+      }
+      
 }
 
 .formulari-alta, .formulari-login {
@@ -109,12 +143,20 @@ footer {
       position: absolute;
       bottom: 0;
       width: 100%;
-      // Alçada fixa //
-      height: 50px;
-      line-height: 50px; // Centrem el text verticalment //
+      padding: 1.5em 0;
+      // height: 50px;
+      // line-height: 50px; // Centrem el text verticalment //
       background-color: $color-basic-gris-clar;
       font-size: 0.9em;
       text-align: center;
+      
+      div.container {
+            display: table;
+            
+            div {
+                  display: table-cell;
+            }
+      }
       
       a {
             color: inherit;
@@ -134,7 +176,23 @@ section#ofertes {
                   font-weight: 900;
                   margin-bottom: 0;
             }
+            
+            .card-body {
+                  svg {
+                        margin-bottom: 0.1em;
+                  }
+                  
+                  a:hover svg {
+                        transform: translateX(5px);
+                        -webkit-transition: ease-in 0.2s;
+                        -moz-transition: ease-in 0.2s;
+                        -o-transition: ease-in 0.2s;
+                        transition: ease-in 0.2s;
+                  }
+            }
+            
       }
+      
 }
 
 section#info {
@@ -148,4 +206,14 @@ section#info {
                   margin-top: 3em;
             }
       }
+}
+
+#info_body {
+      background: url('../img/background_2work.png');
+      background-position: bottom center;
+      background-repeat: no-repeat;
+      -webkit-background-size: auto;
+      -moz-background-size: auto;
+      -o-background-size: auto;
+      background-size: auto;
 }

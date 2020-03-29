@@ -24,9 +24,7 @@ public class EspaiController {
     public ModelAndView EspaiCandidatRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ModelAndView modelview = new ModelAndView("espaiCandidat");
-        modelview.getModelMap().addAttribute("banner", "2work");
-        modelview.getModelMap().addAttribute("tagline", "La teva web de recerca de feina");
-        modelview.getModelMap().addAttribute("footer", "2Work Copyright 2020");
+        modelview.getModelMap().addAttribute("ubicacio", "Ofertes escaients per les teves dades");
         return modelview;
     }
      @RequestMapping(value = "/espaiEmpresa", method = RequestMethod.GET)

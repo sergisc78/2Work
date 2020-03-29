@@ -71,7 +71,13 @@
                         <div class="thumbnail">
                             <div class="caption">
                                 <h3 class="text-center">${item.desc}</h3>
-                                <p class="text-center"><a href=" <spring:url value= "${item.url}" />" class="text-center btn btn-primary" role="button">Dona't d'alta</a></p>
+                                <p class="text-center">
+                                      <a href=" <spring:url value= "${item.url}" />" class="text-center btn btn-primary" role="button">Dona't d'alta
+                                            <svg class="text-light" width="15" height="20" viewBox="3 0 15 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/> 
+                                          </svg>
+                                      </a>
+                                </p>
                             </div>
                         </div>
                     </div>
