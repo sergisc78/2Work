@@ -42,15 +42,15 @@
 
             <div class="collapse navbar-collapse" id="navbarHomeToggler">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                      
+                      <c:forEach items="${opcions}" var="map">
+                      
                     <li class="nav-item">
-                         <a class="nav-link" href="<spring:url value='/perfil'/>">Perfil</a>
+                         <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
                     </li>
-                    <li class="nav-item">
-                         <a class="nav-link" href="<spring:url value='/candidatures'/>">Candidatures</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="<spring:url value='/logout'/>">Logout</a>
-                    </li>
+
+                      </c:forEach>
+                    
                 </ul>
             </div>  
 
@@ -62,33 +62,10 @@
               </div>
         </section>
                     
-        <section class="container" id="ofertes">
+        <section class="container" id="oferta">
               
-              <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-                  <c:forEach begin="0" end="18" varStatus="loop">
-                  <div class="col">      
-                        <div class="card">
-                            <div class="card-header">
-                                   <h6 class="card-title">Títol de l'oferta ${loop.index+1}
-                                          <c:if test="${loop.index % 4 == 0}">  <span class="badge badge-warning">NOVA</span> </c:if>
-                                   </h6>
-                            </div>
-                            <div class="card-body">
-                                  <p class="card-text">Breu descripció de l'oferta</p>
-                                  <a href="<spring:url value='/oferta'><spring:param name="ref" value='"${loop.index}"' /></spring:url>" class="btn btn-primary">
-                                          Veure
-                                          <svg class="text-light" width="15" height="20" viewBox="3 0 15 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/> 
-                                          </svg>
-                                  </a>
-                            </div>
-                      </div>
-                  </div>
-                </c:forEach>
-              </div>
               
         </section>
-
 
 
         <%@include  file='/resources/html/footer.html' %>

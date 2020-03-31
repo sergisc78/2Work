@@ -94,7 +94,7 @@
 
                 <div class="col-lg-6">
                     <div class="media">
-                        <img src="<spring:url value='/resources/svg/cercle_2work.svg'/>" class="mr-3" alt="bullet">
+                        <img src="<spring:url value='/resources/svg/cor.svg'/>" class="mr-3" alt="bullet">
                         <div class="media-body">
                             <h5 class="mt-0 mb-1">No discriminem</h5>
                             Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
@@ -104,7 +104,7 @@
 
                 <div class="col-lg-6">
                     <div class="media">
-                        <img src="<spring:url value='/resources/svg/cercle_2work.svg'/>" class="mr-3" alt="bullet">
+                        <img src="<spring:url value='/resources/svg/somriure.svg'/>" class="mr-3" alt="bullet">
                         <div class="media-body">
                             <h5 class="mt-0 mb-1">Treballem per uns sous justos</h5>
                             Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
@@ -118,7 +118,7 @@
 
                 <div class="col-lg-6">
                     <div class="media">
-                        <img src="<spring:url value='/resources/svg/cercle_2work.svg'/>" class="mr-3" alt="bullet">
+                        <img src="<spring:url value='/resources/svg/euro_ok.svg'/>" class="mr-3" alt="bullet">
                         <div class="media-body">
                             <h5 class="mt-0 mb-1">Preu just</h5>
                             Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
@@ -128,7 +128,7 @@
 
                 <div class="col-lg-6">
                     <div class="media">
-                        <img src="<spring:url value='/resources/svg/cercle_2work.svg'/>" class="mr-3" alt="bullet">
+                        <img src="<spring:url value='/resources/svg/lupa_ok.svg'/>" class="mr-3" alt="bullet">
                         <div class="media-body">
                             <h5 class="mt-0 mb-1">Trobes allò que busques</h5>
                             Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.

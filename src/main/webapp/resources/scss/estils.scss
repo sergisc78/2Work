@@ -135,9 +135,27 @@ section#motius {
       
       img {
             width: 2rem;
+            
+            transform: scale(1);
+            -webkit-transition: ease-in 0.2s;
+            -moz-transition: ease-in 0.2s;
+            -o-transition: ease-in 0.2s;
+            transition: ease-in 0.2s;
+            
+      }
+      
+      .col-lg-6:hover img {
+            
+                  transform: scale(1.3);
+                  -webkit-transition: ease-in 0.2s;
+                  -moz-transition: ease-in 0.2s;
+                  -o-transition: ease-in 0.2s;
+                  transition: ease-in 0.2s;
+            
       }
       
 }
+
 
 footer {
       position: absolute;
