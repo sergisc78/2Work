@@ -1,5 +1,6 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
@@ -24,7 +25,7 @@
         <spring:url value="/resources/css/estils.css" var="estilsCSS" />
         <link href="${estilsCSS}" rel="stylesheet" />
 
-        <title>2Work</title>
+        <title>Detall de l'oferta</title>
     </head>
 
     <body>
@@ -43,13 +44,13 @@
             <div class="collapse navbar-collapse" id="navbarHomeToggler">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                       
-                      <c:forEach items="${opcions}" var="map">
+                        <c:forEach items="${opcions}" var="map">
                       
-                    <li class="nav-item">
-                         <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
-                    </li>
+                        <li class="nav-item">
+                              <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
+                        </li>
 
-                      </c:forEach>
+                        </c:forEach>
                     
                 </ul>
             </div>  
@@ -63,7 +64,58 @@
         </section>
                     
         <section class="container" id="oferta">
-              
+              <div class="card">
+                    
+                    <div class="card-header">
+                          <h1>${oferta.titolOferta}<h1>
+                    </div>
+                    
+                    <div class="card-body container">
+                          
+                          <h4>Estat</h4>
+                          <p>${oferta.estat}</p>
+                          
+                          <h4>Descripció</h4>
+                          <p>${oferta.descripcio}</p>
+                          
+                          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2">
+                                
+                                <div class="col">
+                                    <h4>Empresa</h4>
+                                    <p>${oferta.nifEmpresa}</p>
+                                    <h4>Localitat</h4>
+                                    <p>${oferta.localitat}</p>
+                                    <h4>Tipus de contracte</h4>
+                                    <p>${oferta.tipusContracte}</p>
+                                    <h4>Horari</h4>
+                                    <p>${oferta.torn}</p>
+                                    <h4>Remuneració anual</h4>
+                                    
+                                    <p><fmt:formatNumber groupingUsed = "false" value="${oferta.sou}"/> €</p>
+                                </div>
+                                
+                                <div class="col">
+                                      <h4>Formació requerida</h4>
+                                      <p>${oferta.formacio}</p>
+                                      <h4>Habilitats addicionals requerides</h4>
+                                      <p>
+                                            <c:forEach items="${oferta.habilitats}" var="map" varStatus="loop">
+                                                  ${map.nomHab}
+                                                  <c:if test="${!loop.last}">, </c:if>
+                                            </c:forEach>
+                                      </p>
+                                </div>
+                                
+                          </div>
+                          
+                    </div>
+                    
+              </div>
+                                      
+              <p>
+                        <a href="#" class="text-center btn btn-primary" role="button">Inscriure'm a l'oferta</a>
+                        <a href="#" class="text-center btn btn-warning" role="button">Denunciar l'oferta</a>
+             </p>
               
         </section>
 

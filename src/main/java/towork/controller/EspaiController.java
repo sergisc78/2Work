@@ -84,10 +84,10 @@ public class EspaiController {
         h1.setNomHab("habilitat1");
         
         Habilitat h2 = new Habilitat();
-        h1.setNomHab("habilitat2");
+        h2.setNomHab("habilitat2");
         
         Habilitat h3 = new Habilitat();
-        h1.setNomHab("habilitat3");
+        h3.setNomHab("habilitat3");
         
         
         // Omplo un arrayList amb les habilitats de prova per afegir-lo a l'objecte de prova
@@ -98,20 +98,20 @@ public class EspaiController {
         
         // Genero un objecte Oferta DE PROVA mentre no implementem la línia anterior
         Oferta of = new Oferta();
-        of.setDescripcio("Aquesta és la descripció de l'oferta blablabla");
+        of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi ha podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
         of.setEstat("Pendent");
         of.setFormacio("Formació que requereix aquesta oferta");
         of.setHabilitats(habs);
-        of.setTorn("De 9 a 15h"); // Això està pendent d'acabar de definir al domini.
+        of.setTorn("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
         of.setLocalitat("Cardona");
-        of.setNifEmpresa("22333444K"); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd?
+        of.setNifEmpresa("22333444K"); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
         of.setSou(25000d);
         of.setTipusContracte("Indefinit");
         of.setTitolOferta("Títol de l'oferta");
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
         // Afegeixo els atributs per passar a la vista
-        modelview.getModelMap().addAttribute("ubicacio", "Detalls de l'oferta");
+        modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
         modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que afagem de la bbdd.
         modelview.getModelMap().addAttribute("opcions", opcions);
         
