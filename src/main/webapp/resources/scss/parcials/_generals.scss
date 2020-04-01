@@ -1,0 +1,51 @@
+/* 
+    Created on : 01/04/2020, 07:27:41
+    Author     : Daniel Sevilla i Junyent
+*/
+
+//////////////////// Classes generals per tot el projecte /////////////////////////
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+      font-family: 'Montserrat', sans-serif;
+      padding-bottom: 10em;
+      color: $color-gris-text;
+      
+      background: url('../img/background_2work.png');
+      background-position: bottom center;
+      background-repeat: no-repeat;
+      -webkit-background-size: auto;
+      -moz-background-size: auto;
+      -o-background-size: auto;
+      background-size: auto;
+}
+
+section.barra-ubicacio {
+      background-color: $color-basic-gris-clar;
+      padding: 1em 0;
+      
+      p { 
+            font-weight: 900;
+            color: $color-gris-text; 
+            margin: 0;
+      }
+}
+
+.blau {
+      color: $color-basic-blau-fosc;
+}
+
+.btn-warning {
+      background: $color-basic-taronja;
+      border-color: lighten($color-basic-taronja, 10%);
+      color: $blanc;
+      &:hover {
+            color: $blanc;
+            background: lighten($color-basic-taronja, 10%);
+            border-color: lighten($color-basic-taronja, 20%);
+      }
+}

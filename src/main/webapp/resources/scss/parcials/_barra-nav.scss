@@ -1,0 +1,31 @@
+/* 
+    Created on : 01/04/2020, 07:27:41
+    Author     : Daniel Sevilla i Junyent
+*/
+
+//////////////////// Classes per la barra de navegació /////////////////////////
+
+body > nav:first-of-type {
+      background: rgb(45,170,225);
+      background: $degradat-blaus;
+      
+      .nav-link {
+            padding-top: 0;
+            padding-bottom: 0;
+      }
+      
+}
+
+#navbarlogo {
+      width: 46%;
+}
+
+.btn-primary {
+      background: $color-basic-blau-fosc;
+      
+      &:hover {
+            background: $color-basic-blau-clar;
+            border-color: rgba($color-basic-blau-clar,0.3)
+      }
+      
+}

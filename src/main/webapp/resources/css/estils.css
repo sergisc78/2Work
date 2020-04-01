@@ -2,6 +2,14 @@
     Created on : 20/03/2020, 20:33:07
     Author     : Daniel Sevilla i Junyent
 */
+/* 
+    Created on : 01/04/2020, 07:27:41
+    Author     : Daniel Sevilla i Junyent
+*/
+/* 
+    Created on : 01/04/2020, 07:27:41
+    Author     : Daniel Sevilla i Junyent
+*/
 html {
   position: relative;
   min-height: 100%; }
@@ -18,6 +26,14 @@ body {
   -o-background-size: auto;
   background-size: auto; }
 
+section.barra-ubicacio {
+  background-color: #f5f5f5;
+  padding: 1em 0; }
+  section.barra-ubicacio p {
+    font-weight: 900;
+    color: #666;
+    margin: 0; }
+
 .blau {
   color: #1d70b7; }
 
@@ -30,6 +46,10 @@ body {
     background: #e7855a;
     border-color: #eea686; }
 
+/* 
+    Created on : 01/04/2020, 07:27:41
+    Author     : Daniel Sevilla i Junyent
+*/
 body > nav:first-of-type {
   background: #2daae1;
   background: linear-gradient(90deg, #1d70b7 0%, #2daae1 100%); }
@@ -46,65 +66,10 @@ body > nav:first-of-type {
     background: #2daae1;
     border-color: rgba(45, 170, 225, 0.3); }
 
-.jumbotron {
-  border-radius: 0 !important;
-  background: -moz-linear-gradient(top, rgba(29, 112, 183, 0.2) 0%, rgba(45, 170, 225, 0.5) 100%), url("../img/portatil.jpg") no-repeat;
-  background: -webkit-linear-gradient(180deg, rgba(29, 112, 183, 0.2) 0%, rgba(45, 170, 225, 0.5) 100%), url("../img/portatil.jpg") no-repeat;
-  background: linear-gradient(180deg, rgba(29, 112, 183, 0.2) 0%, rgba(45, 170, 225, 0.5) 100%), url("../img/portatil.jpg") no-repeat;
-  background-blend-mode: multiply;
-  background-size: cover;
-  color: #fff;
-  margin: 0; }
-
-section.barra-ubicacio {
-  background-color: #f5f5f5;
-  padding: 1em 0; }
-  section.barra-ubicacio p {
-    font-weight: 900;
-    color: #666;
-    margin: 0; }
-
-section#cta {
-  background-color: #f5f5f5;
-  padding: 2rem 0; }
-  section#cta > div:not(:last-child) {
-    margin-bottom: 1rem; }
-  section#cta a svg {
-    margin-bottom: 0.1em; }
-  section#cta a:hover svg {
-    transform: translateX(5px);
-    -webkit-transition: ease-in 0.2s;
-    -moz-transition: ease-in 0.2s;
-    -o-transition: ease-in 0.2s;
-    transition: ease-in 0.2s; }
-
-.formulari-alta, .formulari-login {
-  padding-top: 3rem; }
-  @media only screen and (min-width: 720px) {
-    .formulari-alta, .formulari-login {
-      max-width: 50%; } }
-  .formulari-alta form, .formulari-login form {
-    padding-top: 1rem; }
-
-section#motius, section#info, section#ofertes, section#oferta {
-  padding-top: 4rem; }
-
-section#motius div[class^="col"] {
-  margin-top: 3rem; }
-section#motius img {
-  width: 2rem;
-  transform: scale(1);
-  -webkit-transition: ease-in 0.2s;
-  -moz-transition: ease-in 0.2s;
-  -o-transition: ease-in 0.2s;
-  transition: ease-in 0.2s; }
-section#motius .col-lg-6:hover img {
-  transform: scale(1.3);
-  -webkit-transition: ease-in 0.2s;
-  -moz-transition: ease-in 0.2s;
-  -o-transition: ease-in 0.2s;
-  transition: ease-in 0.2s; }
-
+/* 
+    Created on : 01/04/2020, 07:27:41
+    Author     : Daniel Sevilla i Junyent
+*/
 footer {
   position: absolute;
   bottom: 0;
@@ -122,6 +87,61 @@ footer {
     text-decoration: none; }
   footer .container *:not(:last-child):after {
     content: " | "; }
+
+/* 
+    Created on : 01/04/2020, 07:27:41
+    Author     : Daniel Sevilla i Junyent
+*/
+.jumbotron {
+  border-radius: 0 !important;
+  background: -moz-linear-gradient(top, rgba(29, 112, 183, 0.2) 0%, rgba(45, 170, 225, 0.5) 100%), url("../img/portatil.jpg") no-repeat;
+  background: -webkit-linear-gradient(180deg, rgba(29, 112, 183, 0.2) 0%, rgba(45, 170, 225, 0.5) 100%), url("../img/portatil.jpg") no-repeat;
+  background: linear-gradient(180deg, rgba(29, 112, 183, 0.2) 0%, rgba(45, 170, 225, 0.5) 100%), url("../img/portatil.jpg") no-repeat;
+  background-blend-mode: multiply;
+  background-size: cover;
+  color: #fff;
+  margin: 0; }
+
+section#cta {
+  background-color: #f5f5f5;
+  padding: 2rem 0; }
+  section#cta > div:not(:last-child) {
+    margin-bottom: 1rem; }
+  section#cta a svg {
+    margin-bottom: 0.1em; }
+  section#cta a:hover svg {
+    transform: translateX(5px);
+    -webkit-transition: ease-in 0.2s;
+    -moz-transition: ease-in 0.2s;
+    -o-transition: ease-in 0.2s;
+    transition: ease-in 0.2s; }
+
+section#motius div[class^="col"] {
+  margin-top: 3rem; }
+section#motius img {
+  width: 2rem;
+  transform: scale(1);
+  -webkit-transition: ease-in 0.2s;
+  -moz-transition: ease-in 0.2s;
+  -o-transition: ease-in 0.2s;
+  transition: ease-in 0.2s; }
+section#motius .col-lg-6:hover img {
+  transform: scale(1.3);
+  -webkit-transition: ease-in 0.2s;
+  -moz-transition: ease-in 0.2s;
+  -o-transition: ease-in 0.2s;
+  transition: ease-in 0.2s; }
+
+.formulari-alta, .formulari-login {
+  padding-top: 3rem; }
+  @media only screen and (min-width: 720px) {
+    .formulari-alta, .formulari-login {
+      max-width: 50%; } }
+  .formulari-alta form, .formulari-login form {
+    padding-top: 1rem; }
+
+section#motius, section#info, section#ofertes, section#oferta {
+  padding-top: 4rem; }
 
 section#ofertes .card {
   margin-bottom: 1.8em; }
@@ -163,14 +183,5 @@ section#info section {
   text-align: justify; }
   section#info section:not(:first-child) {
     margin-top: 3em; }
-
-#info_body {
-  background: url("../img/background_2work.png");
-  background-position: bottom center;
-  background-repeat: no-repeat;
-  -webkit-background-size: auto;
-  -moz-background-size: auto;
-  -o-background-size: auto;
-  background-size: auto; }
 
 /*# sourceMappingURL=estils.css.map */
