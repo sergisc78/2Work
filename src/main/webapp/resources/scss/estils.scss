@@ -12,6 +12,11 @@
 @import 'parcials/footer';
 @import 'parcials/home';
 
+section#alta-candidat, section#alta-empresa {
+      a:not([href]) {
+            cursor: pointer;
+      }
+}
 
 .formulari-alta, .formulari-login {
       padding-top: 3rem;
@@ -26,8 +31,12 @@
       
 }
 
+#modalPrivacitat .modal-content {
+      font-size: 0.9em;
+}
 
-section#motius, section#info, section#ofertes, section#oferta{
+
+section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat {
       padding-top: 4rem;
 }
 
@@ -43,10 +52,18 @@ section#ofertes {
             .card-body {
                   svg {
                         margin-bottom: 0.1em;
+                        
+                        -webkit-transition: ease-in 0.2s;
+                        -moz-transition: ease-in 0.2s;
+                        -o-transition: ease-in 0.2s;
+                        transition: ease-in 0.2s;
                   }
                   
                   a:hover svg {
+                        -ms-transform: translateX(5px);
+                        -webkit-transform: translateX(5px);
                         transform: translateX(5px);
+                        
                         -webkit-transition: ease-in 0.2s;
                         -moz-transition: ease-in 0.2s;
                         -o-transition: ease-in 0.2s;
@@ -59,13 +76,15 @@ section#ofertes {
 }
 
 
-section#oferta {
+section#oferta, section#candidat {
       .card {
             background: $color-basic-gris-clar;
             border: none;
             margin-bottom: 1.5rem;
             
             .card-header { background: $color-basic-gris-clar; }
+            
+            .card-footer { padding: 1.25rem; }
             
             h1 {
                   font-size: 1.5em;
@@ -88,6 +107,20 @@ section#oferta {
       a {
             margin-right: 15px;
       }
+      
+      #llistat-candidatures {
+            
+            padding: 0;
+            
+            li {
+                  background: inherit;
+                  list-style-type: none;
+                  
+                  form {margin-bottom: 0;}
+            }
+            
+            a p {margin: 0;}
+      }
 }
 
 
@@ -102,4 +135,51 @@ section#info {
                   margin-top: 3em;
             }
       }
+}
+
+section#ofertes-empresa, #llistat-candidatures {
+          
+      .list-group-item {
+            p {
+               margin: 0;   
+            }
+            
+            a { 
+                  color: $color-basic-blau-fosc; 
+                  
+                  &:hover {
+                        color: $color-basic-blau-clar;
+                        text-decoration: none;
+                  }
+                  
+                  &:first-of-type {
+                        margin-right: 0.75em;
+                        margin-bottom: 0.25em;
+                        
+                        svg {
+                              width: 90%;
+                              fill: $color-basic-blau-fosc;
+                              -webkit-transition: ease-in 0.2s;
+                              -moz-transition: ease-in 0.2s;
+                              -o-transition: ease-in 0.2s;
+                              transition: ease-in 0.2s;
+                              
+                              &:hover { 
+                                    fill: $color-basic-blau-clar; 
+                                    transform: scale(1.2);
+                                    -webkit-transition: ease-in 0.2s;
+                                    -moz-transition: ease-in 0.2s;
+                                    -o-transition: ease-in 0.2s;
+                                    transition: ease-in 0.2s;
+                              }
+                        }
+                  }
+            }
+            
+      }
+  
+}
+
+#llistat-candidatures {
+      margin-top: 1em;
 }

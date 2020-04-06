@@ -34,6 +34,9 @@ section.barra-ubicacio {
     color: #666;
     margin: 0; }
 
+a {
+  transition: all 0.3s ease; }
+
 .blau {
   color: #1d70b7; }
 
@@ -46,19 +49,33 @@ section.barra-ubicacio {
     background: #e7855a;
     border-color: #eea686; }
 
+.badge-primary {
+  background: #1d70b7; }
+
 /* 
     Created on : 01/04/2020, 07:27:41
     Author     : Daniel Sevilla i Junyent
 */
 body > nav:first-of-type {
-  background: #2daae1;
-  background: linear-gradient(90deg, #1d70b7 0%, #2daae1 100%); }
+  background-image: linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.1) 50%), linear-gradient(90deg, #1d70b7 0%, #2daae1 100%);
+  background-size: 2px 100%, 100%; }
   body > nav:first-of-type .nav-link {
     padding-top: 0;
     padding-bottom: 0; }
+  body > nav:first-of-type a {
+    transition: all 0.3s ease; }
 
 #navbarlogo {
-  width: 46%; }
+  width: 45%;
+  height: 45%;
+  fill: #ffffff;
+  transition: translateX(0) 1s ease-in-out;
+  -webkit-transition: translateX(0) 0.5s 1 ease-in-out; }
+  #navbarlogo:hover #dreta {
+    -webkit-transform: mouHoritzontal 0.5s 1 ease-in-out;
+    -moz-animation: mouHoritzontal 0.5s 1 ease-in-out;
+    -ms-animation: mouHoritzontal 0.5s 1 ease-in-out;
+    animation: mouHoritzontal 0.5s 1 ease-in-out; }
 
 .btn-primary {
   background: #1d70b7; }
@@ -66,6 +83,15 @@ body > nav:first-of-type {
     background: #2daae1;
     border-color: rgba(45, 170, 225, 0.3); }
 
+@keyframes mouHoritzontal {
+  0% {
+    transform: translateX(0); }
+  50% {
+    transform: translateX(7%); }
+  95% {
+    transform: translateX(-2%); }
+  100% {
+    transform: translateX(0); } }
 /* 
     Created on : 01/04/2020, 07:27:41
     Author     : Daniel Sevilla i Junyent
@@ -108,8 +134,14 @@ section#cta {
   section#cta > div:not(:last-child) {
     margin-bottom: 1rem; }
   section#cta a svg {
-    margin-bottom: 0.1em; }
+    margin-bottom: 0.1em;
+    -webkit-transition: ease-in 0.2s;
+    -moz-transition: ease-in 0.2s;
+    -o-transition: ease-in 0.2s;
+    transition: ease-in 0.2s; }
   section#cta a:hover svg {
+    -ms-transform: translateX(5px);
+    -webkit-transform: translateX(5px);
     transform: translateX(5px);
     -webkit-transition: ease-in 0.2s;
     -moz-transition: ease-in 0.2s;
@@ -131,6 +163,11 @@ section#motius .col-lg-6:hover img {
   -moz-transition: ease-in 0.2s;
   -o-transition: ease-in 0.2s;
   transition: ease-in 0.2s; }
+section#motius h5 {
+  font-weight: 600; }
+
+section#alta-candidat a:not([href]), section#alta-empresa a:not([href]) {
+  cursor: pointer; }
 
 .formulari-alta, .formulari-login {
   padding-top: 3rem; }
@@ -140,7 +177,10 @@ section#motius .col-lg-6:hover img {
   .formulari-alta form, .formulari-login form {
     padding-top: 1rem; }
 
-section#motius, section#info, section#ofertes, section#oferta {
+#modalPrivacitat .modal-content {
+  font-size: 0.9em; }
+
+section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat {
   padding-top: 4rem; }
 
 section#ofertes .card {
@@ -149,33 +189,50 @@ section#ofertes .card {
     font-weight: 900;
     margin-bottom: 0; }
   section#ofertes .card .card-body svg {
-    margin-bottom: 0.1em; }
+    margin-bottom: 0.1em;
+    -webkit-transition: ease-in 0.2s;
+    -moz-transition: ease-in 0.2s;
+    -o-transition: ease-in 0.2s;
+    transition: ease-in 0.2s; }
   section#ofertes .card .card-body a:hover svg {
+    -ms-transform: translateX(5px);
+    -webkit-transform: translateX(5px);
     transform: translateX(5px);
     -webkit-transition: ease-in 0.2s;
     -moz-transition: ease-in 0.2s;
     -o-transition: ease-in 0.2s;
     transition: ease-in 0.2s; }
 
-section#oferta .card {
+section#oferta .card, section#candidat .card {
   background: #f5f5f5;
   border: none;
   margin-bottom: 1.5rem; }
-  section#oferta .card .card-header {
+  section#oferta .card .card-header, section#candidat .card .card-header {
     background: #f5f5f5; }
-  section#oferta .card h1 {
+  section#oferta .card .card-footer, section#candidat .card .card-footer {
+    padding: 1.25rem; }
+  section#oferta .card h1, section#candidat .card h1 {
     font-size: 1.5em;
     font-weight: 900;
     margin-bottom: 0; }
-  section#oferta .card h4 {
+  section#oferta .card h4, section#candidat .card h4 {
     font-size: 0.7em;
     text-transform: uppercase;
     color: #1d70b7;
     margin-bottom: 0; }
-  section#oferta .card .col:last-of-type h4 {
+  section#oferta .card .col:last-of-type h4, section#candidat .card .col:last-of-type h4 {
     color: #2daae1; }
-section#oferta a {
+section#oferta a, section#candidat a {
   margin-right: 15px; }
+section#oferta #llistat-candidatures, section#candidat #llistat-candidatures {
+  padding: 0; }
+  section#oferta #llistat-candidatures li, section#candidat #llistat-candidatures li {
+    background: inherit;
+    list-style-type: none; }
+    section#oferta #llistat-candidatures li form, section#candidat #llistat-candidatures li form {
+      margin-bottom: 0; }
+  section#oferta #llistat-candidatures a p, section#candidat #llistat-candidatures a p {
+    margin: 0; }
 
 section#info h3 {
   margin-bottom: 1em; }
@@ -183,5 +240,33 @@ section#info section {
   text-align: justify; }
   section#info section:not(:first-child) {
     margin-top: 3em; }
+
+section#ofertes-empresa .list-group-item p, #llistat-candidatures .list-group-item p {
+  margin: 0; }
+section#ofertes-empresa .list-group-item a, #llistat-candidatures .list-group-item a {
+  color: #1d70b7; }
+  section#ofertes-empresa .list-group-item a:hover, #llistat-candidatures .list-group-item a:hover {
+    color: #2daae1;
+    text-decoration: none; }
+  section#ofertes-empresa .list-group-item a:first-of-type, #llistat-candidatures .list-group-item a:first-of-type {
+    margin-right: 0.75em;
+    margin-bottom: 0.25em; }
+    section#ofertes-empresa .list-group-item a:first-of-type svg, #llistat-candidatures .list-group-item a:first-of-type svg {
+      width: 90%;
+      fill: #1d70b7;
+      -webkit-transition: ease-in 0.2s;
+      -moz-transition: ease-in 0.2s;
+      -o-transition: ease-in 0.2s;
+      transition: ease-in 0.2s; }
+      section#ofertes-empresa .list-group-item a:first-of-type svg:hover, #llistat-candidatures .list-group-item a:first-of-type svg:hover {
+        fill: #2daae1;
+        transform: scale(1.2);
+        -webkit-transition: ease-in 0.2s;
+        -moz-transition: ease-in 0.2s;
+        -o-transition: ease-in 0.2s;
+        transition: ease-in 0.2s; }
+
+#llistat-candidatures {
+  margin-top: 1em; }
 
 /*# sourceMappingURL=estils.css.map */

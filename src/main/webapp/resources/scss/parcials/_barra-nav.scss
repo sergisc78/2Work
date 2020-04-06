@@ -6,18 +6,37 @@
 //////////////////// Classes per la barra de navegació /////////////////////////
 
 body > nav:first-of-type {
-      background: rgb(45,170,225);
-      background: $degradat-blaus;
+      background-image: linear-gradient(90deg, transparent 50%, rgba(255,255,255,.1) 50%), $degradat-blaus;
+      background-size: 2px 100%, 100%;
+      
+      
       
       .nav-link {
             padding-top: 0;
             padding-bottom: 0;
       }
       
+      a {
+            transition:all 0.3s ease;
+      }
+      
 }
 
 #navbarlogo {
-      width: 46%;
+      width: 45%;
+      height: 45%;
+      fill: #ffffff;
+      
+      transition: translateX(0) 1s ease-in-out;
+      -webkit-transition: translateX(0) 0.5s 1 ease-in-out; 
+      
+      &:hover #dreta {
+                  -webkit-transform: mouHoritzontal 0.5s 1 ease-in-out;
+                  -moz-animation: mouHoritzontal 0.5s 1 ease-in-out;
+                  -ms-animation: mouHoritzontal 0.5s 1 ease-in-out;
+                  animation: mouHoritzontal 0.5s 1 ease-in-out;
+      }
+      
 }
 
 .btn-primary {
@@ -28,4 +47,12 @@ body > nav:first-of-type {
             border-color: rgba($color-basic-blau-clar,0.3)
       }
       
+}
+
+
+@keyframes mouHoritzontal {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(7%); }
+    95% { transform: translateX(-2%); }
+    100% { transform: translateX(0); }
 }

@@ -26,16 +26,35 @@
         
         <title>2Work</title>
 
-
     </head>
 
     <body>
+          
+      <!-- Modal info política de protecció de dades i privacitat-->
+      <div class="modal fade" id="modalPrivacitat" tabindex="-1" role="dialog" aria-labelledby="proteccioDadesPrivacitat" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Política de protecció de dades i privacitat</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <%@include  file='/resources/html/proteccioDadesPrivacitat.html' %>
+            </div>
+          </div>
+        </div>
+      </div>
 
         <!--- Barra de navegació -->
         <nav class="navbar navbar-expand-lg navbar-dark">
 
             <a class="navbar-brand" href="<spring:url value='/'/>">
-                <img src="${pageContext.request.contextPath}/resources/svg/logo_2work.svg" id="navbarlogo" alt="logo2Work">
+                <svg id="navbarlogo" alt="logo2Work" width="280" height="48.105px" viewBox="0 0 280 48.105" enable-background="new 0 0 211.646 48.105"
+   xml:space="preserve" >
+                        <%@include  file='/resources/svg/logo_2work.svg' %>
+                  </svg>
             </a>
         
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,9 +69,9 @@
                 </ul>
             </div>  
 
-
         </nav>
 
+                    
         <section>
             <div class="jumbotron">
                 <div class="container ">
@@ -61,7 +80,7 @@
         </section>
         
                 
-        <section class="container-sm formulari-alta">       
+        <section id="alta-empresa" class="container-sm formulari-alta">       
             <h3 class="text-center blau">Enregistra't com empresa</h3><br>
 
                 <form class="needs-validation" novalidate onsubmit="return validarEmp();">
@@ -167,7 +186,7 @@
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" required>
                         <label class="form-check-label" for="invalidCheck3">D'acord amb la política de privacitat i protecció de dades</label>
-                        <a href="<spring:url value='/info'/>#politicaprivacitat" target="_blank"><span class="badge badge-pill badge-primary">Llegir</span></a>
+                        <a data-toggle="modal" data-target="#modalPrivacitat" ><span class="badge badge-pill badge-primary">Llegir</span></a>
                         <div class="invalid-feedback">
                             Has d´estar d´acord, abans d´enviar el formulari
                         </div>

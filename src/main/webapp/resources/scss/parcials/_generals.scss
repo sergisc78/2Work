@@ -35,6 +35,12 @@ section.barra-ubicacio {
       }
 }
 
+
+a {
+      transition:all 0.3s ease;
+}
+      
+
 .blau {
       color: $color-basic-blau-fosc;
 }
@@ -48,4 +54,8 @@ section.barra-ubicacio {
             background: lighten($color-basic-taronja, 10%);
             border-color: lighten($color-basic-taronja, 20%);
       }
+}
+
+.badge-primary {
+      background: $color-basic-blau-fosc;
 }
