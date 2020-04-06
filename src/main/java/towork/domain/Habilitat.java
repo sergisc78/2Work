@@ -22,16 +22,17 @@ public class Habilitat implements Serializable{
     @Id
     @NotNull
     @Column(name="codiHab")
-    private String codiHab;
+    private Integer codiHab;
     
     @NotNull
-    @Size(max=100)
+    @Size(max=50)
     @Column(name="nomHab")
     private String nomHab;
     
     @NotNull
-    @Column (name="codiSector")
-    protected String codiSector;
+    @Size(max=100)
+    @Column (name="ocupacio")
+    protected String ocupacio;
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Habilitat> candidats = new ArrayList();
@@ -39,23 +40,18 @@ public class Habilitat implements Serializable{
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Oferta> ofertes=new ArrayList();
 
-    public Habilitat(String codiHab, String nomHab, String codiSector,
-            ArrayList<Habilitat> candidats,ArrayList<Oferta> ofertes) {
+    public Habilitat(Integer codiHab, String nomHab, String ocupacio) {
         this.codiHab = codiHab;
         this.nomHab = nomHab;
-        this.codiSector = codiSector;
-        this.candidats=candidats;
-        this.ofertes=ofertes;
+        this.ocupacio = ocupacio;
+        this.candidats=new ArrayList<Habilitat>();
+        this.ofertes=new ArrayList<Oferta>();
     }
 
     public Habilitat() {
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public String getCodiHab() {
+    public Integer getCodiHab() {
         return codiHab;
     }
 
@@ -63,8 +59,8 @@ public class Habilitat implements Serializable{
         return nomHab;
     }
 
-    public String getCodiSector() {
-        return codiSector;
+    public String getOcupacio() {
+        return ocupacio;
     }
 
     public ArrayList<Habilitat> getCandidats() {
@@ -75,23 +71,22 @@ public class Habilitat implements Serializable{
         return ofertes;
     }
 
-    public void setCodiHab(String codiHab) {
+    public void setCodiHab(Integer codiHab) {
         this.codiHab = codiHab;
     }
-
     public void setNomHab(String nomHab) {
         this.nomHab = nomHab;
     }
 
-    public void setCodiSector(String codiSector) {
-        this.codiSector = codiSector;
+    public void setOcupacio(String ocupacio) {
+        this.ocupacio = ocupacio;
     }
 
-    public void setCandidats(ArrayList<Habilitat> candidats) {
+    public void addCandidats(ArrayList<Habilitat> candidats) {
         this.candidats = candidats;
     }
 
-    public void setOfertes(ArrayList<Oferta> ofertes) {
+    public void addOfertes(ArrayList<Oferta> ofertes) {
         this.ofertes = ofertes;
     }
    

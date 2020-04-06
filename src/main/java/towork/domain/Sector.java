@@ -21,7 +21,7 @@ public class Sector implements Serializable{
     @Id
     @NotNull
     @Column (name="codiSector")
-    protected String codiSector;
+    protected Integer codiSector;
     
     @NotNull    
     @Size(max=100)
@@ -31,29 +31,16 @@ public class Sector implements Serializable{
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Empresa> empreses=new ArrayList();
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    protected ArrayList<Candidat> candidats=new ArrayList();
-   
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    protected ArrayList<Habilitat> habilitats = new ArrayList();
-
-    public Sector(String codiSector, String nomSector,ArrayList<Empresa> empreses,
-            ArrayList<Candidat> candidats,ArrayList<Habilitat> habilitats) {
+    public Sector(Integer codiSector, String nomSector) {
         this.codiSector = codiSector;
         this.nomSector = nomSector;
-        this.empreses=empreses;
-        this.candidats=candidats;
-        this.habilitats=habilitats;
+        this.empreses= new ArrayList<Empresa>();
     }
 
     public Sector() {
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public String getCodiSector() {
+    public Integer getCodiSector() {
         return codiSector;
     }
 
@@ -65,15 +52,7 @@ public class Sector implements Serializable{
         return empreses;
     }
 
-    public ArrayList<Candidat> getCandidats() {
-        return candidats;
-    }
-
-    public ArrayList<Habilitat> getHabilitats() {
-        return habilitats;
-    }
-
-    public void setCodiSector(String codiSector) {
+    public void setCodiSector(Integer codiSector) {
         this.codiSector = codiSector;
     }
 
@@ -81,16 +60,8 @@ public class Sector implements Serializable{
         this.nomSector = nomSector;
     }
 
-    public void setEmpreses(ArrayList<Empresa> empreses) {
+    public void addEmpreses(ArrayList<Empresa> empreses) {
         this.empreses = empreses;
-    }
-
-    public void setCandidats(ArrayList<Candidat> candidats) {
-        this.candidats = candidats;
-    }
-
-    public void setHabilitats(ArrayList<Habilitat> habilitats) {
-        this.habilitats = habilitats;
     }
 
 }

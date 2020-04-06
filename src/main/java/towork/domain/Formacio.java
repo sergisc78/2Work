@@ -20,53 +20,48 @@ public class Formacio implements Serializable {
     
     @Id
     @NotNull
-    @Column (name="codiFormPostUni")
-    protected String codiFormPostUni;
+    @Column (name="codiFormacio")
+    protected Integer codiFormacio;
     
     @NotNull    
-    @Size(max=100)
-    @Column (name="nomFormPostUni")
-    protected String nomFormPostUni;
+    @Size(max=50)
+    @Column (name="nomFormacio")
+    protected String nomFormacio;
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Candidat> candidats=new ArrayList();
 
-    public Formacio(String codiFormPostUni, String nomFormPostUni,ArrayList<Candidat> candidats) {
-        this.codiFormPostUni = codiFormPostUni;
-        this.nomFormPostUni = nomFormPostUni;
-        this.candidats=candidats;
+    public Formacio(Integer codiFormacio, String nomFormacio) {
+        this.codiFormacio = codiFormacio;
+        this.nomFormacio = nomFormacio;
+        this.candidats = new ArrayList<Candidat>();
     }
 
     public Formacio() {
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public Integer getCodiFormacio() {
+        return codiFormacio;
     }
-
-    public String getCodiFormPostUni() {
-        return codiFormPostUni;
-    }
-
-    public String getNomFormPostUni() {
-        return nomFormPostUni;
+  
+    public String getNomFormacio() {
+        return nomFormacio;
     }
 
     public ArrayList<Candidat> getCandidats() {
         return candidats;
     }
 
-    public void setCodiFormPostUni(String codiFormPostUni) {
-        this.codiFormPostUni = codiFormPostUni;
+    public void setCodiFormacio(Integer codiFormacio) {
+        this.codiFormacio = codiFormacio;
     }
 
-    public void setNomFormPostUni(String nomFormPostUni) {
-        this.nomFormPostUni = nomFormPostUni;
+    public void setNomFormacio(String nomFormacio) {
+        this.nomFormacio = nomFormacio;
     }
 
-    public void setCandidats(ArrayList<Candidat> candidats) {
+    public void addCandidats(ArrayList<Candidat> candidats) {
         this.candidats = candidats;
     }
-
     
 }

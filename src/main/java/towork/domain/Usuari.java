@@ -15,47 +15,60 @@ public class Usuari implements Serializable{
     
     private static final long serialVersionUID=1L;
     
+    @NotNull
+    @Size(max=20)
+    @Column (name="nom")
+    protected String nom;
+    
     @Id
     @NotNull
+    @Size(max=9)
     @Column (name="dniNif")            
     protected String dniNif;
     
     @NotNull
-    @Size(max=75)
-    @Column (name="nom")
-    protected String nom;
-    
-    @NotNull
-    @Size(max=100)
+    @Size(max=50)
     @Column (name="adreca")
     protected String adreca;
     
     @NotNull
-    @Size(max=20)
+    @Size(max=50)
+    @Column (name="ciutat")
+    protected String ciutat;
+    
+    @NotNull
+    @Size(max=50)
+    @Column (name="provincia")
+    protected String provincia;
+    
+    @NotNull
+    @Size(max=12)
     @Column (name="telefon")
     protected String telefon;
     
-    @Size(max=100)
+    @Size(max=50)
     @Pattern(regexp="^(.+)@(.+)$",message="El correu no és vàlid")
     @Column (name="email")
     protected String email;
     
     @NotNull
-    @Size(max=30, min=5)
+    @Size(max=8)
     @Column (name="pass")
     protected String pass;
     
     @NotNull
-    @Size(max=30, min=5)
+    @Size(max=8)
     @Column (name="cPass")
     protected String cPass;
     
    
 
-    public Usuari(String dniNif, String nom, String adreca, String telefon, String email, String pass, String cPass) {
-        this.dniNif = dniNif;
+    public Usuari(String nom, String dniNif, String adreca, String ciutat, String provincia,String telefon, String email, String pass, String cPass) {   
         this.nom = nom;
+        this.dniNif = dniNif;
         this.adreca = adreca;
+        this.ciutat=ciutat;
+        this.provincia=provincia;
         this.telefon = telefon;
         this.email = email;
         this.pass = pass;
@@ -65,20 +78,24 @@ public class Usuari implements Serializable{
     public Usuari() {
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public String getNom() {
+        return nom;
     }
 
     public String getDniNif() {
         return dniNif;
     }
 
-    public String getNom() {
-        return nom;
-    }
-
     public String getAdreca() {
         return adreca;
+    }
+
+    public String getCiutat() {
+        return ciutat;
+    }
+
+    public String getProvincia() {
+        return provincia;
     }
 
     public String getTelefon() {
@@ -97,16 +114,24 @@ public class Usuari implements Serializable{
         return cPass;
     }
 
-    public void setDniNif(String dniNif) {
-        this.dniNif = dniNif;
-    }
-
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    public void setDniNif(String dniNif) {
+        this.dniNif = dniNif;
+    }
+
     public void setAdreca(String adreca) {
         this.adreca = adreca;
+    }
+
+    public void setCiutat(String ciutat) {
+        this.ciutat = ciutat;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
     }
 
     public void setTelefon(String telefon) {
@@ -125,5 +150,7 @@ public class Usuari implements Serializable{
         this.cPass = cPass;
     }
 
+    
+    
     
 }

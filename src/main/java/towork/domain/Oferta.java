@@ -21,35 +21,42 @@ public class Oferta implements Serializable{
     
     @Id
     @NotNull
-    @Column(name="refOferta")
-    private String refOferta;
+    @Column(name="codiOferta")
+    private Integer codiOferta;
     
     @NotNull
+    @Size(max=9)
     @Column(name="nifEmpresa")
     private String nifEmpresa;
     
     @NotNull
-    @Size(max=100)
+    @Size(max=50)
     @Column(name="titolOferta")
     private String titolOferta;
     
     @NotNull
     @Size(max=100)
-    @Column(name="localitat")
-    private String localitat;
+    @Column(name="ocupacio")
+    protected String ocupacio;
+    
+    @NotNull
+    @Size(max=50)
+    @Column(name="ciutat")
+    private String ciutat;
+    
+    @NotNull
+    @Size(max=50)
+    @Column(name="provincia")
+    private String provincia;
     
     @NotNull    
     @Column(name="sou")
     private Double sou;
     
     @NotNull
-    @Column(name="horesDia")
-    private Integer horesDia;
-    
-    @NotNull
-    @Size(max=10)
-    @Column(name="torn")
-    private String torn;
+    @Size(max=15)
+    @Column(name="horari")
+    private String horari;
     
     @NotNull
     @Size(max=50)
@@ -62,10 +69,11 @@ public class Oferta implements Serializable{
     private String formacio;
       
     @NotNull
-    @Size(max=50)
+    @Size(max=10)
     @Column(name="estat")
     private String estat;
     
+    @Size(max=300)
     @Column(name="descripcio")
     private String descripcio;
     
@@ -76,35 +84,31 @@ public class Oferta implements Serializable{
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Candidat> candidats = new ArrayList();
 
-    public Oferta(String refOferta, String nifEmpresa, String titolOferta, 
-            String localitat, Double sou, Integer horesDia, String torn, 
+    public Oferta(Integer codiOferta, String nifEmpresa, String titolOferta, 
+            String ocupacio,String ciutat, String provincia, Double sou, String horari, 
             String tipusContracte, String formacio, String estat, 
-            String descripcio,ArrayList<Habilitat> habilitats,
-            ArrayList<Candidat> candidats) {
-        this.refOferta = refOferta;
+            String descripcio) {
+        this.codiOferta = codiOferta;
         this.nifEmpresa = nifEmpresa;
         this.titolOferta = titolOferta;
-        this.localitat = localitat;
+        this.ocupacio=ocupacio;
+        this.ciutat=ciutat;
+        this.provincia=provincia;
         this.sou = sou;
-        this.horesDia = horesDia;
-        this.torn = torn;
+        this.horari = horari;
         this.tipusContracte = tipusContracte;
         this.formacio = formacio;
         this.estat = estat;
         this.descripcio = descripcio;
-        this.habilitats=habilitats;
-        this.candidats=candidats;
+        this.habilitats=new ArrayList<Habilitat>();
+        this.candidats=new ArrayList<Candidat>();
     }
 
     public Oferta() {
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public String getRefOferta() {
-        return refOferta;
+    public Integer getCodiOferta() {
+        return codiOferta;
     }
 
     public String getNifEmpresa() {
@@ -115,20 +119,24 @@ public class Oferta implements Serializable{
         return titolOferta;
     }
 
-    public String getLocalitat() {
-        return localitat;
+    public String getOcupacio() {
+        return ocupacio;
+    }
+    
+    public String getCiutat() {
+        return ciutat;
+    }
+
+    public String getProvincia() {
+        return provincia;
     }
 
     public Double getSou() {
         return sou;
     }
 
-    public Integer getHoresDia() {
-        return horesDia;
-    }
-
-    public String getTorn() {
-        return torn;
+    public String getHorari() {
+        return horari;
     }
 
     public String getTipusContracte() {
@@ -155,8 +163,8 @@ public class Oferta implements Serializable{
         return candidats;
     }
 
-    public void setRefOferta(String refOferta) {
-        this.refOferta = refOferta;
+    public void setCodiOferta(Integer codiOferta) {
+        this.codiOferta = codiOferta;
     }
 
     public void setNifEmpresa(String nifEmpresa) {
@@ -167,20 +175,24 @@ public class Oferta implements Serializable{
         this.titolOferta = titolOferta;
     }
 
-    public void setLocalitat(String localitat) {
-        this.localitat = localitat;
+    public void setOcupacio(String ocupacio) {
+        this.ocupacio = ocupacio;
+    }
+    
+    public void setCiutat(String ciutat) {
+        this.ciutat = ciutat;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
     }
 
     public void setSou(Double sou) {
         this.sou = sou;
     }
 
-    public void setHoresDia(Integer horesDia) {
-        this.horesDia = horesDia;
-    }
-
-    public void setTorn(String torn) {
-        this.torn = torn;
+    public void setHorari(String horari) {
+        this.horari = horari;
     }
 
     public void setTipusContracte(String tipusContracte) {
@@ -199,13 +211,12 @@ public class Oferta implements Serializable{
         this.descripcio = descripcio;
     }
 
-    public void setHabilitats(ArrayList<Habilitat> habilitats) {
+    public void addHabilitats(ArrayList<Habilitat> habilitats) {
         this.habilitats = habilitats;
     }
 
-    public void setCandidats(ArrayList<Candidat> candidats) {
+    public void addCandidats(ArrayList<Candidat> candidats) {
         this.candidats = candidats;
     }
-
     
 }
