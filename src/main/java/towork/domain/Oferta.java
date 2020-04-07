@@ -35,9 +35,8 @@ public class Oferta implements Serializable{
     private String titolOferta;
     
     @NotNull
-    @Size(max=100)
     @Column(name="ocupacio")
-    protected String ocupacio;
+    protected Integer ocupacio;
     
     @NotNull
     @Size(max=50)
@@ -64,9 +63,8 @@ public class Oferta implements Serializable{
     private String tipusContracte;
     
     @NotNull
-    @Size(max=100)
     @Column(name="formacio")
-    private String formacio;
+    private Integer formacio;
       
     @NotNull
     @Size(max=10)
@@ -85,8 +83,8 @@ public class Oferta implements Serializable{
     protected ArrayList<Candidat> candidats = new ArrayList();
 
     public Oferta(Integer codiOferta, String nifEmpresa, String titolOferta, 
-            String ocupacio,String ciutat, String provincia, Double sou, String horari, 
-            String tipusContracte, String formacio, String estat, 
+            Integer ocupacio,String ciutat, String provincia, Double sou, String horari, 
+            String tipusContracte, Integer formacio, String estat, 
             String descripcio) {
         this.codiOferta = codiOferta;
         this.nifEmpresa = nifEmpresa;
@@ -119,10 +117,10 @@ public class Oferta implements Serializable{
         return titolOferta;
     }
 
-    public String getOcupacio() {
+    public Integer getOcupacio() {
         return ocupacio;
     }
-    
+
     public String getCiutat() {
         return ciutat;
     }
@@ -143,7 +141,7 @@ public class Oferta implements Serializable{
         return tipusContracte;
     }
 
-    public String getFormacio() {
+    public Integer getFormacio() {
         return formacio;
     }
 
@@ -175,7 +173,7 @@ public class Oferta implements Serializable{
         this.titolOferta = titolOferta;
     }
 
-    public void setOcupacio(String ocupacio) {
+    public void setOcupacio(Integer ocupacio) {
         this.ocupacio = ocupacio;
     }
     
@@ -199,7 +197,7 @@ public class Oferta implements Serializable{
         this.tipusContracte = tipusContracte;
     }
 
-    public void setFormacio(String formacio) {
+    public void setFormacio(Integer formacio) {
         this.formacio = formacio;
     }
 

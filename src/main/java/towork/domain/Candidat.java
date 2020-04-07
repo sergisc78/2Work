@@ -31,13 +31,13 @@ public class Candidat extends Usuari implements Serializable{
     @Column(name="dataNaix")
     protected Date dataNaix;
     
+    @NotNull
     @Column(name="formacio")
     protected Integer formacio;
     
     @NotNull
-    @Size(max=100)
     @Column(name="ocupacio")
-    protected String ocupacio;
+    protected Integer ocupacio;
 
     @Column(name="codiCandidat")
     protected Integer codiCandidat;
@@ -50,7 +50,7 @@ public class Candidat extends Usuari implements Serializable{
 
 
     public Candidat (String nom,String cognoms, String dniNif,Date dataNaix,String adreca, String ciutat,String provincia,String telefon,
-            String email, String observacions, String pass, String cPass, Integer formacio,String ocupacio,Integer codiCandidat) {
+            String email, String observacions, String pass, String cPass, Integer formacio,Integer ocupacio,Integer codiCandidat) {
         super(nom,dniNif,adreca,ciutat,provincia,telefon,email,observacions,pass,cPass);
         this.cognoms = cognoms;
         this.dataNaix = dataNaix;
@@ -76,7 +76,7 @@ public class Candidat extends Usuari implements Serializable{
         return formacio;
     }
 
-    public String getOcupacio() {
+    public Integer getOcupacio() {
         return ocupacio;
     }
 
@@ -104,7 +104,7 @@ public class Candidat extends Usuari implements Serializable{
         this.formacio = codiFormacio;
     }
 
-    public void setOcupacio(String ocupacio) {
+    public void setOcupacio(Integer ocupacio) {
         this.ocupacio = ocupacio;
     }
 

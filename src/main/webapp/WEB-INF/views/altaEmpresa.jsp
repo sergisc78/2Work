@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"  %>
 <html>
     <head>
         <!-- Requerits per Bootstrap -->
@@ -22,7 +23,7 @@
         <!-- Estils afegits -->
         <spring:url value="/resources/css/estils.css" var="estilsCSS" />
         <link href="${estilsCSS}" rel="stylesheet" />
-        <script type="text/javascript" src="resources/validarForm.js"></script>
+        <script type="text/javascript" src="resources/js/validarForm.js"></script>
         
         <title>2Work</title>
 
@@ -78,103 +79,128 @@
         <section id="alta-empresa" class="container-sm formulari-alta">       
             <h3 class="text-center blau">Enregistra't com empresa</h3><br>
 
-                <form class="needs-validation" novalidate onsubmit="return validarEmp();">
+                 <form:form modelAttribute="formEmpresa" class="needs-validation" novalidate="novalidate" onsubmit="return validarEmp();">
 
                     <div class="form-group">
-                        <label for="nomEmp">Nom de l'empresa</label>
-                        <input type="text" class="form-control" id="nomEmp" aria-describedby="emailHelp" placeholder="Introdueix el nom" required>
+                        <label for="nom">Nom de l'empresa</label>
+                        <form:input type="text" class="form-control" id="nom"path="nom" aria-describedby="nomEmpresa" placeholder="Introdueix el nom empresa" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix el nom de l'empresa
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label for="responsable">Responsable</label>
+                        <form:input type="text" class="form-control" id="responsable" path="responsable" aria-describedby="responsable" placeholder="Introdueix el nom del responsable" required="required"/>
+                        <div class="invalid-feedback">
+                            Introdueix el nom del responsable de l'empresa
+                        </div>
+                    </div>
                     <div class="form-group ">
-                        <label for="nifEmp">NIF</label>
-                        <input type="text" class="form-control" id="nifEmp" aria-describedby="emailHelp" placeholder="Introdueix el NIF" required>
+                        <label for="dniNif">NIF</label>
+                        <form:input type="text" class="form-control" id="dniNif"path="dniNif" aria-describedby="nif" placeholder="Introdueix el NIF" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix el NIF
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="adrecaEmp">Adreça</label>
-                        <input type="text" class="form-control" id="adrecaEmp"  placeholder="Introdueix l'adreça" required>
+                        <label for="adreca">Adreça</label>
+                        <form:input type="text" class="form-control" id="adreca" path="adreca" placeholder="Introdueix l'adreça" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix l'adreça
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label for="telfEmp">Telèfon</label>
-                        <input type="text" class="form-control" id="telfEmp"  placeholder="Introdueix el telèfon" required>
+                        <label for="ciutat">Ciutat</label>
+                        <form:input type="text" class="form-control" id="ciutat" path="ciutat"  placeholder="Introdueix la ciutat" required="required"/>
+                        <div class="invalid-feedback">
+                            Introdueix la ciutat
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="provincia">Provincia</label>
+                        <form:input type="text" class="form-control" id="provincia" path="provincia"  placeholder="Introdueix la provincia" required="required"/>
+                        <div class="invalid-feedback">
+                            Introdueix la provincia
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefon">Telèfon</label>
+                        <form:input type="text" class="form-control" id="telefon" path="telefon" placeholder="Introdueix el telèfon" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix el telèfon
                         </div>
                     </div>
 
                     <div class="form-group">
-                          <label for="webEmp">Web de l'empresa <small>(* Camp no obligatori)</small></label>
-                        <input type="text" class="form-control" id="webEmp" placeholder="Introdueix la web">
+                          <label for="web">Web de l'empresa <small>(* Camp no obligatori)</small></label>
+                        <form:input type="text" class="form-control" id="web"path="web" placeholder="Introdueix la web"/>
 
                     </div>
                     <div class="form-group">
-                        <label for="tamanyEmp">Tamany l'empresa</label>
-                        <input type="text" class="form-control" id="tamanyEmp" placeholder="Introdueix el número de treballadors" >
+                        <label for="tamany">Tamany l'empresa</label>
+                        <form:input type="text" class="form-control" id="tamany" path="tamany" placeholder="Introdueix el número de treballadors" />
                         <div class="invalid-feedback">
-                            Introdueix el tamany
+                            Introdueix el nommbre de treballadors
                         </div>
 
                     </div>
                     <div class="form-group">
-                        <label for="mailEmp">E-mail</label>
-                        <input type="email" class="form-control" id="mailEmp" placeholder="Introdueix l'e-mail" >
+                        <label for="email">E-mail</label>
+                        <form:input type="email" class="form-control" id="email" path="email" placeholder="Introdueix l'e-mail"/>
                         <div class="invalid-feedback">
                             Introdueix l'email
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label for="passEmp">Password</label>
-                        <input type="password" class="form-control" id="passEmp" pattern=".{8,}"  placeholder="Mínim 8 caràcters" required>
+                        <label for="observacions">Observacions</label>
+                        <form:textarea rows="8" cols="30" class="form-control" id="observacions" path="observacions"placeholder="Observacions"/>
+                        <div class="invalid-feedback">
+                           Observacions
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass">Password</label>
+                        <form:input type="password" class="form-control" id="pass" path="pass" pattern=".{8,}"  placeholder="Mínim 8 caràcters" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix password
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="cpassEmp">Validar password</label>
-                        <input type="password" class="form-control" id="cpassEmp" placeholder="Validar password" required>
+                        <label for="cPass">Validar password</label>
+                        <form:input type="password" class="form-control" id="cPass" path="cPass"placeholder="Validar password" required="required"/>
                         <div class="invalid-feedback">
                             Confirma password
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="sectorEmp">Sector laboral de l'empresa</label>
-                        <select class="form-control" id="sectorEmp" required>
-                            <option value="" selected="true" selected="false"></option>
-                            <option>Activitats físiques i esportives</option>
-                            <option>Adminstració i gestió</option>
-                            <option>Agricultura i ramaderia</option>
-                            <option>Indústria alimentària</option>
-                            <option>Comerç</option>
-                            <option>Construcció</option>
-                            <option>Disseny i arts gràfiques</option>
-                            <option>Educació</option>
-                            <option>Finances</option>
-                            <option>Informàtica</option>
-                            <option>Enyingeria</option>
-                            <option>Legal</option>
-                            <option>Màrqueting i comunicació</option>
-                            <option>Recursos humans</option>
-                            <option>Sanitari</option>
-                            <option>Turisme</option>
-                            <option>Hostaleria i turisme</option>
-                            <option>Mediambiental</option>
-                            <option>Pesca i agricultura</option>
-                            <option>Química</option>
-                            <option>Estètica i perruqueria</option>
-                        </select>
+                        <label for="sector">Sector laboral de l'empresa</label>
+                        <form:select class="form-control" id="sector" path="sector" required="required">
+                            <form:option value="0"> --SELECT--</form:option>
+                            <form:option value="1" label="1.Activitats físiques i esportives"/>
+                            <form:option value="2" label="2.Adminstració i gestió"/>
+                            <form:option value="3" label="3.Agricultura i ramaderia"/>
+                            <form:option value="4" label="4.Indústria alimentària"/>
+                            <form:option value="5" label="5.Comerç"/>
+                            <form:option value="6" label="6.Construcció"/>
+                            <form:option value="7" label="7.Disseny i arts gràfiques"/>
+                            <form:option value="8" label="8.Educació"/>
+                            <form:option value="9" label="9.Finances"/>
+                            <form:option value="10" label="10.Informàtica"/>
+                            <form:option value="11" label="11.Enyingeria"/>
+                            <form:option value="12" label="12.Legal"/>
+                            <form:option value="13" label="13.Màrqueting i comunicació"/>
+                            <form:option value="14" label="14.Recursos humans"/>
+                            <form:option value="15" label="15.Sanitari"/>
+                            <form:option value="16" label="16.Turisme"/>
+                            <form:option value="17" label="17.Hostaleria i turisme"/>
+                            <form:option value="18" label="18.Mediambiental"/>
+                            <form:option value="19" label="19.Pesca i agricultura"/>
+                            <form:option value="20" label="20.Química"/>
+                            <form:option value="21" label="21.Estètica i perruqueria"/>
+                        </form:select>
                     </div>
                     
                      <div class="form-group">
@@ -189,7 +215,7 @@
                 </div>
 
                     <button type="submit" class="btn btn-primary">Enviar</button>
-                </form>
+               </form:form>
         </section>
 
         <%@include  file='/resources/html/footer.html' %>

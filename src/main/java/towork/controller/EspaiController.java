@@ -65,10 +65,24 @@ public class EspaiController {
             ModelAndView modelview = new ModelAndView("espaiEmpresa");
             modelview.getModelMap().addAttribute("banner", "2work");
             modelview.getModelMap().addAttribute("tagline", "La teva web de cerca de feina");
+            
+            //Formulari oferta
+             Oferta formOferta = new Oferta();
+            //modelview.getModelMap().addAttribute("act", "oferta/add");
+             modelview.getModelMap().addAttribute("formOferta", formOferta);
+            
+            
             modelview.getModelMap().addAttribute("footer", "2Work Copyright 2020");
             return modelview;
       }
-
+       /*
+        FORM DE Oferta POST
+         */
+        /*@RequestMapping(value = "/oferta/add", method = RequestMethod.POST)
+        public String processAddForm(@ModelAttribute("formOferta") Oferta formOferta, BindingResult result) {
+            OfertaService.addOferta(formOferta);
+            return "redirect:/all"; //return "redirect:/";
+        }*/
       
       @RequestMapping(value = "/espaiAdmin", method = RequestMethod.GET)
       public ModelAndView EspaiAdministradorRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -134,7 +148,7 @@ public class EspaiController {
             Oferta of = new Oferta();
             of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi ha podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
             of.setEstat("Pendent");
-            of.setFormacio("Formació que requereix aquesta oferta");
+            of.setFormacio(1);
             of.addHabilitats(habs);
             of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
             of.setCiutat("Cardona");
@@ -210,7 +224,7 @@ public class EspaiController {
             Oferta of = new Oferta();
             of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi ha podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
             of.setEstat("Pendent");
-            of.setFormacio("Formació que requereix aquesta oferta");
+            of.setFormacio(1);
             of.addHabilitats(habs);
             of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
             of.setCiutat("Cardona");
@@ -280,7 +294,7 @@ public class EspaiController {
         Oferta of = new Oferta();
         of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
         of.setEstat("Pendent");
-        of.setFormacio("Formació que requereix aquesta oferta");
+        of.setFormacio(1);
         of.addHabilitats(habs);
         of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
         of.setCiutat("Cardona");

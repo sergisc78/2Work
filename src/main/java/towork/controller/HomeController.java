@@ -17,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import towork.domain.Candidat;
+import towork.domain.Empresa;
 
 /**
  *
@@ -66,22 +68,50 @@ public class HomeController {
             inici.put("url","/");
         
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{inici};  
-        
+            HashMap[] opcions = new HashMap[]{inici};
+            
+            // Formulari d'alta candidat 
+            Candidat formCandidat = new Candidat();
+            //modelview.getModelMap().addAttribute("act", "candidat/add");
+            modelview.getModelMap().addAttribute("formCandidat", formCandidat);
+            
             modelview.getModelMap().addAttribute("ubicacio", "Alta de candidat");
             modelview.getModelMap().addAttribute("opcions", opcions);
             return modelview;
     }
-    
+    /*
+     FORM DE Candidat POST
+     */
+    /*@RequestMapping(value = "/candidat/add", method = RequestMethod.POST)
+    public String processAddForm(@ModelAttribute("formCandidat") Candidat formCandidat, BindingResult result) {
+        CandidatService.addCandidat(formCandidat);
+        return "redirect:/all"; //return "redirect:/";
+    }*/
+      
     @RequestMapping(value = "/altaEmpresa", method = RequestMethod.GET)
     public ModelAndView addempresaRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ModelAndView modelview = new ModelAndView("altaEmpresa");
         modelview.getModelMap().addAttribute("banner", "2work");
+        
+        //Formulari d'alta empresa 
+        Empresa formEmpresa = new Empresa();
+        //modelview.getModelMap().addAttribute("act", "empresa/add");
+        modelview.getModelMap().addAttribute("formEmpresa", formEmpresa);
+        
         modelview.getModelMap().addAttribute("tagline", "La teva web de cerca de feina");
         return modelview;
     }
     
+    /*
+     FORM D'empresa POST
+     */
+    /*@RequestMapping(value = "/empresa/add", method = RequestMethod.POST)
+    public String processAddForm(@ModelAttribute("formEmpresa") Empresa formEmpresa, BindingResult result) {
+        EmpresaService.addEmpresa(formEmpresa);
+        return "redirect:/all"; //return "redirect:/";
+    }*/
+     
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public ModelAndView infoRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

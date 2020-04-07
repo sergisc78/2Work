@@ -33,9 +33,8 @@ public class Empresa extends Usuari implements Serializable{
     protected Integer tamany;
     
     @NotNull    
-    @Size(max=100)
     @Column (name="sector")
-    protected String sector;
+    protected Integer sector;
      
     @NotNull
     @Column (name="codiEmpresa")
@@ -47,7 +46,7 @@ public class Empresa extends Usuari implements Serializable{
 
     public Empresa( String nom, String responsable, String dniNif,String adreca, String ciutat, String provincia,
             String telefon,String web, Integer tamany, String email, String observacions,
-            String pass, String cPass, String sector,Integer codiEmpresa) {
+            String pass, String cPass, Integer sector,Integer codiEmpresa) {
         super(nom,dniNif,adreca,ciutat,provincia,telefon,email,observacions,pass,cPass);
         this.responsable=responsable;
         this.web = web;
@@ -72,7 +71,7 @@ public class Empresa extends Usuari implements Serializable{
         return tamany;
     }
 
-    public String getSector() {
+    public Integer getSector() {
         return sector;
     }
 
@@ -96,7 +95,7 @@ public class Empresa extends Usuari implements Serializable{
         this.tamany = tamany;
     }
 
-    public void setSector(String sector) {
+    public void setSector(Integer sector) {
         this.sector = sector;
     }
 
