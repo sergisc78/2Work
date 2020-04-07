@@ -33,6 +33,8 @@ public class EspaiController {
       @RequestMapping(value = "/espaiCandidat", method = RequestMethod.GET)
       public ModelAndView EspaiCandidatRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
           
+            // AQUEST CONTROLADOR HAURÀ DE REBRE EL CODI DE CANDIDAT
+            
             // Opció perfil a la barra de navegació
             HashMap<String, String> perfil = new HashMap<>();
             perfil.put("paraula","Perfil");
@@ -107,7 +109,9 @@ public class EspaiController {
             ModelAndView modelview = new ModelAndView("oferta");
             // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
         
+            
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            
             // Genero habilitats de prova
             Habilitat h1 = new Habilitat();
             h1.setNomHab("habilitat1");
@@ -118,21 +122,22 @@ public class EspaiController {
             Habilitat h3 = new Habilitat();
             h3.setNomHab("habilitat3");
         
-        
+            
             // Omplo un arrayList amb les habilitats de prova per afegir-lo a l'objecte de prova
             ArrayList<Habilitat> habs = new ArrayList();
             habs.add(h1);
             habs.add(h2);
             habs.add(h3);
         
+            
             // Genero un objecte Oferta DE PROVA mentre no implementem la línia anterior
             Oferta of = new Oferta();
             of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi ha podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
             of.setEstat("Pendent");
             of.setFormacio("Formació que requereix aquesta oferta");
-            of.setHabilitats(habs);
-            of.setTorn("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
-            of.setLocalitat("Cardona");
+            of.addHabilitats(habs);
+            of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
+            of.setCiutat("Cardona");
             of.setNifEmpresa("22333444K"); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
             of.setSou(25000d);
             of.setTipusContracte("Indefinit");
@@ -143,6 +148,83 @@ public class EspaiController {
             modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
             modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
             modelview.getModelMap().addAttribute("opcions", opcions);
+                    
+            return modelview;
+      }
+      
+      @RequestMapping(value = "/ofertaTornar", method = RequestMethod.GET)
+      public ModelAndView OfertaPerRefTornar(@RequestParam("ref") String ref, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      
+            // Controlador que invoca la vista perque aquesta mostri només el botó 'Tornar'
+            // Pensat per quan el candidat vulgui consultar l'oferta des del llistat de candidatures
+            // Passem el referer a la vista com a atribut
+            
+            // Opció perfil a la barra de navegació
+            HashMap<String, String> perfil = new HashMap<>();
+            perfil.put("paraula","Perfil");
+            perfil.put("url","/perfil");
+        
+            // Opció ofertes a la barra de navegació
+            HashMap<String, String> ofertes = new HashMap<>();
+            ofertes.put("paraula","Ofertes");
+            ofertes.put("url","/espaiCandidat"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
+        
+            // Opció candidatures a la barra de navegació
+            HashMap<String, String> candidatures = new HashMap<>();
+            candidatures.put("paraula","Candidatures");  
+            candidatures.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
+        
+            // Opció logout a la barra de navegació
+            HashMap<String, String> logout = new HashMap<>();
+            logout.put("paraula","Logout");
+            logout.put("url","/logout");
+        
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{perfil,ofertes,candidatures,logout};  
+        
+            ModelAndView modelview = new ModelAndView("oferta");
+            // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
+        
+            
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            
+            // Genero habilitats de prova
+            Habilitat h1 = new Habilitat();
+            h1.setNomHab("habilitat1");
+        
+            Habilitat h2 = new Habilitat();
+            h2.setNomHab("habilitat2");
+        
+            Habilitat h3 = new Habilitat();
+            h3.setNomHab("habilitat3");
+        
+            
+            // Omplo un arrayList amb les habilitats de prova per afegir-lo a l'objecte de prova
+            ArrayList<Habilitat> habs = new ArrayList();
+            habs.add(h1);
+            habs.add(h2);
+            habs.add(h3);
+        
+            
+            // Genero un objecte Oferta DE PROVA mentre no implementem la línia anterior
+            Oferta of = new Oferta();
+            of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi ha podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
+            of.setEstat("Pendent");
+            of.setFormacio("Formació que requereix aquesta oferta");
+            of.addHabilitats(habs);
+            of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
+            of.setCiutat("Cardona");
+            of.setNifEmpresa("22333444K"); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
+            of.setSou(25000d);
+            of.setTipusContracte("Indefinit");
+            of.setTitolOferta("Títol de l'oferta");
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+            // Afegeixo els atributs per passar a la vista
+            modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
+            modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
+            modelview.getModelMap().addAttribute("opcions", opcions);
+            modelview.getModelMap().addAttribute("referer", request.getHeader("Referer"));
                     
             return modelview;
       }
@@ -199,9 +281,9 @@ public class EspaiController {
         of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
         of.setEstat("Pendent");
         of.setFormacio("Formació que requereix aquesta oferta");
-        of.setHabilitats(habs);
-        of.setTorn("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
-        of.setLocalitat("Cardona");
+        of.addHabilitats(habs);
+        of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
+        of.setCiutat("Cardona");
         of.setNifEmpresa("22333444K"); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
         of.setSou(25000d);
         of.setTipusContracte("Indefinit");
@@ -219,7 +301,7 @@ public class EspaiController {
         // Omplo un arrayList amb les candidatures de prova per poder enviar-les al controlador
         List<Candidatura> candidatures = getListOfCandidatures();
         LlistaCandidatures llistaCandidatures = new LlistaCandidatures();
-        llistaCandidatures.setLlistat(candidatures);
+        llistaCandidatures.setLlista(candidatures);
         
         Candidatura formCandidatura = new Candidatura();
 
@@ -311,26 +393,18 @@ public class EspaiController {
             habs.add(h2);
             habs.add(h3);
 
-            // Genero formacions de prova (ara no sé si només en pot haver una)
-            Formacio f1 = new Formacio();
-            f1.setNomFormPostUni("Nom de la formació1");
-
-            Formacio f2 = new Formacio();
-            f2.setNomFormPostUni("Nom de la formació2");
-
-            // Omplo un arrayList amb les formacions de prova per afegir-lo a l'objecte de prova
-            ArrayList<Formacio> formacions = new ArrayList();
-            formacions.add(f1);
-            formacions.add(f2);
+            // Genero objecte Formacio de prova
+            Formacio formacio = new Formacio();
+            formacio.setNomFormacio("Nom de la formació1");
+            formacio.setCodiFormacio(1);
 
             // Genero un objecte Candidat DE PROVA mentre no fem el getCandidatPerCodi, o com sigui
             // Només hi poso les dades que han de sortir a la vista
             Candidat cand = new Candidat();
-            cand.setCodiFormacio("codiFormació");
+            cand.setFormacio(1);
             cand.setEmail("e@mail.cat");
             cand.setTelefon("969996633");
             cand.setHabilitats(habs);
-            cand.setFormacions(formacions); // Vam quedar amb una sola formació possible o amb un array de formacions?
 
             ModelAndView modelview = new ModelAndView("candidat");
             modelview.getModelMap().addAttribute("ubicacio", "Detall del candidat");
@@ -357,7 +431,7 @@ public class EspaiController {
             // Opció ofertes a la barra de navegació
             HashMap<String, String> ofertes = new HashMap<>();
             ofertes.put("paraula","Ofertes");
-            ofertes.put("url","/ofertes?codi="+codiCandidat);
+            ofertes.put("url","/espaiCandidat"); // AQUI LI HAUREM DE PASSAR A LA URL EL CODI DE CANDIDAT PERQUE ENS MOSTRI LA INFO ESCAIENTS
 
             // Opció logout a la barra de navegació
             HashMap<String, String> logout = new HashMap<>();
@@ -373,7 +447,7 @@ public class EspaiController {
             // PQ A LA TAULA HAURIA DE SORTIR EL TÍTOL DE L'OFERTA I A L'OBJECTE CANDIDATURA HI HA EL CODI
             List<Candidatura> candidatures = getListOfCandidatures();
             LlistaCandidatures llistaCandidatures = new LlistaCandidatures();
-            llistaCandidatures.setLlistat(candidatures);
+            llistaCandidatures.setLlista(candidatures);
 
             
             ModelAndView modelview = new ModelAndView("candidatures");
@@ -431,10 +505,11 @@ public class EspaiController {
     // Mètode que afegeig una llista de candidatures
     private List<Candidatura> getListOfCandidatures() {
       List<Candidatura> cands = new ArrayList<>();
-      cands.add(new Candidatura("codiCandidatura1", "dniCandidat1", "codiOferta1", 2));
-      cands.add(new Candidatura("codiCandidatura2", "dniCandidat2", "codiOferta2", 2));
-      cands.add(new Candidatura("codiCandidatura3", "dniCandidat3", "codiOferta3", 1));
-      cands.add(new Candidatura("codiCandidatura4", "dniCandidat4", "codiOferta4", 0));
+      // Ordre dels paràmetres al constructor: codiCandidatura, codiCandidat, codiOferta, estat
+      cands.add(new Candidatura(1, 1, 1, 2));
+      cands.add(new Candidatura(2, 2, 2, 2));
+      cands.add(new Candidatura(3, 3, 3, 1));
+      cands.add(new Candidatura(4, 4, 4, 0));
       return cands;
    }
     

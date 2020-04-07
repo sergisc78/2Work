@@ -34,10 +34,7 @@
         <!--- Barra de navegació -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
-            <a class="navbar-brand" href="<spring:url value='/'/>">
-                  <svg id="navbarlogo" alt="logo2Work" width="280" height="48.105px" viewBox="0 0 280 48.105" enable-background="new 0 0 211.646 48.105"
-   xml:space="preserve" ><%@include  file='/resources/svg/logo_2work.svg' %></svg>
-            </a>
+            <%@include  file='/resources/html/linkLogo.html' %>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -88,12 +85,12 @@
                                           <h4>Empresa</h4>
                                           <p>${oferta.nifEmpresa}</p>
                                           <h4>Localitat</h4>
-                                          <p>${oferta.localitat}</p>
+                                          <p>${oferta.ciutat}</p>
                                     </c:if>
                                     <h4>Tipus de contracte</h4>
                                     <p>${oferta.tipusContracte}</p>
                                     <h4>Horari</h4>
-                                    <p>${oferta.torn}</p>
+                                    <p>${oferta.horari}</p>
                                     <h4>Remuneració anual</h4>
                                     
                                     <p><fmt:formatNumber groupingUsed = "false" value="${oferta.sou}"/> €</p>
@@ -123,10 +120,10 @@
                               
                               <form:form id="formulariCandidatures" modelAttribute="Candidatures" method="post" action="/desaEstatCandidatura">
                                     
-                                    <c:forEach items="${Candidatures.llistat}" var="candidatura" varStatus="loop">
+                                    <c:forEach items="${Candidatures.llista}" var="candidatura" varStatus="loop">
                                           <li class="list-group-item d-flex justify-content-between align-items-center">   
                                                 <a href="<spring:url value='/candidat?codi="1"'/>" class="flex-grow-1"><p>Candidat random número ${loop.index}</p></a>
-                                                <form:select path="llistat[${loop.index}].estat">
+                                                <form:select path="llista[${loop.index}].estat">
                                                       <form:options items="${estatsPossiblesCandidatura}" />
                                                 </form:select>
                                           </li>
@@ -149,10 +146,19 @@
                  
             <!--- NOMÉS PELS NO PROPIETARIS/CREADORS DE L'OFERTA --->
             <c:if test="${not propietari}">
-            <p>
-                  <a href="#" class="text-center btn btn-primary" role="button">Inscriure'm a l'oferta</a>
-                  <a href="#" class="text-center btn btn-warning" role="button">Denunciar l'oferta</a>
-            </p>
+                  
+                  <p>
+                  <c:choose>
+                        <c:when test="${not empty referer}">
+                              <a href="<spring:url value='${referer}'/>" class="text-center btn btn-primary" role="button">Tornar</a>
+                        </c:when> 
+                        <c:otherwise>
+                              <a href="#" class="text-center btn btn-primary" role="button">Inscriure'm a l'oferta</a>
+                              <a href="#" class="text-center btn btn-warning" role="button">Denunciar l'oferta</a>
+                        </c:otherwise> 
+                  </c:choose>
+                 </p>
+            
             </c:if>
               
         </section>

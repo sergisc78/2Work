@@ -24,9 +24,7 @@
         <link href="${estilsCSS}" rel="stylesheet" />
         <script type="text/javascript" src="resources/validarForm.js"></script>
         
-        <title>2Work</title>
-
-
+        <title>2Work - ${ubicacio}</title>
     </head>
 
     <body>
@@ -51,12 +49,7 @@
         <!--- Barra de navegació -->
         <nav class="navbar navbar-expand-lg navbar-dark">
 
-            <a class="navbar-brand" href="<spring:url value='/'/>">
-                <svg id="navbarlogo" alt="logo2Work" width="280" height="48.105px" viewBox="0 0 280 48.105" enable-background="new 0 0 211.646 48.105"
-   xml:space="preserve" >
-                        <%@include  file='/resources/svg/logo_2work.svg' %>
-                </svg>
-            </a>
+            <%@include  file='/resources/html/linkLogo.html' %>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -76,7 +69,7 @@
         <section>
             <div class="jumbotron">
                 <div class="container ">
-                    <h1> ${tagline} </h1>
+                    <h1>La teva web de cerca de feina</h1>
                 </div>
         </section>
 

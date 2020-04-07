@@ -50,18 +50,27 @@ public class HomeController {
         
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{admin,candidat,empresa};  
-
+            
+            modelview.getModelMap().addAttribute("ubicacio", "La teva web de cerca de feina");
             modelview.getModelMap().addAttribute("opcions", opcions);
             return modelview;
     }
 
-    @RequestMapping(value = "/altaCandidat", method = RequestMethod.GET)
-    public ModelAndView addcandidatRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        ModelAndView modelview = new ModelAndView("altaCandidat");
-        modelview.getModelMap().addAttribute("banner", "2work");
-        modelview.getModelMap().addAttribute("tagline", "La teva web de cerca de feina");
-        return modelview;
+      @RequestMapping(value = "/altaCandidat", method = RequestMethod.GET)
+      public ModelAndView addcandidatRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            ModelAndView modelview = new ModelAndView("altaCandidat");
+        
+            // Opció Inici a la barra de navegació
+            HashMap<String, String> inici = new HashMap<>();
+            inici.put("paraula","Inici");
+            inici.put("url","/");
+        
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{inici};  
+        
+            modelview.getModelMap().addAttribute("ubicacio", "Alta de candidat");
+            modelview.getModelMap().addAttribute("opcions", opcions);
+            return modelview;
     }
     
     @RequestMapping(value = "/altaEmpresa", method = RequestMethod.GET)

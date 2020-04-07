@@ -24,7 +24,7 @@
             <spring:url value="/resources/css/estils.css" var="estilsCSS" />
             <link href="${estilsCSS}" rel="stylesheet" />
 
-            <title>2Work</title>
+            <title>2Work - ${ubicacio}</title>
       </head>
 
       <body>
@@ -32,10 +32,7 @@
             <!--- Barra de navegació -->
             <nav class="navbar navbar-expand-lg navbar-dark">
 
-                  <a class="navbar-brand" href="#">
-                        <svg id="navbarlogo" alt="logo2Work" width="280" height="48.105px" viewBox="0 0 280 48.105" enable-background="new 0 0 211.646 48.105"
-         xml:space="preserve" ><%@include  file='/resources/svg/logo_2work.svg' %></svg>
-                  </a>
+                  <%@include  file='/resources/html/linkLogo.html' %>
 
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -82,7 +79,7 @@
                         <div class="col-md">
                               <h3 class="text-center">Estàs buscant feina o vols millorar o canviar la que tens?</h3>
                               <p class="text-center">
-                                    <a href=" <spring:url value= "/altaCandidat" />" class="text-center btn btn-primary" role="button">Dona't d'alta
+                                    <a href=" <spring:url value= "/altaCandidat" />" class="text-center btn btn-primary wobble" role="button">Dona't d'alta
                                           <svg class="text-light" width="15" height="20" viewBox="3 0 15 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
                                     </a>
                               </p>
@@ -93,7 +90,7 @@
                         <div class="col-md">
                               <h3 class="text-center">Ets empresari i busques treballadors?</h3>
                               <p class="text-center">
-                                    <a href="<spring:url value= "/altaEmpresa" />" class="text-center btn btn-primary" role="button">Dona't d'alta
+                                    <a href="<spring:url value= "/altaEmpresa" />" class="text-center btn btn-primary wobble" role="button">Dona't d'alta
                                           <svg class="text-light" width="15" height="20" viewBox="3 0 15 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg>
                                     </a>
                               </p>
