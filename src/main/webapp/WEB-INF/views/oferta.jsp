@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"  %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 
@@ -34,7 +35,8 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
             <a class="navbar-brand" href="<spring:url value='/'/>">
-                <img src="${pageContext.request.contextPath}/resources/svg/logo_2work.svg" id="navbarlogo" alt="logo2Work">
+                  <svg id="navbarlogo" alt="logo2Work" width="280" height="48.105px" viewBox="0 0 280 48.105" enable-background="new 0 0 211.646 48.105"
+   xml:space="preserve" ><%@include  file='/resources/svg/logo_2work.svg' %></svg>
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +51,7 @@
                         <li class="nav-item">
                               <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
                         </li>
-
+                        
                         </c:forEach>
                     
                 </ul>
@@ -81,10 +83,13 @@
                           <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2">
                                 
                                 <div class="col">
-                                    <h4>Empresa</h4>
-                                    <p>${oferta.nifEmpresa}</p>
-                                    <h4>Localitat</h4>
-                                    <p>${oferta.localitat}</p>
+                                    <c:if test="${ not propietari}">
+                                          <!--- NOMÉS PELS NO PROPIETARIS/CREADORS DE L'OFERTA --->
+                                          <h4>Empresa</h4>
+                                          <p>${oferta.nifEmpresa}</p>
+                                          <h4>Localitat</h4>
+                                          <p>${oferta.localitat}</p>
+                                    </c:if>
                                     <h4>Tipus de contracte</h4>
                                     <p>${oferta.tipusContracte}</p>
                                     <h4>Horari</h4>
@@ -109,13 +114,46 @@
                           </div>
                           
                     </div>
+                          
+                  <!--- LLISTAT DE CANDIDATURES NOMÉS PEL PROPIETARI/CREADOR DE L'OFERTA --->
+                  <c:if test="${propietari}">
+                  <div class="card-footer">
+                        <h4>Candidatures</h4>
+                        <ul class="list-group-flush" id="llistat-candidatures">
+                              
+                              <form:form id="formulariCandidatures" modelAttribute="Candidatures" method="post" action="/desaEstatCandidatura">
+                                    
+                                    <c:forEach items="${Candidatures.llistat}" var="candidatura" varStatus="loop">
+                                          <li class="list-group-item d-flex justify-content-between align-items-center">   
+                                                <a href="<spring:url value='/candidat?codi="1"'/>" class="flex-grow-1"><p>Candidat random número ${loop.index}</p></a>
+                                                <form:select path="llistat[${loop.index}].estat">
+                                                      <form:options items="${estatsPossiblesCandidatura}" />
+                                                </form:select>
+                                          </li>
+                                    </c:forEach>
+                                                                              
+                              </form:form>
+                              
+                        </ul>
+                  </div>
+                  </c:if>
                     
-              </div>
-                                      
-              <p>
-                        <a href="#" class="text-center btn btn-primary" role="button">Inscriure'm a l'oferta</a>
-                        <a href="#" class="text-center btn btn-warning" role="button">Denunciar l'oferta</a>
-             </p>
+            </div>
+              
+            <!--- NOMÉS PEL PROPIETARI/CREADOR DE L'OFERTA --->
+            <c:if test="${propietari}">
+            <p>
+                  <input form="formulariCandidatures" class="text-center btn btn-primary" type="submit"  role="button" value="Desar els canvis" />
+            </p>
+            </c:if>
+                 
+            <!--- NOMÉS PELS NO PROPIETARIS/CREADORS DE L'OFERTA --->
+            <c:if test="${not propietari}">
+            <p>
+                  <a href="#" class="text-center btn btn-primary" role="button">Inscriure'm a l'oferta</a>
+                  <a href="#" class="text-center btn btn-warning" role="button">Denunciar l'oferta</a>
+            </p>
+            </c:if>
               
         </section>
 

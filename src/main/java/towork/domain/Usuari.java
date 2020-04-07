@@ -51,6 +51,10 @@ public class Usuari implements Serializable{
     @Column (name="email")
     protected String email;
     
+    @Size(max=500)
+    @Column (name="observacions")
+    protected String observacions;
+    
     @NotNull
     @Size(max=8)
     @Column (name="pass")
@@ -63,7 +67,7 @@ public class Usuari implements Serializable{
     
    
 
-    public Usuari(String nom, String dniNif, String adreca, String ciutat, String provincia,String telefon, String email, String pass, String cPass) {   
+    public Usuari(String nom, String dniNif, String adreca, String ciutat, String provincia,String telefon, String email, String observacions, String pass, String cPass) {   
         this.nom = nom;
         this.dniNif = dniNif;
         this.adreca = adreca;
@@ -71,6 +75,7 @@ public class Usuari implements Serializable{
         this.provincia=provincia;
         this.telefon = telefon;
         this.email = email;
+        this.observacions = observacions;
         this.pass = pass;
         this.cPass = cPass;
     }
@@ -104,6 +109,10 @@ public class Usuari implements Serializable{
 
     public String getEmail() {
         return email;
+    }
+    
+    public String getObservacions() {
+          return observacions;
     }
 
     public String getPass() {
@@ -141,6 +150,10 @@ public class Usuari implements Serializable{
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    public void setObservacions(String observacions) {
+          this.observacions = observacions;
+    }
 
     public void setPass(String pass) {
         this.pass = pass;
@@ -150,7 +163,5 @@ public class Usuari implements Serializable{
         this.cPass = cPass;
     }
 
-    
-    
     
 }

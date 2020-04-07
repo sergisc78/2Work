@@ -33,7 +33,8 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
             <a class="navbar-brand" href="<spring:url value='/'/>">
-                <img src="${pageContext.request.contextPath}/resources/svg/logo_2work.svg" id="navbarlogo" alt="logo2Work">
+                  <svg id="navbarlogo" alt="logo2Work" width="280px" height="48.105px" viewBox="0 0 280 48.105" enable-background="new 0 0 211.646 48.105"
+   xml:space="preserve" ><%@include  file='/resources/svg/logo_2work.svg' %></svg>
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">

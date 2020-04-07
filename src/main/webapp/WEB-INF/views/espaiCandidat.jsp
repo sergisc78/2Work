@@ -33,7 +33,8 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
             <a class="navbar-brand" href="<spring:url value='/'/>">
-                <img src="${pageContext.request.contextPath}/resources/svg/logo_2work.svg" id="navbarlogo" alt="logo2Work">
+                  <svg id="navbarlogo" alt="logo2Work" width="280" height="48.105px" viewBox="0 0 280 48.105" enable-background="new 0 0 211.646 48.105"
+         xml:space="preserve" ><%@include  file='/resources/svg/logo_2work.svg' %></svg>
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,15 +43,13 @@
 
             <div class="collapse navbar-collapse" id="navbarHomeToggler">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
-                         <a class="nav-link" href="<spring:url value='/perfil'/>">Perfil</a>
-                    </li>
-                    <li class="nav-item">
-                         <a class="nav-link" href="<spring:url value='/candidatures'/>">Candidatures</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="<spring:url value='/logout'/>">Logout</a>
-                    </li>
+                        <c:forEach items="${opcions}" var="map">
+                      
+                        <li class="nav-item">
+                              <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
+                        </li>
+                        
+                        </c:forEach>
                 </ul>
             </div>  
 

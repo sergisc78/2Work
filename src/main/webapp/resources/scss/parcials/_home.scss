@@ -17,13 +17,23 @@
       margin: 0;
 }
 
+#alertaHome {
+      padding: 0.5em 0;
+      margin: 0;
+      background: $color-groc-alerta;
+      border: none;
+}
 
 section#cta {
       background-color: $color-basic-gris-clar;
-      padding: 2rem 0;
+      padding: 3rem 0;
+      
+      p:last-of-type {
+            margin-bottom: 0.25rem;
+      }
       
       > div:not(:last-child) {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
       }
       
       a svg {

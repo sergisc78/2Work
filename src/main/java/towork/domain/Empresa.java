@@ -46,9 +46,9 @@ public class Empresa extends Usuari implements Serializable{
     protected ArrayList<Oferta> ofertes=new ArrayList();
 
     public Empresa( String nom, String responsable, String dniNif,String adreca, String ciutat, String provincia,
-            String telefon,String web, Integer tamany, String email, 
+            String telefon,String web, Integer tamany, String email, String observacions,
             String pass, String cPass, String sector,Integer codiEmpresa) {
-        super(nom,dniNif,adreca,ciutat,provincia,telefon,email,pass,cPass);
+        super(nom,dniNif,adreca,ciutat,provincia,telefon,email,observacions,pass,cPass);
         this.responsable=responsable;
         this.web = web;
         this.tamany = tamany;

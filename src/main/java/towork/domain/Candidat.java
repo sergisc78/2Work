@@ -31,15 +31,14 @@ public class Candidat extends Usuari implements Serializable{
     @Column(name="dataNaix")
     protected Date dataNaix;
     
-    @Size(max=100)
     @Column(name="formacio")
-    protected String formacio;
+    protected Integer formacio;
     
     @NotNull
     @Size(max=100)
     @Column(name="ocupacio")
     protected String ocupacio;
-    
+
     @Column(name="codiCandidat")
     protected Integer codiCandidat;
     
@@ -49,9 +48,10 @@ public class Candidat extends Usuari implements Serializable{
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Experiencia> experiencies = new ArrayList();
 
+
     public Candidat (String nom,String cognoms, String dniNif,Date dataNaix,String adreca, String ciutat,String provincia,String telefon,
-            String email, String pass, String cPass, String formacio,String ocupacio,Integer codiCandidat) {
-        super(nom,dniNif,adreca,ciutat,provincia,telefon,email,pass,cPass);
+            String email, String observacions, String pass, String cPass, Integer formacio,String ocupacio,Integer codiCandidat) {
+        super(nom,dniNif,adreca,ciutat,provincia,telefon,email,observacions,pass,cPass);
         this.cognoms = cognoms;
         this.dataNaix = dataNaix;
         this.formacio = formacio;
@@ -72,7 +72,7 @@ public class Candidat extends Usuari implements Serializable{
         return dataNaix;
     }
 
-    public String getFormacio() {
+    public Integer getFormacio() {
         return formacio;
     }
 
@@ -100,8 +100,8 @@ public class Candidat extends Usuari implements Serializable{
         this.dataNaix = dataNaix;
     }
 
-    public void setFormacio(String formacio) {
-        this.formacio = formacio;
+    public void setFormacio(Integer codiFormacio) {
+        this.formacio = codiFormacio;
     }
 
     public void setOcupacio(String ocupacio) {
@@ -111,7 +111,6 @@ public class Candidat extends Usuari implements Serializable{
     public void setCodiCandidat(Integer codiCandidat) {
         this.codiCandidat = codiCandidat;
     }
-
 
     public void setHabilitats(ArrayList<Habilitat> habilitats) {
         this.habilitats = habilitats;

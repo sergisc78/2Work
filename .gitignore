@@ -26,3 +26,6 @@ hs_err_pid*
 target/
 
 nb-configuration.xml
+/src/main/java/towork/domain/Sector_1.java
+/src/main/java/towork/domain/Candidatura.java
+/src/main/java/towork/domain/LlistaCandidatures.java

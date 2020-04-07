@@ -25,24 +25,34 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView homeRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        ModelAndView modelview = new ModelAndView("home");
-        modelview.getModelMap().addAttribute("banner", "2work");
-        modelview.getModelMap().addAttribute("tagline", "La teva web de recerca de feina");
-        List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-        Map<String, String> map = new HashMap();
-        map.put("desc", "Estàs buscant feina o vols millorar o canviar la que tens?");
-        map.put("url", "/altaCandidat");
-        list.add(map);
-        Map<String, String> map2 = new HashMap();
-        map2.put("desc", "Ets empresari i busques treballadors?");
-        map2.put("url", "/altaEmpresa");
-        list.add(map2);
-        modelview.getModelMap().addAttribute("footer", "2Work Copyright 2020");
-        modelview.getModelMap().addAttribute("options", list);
-        return modelview;
+      @RequestMapping(value = "/", method = RequestMethod.GET)
+      public ModelAndView homeRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+            // Creem el modelview
+            ModelAndView modelview = new ModelAndView("home");
+            
+            // Creem les opcions que aniràn a la barra de navegació
+            
+            // Opció Administrador a la barra de navegació
+            HashMap<String, String> admin = new HashMap<>();
+            admin.put("paraula","Administrador");
+            admin.put("url","/loginAdmin");
+        
+            // Opció Candidat a la barra de navegació
+            HashMap<String, String> candidat = new HashMap<>();
+            candidat.put("paraula","Candidat");
+            candidat.put("url","/loginCandidat");
+        
+            // Opció Empresa a la barra de navegació
+            HashMap<String, String> empresa = new HashMap<>();
+            empresa.put("paraula","Empresa");
+            empresa.put("url","/loginEmpresa");
+        
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{admin,candidat,empresa};  
+
+            modelview.getModelMap().addAttribute("opcions", opcions);
+            return modelview;
     }
 
     @RequestMapping(value = "/altaCandidat", method = RequestMethod.GET)
@@ -50,7 +60,7 @@ public class HomeController {
             throws ServletException, IOException {
         ModelAndView modelview = new ModelAndView("altaCandidat");
         modelview.getModelMap().addAttribute("banner", "2work");
-        modelview.getModelMap().addAttribute("tagline", "La teva web de recerca de feina");
+        modelview.getModelMap().addAttribute("tagline", "La teva web de cerca de feina");
         return modelview;
     }
     
@@ -59,7 +69,7 @@ public class HomeController {
             throws ServletException, IOException {
         ModelAndView modelview = new ModelAndView("altaEmpresa");
         modelview.getModelMap().addAttribute("banner", "2work");
-        modelview.getModelMap().addAttribute("tagline", "La teva web de recerca de feina");
+        modelview.getModelMap().addAttribute("tagline", "La teva web de cerca de feina");
         return modelview;
     }
     
