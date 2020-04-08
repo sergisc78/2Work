@@ -13,6 +13,7 @@
       background: linear-gradient(180deg, rgba($color-basic-blau-fosc,0.2) 0%, rgba($color-basic-blau-clar,0.5) 100%), url("../img/portatil.jpg") no-repeat;
       background-blend-mode: multiply;
       background-size: cover;
+      text-align: center;
       color: #fff;
       margin: 0;
 }
@@ -25,8 +26,10 @@
 }
 
 section#cta {
-      background-color: $color-basic-gris-clar;
-      padding: 3rem 0;
+      background: $color-basic-gris-clar;
+      background:$degradat-grisos-clars;
+      clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+      padding: 3rem 5% 4rem;
       
       p:last-of-type {
             margin-bottom: 0.25rem;
