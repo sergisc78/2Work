@@ -72,6 +72,14 @@ a {
       background: $color-basic-blau-fosc;
 }
 
+.badge-secondary {
+      background: $color-gris-text;
+}
+
+.badge-danger {
+      background: $color-basic-taronja;
+}
+
 .wobble {
       
       &:hover, &:focus, &:active {

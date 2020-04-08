@@ -163,6 +163,7 @@ public class EspaiController {
             HashMap<String, String> ofertes = new HashMap<>();
             ofertes.put("paraula","Ofertes");
             ofertes.put("url","/espaiCandidat"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
+                                                                        // Si vinc de la vista oferta per empresa (compartim vista) hauria de tornar a llistat d'ofertes per empresa
         
             // Opció candidatures a la barra de navegació
             HashMap<String, String> candidatures = new HashMap<>();
@@ -452,14 +453,16 @@ public class EspaiController {
             return modelview;
     }
       
+      
      @RequestMapping(value = "/inscripcioOferta/{dadesInscripcio}", method = RequestMethod.GET)
-     public ModelAndView inscripcioOferta(@MatrixVariable(pathVar="dadesInscripcio") Map<String, List<String>> dades){
+     public ModelAndView inscripcioOferta(@MatrixVariable(pathVar="dadesInscripcio") Map<String, Integer> dades){
            
            Boolean inscripcioOK=false;
            
+           // Les tres línies de sota es podran eliminar. La seva funció és de comprovació del codi.
            System.out.println("--- dades per fer la inscripció a l'oferta: "+dades);
-           System.out.println("--- Codi de l'oferta: "+dades.get("oferta").get(0));
-           System.out.println("--- Codi del candidat: "+dades.get("candidat").get(0));
+           System.out.println("--- Codi de l'oferta: "+dades.get("oferta"));
+           System.out.println("--- Codi del candidat: "+dades.get("candidat"));
            
            
            //
@@ -507,6 +510,68 @@ public class EspaiController {
            
            // modelview.getModelMap().addAttribute("missatgeFeedback", "Has sortit de l'aplicació. Fins aviat!");
            return modelview;
+     }
+     
+     
+     @RequestMapping(value = "/cancelarCandidatura/{dadesCancelacio}", method = RequestMethod.GET)
+     public ModelAndView cancelacioCandidatura(@MatrixVariable(pathVar="dadesCancelacio") Map<String, Integer> dades){
+           
+           Boolean cancelacioOK=false;
+           
+           //
+           // AQUI HAUREM DE GESTIONAR LA CANCEL·LACIÓ MITJANÇANT EL MÈTODE CORRESPONENT
+           // HAUREM DE REBRE UN VALOR BOOLEÀ QUE UTILITZAREM PER PASSAR FEEDBACK A L'USUARI
+           //
+           
+           // Opció perfil a la barra de navegació
+            HashMap<String, String> perfil = new HashMap<>();
+            perfil.put("paraula","Perfil");
+            perfil.put("url","/perfil");
+
+            // Opció ofertes a la barra de navegació
+            HashMap<String, String> ofertes = new HashMap<>();
+            ofertes.put("paraula","Ofertes");
+            ofertes.put("url","/espaiCandidat"); // AQUI LI HAUREM DE PASSAR A LA URL EL CODI DE CANDIDAT PERQUE ENS MOSTRI LA INFO ESCAIENTS
+
+            // Opció logout a la barra de navegació
+            HashMap<String, String> logout = new HashMap<>();
+            logout.put("paraula","Logout");
+            logout.put("url","/logout");
+
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{perfil,ofertes,logout};
+            
+            // També li haurem de passar la LLISTA AMB LES CANDIDATURES, amb l'estat en que estiguin, si no passen integrades dins l'objecte Oferta
+            // Omplo un arrayList amb les candidatures de prova per poder enviar-les al controlador
+            // AL TANTO, HAUREM DE FER SERVIR UN MÈTODE QUE ENS PASSI EL TÍTOL DE L'OFERTA PASSANT-LI EL CODI
+            // PQ A LA TAULA HAURIA DE SORTIR EL TÍTOL DE L'OFERTA I A L'OBJECTE CANDIDATURA HI HA EL CODI
+            List<Candidatura> candidatures = getListOfCandidatures();
+            LlistaCandidatures llistaCandidatures = new LlistaCandidatures();
+            llistaCandidatures.setLlista(candidatures);
+           
+           // missatge i classe del missatge de feedback que rebrà l'usuari
+            String missatgeFeedback =""; // missatge de feedback que rebrà l'usuari 
+            String classeFeedback = "";  // classe CSS que s'aplicarà al contenidor del missatge de feedback
+           
+           if (cancelacioOK) {
+                  missatgeFeedback = "Cancel·lació de la candidatura realitzada correctament";
+                  classeFeedback = "alert-warning";
+            } else {
+                  missatgeFeedback = "Cancel·lació de la candidatura NO realitzada.";
+                  classeFeedback = "alert-danger";
+            }
+            
+            // LI HAUREM DE PASSAR AL MODEL EL CODI DEL CANDIDAT
+            ModelAndView modelview = new ModelAndView("candidatures");
+            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
+            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+            modelview.getModelMap().addAttribute("ubicacio", "Les meves candidatures");
+            modelview.getModelMap().addAttribute("candidatures", candidatures);
+            modelview.getModelMap().addAttribute("opcions", opcions);
+           
+           // modelview.getModelMap().addAttribute("missatgeFeedback", "Has sortit de l'aplicació. Fins aviat!");
+           return modelview;
+           
      }
     
       

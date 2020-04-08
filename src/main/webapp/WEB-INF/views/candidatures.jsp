@@ -4,55 +4,70 @@
 <!-- <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> -->
 <html>
 
-    <head>
-        <!-- Requerits per Bootstrap -->
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <head>
+            <!-- Requerits per Bootstrap -->
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
-        <!-- Bootstrap JS + jQuery -->
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+            <!-- Bootstrap JS + jQuery -->
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-        <!-- Tipografia-->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+            <!-- Tipografia-->
+            <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
-        <!-- Estils afegits -->
-        <spring:url value="/resources/css/estils.css" var="estilsCSS" />
-        <link href="${estilsCSS}" rel="stylesheet" />
+            <!-- Estils afegits -->
+            <spring:url value="/resources/css/estils.css" var="estilsCSS" />
+            <link href="${estilsCSS}" rel="stylesheet" />
 
-        <title>2Work - ${ubicacio}</title>
-    </head>
+            <title>2Work - ${ubicacio}</title>
+      </head>
 
-    <body>
+      <body>
 
-        <!--- Barra de navegació -->
-        <nav class="navbar navbar-expand-lg navbar-dark">
+            <!--- Barra de navegació -->
+            <nav class="navbar navbar-expand-lg navbar-dark">
 
             <%@include  file='/resources/html/linkLogo.html' %>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                  <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarHomeToggler">
-                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                  <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     
-                      <c:forEach items="${opcions}" var="map">
+                        <c:forEach items="${opcions}" var="map">
                       
                         <li class="nav-item">
                               <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
                         </li>
 
-                     </c:forEach>
+                        </c:forEach>
 
                 </ul>
             </div>
 
         </nav>
+            
+            
+      <c:if test="${not empty missatgeFeedback}">
+      <section id="feedback" role="alert" class="${classeFeedback} alert  alert-dismissible fade show">
+            <div class="container">
+                  <div>
+                        ${missatgeFeedback}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                        </button>
+                  </div>
+            </div>
+      </section>                  
+      </c:if>
+            
 
         <section class="barra-ubicacio">
               <div class="container">
@@ -70,7 +85,8 @@
                   <c:forEach items="${candidatures}" var="candidatura" varStatus="loop">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                               
-                              <a href="#" alt="eliminar candidatura">
+                              <!-- PENDENT DEIXAR L'ENLLAÇ DEFINITIU -->
+                              <a href=" <spring:url value='/cancelarCandidatura/oferta=1;candidat=1'/>" alt="eliminar candidatura">
                                     <svg id="icona_esborrar" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18.207px" height="18.285px" viewBox="0 0 18.207 18.285" enable-background="new 0 0 18.207 18.285" xml:space="preserve">
                                           <%@include  file='/resources/svg/trash.svg' %>
                                     </svg>
@@ -78,8 +94,18 @@
                                     
                               <a href="<spring:url value= "/ofertaTornar?ref='" />${loop.index}'" class="flex-grow-1"><p>Títol de l'oferta ${candidatura.codiOferta}</p></a>
                               
-                              <!-- AQUI HEM D'INTRODUÏR UN CONDICIONAL PER POSAR LA CLASSE DEL TIPUS DE BADGE DEPENENT DE L'ESTAT -->
-                              <span class="badge badge-primary badge-pill">Estat ${candidatura.estat}</span>
+                              <c:choose>
+                                    <c:when test="${candidatura.estat == '0'}">
+                                          <c:set var="classe" value="badge-secondary"/>
+                                    </c:when>
+                                    <c:when test="${candidatura.estat == '1'}">
+                                          <c:set var="classe" value="badge-danger"/>
+                                    </c:when>
+                                    <c:when test="${candidatura.estat == '2'}">
+                                          <c:set var="classe" value="badge-primary"/>
+                                    </c:when>
+                              </c:choose>
+                              <span class="badge ${classe} badge-pill">Estat ${candidatura.estat}</span>
                                           
                         </li>
                   </c:forEach>

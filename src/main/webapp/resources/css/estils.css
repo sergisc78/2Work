@@ -61,6 +61,12 @@ a {
 .badge-primary {
   background: #1d70b7; }
 
+.badge-secondary {
+  background: #666; }
+
+.badge-danger {
+  background: #e1642d; }
+
 .wobble:hover svg, .wobble:focus svg, .wobble:active svg {
   -webkit-animation-name: hvr-wobble-horizontal;
   animation-name: hvr-wobble-horizontal;
