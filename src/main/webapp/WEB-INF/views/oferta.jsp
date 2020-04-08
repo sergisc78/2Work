@@ -153,7 +153,7 @@
                               <a href="<spring:url value='${referer}'/>" class="text-center btn btn-primary" role="button">Tornar</a>
                         </c:when> 
                         <c:otherwise>
-                              <a href="#" class="text-center btn btn-primary" role="button">Inscriure'm a l'oferta</a>
+                              <a href="<spring:url value='/inscripcioOferta/oferta=1;candidat=1'/>" class="text-center btn btn-primary" role="button">Inscriure'm a l'oferta</a>
                               <a href="#" class="text-center btn btn-warning" role="button">Denunciar l'oferta</a>
                         </c:otherwise> 
                   </c:choose>

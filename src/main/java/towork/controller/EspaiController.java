@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,7 +29,63 @@ import towork.domain.Oferta;
 @Controller
 public class EspaiController {
     
-      // Crear el controller dels espais dls 3 usuaris del sistema,candidat, empresa i administrador
+      ///// GENEREM OBJECTES DE PROVA QUE HAUREM D'ESBORRAR QUAN TINGUEM CREATS ELS MÈTODES QUE ELS
+     //// AGAFARAN DE LA BASE DE DADES
+      public Habilitat h1 = new Habilitat();
+      public Habilitat h2 = new Habilitat();
+      public Habilitat h3 = new Habilitat();
+      public ArrayList<Habilitat> habs = new ArrayList();
+      public Oferta of = new Oferta();
+      public List<Candidatura> candidatures;
+      public LlistaCandidatures llistaCandidatures = new LlistaCandidatures();
+      
+      // Hashmap que emmagatzema els POSSIBLES ESTATS QUE PODEN  TENIR LES CANDIDATURES
+      // Aquesta part potser es pot deixar definida aqui. Valorar si és un bon lloc.
+      public HashMap<Integer, String> estatsPossibles = new HashMap<>();
+      
+      
+      public EspaiController() {
+            // Constructor de la classe
+        
+            //// Dono valors als objectes de prova creats 
+            
+            // Habilitats
+            h1.setNomHab("habilitat1");
+            h2.setNomHab("habilitat2");
+            h3.setNomHab("habilitat3");
+               
+            // Omplo un arrayList amb les habilitats de prova per afegir-lo a l'objecte de prova
+            habs.add(h1);
+            habs.add(h2);
+            habs.add(h3);
+        
+            // Oferta
+            of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi ha podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
+            of.setEstat("Pendent");
+            of.setFormacio(1);
+            of.addHabilitats(habs);
+            of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
+            of.setCiutat("Cardona");
+            of.setNifEmpresa("22333444K"); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
+            of.setSou(25000d);
+            of.setTipusContracte("Indefinit");
+            of.setTitolOferta("Títol de l'oferta");
+            
+            // Candidatures
+            candidatures = getListOfCandidatures();
+            llistaCandidatures.setLlista(candidatures);
+            
+            // Fins aqui els objectes de prova
+        
+            // Possibles estats de les candidatures (aquesta part potser es pot deixar definida aqui. Valorar si és un bon lloc)
+            estatsPossibles.put(0,"Pendent revisar");
+            estatsPossibles.put(1,"Denegada"); 
+            estatsPossibles.put(2,"Aprovada");
+            
+       }
+      
+      
+      // Controllers dels espais dls 3 usuaris del sistema,candidat, empresa i administrador
     
       @RequestMapping(value = "/espaiCandidat", method = RequestMethod.GET)
       public ModelAndView EspaiCandidatRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -122,42 +179,7 @@ public class EspaiController {
         
             ModelAndView modelview = new ModelAndView("oferta");
             // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
-        
-            
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            
-            // Genero habilitats de prova
-            Habilitat h1 = new Habilitat();
-            h1.setNomHab("habilitat1");
-        
-            Habilitat h2 = new Habilitat();
-            h2.setNomHab("habilitat2");
-        
-            Habilitat h3 = new Habilitat();
-            h3.setNomHab("habilitat3");
-        
-            
-            // Omplo un arrayList amb les habilitats de prova per afegir-lo a l'objecte de prova
-            ArrayList<Habilitat> habs = new ArrayList();
-            habs.add(h1);
-            habs.add(h2);
-            habs.add(h3);
-        
-            
-            // Genero un objecte Oferta DE PROVA mentre no implementem la línia anterior
-            Oferta of = new Oferta();
-            of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi ha podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
-            of.setEstat("Pendent");
-            of.setFormacio(1);
-            of.addHabilitats(habs);
-            of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
-            of.setCiutat("Cardona");
-            of.setNifEmpresa("22333444K"); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
-            of.setSou(25000d);
-            of.setTipusContracte("Indefinit");
-            of.setTitolOferta("Títol de l'oferta");
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
+           
             // Afegeixo els atributs per passar a la vista
             modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
             modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
@@ -198,42 +220,7 @@ public class EspaiController {
         
             ModelAndView modelview = new ModelAndView("oferta");
             // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
-        
             
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            
-            // Genero habilitats de prova
-            Habilitat h1 = new Habilitat();
-            h1.setNomHab("habilitat1");
-        
-            Habilitat h2 = new Habilitat();
-            h2.setNomHab("habilitat2");
-        
-            Habilitat h3 = new Habilitat();
-            h3.setNomHab("habilitat3");
-        
-            
-            // Omplo un arrayList amb les habilitats de prova per afegir-lo a l'objecte de prova
-            ArrayList<Habilitat> habs = new ArrayList();
-            habs.add(h1);
-            habs.add(h2);
-            habs.add(h3);
-        
-            
-            // Genero un objecte Oferta DE PROVA mentre no implementem la línia anterior
-            Oferta of = new Oferta();
-            of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi ha podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
-            of.setEstat("Pendent");
-            of.setFormacio(1);
-            of.addHabilitats(habs);
-            of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
-            of.setCiutat("Cardona");
-            of.setNifEmpresa("22333444K"); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
-            of.setSou(25000d);
-            of.setTipusContracte("Indefinit");
-            of.setTitolOferta("Títol de l'oferta");
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
             // Afegeixo els atributs per passar a la vista
             modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
             modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
@@ -270,48 +257,6 @@ public class EspaiController {
         ModelAndView modelview = new ModelAndView("oferta");
         // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
         
-        
-        ///// Inici dels objectes de prova que genero per poder muntar la vista ////////////////////////////////////////////////////////////////////////////////////////////
-        
-        // Genero habilitats de prova
-        Habilitat h1 = new Habilitat();
-        h1.setNomHab("habilitat1");
-        
-        Habilitat h2 = new Habilitat();
-        h2.setNomHab("habilitat2");
-        
-        Habilitat h3 = new Habilitat();
-        h3.setNomHab("habilitat3");
-        
-        
-        // Omplo un arrayList amb les habilitats de prova per afegir-lo a l'objecte de prova
-        ArrayList<Habilitat> habs = new ArrayList();
-        habs.add(h1);
-        habs.add(h2);
-        habs.add(h3);
-        
-        // Genero un objecte Oferta DE PROVA mentre no fem el getOfertaPerRef, o com sigui
-        Oferta of = new Oferta();
-        of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
-        of.setEstat("Pendent");
-        of.setFormacio(1);
-        of.addHabilitats(habs);
-        of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
-        of.setCiutat("Cardona");
-        of.setNifEmpresa("22333444K"); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
-        of.setSou(25000d);
-        of.setTipusContracte("Indefinit");
-        of.setTitolOferta("Títol de l'oferta");
-        
-    
-        // Hashmap que emmagatzema els POSSIBLES ESTATS QUE PODEN  TENIR LES CANDIDATURES (per poder fer la prova). Probablement no és el millor lloc on tenir aquest llistat.
-        HashMap<Integer, String> estatsPossibles = new HashMap<>();
-        estatsPossibles.put(0,"Pendent revisar");
-        estatsPossibles.put(1,"Denegada"); 
-        estatsPossibles.put(2,"Aprovada");
-     
-        
-        // També li haurem de passar la LLISTA AMB LES CANDIDATURES, amb l'estat en que estiguin, si no passen integrades dins l'objecte Oferta
         // Omplo un arrayList amb les candidatures de prova per poder enviar-les al controlador
         List<Candidatura> candidatures = getListOfCandidatures();
         LlistaCandidatures llistaCandidatures = new LlistaCandidatures();
@@ -500,10 +445,69 @@ public class EspaiController {
           
             ModelAndView modelview = new ModelAndView("home");
             modelview.getModelMap().addAttribute("opcions", opcions);
-            modelview.getModelMap().addAttribute("missatgeAlerta", "Has sortit de l'aplicació. Fins aviat!");
+            modelview.getModelMap().addAttribute("ubicacio", "La teva web de cerca de feina");
+            modelview.getModelMap().addAttribute("missatgeFeedback", "Has sortit de l'aplicació. Fins aviat!");
+            modelview.getModelMap().addAttribute("classeFeedback", "alert-warning");
             
             return modelview;
     }
+      
+     @RequestMapping(value = "/inscripcioOferta/{dadesInscripcio}", method = RequestMethod.GET)
+     public ModelAndView inscripcioOferta(@MatrixVariable(pathVar="dadesInscripcio") Map<String, List<String>> dades){
+           
+           Boolean inscripcioOK=false;
+           
+           System.out.println("--- dades per fer la inscripció a l'oferta: "+dades);
+           System.out.println("--- Codi de l'oferta: "+dades.get("oferta").get(0));
+           System.out.println("--- Codi del candidat: "+dades.get("candidat").get(0));
+           
+           
+           //
+           // AQUI HAUREM DE GESTIONAR LA INSCRIPCIÓ MITJANÇANT EL MÈTODE CORRESPONENT
+           // HAUREM DE REBRE UN VALOR BOOLEÀ QUE UTILITZAREM PER PASSAR FEEDBACK A L'USUARI
+           //
+           
+           
+           // Opció perfil a la barra de navegació
+            HashMap<String, String> perfil = new HashMap<>();
+            perfil.put("paraula","Perfil");
+            perfil.put("url","/perfil");
+        
+            // Opció candidatures a la barra de navegació
+            HashMap<String, String> candidatures = new HashMap<>();
+            candidatures.put("paraula","Candidatures");  
+            candidatures.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
+        
+            // Opció logout a la barra de navegació
+            HashMap<String, String> logout = new HashMap<>();
+            logout.put("paraula","Logout");
+            logout.put("url","/logout");
+        
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{perfil,candidatures,logout};  
+            
+            // missatge i classe del missatge de feedback que rebrà l'usuari
+            String missatgeFeedback =""; // missatge de feedback que rebrà l'usuari 
+            String classeFeedback = "";  // classe CSS que s'aplicarà al contenidor del missatge de feedback
+            
+            if (inscripcioOK) {
+                  missatgeFeedback = "Inscripció a l'oferta realitzada correctament";
+                  classeFeedback = "alert-warning";
+            } else {
+                  missatgeFeedback = "Inscripció a l'oferta NO realitzada.";
+                  classeFeedback = "alert-danger";
+            }
+            
+            // LI HAUREM DE PASSAR AL MODEL EL CODI DEL CANDIDAT
+            ModelAndView modelview = new ModelAndView("espaiCandidat");
+            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
+            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+            modelview.getModelMap().addAttribute("ubicacio", "Ofertes escaients per les teves dades");
+            modelview.getModelMap().addAttribute("opcions", opcions);
+           
+           // modelview.getModelMap().addAttribute("missatgeFeedback", "Has sortit de l'aplicació. Fins aviat!");
+           return modelview;
+     }
     
       
     @RequestMapping(value = "/enrera", method = RequestMethod.GET)

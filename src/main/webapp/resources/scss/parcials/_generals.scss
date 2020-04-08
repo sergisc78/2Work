@@ -45,6 +45,18 @@ a {
       color: $color-basic-blau-fosc;
 }
 
+#feedback {
+      padding: 0.5em 0;
+      margin: 0;
+      border: none;
+      
+      .container div {
+            position: relative;
+            
+            button { top: -50%; }
+      }
+}
+
 .btn-warning {
       background: $color-basic-taronja;
       border-color: lighten($color-basic-taronja, 10%);
