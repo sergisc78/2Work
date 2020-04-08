@@ -179,27 +179,27 @@
                         <label for="sector">Sector laboral de l'empresa</label>
                         <form:select class="form-control" id="sector" path="sector" required="required">
                             <form:option value="0"> --SELECT--</form:option>
-                            <form:option value="1" label="1.Activitats físiques i esportives"/>
-                            <form:option value="2" label="2.Adminstració i gestió"/>
-                            <form:option value="3" label="3.Agricultura i ramaderia"/>
-                            <form:option value="4" label="4.Indústria alimentària"/>
-                            <form:option value="5" label="5.Comerç"/>
-                            <form:option value="6" label="6.Construcció"/>
-                            <form:option value="7" label="7.Disseny i arts gràfiques"/>
-                            <form:option value="8" label="8.Educació"/>
-                            <form:option value="9" label="9.Finances"/>
-                            <form:option value="10" label="10.Informàtica"/>
-                            <form:option value="11" label="11.Enyingeria"/>
-                            <form:option value="12" label="12.Legal"/>
-                            <form:option value="13" label="13.Màrqueting i comunicació"/>
-                            <form:option value="14" label="14.Recursos humans"/>
-                            <form:option value="15" label="15.Sanitari"/>
-                            <form:option value="16" label="16.Turisme"/>
-                            <form:option value="17" label="17.Hostaleria i turisme"/>
-                            <form:option value="18" label="18.Mediambiental"/>
-                            <form:option value="19" label="19.Pesca i agricultura"/>
-                            <form:option value="20" label="20.Química"/>
-                            <form:option value="21" label="21.Estètica i perruqueria"/>
+                            <form:option value="1" label="Activitats físiques i esportives"/>
+                            <form:option value="2" label="Adminstració i gestió"/>
+                            <form:option value="3" label="Agricultura i ramaderia"/>
+                            <form:option value="4" label="Indústria alimentària"/>
+                            <form:option value="5" label="Comerç"/>
+                            <form:option value="6" label="Construcció"/>
+                            <form:option value="7" label="Disseny i arts gràfiques"/>
+                            <form:option value="8" label="Educació"/>
+                            <form:option value="9" label="Finances"/>
+                            <form:option value="10" label="Informàtica"/>
+                            <form:option value="11" label="Enyingeria"/>
+                            <form:option value="12" label="Legal"/>
+                            <form:option value="13" label="Màrqueting i comunicació"/>
+                            <form:option value="14" label="Recursos humans"/>
+                            <form:option value="15" label="Sanitari"/>
+                            <form:option value="16" label="Turisme"/>
+                            <form:option value="17" label="Hostaleria i turisme"/>
+                            <form:option value="18" label="Mediambiental"/>
+                            <form:option value="19" label="Pesca i agricultura"/>
+                            <form:option value="20" label="Química"/>
+                            <form:option value="21" label="Estètica i perruqueria"/>
                         </form:select>
                     </div>
                     

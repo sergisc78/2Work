@@ -32,7 +32,7 @@ public class Habilitat implements Serializable{
     @NotNull
     @Size(max=100)
     @Column (name="ocupacio")
-    protected String ocupacio;
+    protected Integer ocupacio;
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Habilitat> candidats = new ArrayList();
@@ -40,7 +40,7 @@ public class Habilitat implements Serializable{
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Oferta> ofertes=new ArrayList();
 
-    public Habilitat(Integer codiHab, String nomHab, String ocupacio) {
+    public Habilitat(Integer codiHab, String nomHab, Integer ocupacio) {
         this.codiHab = codiHab;
         this.nomHab = nomHab;
         this.ocupacio = ocupacio;
@@ -59,7 +59,7 @@ public class Habilitat implements Serializable{
         return nomHab;
     }
 
-    public String getOcupacio() {
+    public Integer getOcupacio() {
         return ocupacio;
     }
 
@@ -78,7 +78,7 @@ public class Habilitat implements Serializable{
         this.nomHab = nomHab;
     }
 
-    public void setOcupacio(String ocupacio) {
+    public void setOcupacio(Integer ocupacio) {
         this.ocupacio = ocupacio;
     }
 
