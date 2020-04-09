@@ -39,8 +39,6 @@ public class Candidat extends Usuari implements Serializable{
     @Column(name="ocupacio")
     protected Integer ocupacio;
 
-    @Column(name="codiCandidat")
-    protected Integer codiCandidat;
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Habilitat> habilitats = new ArrayList();
@@ -49,14 +47,13 @@ public class Candidat extends Usuari implements Serializable{
     protected ArrayList<Experiencia> experiencies = new ArrayList();
 
 
-    public Candidat (String nom,String cognoms, String dniNif,Date dataNaix,String adreca, String ciutat,String provincia,String telefon,
-            String email, String observacions, String pass, String cPass, Integer formacio,Integer ocupacio,Integer codiCandidat) {
-        super(nom,dniNif,adreca,ciutat,provincia,telefon,email,observacions,pass,cPass);
+    public Candidat (Integer codi,String nom,String cognoms, String dniNif,Date dataNaix,String adreca, String ciutat,String provincia,String telefon,
+            String email, String observacions, String pass, String cPass, Integer formacio,Integer ocupacio) {
+        super(codi,nom,dniNif,adreca,ciutat,provincia,telefon,email,observacions,pass,cPass);
         this.cognoms = cognoms;
         this.dataNaix = dataNaix;
         this.formacio = formacio;
-        this.ocupacio=ocupacio;
-        this.codiCandidat = codiCandidat;        
+        this.ocupacio=ocupacio;   
         this.habilitats= new ArrayList<Habilitat>();
         this.experiencies= new ArrayList<Experiencia>();
     }
@@ -78,11 +75,7 @@ public class Candidat extends Usuari implements Serializable{
 
     public Integer getOcupacio() {
         return ocupacio;
-    }
-
-    public Integer getCodiCandidat() {
-        return codiCandidat;
-    }   
+    } 
 
     public ArrayList<Habilitat> getHabilitats() {
         return habilitats;
@@ -106,10 +99,6 @@ public class Candidat extends Usuari implements Serializable{
 
     public void setOcupacio(Integer ocupacio) {
         this.ocupacio = ocupacio;
-    }
-
-    public void setCodiCandidat(Integer codiCandidat) {
-        this.codiCandidat = codiCandidat;
     }
 
     public void setHabilitats(ArrayList<Habilitat> habilitats) {

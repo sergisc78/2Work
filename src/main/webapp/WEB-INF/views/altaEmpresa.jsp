@@ -79,8 +79,14 @@
         <section id="alta-empresa" class="container-sm formulari-alta">       
             <h3 class="text-center blau">Enregistra't com empresa</h3><br>
 
-                 <form:form modelAttribute="formEmpresa" class="needs-validation" novalidate="novalidate" onsubmit="return validarEmp();">
-
+                 <form:form modelAttribute="formEmpresa" class="needs-validation" novalidate="novalidate" onsubmit="return validarEmp();" action="${act}">
+                    <div class="form-group">
+                    <label for="codi">Codi Empresa</label>
+                    <form:input type="text" class="form-control" id="codi"path="codi" aria-describedby="codi" placeholder="NO OMPLIR" />
+                    <div class="invalid-feedback">
+                        NO OMPLIR 
+                    </div>
+                </div> 
                     <div class="form-group">
                         <label for="nom">Nom de l'empresa</label>
                         <form:input type="text" class="form-control" id="nom"path="nom" aria-describedby="nomEmpresa" placeholder="Introdueix el nom empresa" required="required"/>

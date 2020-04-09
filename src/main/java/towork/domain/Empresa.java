@@ -44,10 +44,10 @@ public class Empresa extends Usuari implements Serializable{
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Oferta> ofertes=new ArrayList();
 
-    public Empresa( String nom, String responsable, String dniNif,String adreca, String ciutat, String provincia,
+    public Empresa( Integer codi,String nom, String responsable, String dniNif,String adreca, String ciutat, String provincia,
             String telefon,String web, Integer tamany, String email, String observacions,
             String pass, String cPass, Integer sector,Integer codiEmpresa) {
-        super(nom,dniNif,adreca,ciutat,provincia,telefon,email,observacions,pass,cPass);
+        super(codi,nom,dniNif,adreca,ciutat,provincia,telefon,email,observacions,pass,cPass);
         this.responsable=responsable;
         this.web = web;
         this.tamany = tamany;

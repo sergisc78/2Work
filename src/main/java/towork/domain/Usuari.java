@@ -15,12 +15,18 @@ public class Usuari implements Serializable{
     
     private static final long serialVersionUID=1L;
     
+    @Id
+    @NotNull
+    @Column (name="codi")
+    protected Integer codi;
+    
+    
     @NotNull
     @Size(max=20)
     @Column (name="nom")
     protected String nom;
     
-    @Id
+    
     @NotNull
     @Size(max=9)
     @Column (name="dniNif")            
@@ -67,7 +73,8 @@ public class Usuari implements Serializable{
     
    
 
-    public Usuari(String nom, String dniNif, String adreca, String ciutat, String provincia,String telefon, String email, String observacions, String pass, String cPass) {   
+    public Usuari(Integer codi,String nom, String dniNif, String adreca, String ciutat, String provincia,String telefon, String email, String observacions, String pass, String cPass) {   
+        this.codi=codi;
         this.nom = nom;
         this.dniNif = dniNif;
         this.adreca = adreca;
@@ -83,6 +90,10 @@ public class Usuari implements Serializable{
     public Usuari() {
     }
 
+    public Integer getCodi() {
+        return codi;
+    }
+    
     public String getNom() {
         return nom;
     }
@@ -123,6 +134,10 @@ public class Usuari implements Serializable{
         return cPass;
     }
 
+    public void setCodi(Integer codi) {
+        this.codi = codi;
+    }
+    
     public void setNom(String nom) {
         this.nom = nom;
     }

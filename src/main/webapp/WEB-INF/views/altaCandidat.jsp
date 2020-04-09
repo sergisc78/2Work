@@ -78,7 +78,13 @@
             <h3 class="text-center blau">Enregistra't com a candidat</h3><br>
 
             <form:form modelAttribute="formCandidat" class="needs-validation" novalidate="novalidate" onsubmit="return validarCand();" action="${act}">
-
+                <div class="form-group">
+                    <label for="codi">Codi candidat</label>
+                    <form:input type="text" class="form-control" id="codi"path="codi" aria-describedby="codi" placeholder="NO OMPLIR" />
+                    <div class="invalid-feedback">
+                        NO OMPLIR 
+                    </div>
+                </div>    
                 <div class="form-group">
                     <label for="nom">Nom</label>
                     <form:input type="text" class="form-control" id="nom" path="nom" aria-describedby="nomCandidat" placeholder="Introdueix el nom" required="required"/>

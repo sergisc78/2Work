@@ -76,21 +76,21 @@
                 <form:form modelAttribute="formOferta" class="needs-validation" novalidate="novalidate" onsubmit="return validarOferta();" action="${act}">
                     <div class="form-group">
                         <label for="codiOferta">Codi de l'oferta</label>
-                        <form:input type="text" class="form-control" id="codiOferta"path="codiOferta" aria-describedby="emailHelp" placeholder="NO OMPLIR" />
+                        <form:input type="text" class="form-control" id="codiOferta"path="codiOferta" aria-describedby="codiOferta" placeholder="NO OMPLIR" />
                         <div class="invalid-feedback">
                             NO OMPLIR 
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="nifEmpresa">Nif de l'empresa</label>
-                        <form:input type="text" class="form-control" id="nifEmpresa"path="nifEmpresa" aria-describedby="emailHelp" placeholder="Introdueix el nif empresa" required="required"/>
+                        <form:input type="text" class="form-control" id="nifEmpresa"path="nifEmpresa" aria-describedby="nif" placeholder="Introdueix el nif empresa" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix el nif de l'empresa
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="titolOferta">Títol de l'oferta</label>
-                        <form:input type="text" class="form-control" id="titolOferta" path="titolOferta" aria-describedby="emailHelp" placeholder="Introdueix el títol de l'oferta" required="required"/>
+                        <form:input type="text" class="form-control" id="titolOferta" path="titolOferta" aria-describedby="titol" placeholder="Introdueix el títol de l'oferta" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix el títol de l'oferta
                         </div>
