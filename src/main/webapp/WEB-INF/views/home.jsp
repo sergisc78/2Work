@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8" session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!-- <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> -->
@@ -40,14 +40,12 @@
 
                   <div class="collapse navbar-collapse" id="navbarHomeToggler">
                         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                              <c:forEach items="${opcions}" var="map">
+                      
                               <li class="nav-item">
-                                    <a class="nav-link" href="<spring:url value='/loginAdmin'/>">Administrador</a>
+                                    <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
                               </li>
-                              <li class="nav-item">
-                                    <a class="nav-link" href="<spring:url value='/loginCandidat'/>">Candidat</a>
-                              </li>
-                                    <a class="nav-link" href="<spring:url value='/loginEmpresa'/>">Empresa</a>
-                              </li>
+                        </c:forEach>
                       </ul>
                   </div>
 

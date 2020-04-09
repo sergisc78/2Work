@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,34 +31,60 @@ public class HomeController {
       @RequestMapping(value = "/", method = RequestMethod.GET)
       public ModelAndView homeRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
+            // Llegim l'atribut login de la sessió
+            
+            HttpSession session = request.getSession();
+            boolean login = false;
+            
+            if (session.getAttribute("login") != null){
+                  login = (Boolean) session.getAttribute("login");
+            }
+            
+            
             // Creem el modelview
             ModelAndView modelview = new ModelAndView("home");
             
             // Creem les opcions que aniràn a la barra de navegació
+            List<Map<String, String>> opcions = new ArrayList<>();
             
-            // Opció Administrador a la barra de navegació
-            HashMap<String, String> admin = new HashMap<>();
-            admin.put("paraula","Administrador");
-            admin.put("url","/loginAdmin");
+            if (!login) {
+                  // Si no hi  ha un usuari logat 
+                  // Opció Administrador a la barra de navegació
+                  HashMap<String, String> admin = new HashMap<>();
+                  admin.put("paraula","Administrador");
+                  admin.put("url","/loginAdmin");
         
-            // Opció Candidat a la barra de navegació
-            HashMap<String, String> candidat = new HashMap<>();
-            candidat.put("paraula","Candidat");
-            candidat.put("url","/loginCandidat");
+                  // Opció Candidat a la barra de navegació
+                  HashMap<String, String> candidat = new HashMap<>();
+                  candidat.put("paraula","Candidat");
+                  candidat.put("url","/loginCandidat");
         
-            // Opció Empresa a la barra de navegació
-            HashMap<String, String> empresa = new HashMap<>();
-            empresa.put("paraula","Empresa");
-            empresa.put("url","/loginEmpresa");
-        
-            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{admin,candidat,empresa};  
+                  // Opció Empresa a la barra de navegació
+                  HashMap<String, String> empresa = new HashMap<>();
+                  empresa.put("paraula","Empresa");
+                  empresa.put("url","/loginEmpresa");
+                  
+                  // Afegim les opcions a l'array
+                  opcions.add(admin);
+                  opcions.add(candidat);
+                  opcions.add(empresa);
+                  
+            } else {
+                  // Si hi ha algun usuari logat
+                  // Opció Logout a la barra de navegació
+                  HashMap<String, String> logout = new HashMap<>();
+                  logout.put("paraula","Logout");
+                  logout.put("url","/logout");
+                  
+                  opcions.add(logout);
+            }
             
             modelview.getModelMap().addAttribute("ubicacio", "La teva web de cerca de feina");
             modelview.getModelMap().addAttribute("opcions", opcions);
             return modelview;
-    }
+      }
 
+      
       @RequestMapping(value = "/altaCandidat", method = RequestMethod.GET)
       public ModelAndView addcandidatRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             ModelAndView modelview = new ModelAndView("altaCandidat");
@@ -87,6 +114,7 @@ public class HomeController {
         CandidatService.addCandidat(formCandidat);
         return "redirect:/all"; //return "redirect:/";
     }*/
+      
       
     @RequestMapping(value = "/altaEmpresa", method = RequestMethod.GET)
     public ModelAndView addempresaRequest(HttpServletRequest request, HttpServletResponse response)

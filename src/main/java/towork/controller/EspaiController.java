@@ -1,5 +1,8 @@
-
 package towork.controller;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.CookieValue;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +13,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,7 +34,7 @@ import towork.domain.Oferta;
 public class EspaiController {
     
       ///// GENEREM OBJECTES DE PROVA QUE HAUREM D'ESBORRAR QUAN TINGUEM CREATS ELS MÈTODES QUE ELS
-     //// AGAFARAN DE LA BASE DE DADES
+      //// AGAFARAN DE LA BASE DE DADES
       public Habilitat h1 = new Habilitat();
       public Habilitat h2 = new Habilitat();
       public Habilitat h3 = new Habilitat();
@@ -77,19 +81,40 @@ public class EspaiController {
             
             // Fins aqui els objectes de prova
         
-            // Possibles estats de les candidatures (aquesta part potser es pot deixar definida aqui. Valorar si és un bon lloc)
+            // Possibles estats de les candidatures (aquesta part potser es pot deixar definida aqui. Probablement no és el millor lloc)
             estatsPossibles.put(0,"Pendent revisar");
             estatsPossibles.put(1,"Denegada"); 
             estatsPossibles.put(2,"Aprovada");
             
        }
       
+      ///////////////////////////////////////////////////////////////////////////////////////////////
+
+      // Mètode provisional que afegeig una llista de candidatures
+      private List<Candidatura> getListOfCandidatures() {
+            
+            List<Candidatura> cands = new ArrayList<>();
+            // Ordre dels paràmetres al constructor: codiCandidatura, codiCandidat, codiOferta, estat
+            cands.add(new Candidatura(1, 1, 1, 2));
+            cands.add(new Candidatura(2, 2, 2, 2));
+            cands.add(new Candidatura(3, 3, 3, 1));
+            cands.add(new Candidatura(4, 4, 4, 0));
+            return cands;
+     }
       
+      
+      
+      
+      //
       // Controllers dels espais dls 3 usuaris del sistema,candidat, empresa i administrador
-    
+      //
+      
+      
       @RequestMapping(value = "/espaiCandidat", method = RequestMethod.GET)
+      // public ModelAndView EspaiCandidatRequest(@CookieValue(value="usuari", required=false) String tipusUsuariCookie, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       public ModelAndView EspaiCandidatRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
           
+
             // AQUEST CONTROLADOR HAURÀ DE REBRE EL CODI DE CANDIDAT
             
             // Opció perfil a la barra de navegació
@@ -113,6 +138,7 @@ public class EspaiController {
             ModelAndView modelview = new ModelAndView("espaiCandidat");
             modelview.getModelMap().addAttribute("ubicacio", "Ofertes escaients per les teves dades");
             modelview.getModelMap().addAttribute("opcions", opcions);
+            
             return modelview;
       }
     
@@ -153,7 +179,7 @@ public class EspaiController {
       
       @RequestMapping(value = "/oferta", method = RequestMethod.GET)
       public ModelAndView OfertaPerRef(@RequestParam("ref") String ref, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-          
+            
             // Opció perfil a la barra de navegació
             HashMap<String, String> perfil = new HashMap<>();
             perfil.put("paraula","Perfil");
@@ -162,9 +188,8 @@ public class EspaiController {
             // Opció ofertes a la barra de navegació
             HashMap<String, String> ofertes = new HashMap<>();
             ofertes.put("paraula","Ofertes");
-            ofertes.put("url","/espaiCandidat"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
-                                                                        // Si vinc de la vista oferta per empresa (compartim vista) hauria de tornar a llistat d'ofertes per empresa
-        
+            ofertes.put("url","/espaiCandidat"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes pels candidats
+                                                                        
             // Opció candidatures a la barra de navegació
             HashMap<String, String> candidatures = new HashMap<>();
             candidatures.put("paraula","Candidatures");  
@@ -195,6 +220,9 @@ public class EspaiController {
             // Controlador que invoca la vista perque aquesta mostri només el botó 'Tornar'
             // Pensat per quan el candidat vulgui consultar l'oferta des del llistat de candidatures
             // Passem el referer a la vista com a atribut
+          
+            HttpSession session = request.getSession();
+            String tipusUsuari = String.valueOf(session.getAttribute("usuari"));
             
             // Opció perfil a la barra de navegació
             HashMap<String, String> perfil = new HashMap<>();
@@ -203,8 +231,20 @@ public class EspaiController {
         
             // Opció ofertes a la barra de navegació
             HashMap<String, String> ofertes = new HashMap<>();
+            
+            System.out.println("--- Entrem al switch amb el següent valor a tipusUsuari: "+tipusUsuari);
+            
             ofertes.put("paraula","Ofertes");
-            ofertes.put("url","/espaiCandidat"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
+            switch(tipusUsuari){
+                  case "candidat": { 
+                        ofertes.put("url","/espaiCandidat"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes pels candidats
+                        break;
+                  }
+                  case "empresa": {
+                        ofertes.put("url","/ofertesEmpresa");
+                        break;
+                  }
+            }
         
             // Opció candidatures a la barra de navegació
             HashMap<String, String> candidatures = new HashMap<>();
@@ -245,7 +285,7 @@ public class EspaiController {
         // Opció ofertes a la barra de navegació
         HashMap<String, String> ofertes = new HashMap<>();
         ofertes.put("paraula","Ofertes");
-        ofertes.put("url","/espaiCandidat"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
+        ofertes.put("url","/ofertesEmpresa"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
             
         // Opció logout a la barra de navegació
         HashMap<String, String> logout = new HashMap<>();
@@ -284,28 +324,33 @@ public class EspaiController {
     }
     
         
-    @RequestMapping(value = "/ofertesEmpresa", method = RequestMethod.GET)
-    public ModelAndView OfertesEmpresaRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      @RequestMapping(value = "/ofertesEmpresa", method = RequestMethod.GET)
+      public ModelAndView OfertesEmpresaRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+            HttpSession session = request.getSession();
+            String tipusUsuari = String.valueOf(session.getAttribute("usuari"));
+            System.out.println("--- Valor de l'atribut al controlador: "+tipusUsuari);
           
-        // Opció perfil a la barra de navegació
-        HashMap<String, String> perfil = new HashMap<>();
-        perfil.put("paraula","Perfil");
-        perfil.put("url","/perfil");
+            // Opció perfil a la barra de navegació
+            HashMap<String, String> perfil = new HashMap<>();
+            perfil.put("paraula","Perfil");
+            perfil.put("url","/perfil");
         
-        // Opció logout a la barra de navegació
-        HashMap<String, String> logout = new HashMap<>();
-        logout.put("paraula","Logout");
-        logout.put("url","/logout");
+            // Opció logout a la barra de navegació
+            HashMap<String, String> logout = new HashMap<>();
+            logout.put("paraula","Logout");
+            logout.put("url","/logout");
         
-        // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-        HashMap[] opcions = new HashMap[]{perfil,logout};  
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{perfil,logout};  
 
         
-        ModelAndView modelview = new ModelAndView("ofertesEmpresa");
-        modelview.getModelMap().addAttribute("ubicacio", "Ofertes generades");
-        modelview.getModelMap().addAttribute("opcions", opcions);
+            ModelAndView modelview = new ModelAndView("ofertesEmpresa");
+            modelview.getModelMap().addAttribute("tipusUsuari", tipusUsuari);
+            modelview.getModelMap().addAttribute("ubicacio", "Ofertes generades");
+            modelview.getModelMap().addAttribute("opcions", opcions);
         
-        return modelview;
+            return modelview;
     }    
 
 
@@ -422,8 +467,11 @@ public class EspaiController {
       @RequestMapping(value = "/logout", method = RequestMethod.GET)
       public ModelAndView logout(HttpServletRequest request) {
           
-            // AQUI HEM DE CRIDAR EL MÈTODE QUE FARÀ EL LOGOUT
-          
+            HttpSession session = request.getSession();
+            session.setAttribute("login", false);
+            session.removeAttribute("usuari");
+            // AQUI HEM DE CRIDAR EL MÈTODE QUE FARÀ EL LOGOUT 
+           
             // Creem les opcions que aniràn a la barra de navegació
             
             // Opció Administrador a la barra de navegació
@@ -574,26 +622,35 @@ public class EspaiController {
            
      }
     
-      
     @RequestMapping(value = "/enrera", method = RequestMethod.GET)
      public String anarEnrera(HttpServletRequest request) {
             // Controlador que utilitzem per tornar a la pàgina anterior 
             String referer = request.getHeader("Referer");            
             return "redirect:"+ referer;
     }
-  
+     
+        
+     ///////////////////////////////  Mètodes de prova (atributs de sessió per simular login/logout  ///////////////////////////////
+     
+     @RequestMapping(value = "/entradaCandidat", method = RequestMethod.GET) 
+     public String entradaCandidat(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+           
+           HttpSession session = request.getSession();
+           session.setAttribute("tipusUsuari", "candidat");
+           session.setAttribute("login", true);
+           
+           return "redirect:/espaiCandidat";
+      }
     
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    
-    // Mètode que afegeig una llista de candidatures
-    private List<Candidatura> getListOfCandidatures() {
-      List<Candidatura> cands = new ArrayList<>();
-      // Ordre dels paràmetres al constructor: codiCandidatura, codiCandidat, codiOferta, estat
-      cands.add(new Candidatura(1, 1, 1, 2));
-      cands.add(new Candidatura(2, 2, 2, 2));
-      cands.add(new Candidatura(3, 3, 3, 1));
-      cands.add(new Candidatura(4, 4, 4, 0));
-      return cands;
-   }
-    
+     
+     @RequestMapping(value = "/entradaEmpresa", method = RequestMethod.GET) 
+     public String entradaEmpresa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+           
+           HttpSession session = request.getSession();
+           session.setAttribute("tipusUsuari", "empresa");
+           session.setAttribute("login", true);
+           
+           return "redirect:/ofertesEmpresa";
+      }
+     
 }

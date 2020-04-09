@@ -41,7 +41,7 @@
               </form>
               <p>
                     <a class="small-text text-muted" href="<spring:url value='/'/>">Tornar</a>
-                    <a class="small-text text-muted" href="<spring:url value='espaiCandidat/'/>" style="margin-left: 1rem;">Entrar sense login</a>
+                    <a class="small-text text-muted" href="<spring:url value='entradaCandidat/'/>" style="margin-left: 1rem;">Entrar sense login</a>
               </p>
         </section>
             
