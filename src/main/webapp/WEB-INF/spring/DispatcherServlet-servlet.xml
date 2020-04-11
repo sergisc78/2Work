@@ -13,7 +13,7 @@
     
     <mvc:annotation-driven enable-matrix-variables="true"/>
     <mvc:resources mapping="/resources/**" location="/resources/" />
-    <context:component-scan base-package="towork.controller" />
+    <context:component-scan base-package="towork.controller towork.domain towork.repository towork.repository.impl towork.service towork.service.impl" />
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />

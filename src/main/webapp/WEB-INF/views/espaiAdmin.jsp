@@ -42,9 +42,11 @@
 
             <div class="collapse navbar-collapse" id="navbarHomeToggler">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<spring:url value='/'/>">Inici</a>
-                    </li>
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                        <li role="Presentation" class="nav-item">
+                            <a class="nav-link" href="<c:url value="/j_spring_security_logout" />">Logout</a>
+                        </li>
+                    </sec:authorize>
                 </ul>
             </div>  
 
@@ -57,17 +59,19 @@
         </section>
         <h2 class="text-center">Benvingut a l´espai administrador</h2><br>
         <h3 class="text-center">Què desitges fer?</h3><br>
-        <div class="container" style="border:#ccc 2px solid;padding: 10px">
+        <div class="container">
             <ul class="text-center">
-                <a href="#"><li sytle="list-style:none">Consultar ofertes creades</li></a>
-                <a href="#"><li sytle="list-style:none">Consultar candidats</li></a>
-                <a href="#"><li sytle="list-style:none">Consultar empreses</li></a>
-                
+                <a href="#">Consultar ofertes creades</a><br><br>
+                <a href="#">Consultar candidats</a><br><br>
+                <a href="#">Consultar empreses</a><br><br>
+                <a href="#">Esborrar candidats</a><br><br>
+                <a href="#">Esborrar empreses</a><br><br>
+
 
             </ul>
         </div>
 
         <%@include  file='/resources/html/footer.html' %>
-        
+
     </body>
 </html>
