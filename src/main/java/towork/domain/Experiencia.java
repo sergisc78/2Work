@@ -29,7 +29,6 @@ public class Experiencia implements Serializable{
     @Column(name="nomEmpresa")
     private String nomEmpresa;
     
-    
     @NotNull
     @Size(max=9)
     @Column(name="dniCandidat")

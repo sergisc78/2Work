@@ -44,13 +44,13 @@ public class Habilitat implements Serializable{
         this.codiHab = codiHab;
         this.nomHab = nomHab;
         this.ocupacio = ocupacio;
-        this.candidats=new ArrayList<Habilitat>();
-        this.ofertes=new ArrayList<Oferta>();
+        // this.candidats=new ArrayList<Habilitat>();
+        // this.ofertes=new ArrayList<Oferta>();
     }
 
     public Habilitat() {
     }
-
+    
     public Integer getCodiHab() {
         return codiHab;
     }

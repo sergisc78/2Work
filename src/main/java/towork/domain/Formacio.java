@@ -1,4 +1,3 @@
-
 package towork.domain;
 
 import java.io.Serializable;
@@ -34,7 +33,7 @@ public class Formacio implements Serializable {
     public Formacio(Integer codiFormacio, String nomFormacio) {
         this.codiFormacio = codiFormacio;
         this.nomFormacio = nomFormacio;
-        this.candidats = new ArrayList<Candidat>();
+        // this.candidats = new ArrayList<Candidat>();
     }
 
     public Formacio() {

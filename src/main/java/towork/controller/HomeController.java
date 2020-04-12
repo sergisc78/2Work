@@ -13,13 +13,17 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import towork.domain.Candidat;
 import towork.domain.Empresa;
+import towork.domain.Experiencia;
+import towork.formularis.LlistaFormacions;
+import towork.formularis.LlistaOcupacions;
 
 /**
  *
@@ -31,53 +35,32 @@ public class HomeController {
       @RequestMapping(value = "/", method = RequestMethod.GET)
       public ModelAndView homeRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-            // Llegim l'atribut login de la sessió
-            
-            HttpSession session = request.getSession();
-            boolean login = false;
-            
-            if (session.getAttribute("login") != null){
-                  login = (Boolean) session.getAttribute("login");
-            }
-            
-            
             // Creem el modelview
             ModelAndView modelview = new ModelAndView("home");
             
             // Creem les opcions que aniràn a la barra de navegació
             List<Map<String, String>> opcions = new ArrayList<>();
             
-            if (!login) {
-                  // Si no hi  ha un usuari logat 
-                  // Opció Administrador a la barra de navegació
-                  HashMap<String, String> admin = new HashMap<>();
-                  admin.put("paraula","Administrador");
-                  admin.put("url","/loginAdmin");
+            
+            // Opció Administrador a la barra de navegació
+            HashMap<String, String> admin = new HashMap<>();
+            admin.put("paraula","Administrador");
+            admin.put("url","/loginAdmin");
         
-                  // Opció Candidat a la barra de navegació
-                  HashMap<String, String> candidat = new HashMap<>();
-                  candidat.put("paraula","Candidat");
-                  candidat.put("url","/loginCandidat");
+            // Opció Candidat a la barra de navegació
+            HashMap<String, String> candidat = new HashMap<>();
+            candidat.put("paraula","Candidat");
+            candidat.put("url","/loginCandidat");
         
-                  // Opció Empresa a la barra de navegació
-                  HashMap<String, String> empresa = new HashMap<>();
-                  empresa.put("paraula","Empresa");
-                  empresa.put("url","/loginEmpresa");
+            // Opció Empresa a la barra de navegació
+            HashMap<String, String> empresa = new HashMap<>();
+            empresa.put("paraula","Empresa");
+            empresa.put("url","/loginEmpresa");
                   
-                  // Afegim les opcions a l'array
-                  opcions.add(admin);
-                  opcions.add(candidat);
-                  opcions.add(empresa);
-                  
-            } else {
-                  // Si hi ha algun usuari logat
-                  // Opció Logout a la barra de navegació
-                  HashMap<String, String> logout = new HashMap<>();
-                  logout.put("paraula","Logout");
-                  logout.put("url","/logout");
-                  
-                  opcions.add(logout);
-            }
+            // Afegim les opcions a l'array
+            opcions.add(admin);
+            opcions.add(candidat);
+            opcions.add(empresa);
             
             modelview.getModelMap().addAttribute("ubicacio", "La teva web de cerca de feina");
             modelview.getModelMap().addAttribute("opcions", opcions);
@@ -102,18 +85,38 @@ public class HomeController {
             //modelview.getModelMap().addAttribute("act", "candidat/add");
             modelview.getModelMap().addAttribute("formCandidat", formCandidat);
             
+            // AQUI LI HEM DE PASSAR ELS LLISTATS PER OMPLIR ELS SELECTS QUE VINDRAN DE LA BBDD
+            // PER ARA ESTÀ SIMULAT AIXÍ
+            LlistaFormacions llistaFormacions = new LlistaFormacions();
+            LlistaOcupacions llistaOcupacions = new LlistaOcupacions();
+            
             modelview.getModelMap().addAttribute("ubicacio", "Alta de candidat");
+            modelview.getModelMap().addAttribute("llistaFormacions", llistaFormacions);
+            modelview.getModelMap().addAttribute("llistaOcupacions", llistaOcupacions);
             modelview.getModelMap().addAttribute("opcions", opcions);
             return modelview;
+      }
+      
+    
+      @RequestMapping(value = "/executaAltaCandidat", method = RequestMethod.POST)
+      public String executaAltaCandidat(@ModelAttribute("formCandidat") Candidat formCandidat, BindingResult result) {
+            
+            System.out.println("--- Ja tenim el candidat a l'objecte formCandidat. Fem amb ell el que faci falta.");
+            for (Experiencia exp : formCandidat.getExperiencies()) {
+                  System.out.println("--- Experiencia: "+exp.getDescripcio());
+            }
+            // System.out.println("--- Propietat d'una de les experiències no omplertes: "+formCandidat.getExperiencies());
+            
+            // Invocarem els mètodes corresponents un cop fets els filtres que calguin
+            // CandidatService.addCandidat(formCandidat);
+            // service.addExperiencies
+            //....
+            
+            
+            // segons el resultat de l'execució del mètode...
+            // ... haurem de redirigir a la vista que vulguem passant feedback a l'usuari (alta feta/alta no feta)
+            return "redirect:/";
     }
-    /*
-     FORM DE Candidat POST
-     */
-    /*@RequestMapping(value = "/candidat/add", method = RequestMethod.POST)
-    public String processAddForm(@ModelAttribute("formCandidat") Candidat formCandidat, BindingResult result) {
-        CandidatService.addCandidat(formCandidat);
-        return "redirect:/all"; //return "redirect:/";
-    }*/
       
       
     @RequestMapping(value = "/altaEmpresa", method = RequestMethod.GET)

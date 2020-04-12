@@ -49,6 +49,12 @@ a {
     #feedback .container div button {
       top: -50%; }
 
+.btn-primary {
+  background: #1d70b7; }
+  .btn-primary:hover {
+    background: #2daae1;
+    border-color: rgba(45, 170, 225, 0.3); }
+
 .btn-warning {
   background: #e1642d;
   border-color: #e7855a;
@@ -141,12 +147,6 @@ body > nav:first-of-type {
     -ms-animation: mouHoritzontal 0.5s 1 ease-in-out;
     animation: mouHoritzontal 0.5s 1 ease-in-out; }
 
-.btn-primary {
-  background: #1d70b7; }
-  .btn-primary:hover {
-    background: #2daae1;
-    border-color: rgba(45, 170, 225, 0.3); }
-
 @keyframes mouHoritzontal {
   0% {
     transform: translateX(0); }
@@ -156,6 +156,42 @@ body > nav:first-of-type {
     transform: translateX(-2%); }
   100% {
     transform: translateX(0); } }
+/* 
+    Created on : 11/04/2020, 11:10:13
+    Author     : Daniel Sevilla i Junyent
+*/
+.formulari-alta, .formulari-login {
+  padding-top: 3rem; }
+  @media only screen and (min-width: 720px) {
+    .formulari-alta, .formulari-login {
+      max-width: 50%; } }
+  .formulari-alta form, .formulari-login form {
+    padding-top: 1rem; }
+
+#alta-candidat hr {
+  width: 100%;
+  border: none;
+  height: 1px;
+  margin: 0 15px 1em;
+  background-color: #1d70b7; }
+#alta-candidat #experiencia button.btn-sm {
+  font-size: 0.8em;
+  padding: .1rem 0.3rem;
+  color: #1d70b7;
+  border-color: #1d70b7; }
+  #alta-candidat #experiencia button.btn-sm:hover {
+    color: #fff;
+    background-color: #1d70b7; }
+#alta-candidat #experiencia .item_experiencia a.esborrar_item {
+  margin-left: 15px; }
+  #alta-candidat #experiencia .item_experiencia a.esborrar_item:hover {
+    color: #2daae1; }
+#alta-candidat #experiencia .item_experiencia div:not(:last-of-type) {
+  margin-bottom: 0.3em; }
+#alta-candidat #experiencia .item_experiencia:not(:first-of-type) {
+  margin-top: 2em;
+  display: none; }
+
 /* 
     Created on : 01/04/2020, 07:27:41
     Author     : Daniel Sevilla i Junyent
@@ -235,14 +271,6 @@ section#motius h5 {
 
 section#alta-candidat a:not([href]), section#alta-empresa a:not([href]) {
   cursor: pointer; }
-
-.formulari-alta, .formulari-login {
-  padding-top: 3rem; }
-  @media only screen and (min-width: 720px) {
-    .formulari-alta, .formulari-login {
-      max-width: 50%; } }
-  .formulari-alta form, .formulari-login form {
-    padding-top: 1rem; }
 
 #modalPrivacitat .modal-content {
   font-size: 0.9em; }

@@ -19,15 +19,18 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import towork.domain.Candidat;
 import towork.domain.Candidatura;
 import towork.domain.Formacio;
 import towork.domain.Habilitat;
-import towork.domain.LlistaCandidatures;
+import towork.formularis.LlistaCandidatures;
+import towork.formularis.LlistaHabilitats;
 import towork.domain.Oferta;
 
 @Controller
@@ -393,10 +396,10 @@ public class EspaiController {
             h3.setNomHab("habilitat3");
 
             // Omplo un arrayList amb les habilitats de prova per afegir-lo a l'objecte de prova
-            ArrayList<Habilitat> habs = new ArrayList();
-            habs.add(h1);
-            habs.add(h2);
-            habs.add(h3);
+            ArrayList<Integer> habs = new ArrayList();
+            habs.add(h1.getCodiHab());
+            habs.add(h2.getCodiHab());
+            habs.add(h3.getCodiHab());
 
             // Genero objecte Formacio de prova
             Formacio formacio = new Formacio();
@@ -406,6 +409,7 @@ public class EspaiController {
             // Genero un objecte Candidat DE PROVA mentre no fem el getCandidatPerCodi, o com sigui
             // Només hi poso les dades que han de sortir a la vista
             Candidat cand = new Candidat();
+            cand.setCodi(1);
             cand.setFormacio(1);
             cand.setEmail("e@mail.cat");
             cand.setTelefon("969996633");
@@ -621,6 +625,36 @@ public class EspaiController {
            return modelview;
            
      }
+     
+      @RequestMapping(value = "/getHabilitats/{idOcupacio}", method = RequestMethod.GET)
+      public @ResponseBody  List<Habilitat> getHabilitatsPerOcupacio(@PathVariable("idOcupacio") int idOcupacio,HttpServletRequest request, HttpServletResponse response) {
+            // Li retornem al select d'habilitats habilitats que hi han d'anar SEGONS EL CODI D'OCUPACIÓ QUE LI PASSEM
+            // Retornem una llista d'objectes Habilitat
+            
+            /////////////////////// 
+            /////////////////////// Les següents línies son de prova, hem de rebre el llistat de la base de dades
+            /////////////////////// 
+            
+            LlistaHabilitats llistaHabilitats = new LlistaHabilitats(true); // genero una llista plena (veure constructors de la classe LlistaHabilitats 
+                        
+            // Genero una llista buida amb els elements de la llista  plena amb ocupació coincident
+            List<Habilitat> llistaIntermitja = new ArrayList<>();
+            
+            for (Habilitat hab : llistaHabilitats.getLlista()) {
+              if (hab.getOcupacio() == idOcupacio) {
+                    llistaIntermitja.add(hab);
+              }
+            }
+            
+            return llistaIntermitja; // Passem això com a prova
+           
+            /////////////////////// 
+            /////////////////////// 
+            /////////////////////// 
+            
+            // exemple de la crida al mètode del servei (que al seu torn cridaria al del repositori, si ho implementem així)
+            // return categoryService.getAllSubcategories(categoryId);
+      }
     
     @RequestMapping(value = "/enrera", method = RequestMethod.GET)
      public String anarEnrera(HttpServletRequest request) {

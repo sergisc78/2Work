@@ -9,6 +9,7 @@
 @import 'parcials/colors';
 @import 'parcials/generals';
 @import 'parcials/barra-nav';
+@import 'parcials/formularis';
 @import 'parcials/footer';
 @import 'parcials/home';
 
@@ -18,18 +19,6 @@ section#alta-candidat, section#alta-empresa {
       }
 }
 
-.formulari-alta, .formulari-login {
-      padding-top: 3rem;
-      
-      @media only screen and (min-width: 720px) {
-            max-width: 50%;
-      }
-      
-      form {
-            padding-top: 1rem;
-      }
-      
-}
 
 #modalPrivacitat .modal-content {
       font-size: 0.9em;

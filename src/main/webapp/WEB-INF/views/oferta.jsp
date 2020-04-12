@@ -118,7 +118,7 @@
                         <h4>Candidatures</h4>
                         <ul class="list-group-flush" id="llistat-candidatures">
                               
-                              <form:form id="formulariCandidatures" modelAttribute="Candidatures" method="post" action="/desaEstatCandidatura">
+                              <form:form id="formulariCandidatures" modelAttribute="Candidatures" method="post" action="desaEstatCandidatura">
                                     
                                     <c:forEach items="${Candidatures.llista}" var="candidatura" varStatus="loop">
                                           <li class="list-group-item d-flex justify-content-between align-items-center">   

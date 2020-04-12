@@ -1,7 +1,8 @@
-package towork.domain;
+package towork.formularis;
 
 import java.io.Serializable;
 import java.util.List;
+import towork.domain.Candidatura;
 
 public class LlistaCandidatures  implements Serializable{
     

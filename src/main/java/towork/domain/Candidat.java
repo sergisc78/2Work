@@ -41,20 +41,19 @@ public class Candidat extends Usuari implements Serializable{
 
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    protected ArrayList<Habilitat> habilitats = new ArrayList();
+    protected ArrayList<Integer> habilitats = new ArrayList();
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Experiencia> experiencies = new ArrayList();
 
 
-    public Candidat (Integer codi,String nom,String cognoms, String dniNif,Date dataNaix,String adreca, String ciutat,String provincia,String telefon,
-            String email, String observacions, String pass, String cPass, Integer formacio,Integer ocupacio) {
+    public Candidat (String nom,String cognoms, String dniNif,Date dataNaix,String adreca, String ciutat,String provincia,String telefon, String email, String observacions, String pass, String cPass, Integer codi, Integer formacio,Integer ocupacio) {
         super(codi,nom,dniNif,adreca,ciutat,provincia,telefon,email,observacions,pass,cPass);
         this.cognoms = cognoms;
         this.dataNaix = dataNaix;
         this.formacio = formacio;
         this.ocupacio=ocupacio;   
-        this.habilitats= new ArrayList<Habilitat>();
+        this.habilitats= new ArrayList<Integer>();
         this.experiencies= new ArrayList<Experiencia>();
     }
     
@@ -77,7 +76,7 @@ public class Candidat extends Usuari implements Serializable{
         return ocupacio;
     } 
 
-    public ArrayList<Habilitat> getHabilitats() {
+    public ArrayList<Integer> getHabilitats() {
         return habilitats;
     }
 
@@ -101,7 +100,7 @@ public class Candidat extends Usuari implements Serializable{
         this.ocupacio = ocupacio;
     }
 
-    public void setHabilitats(ArrayList<Habilitat> habilitats) {
+    public void setHabilitats(ArrayList<Integer> habilitats) {
         this.habilitats = habilitats;
     }
 

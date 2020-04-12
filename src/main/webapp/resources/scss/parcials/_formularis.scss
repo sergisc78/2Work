@@ -1,0 +1,65 @@
+/* 
+    Created on : 11/04/2020, 11:10:13
+    Author     : Daniel Sevilla i Junyent
+*/
+
+.formulari-alta, .formulari-login {
+      padding-top: 3rem;
+      
+      @media only screen and (min-width: 720px) {
+            max-width: 50%;
+      }
+      
+      form {
+            padding-top: 1rem;
+      }
+      
+}
+
+#alta-candidat {
+      
+      hr {
+            width: 100%;
+            border: none;
+            height: 1px;
+            margin: 0 15px 1em;
+            background-color: $color-basic-blau-fosc;
+      }
+      
+      #experiencia {
+            
+            button.btn-sm {
+                  font-size: 0.8em;
+                  padding: .1rem 0.3rem;
+                  color: $color-basic-blau-fosc;
+                  border-color: $color-basic-blau-fosc;
+
+                  &:hover {
+                        color: $blanc;
+                        // border:none;
+                        background-color: $color-basic-blau-fosc;
+                  }
+            }
+            
+            .item_experiencia {
+                  
+                  a.esborrar_item {
+                        margin-left: 15px;
+                        &:hover {
+                              color: $color-basic-blau-clar;
+                        }
+                  }
+                  
+                  div:not(:last-of-type) {
+                        margin-bottom: 0.3em;
+                  }
+                  
+                  &:not(:first-of-type) {
+                        margin-top: 2em;
+                        display: none;
+                  }
+            }
+            
+      }
+      
+}

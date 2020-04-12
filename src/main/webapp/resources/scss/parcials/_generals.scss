@@ -57,6 +57,15 @@ a {
       }
 }
 
+.btn-primary {
+      background: $color-basic-blau-fosc;
+      
+      &:hover {
+            background: $color-basic-blau-clar;
+            border-color: rgba($color-basic-blau-clar,0.3)
+      }
+}
+
 .btn-warning {
       background: $color-basic-taronja;
       border-color: lighten($color-basic-taronja, 10%);

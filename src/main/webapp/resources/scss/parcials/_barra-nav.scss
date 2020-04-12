@@ -39,15 +39,7 @@ body > nav:first-of-type {
       
 }
 
-.btn-primary {
-      background: $color-basic-blau-fosc;
-      
-      &:hover {
-            background: $color-basic-blau-clar;
-            border-color: rgba($color-basic-blau-clar,0.3)
-      }
-      
-}
+
 
 
 @keyframes mouHoritzontal {
