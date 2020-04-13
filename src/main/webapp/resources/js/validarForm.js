@@ -85,12 +85,15 @@
         
         var nifEmpresa,titolOferta,poblacio,provincia,sou,horari; 
     
-            nifEmpresa=document.getElementById('nifEmpresa').value;
+
+            // codiOferta=document.getElementById('codiOferta').value;
+            // nifEmpresa=document.getElementById('nifEmpresa').value;
             titolOferta=document.getElementById('titolOferta').value;
             poblacio=document.getElementById('poblacio').value;
             provincia=document.getElementById('provincia').value;
             sou=document.getElementById('sou').value;
             horari=document.getElementById('horari').value;
+            tipusContracte=document.getElementById('select_tipusContracte').value;
             
         while(nifEmpresa===''||titolOferta===''||poblacio===''||
                 provincia===''||sou===''||horari===''){

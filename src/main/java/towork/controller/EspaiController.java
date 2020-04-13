@@ -1,12 +1,7 @@
 package towork.controller;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.CookieValue;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,6 +26,8 @@ import towork.domain.Habilitat;
 import towork.formularis.LlistaCandidatures;
 import towork.formularis.LlistaHabilitats;
 import towork.domain.Oferta;
+import towork.formularis.LlistaFormacions;
+import towork.formularis.LlistaOcupacions;
 
 @Controller
 public class EspaiController {
@@ -41,10 +37,12 @@ public class EspaiController {
       public Habilitat h1 = new Habilitat();
       public Habilitat h2 = new Habilitat();
       public Habilitat h3 = new Habilitat();
-      public ArrayList<Habilitat> habs = new ArrayList();
+      public ArrayList<Integer> habs = new ArrayList();
       public Oferta of = new Oferta();
       public List<Candidatura> candidatures;
       public LlistaCandidatures llistaCandidatures = new LlistaCandidatures();
+      List <String> llistaTipusContracte = new ArrayList();
+      
       
       // Hashmap que emmagatzema els POSSIBLES ESTATS QUE PODEN  TENIR LES CANDIDATURES
       // Aquesta part potser es pot deixar definida aqui. Valorar si és un bon lloc.
@@ -60,11 +58,15 @@ public class EspaiController {
             h1.setNomHab("habilitat1");
             h2.setNomHab("habilitat2");
             h3.setNomHab("habilitat3");
+            
+            h1.setCodiHab(1);
+            h2.setCodiHab(2);
+            h3.setCodiHab(3);
                
             // Omplo un arrayList amb les habilitats de prova per afegir-lo a l'objecte de prova
-            habs.add(h1);
-            habs.add(h2);
-            habs.add(h3);
+            habs.add(h1.getCodiHab());
+            habs.add(h2.getCodiHab());
+            habs.add(h3.getCodiHab());
         
             // Oferta
             of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi ha podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
@@ -89,6 +91,17 @@ public class EspaiController {
             estatsPossibles.put(1,"Denegada"); 
             estatsPossibles.put(2,"Aprovada");
             
+            // Possibles valors de l'atribut 'Tipus de contracte'          
+            llistaTipusContracte.add("Obra i servei");
+            llistaTipusContracte.add("Temporal");
+            llistaTipusContracte.add("Indefinit");
+            llistaTipusContracte.add("Eventual");
+            llistaTipusContracte.add("Formació i aprenentatge");
+            llistaTipusContracte.add("Substitució");
+            llistaTipusContracte.add("Relleu");
+            llistaTipusContracte.add("Pràctiques");
+            
+           
        }
       
       ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,16 +118,12 @@ public class EspaiController {
             return cands;
      }
       
-      
-      
-      
       //
       // Controllers dels espais dls 3 usuaris del sistema,candidat, empresa i administrador
       //
       
       
       @RequestMapping(value = "/espaiCandidat", method = RequestMethod.GET)
-      // public ModelAndView EspaiCandidatRequest(@CookieValue(value="usuari", required=false) String tipusUsuariCookie, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       public ModelAndView EspaiCandidatRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
           
 
@@ -151,24 +160,11 @@ public class EspaiController {
             ModelAndView modelview = new ModelAndView("espaiEmpresa");
             modelview.getModelMap().addAttribute("banner", "2work");
             modelview.getModelMap().addAttribute("tagline", "La teva web de cerca de feina");
-            
-            //Formulari oferta
-             Oferta formOferta = new Oferta();
-            //modelview.getModelMap().addAttribute("act", "oferta/add");
-             modelview.getModelMap().addAttribute("formOferta", formOferta);
-            
-            
             modelview.getModelMap().addAttribute("footer", "2Work Copyright 2020");
+            
             return modelview;
       }
-       /*
-        FORM DE Oferta POST
-         */
-        /*@RequestMapping(value = "/oferta/add", method = RequestMethod.POST)
-        public String processAddForm(@ModelAttribute("formOferta") Oferta formOferta, BindingResult result) {
-            OfertaService.addOferta(formOferta);
-            return "redirect:/all"; //return "redirect:/";
-        }*/
+
       
       @RequestMapping(value = "/espaiAdmin", method = RequestMethod.GET)
       public ModelAndView EspaiAdministradorRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -176,6 +172,7 @@ public class EspaiController {
             modelview.getModelMap().addAttribute("banner", "2work");
             modelview.getModelMap().addAttribute("tagline", "La teva web de cerca de feina");
             modelview.getModelMap().addAttribute("footer", "2Work Copyright 2020");
+            
             return modelview;
       }
 
@@ -216,6 +213,7 @@ public class EspaiController {
                     
             return modelview;
       }
+      
       
       @RequestMapping(value = "/ofertaTornar", method = RequestMethod.GET)
       public ModelAndView OfertaPerRefTornar(@RequestParam("ref") String ref, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -275,56 +273,56 @@ public class EspaiController {
       }
 
       
-        @RequestMapping(value = "/ofertaPropietari", method = RequestMethod.GET)
-        public ModelAndView OfertaPropietariPerRef(@RequestParam("ref") String ref, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      @RequestMapping(value = "/ofertaPropietari", method = RequestMethod.GET)
+      public ModelAndView OfertaPropietariPerRef(@RequestParam("ref") String ref, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        // Mostrarà l'oferta al seu propietari (de manera diferent als no propietaris, però compartirem vista)      
-              
-        // Opció perfil a la barra de navegació
-        HashMap<String, String> perfil = new HashMap<>();
-        perfil.put("paraula","Perfil");
-        perfil.put("url","/perfil");
-        
-        // Opció ofertes a la barra de navegació
-        HashMap<String, String> ofertes = new HashMap<>();
-        ofertes.put("paraula","Ofertes");
-        ofertes.put("url","/ofertesEmpresa"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
-            
-        // Opció logout a la barra de navegació
-        HashMap<String, String> logout = new HashMap<>();
-        logout.put("paraula","Logout");
-        logout.put("url","/logout");
-        
-        // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-        HashMap[] opcions = new HashMap[]{perfil,ofertes,logout};  
-        
-        ModelAndView modelview = new ModelAndView("oferta");
-        // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
-        
-        // Omplo un arrayList amb les candidatures de prova per poder enviar-les al controlador
-        List<Candidatura> candidatures = getListOfCandidatures();
-        LlistaCandidatures llistaCandidatures = new LlistaCandidatures();
-        llistaCandidatures.setLlista(candidatures);
-        
-        Candidatura formCandidatura = new Candidatura();
+            // Mostrarà l'oferta al seu propietari (de manera diferent als no propietaris, però compartirem vista)      
 
-        ///// Final dels objectes de prova que genero per poder muntar la vista ////////////////////////////////////////////////////////////////////////////////////////////
+            // Opció perfil a la barra de navegació
+            HashMap<String, String> perfil = new HashMap<>();
+            perfil.put("paraula","Perfil");
+            perfil.put("url","/perfil");
 
+            // Opció ofertes a la barra de navegació
+            HashMap<String, String> ofertes = new HashMap<>();
+            ofertes.put("paraula","Ofertes");
+            ofertes.put("url","/ofertesEmpresa"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
+
+            // Opció logout a la barra de navegació
+            HashMap<String, String> logout = new HashMap<>();
+            logout.put("paraula","Logout");
+            logout.put("url","/logout");
+
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{perfil,ofertes,logout};  
+
+            ModelAndView modelview = new ModelAndView("oferta");
+            // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
+
+            // Omplo un arrayList amb les candidatures de prova per poder enviar-les al controlador
+            List<Candidatura> candidatures = getListOfCandidatures();
+            LlistaCandidatures llistaCandidatures = new LlistaCandidatures();
+            llistaCandidatures.setLlista(candidatures);
+
+            Candidatura formCandidatura = new Candidatura();
+
+            ///// Final dels objectes de prova que genero per poder muntar la vista ////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            // Afegeixo els atributs per passar a la vista
+            modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
+            modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
+            modelview.getModelMap().addAttribute("opcions", opcions);
+
+            modelview.getModelMap().addAttribute("estatsPossiblesCandidatura", estatsPossibles);
+            modelview.getModelMap().addAttribute("Candidatures", llistaCandidatures);
+            modelview.getModelMap().addAttribute("formCandidatura", formCandidatura);
+
+            modelview.getModelMap().addAttribute("propietari", true); // Indica a la vista que hem de mostrar la informació que només és pel propietari de l'oferta
+
+            return modelview;
         
-        // Afegeixo els atributs per passar a la vista
-        modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
-        modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
-        modelview.getModelMap().addAttribute("opcions", opcions);
-        
-        modelview.getModelMap().addAttribute("estatsPossiblesCandidatura", estatsPossibles);
-        modelview.getModelMap().addAttribute("Candidatures", llistaCandidatures);
-        modelview.getModelMap().addAttribute("formCandidatura", formCandidatura);
-        
-        modelview.getModelMap().addAttribute("propietari", true); // Indica a la vista que hem de mostrar la informació que només és pel propietari de l'oferta
-        
-        return modelview;
-        
-    }
+      }
     
         
       @RequestMapping(value = "/ofertesEmpresa", method = RequestMethod.GET)
@@ -465,15 +463,13 @@ public class EspaiController {
             modelview.getModelMap().addAttribute("candidatures", candidatures);
 
             return modelview;
-    }
+      }
 
     
       @RequestMapping(value = "/logout", method = RequestMethod.GET)
       public ModelAndView logout(HttpServletRequest request) {
           
-            HttpSession session = request.getSession();
-            session.setAttribute("login", false);
-            session.removeAttribute("usuari");
+            
             // AQUI HEM DE CRIDAR EL MÈTODE QUE FARÀ EL LOGOUT 
            
             // Creem les opcions que aniràn a la barra de navegació
@@ -560,7 +556,6 @@ public class EspaiController {
             modelview.getModelMap().addAttribute("ubicacio", "Ofertes escaients per les teves dades");
             modelview.getModelMap().addAttribute("opcions", opcions);
            
-           // modelview.getModelMap().addAttribute("missatgeFeedback", "Has sortit de l'aplicació. Fins aviat!");
            return modelview;
      }
      
@@ -621,10 +616,9 @@ public class EspaiController {
             modelview.getModelMap().addAttribute("candidatures", candidatures);
             modelview.getModelMap().addAttribute("opcions", opcions);
            
-           // modelview.getModelMap().addAttribute("missatgeFeedback", "Has sortit de l'aplicació. Fins aviat!");
-           return modelview;
-           
+           return modelview;       
      }
+     
      
       @RequestMapping(value = "/getHabilitats/{idOcupacio}", method = RequestMethod.GET)
       public @ResponseBody  List<Habilitat> getHabilitatsPerOcupacio(@PathVariable("idOcupacio") int idOcupacio,HttpServletRequest request, HttpServletResponse response) {
@@ -656,35 +650,75 @@ public class EspaiController {
             // return categoryService.getAllSubcategories(categoryId);
       }
     
-    @RequestMapping(value = "/enrera", method = RequestMethod.GET)
-     public String anarEnrera(HttpServletRequest request) {
+    
+     @RequestMapping(value = "/altaOferta", method = RequestMethod.GET)
+      public ModelAndView addOfertaRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            // Controlador que munta la vista d'alta d'oferta
+            ModelAndView modelview = new ModelAndView("altaOferta");
+            
+            // Formulari d'alta oferta 
+            Oferta formOferta = new Oferta();
+
+            
+            // Opció Inici a la barra de navegació
+            HashMap<String, String> inici = new HashMap<>();
+            inici.put("paraula","Inici");
+            inici.put("url","/");
+            
+            // Opció perfil a la barra de navegació
+            HashMap<String, String> perfil = new HashMap<>();
+            perfil.put("paraula","Perfil");
+            perfil.put("url","/perfil");
+
+            // Opció ofertes a la barra de navegació
+            HashMap<String, String> ofertes = new HashMap<>();
+            ofertes.put("paraula","Ofertes");
+            ofertes.put("url","/ofertesEmpresa");
+
+            // Opció logout a la barra de navegació
+            HashMap<String, String> logout = new HashMap<>();
+            logout.put("paraula","Logout");
+            logout.put("url","/logout");
+            
+            // AQUI LI HEM DE PASSAR ELS LLISTATS PER OMPLIR ELS SELECTS QUE VINDRAN DE LA BBDD
+            // PER ARA ESTÀ SIMULAT AIXÍ
+            LlistaFormacions llistaFormacions = new LlistaFormacions();
+            LlistaOcupacions llistaOcupacions = new LlistaOcupacions();
+            
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{inici,perfil,ofertes,logout};
+            
+            modelview.getModelMap().addAttribute("formOferta", formOferta);
+            modelview.getModelMap().addAttribute("ubicacio", "Alta d'oferta");
+            modelview.getModelMap().addAttribute("llistaFormacions", llistaFormacions);
+            modelview.getModelMap().addAttribute("llistaOcupacions", llistaOcupacions);
+            modelview.getModelMap().addAttribute("llistaTipusContracte", llistaTipusContracte);
+            modelview.getModelMap().addAttribute("opcions", opcions);
+            
+            return modelview;
+      }
+      
+      
+      @RequestMapping(value = "/executaAltaOferta", method = RequestMethod.POST)
+      public String executaAltaOferta(@ModelAttribute("formOferta") Oferta  formOferta, BindingResult result) {
+            
+            Boolean altaOfertaOK=false;
+            System.out.println("--- Ja tenim la oferta a l'objecte formOferta. Fem amb ell el que faci falta.");
+            
+            // Invocarem els mètodes corresponents un cop fets els filtres que calguin
+            
+            
+            // segons el resultat de l'execució del mètode...
+            // ... haurem de redirigir a la vista que vulguem passant feedback a l'usuari (alta feta/alta no feta)
+            return "redirect:/";
+    }
+      
+      
+      @RequestMapping(value = "/enrera", method = RequestMethod.GET)
+      public String anarEnrera(HttpServletRequest request) {
             // Controlador que utilitzem per tornar a la pàgina anterior 
             String referer = request.getHeader("Referer");            
             return "redirect:"+ referer;
-    }
-     
-        
-     ///////////////////////////////  Mètodes de prova (atributs de sessió per simular login/logout  ///////////////////////////////
-     
-     @RequestMapping(value = "/entradaCandidat", method = RequestMethod.GET) 
-     public String entradaCandidat(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-           
-           HttpSession session = request.getSession();
-           session.setAttribute("tipusUsuari", "candidat");
-           session.setAttribute("login", true);
-           
-           return "redirect:/espaiCandidat";
-      }
-    
-     
-     @RequestMapping(value = "/entradaEmpresa", method = RequestMethod.GET) 
-     public String entradaEmpresa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-           
-           HttpSession session = request.getSession();
-           session.setAttribute("tipusUsuari", "empresa");
-           session.setAttribute("login", true);
-           
-           return "redirect:/ofertesEmpresa";
-      }
-     
+      }  
+       
 }

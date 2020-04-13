@@ -59,12 +59,16 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarHomeToggler">
-                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<spring:url value='/'/>">Inici</a>
-                    </li>
-                </ul>
-            </div>  
+                  <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                        <c:forEach items="${opcions}" var="map">
+                      
+                        <li class="nav-item">
+                              <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
+                        </li>
+                        
+                        </c:forEach>
+                  </ul>
+            </div>
         </nav>
 
         <section>
@@ -104,8 +108,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="dataNaix">Data de naixament</label>
-                    <form:input type="date" class="form-control" id="dataNaix" path="dataNaix" maxlength="10" required="required"/>
+                    <label for="dataNaix">Data de naixement</label>
+                    <form:input type="date" class="form-control" id="dataNaix" path="dataNaix" required="required"/>
                     <div class="invalid-feedback">
                         Introdueix la data de naixement
                     </div>
@@ -119,15 +123,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="poblacio">Població</label>
-                    <form:input type="text" class="form-control" id="poblacio" path="poblacio" maxlength="50" placeholder="Introdueix la població" required="required"/>
+                    <label for="ciutat">Població</label>
+                    <form:input type="text" class="form-control" id="poblacio" path="poblacio"  maxlength="50" placeholder="Introdueix la població" required="required"/>
                     <div class="invalid-feedback">
                         Introdueix la població
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="provincia">Provincia</label>
-                    <form:input type="text" class="form-control" id="provincia" path="provincia" maxlength="50" placeholder="Introdueix la provincia" required="required"/>
+                    <label for="provincia">Província</label>
+                    <form:input type="text" class="form-control" id="provincia" path="provincia" maxlength="50" placeholder="Introdueix la província" required="required"/>
                     <div class="invalid-feedback">
                         Introdueix la provincia
                     </div>
@@ -183,7 +187,7 @@
                     <form:select class="form-control" id="select_ocupacio" path="ocupacio" required="required">
                               <form:option value="">Selecciona la teva ocupació</form:option>
                               <form:options items="${llistaOcupacions.llista}" itemValue="codiOcupacio" itemLabel="nomOcupacio" />
-                        </form:select>
+                    </form:select>
                 </div>
                     
                 <div class="form-group">
@@ -195,8 +199,6 @@
                 </div>
                     
                 <div id="experiencia" class="form-group" >
-                      
-                      
                         <label for="experiencia">Experiència</label>
                         <!-- <a class="badge badge-pill badge-primary float-right" id="boto_afegir_camps">Afegir experiència</a> -->
                         <button type="button" class="btn btn-outline-primary btn-sm float-right" id="boto_afegir_camps">Afegir</button>

@@ -1,17 +1,7 @@
 
 package towork.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 
 public class Oferta {
@@ -29,13 +19,10 @@ public class Oferta {
     private String estat;
     private String descripcio;
     
-    protected ArrayList<Habilitat> habilitats = new ArrayList();
+    protected ArrayList<Integer> habilitats = new ArrayList();
     protected ArrayList<Candidat> candidats = new ArrayList();
 
-    public Oferta(Integer codiOferta, String nifEmpresa, String titolOferta, 
-            Integer ocupacio,String poblacio, String provincia, Double sou, String horari, 
-            String tipusContracte, Integer formacio, String estat, 
-            String descripcio) {
+    public Oferta(Integer codiOferta, String nifEmpresa, String titolOferta, Integer ocupacio,String poblacio, String provincia, Double sou, String horari, String tipusContracte, Integer formacio, String estat, String descripcio) {
         this.codiOferta = codiOferta;
         this.nifEmpresa = nifEmpresa;
         this.titolOferta = titolOferta;
@@ -48,13 +35,17 @@ public class Oferta {
         this.formacio = formacio;
         this.estat = estat;
         this.descripcio = descripcio;
-        this.habilitats=new ArrayList<Habilitat>();
-        this.candidats=new ArrayList<Candidat>();
+        this.habilitats = new ArrayList<Integer>();
+        this.candidats =new ArrayList<Candidat>();
     }
 
     public Oferta() {
     }
 
+    
+    // getters
+    
+    
     public Integer getCodiOferta() {
         return codiOferta;
     }
@@ -103,7 +94,7 @@ public class Oferta {
         return descripcio;
     }
 
-    public ArrayList<Habilitat> getHabilitats() {
+    public ArrayList<Integer> getHabilitats() {
         return habilitats;
     }
 
@@ -111,6 +102,8 @@ public class Oferta {
         return candidats;
     }
 
+    // setters
+    
     public void setCodiOferta(Integer codiOferta) {
         this.codiOferta = codiOferta;
     }
@@ -159,7 +152,7 @@ public class Oferta {
         this.descripcio = descripcio;
     }
 
-    public void setHabilitats(ArrayList<Habilitat> habilitats) {
+    public void setHabilitats(ArrayList<Integer> habilitats) {
         this.habilitats = habilitats;
     }
 
