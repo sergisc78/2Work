@@ -10,32 +10,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name="experiencies")
-public class Experiencia implements Serializable{
-    private static final long serialVersionUID=1L;
-    
-    @Id
-    @NotNull
-    @Column(name="codiExperiencia")
-    private Integer codiExperiencia;
-   
-    @NotNull
-    @Column(name="anys")
-    private Integer anys;
-    
-    @NotNull
-    @Size(max=50)
-    @Column(name="nomEmpresa")
-    private String nomEmpresa;
-    
-    @NotNull
-    @Size(max=9)
-    @Column(name="dniCandidat")
-    private String dniCandidat;
 
-    @Size(max=300)
-    @Column(name="descripcio")
+public class Experiencia {
+    
+    private Integer codiExperiencia;
+    private Integer anys;
+    private String nomEmpresa;
+    private String dniCandidat;
     private String descripcio;
 
     public Experiencia(Integer codiExperiencia,Integer anys, String nomEmpresa, String dniCandidat, String descripcio) {

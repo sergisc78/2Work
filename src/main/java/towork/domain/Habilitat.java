@@ -13,31 +13,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name="habilitats")
-public class Habilitat implements Serializable{
-    
-    private static final long serialVersionUID=1L;
-    
-    @Id
-    @NotNull
-    @Column(name="codiHab")
-    private Integer codiHab;
-    
-    @NotNull
-    @Size(max=50)
-    @Column(name="nomHab")
-    private String nomHab;
-    
-    @NotNull
-    @Size(max=100)
-    @Column (name="ocupacio")
-    protected Integer ocupacio;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    protected ArrayList<Habilitat> candidats = new ArrayList();
+public class Habilitat {
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    private Integer codiHab;
+    private String nomHab;
+    protected Integer ocupacio;
+    protected ArrayList<Habilitat> candidats = new ArrayList();
     protected ArrayList<Oferta> ofertes=new ArrayList();
 
     public Habilitat(Integer codiHab, String nomHab, Integer ocupacio) {
@@ -82,11 +64,11 @@ public class Habilitat implements Serializable{
         this.ocupacio = ocupacio;
     }
 
-    public void addCandidats(ArrayList<Habilitat> candidats) {
+    public void setCandidats(ArrayList<Habilitat> candidats) {
         this.candidats = candidats;
     }
 
-    public void addOfertes(ArrayList<Oferta> ofertes) {
+    public void setOfertes(ArrayList<Oferta> ofertes) {
         this.ofertes = ofertes;
     }
    

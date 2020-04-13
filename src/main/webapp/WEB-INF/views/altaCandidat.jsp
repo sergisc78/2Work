@@ -81,7 +81,7 @@
                
                 <div class="form-group">
                     <label for="nom">Nom</label>
-                    <form:input type="text" class="form-control" id="nom" path="nom" aria-describedby="nomCandidat" placeholder="Introdueix el nom" required="required"/>
+                    <form:input type="text" class="form-control" id="nom" path="nom" maxlength="20" aria-describedby="nomCandidat" placeholder="Introdueix el nom" required="required"/>
                     <div class="invalid-feedback">
                         Introdueix el teu nom
                     </div>
@@ -89,7 +89,7 @@
 
                 <div class="form-group">
                     <label for="cognoms">Cognoms</label>
-                    <form:input type="text" class="form-control" id="cognoms" path="cognoms" aria-describedby="cognoms" placeholder="Introdueix els cognoms" required="required"/>
+                    <form:input type="text" class="form-control" id="cognoms" path="cognoms" maxlength="50" aria-describedby="cognoms" placeholder="Introdueix els cognoms" required="required"/>
                     <div class="invalid-feedback">
                         Introdueix el cognoms
                     </div>
@@ -97,7 +97,7 @@
 
                 <div class="form-group">
                     <label for="dniNif">DNI</label>
-                    <form:input type="text" class="form-control" id="dniNif" path="dniNif" aria-describedby="dni" placeholder="Introdueix el DNI" required="required"/>
+                    <form:input type="text" class="form-control" id="dniNif" path="dniNif" maxlength="9" aria-describedby="dni" placeholder="Introdueix el DNI" required="required"/>
                     <div class="invalid-feedback">
                         Introdueix el DNI
                     </div>
@@ -105,7 +105,7 @@
 
                 <div class="form-group">
                     <label for="dataNaix">Data de naixament</label>
-                    <form:input type="date" class="form-control" id="dataNaix" path="dataNaix" required="required"/>
+                    <form:input type="date" class="form-control" id="dataNaix" path="dataNaix" maxlength="10" required="required"/>
                     <div class="invalid-feedback">
                         Introdueix la data de naixement
                     </div>
@@ -113,28 +113,28 @@
 
                 <div class="form-group">
                     <label for="adreca">Adreça</label>
-                    <form:input type="text" class="form-control" id="adreca" path="adreca"  placeholder="Introdueix l'adreça" required="required"/>
+                    <form:input type="text" class="form-control" id="adreca" path="adreca" maxlength="50" placeholder="Introdueix l'adreça" required="required"/>
                     <div class="invalid-feedback">
                         Introdueix l'adreça
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="ciutat">Ciutat</label>
-                    <form:input type="text" class="form-control" id="ciutat" path="ciutat"  placeholder="Introdueix la ciutat" required="required"/>
+                    <label for="poblacio">Població</label>
+                    <form:input type="text" class="form-control" id="poblacio" path="poblacio" maxlength="50" placeholder="Introdueix la població" required="required"/>
                     <div class="invalid-feedback">
-                        Introdueix la ciutat
+                        Introdueix la població
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="provincia">Provincia</label>
-                    <form:input type="text" class="form-control" id="provincia" path="provincia"  placeholder="Introdueix la provincia" required="required"/>
+                    <form:input type="text" class="form-control" id="provincia" path="provincia" maxlength="50" placeholder="Introdueix la provincia" required="required"/>
                     <div class="invalid-feedback">
                         Introdueix la provincia
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="telefon">Telèfon</label>
-                    <form:input type="text" class="form-control" id="telefon" path="telefon" placeholder="Introdueix el telèfon" required="required"/>
+                    <form:input type="text" class="form-control" id="telefon" path="telefon" maxlength="12" placeholder="Introdueix el telèfon" required="required"/>
                     <div class="invalid-feedback">
                         Introdueix el telèfon
                     </div>
@@ -142,21 +142,21 @@
 
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <form:input type="email" class="form-control" id="email" path="email" placeholder="Introdueix l'e-mail" />
+                    <form:input type="email" class="form-control" id="email" path="email" maxlength="50" placeholder="Introdueix l'e-mail" />
                     <div class="invalid-feedback">
                         Introdueix l'email
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="observacions">Observacions</label>
-                    <form:textarea rows="8" cols="30" class="form-control" id="observacions" path="observacions" placeholder="Observacions"/>
+                    <form:textarea rows="8" cols="30" class="form-control" id="observacions" path="observacions" maxlength="500" placeholder="Observacions"/>
                     <div class="invalid-feedback">
                        Observacions
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="pass">Password</label>
-                    <form:input type="password" class="form-control" id="pass" path="pass" pattern=".{8,}"  placeholder="Mínim 8 caràcters" required="required"/>
+                    <label for="pass">Password (max 8 caracters)</label>
+                    <form:input type="password" class="form-control" id="pass" path="pass" pattern=".{8,}" maxlength="8" placeholder="Mínim 8 caràcters" required="required"/>
                     <div class="invalid-feedback">
                         Introdueix password
                     </div>
@@ -164,7 +164,7 @@
 
                 <div class="form-group">
                     <label for="cPass">Confirmar password</label>
-                    <form:input type="password" class="form-control" id="cPass" path="cPass" placeholder="Torna a escriure el password" required="required"/>
+                    <form:input type="password" class="form-control" id="cPass" path="cPass" maxlength="8" placeholder="Torna a escriure el password" required="required"/>
                     <div class="invalid-feedback">
                         Confirma el password
                     </div>
@@ -187,10 +187,11 @@
                 </div>
                     
                 <div class="form-group">
-                    <label for="habilitats">Habilitats addicionals</label>
+                    <label for="habilitats">Habilitats addicionals </label>
                     <form:select class="form-control" id="select_habilitats" path="habilitats">
                     </form:select>
-                    <small class="text-muted">Pots seleccionar diverses de les habilitats disponibles</small>
+                    <small class="text-muted">Pots seleccionar diverses de les habilitats disponibles: selecciona una opció i amb la
+                    tecla "ctrl" premuda seleciona les altres habilitats.</small>
                 </div>
                     
                 <div id="experiencia" class="form-group" >

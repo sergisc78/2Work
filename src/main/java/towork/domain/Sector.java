@@ -13,22 +13,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name="sectors")
-public class Sector implements Serializable{
-    private static final long serialVersionUID=1L;
+
+public class Sector {
     
-    @Id
-    @NotNull
-    @Column (name="codiSector")
     protected Integer codiSector;
-    
-    @NotNull    
-    @Size(max=100)
-    @Column (name="nomSector")
     protected String nomSector;
-    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Empresa> empreses=new ArrayList();
     
     public Sector(Integer codiSector, String nomSector) {
@@ -60,7 +49,7 @@ public class Sector implements Serializable{
         this.nomSector = nomSector;
     }
 
-    public void addEmpreses(ArrayList<Empresa> empreses) {
+    public void setEmpreses(ArrayList<Empresa> empreses) {
         this.empreses = empreses;
     }
 

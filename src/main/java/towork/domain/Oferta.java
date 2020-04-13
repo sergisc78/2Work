@@ -13,84 +13,34 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name="ofertes")
-public class Oferta implements Serializable{
+
+public class Oferta {
     
-    private static final long serialVersionUID=1L;
-    
-    @Id
-    @NotNull
-    @Column(name="codiOferta")
     private Integer codiOferta;
-    
-    @NotNull
-    @Size(max=9)
-    @Column(name="nifEmpresa")
     private String nifEmpresa;
-    
-    @NotNull
-    @Size(max=50)
-    @Column(name="titolOferta")
     private String titolOferta;
-    
-    @NotNull
-    @Column(name="ocupacio")
     protected Integer ocupacio;
-    
-    @NotNull
-    @Size(max=50)
-    @Column(name="ciutat")
-    private String ciutat;
-    
-    @NotNull
-    @Size(max=50)
-    @Column(name="provincia")
+    private String poblacio;
     private String provincia;
-    
-    @NotNull    
-    @Column(name="sou")
     private Double sou;
-    
-    @NotNull
-    @Size(max=15)
-    @Column(name="horari")
     private String horari;
-    
-    @NotNull
-    @Size(max=50)
-    @Column(name="tipusContracte")
     private String tipusContracte;
-    
-    @NotNull
-    @Column(name="formacio")
     private Integer formacio;
-      
-    @NotNull
-    @Size(max=10)
-    @Column(name="estat")
     private String estat;
-    
-    @Size(max=300)
-    @Column(name="descripcio")
     private String descripcio;
     
-    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Habilitat> habilitats = new ArrayList();
-    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Candidat> candidats = new ArrayList();
 
     public Oferta(Integer codiOferta, String nifEmpresa, String titolOferta, 
-            Integer ocupacio,String ciutat, String provincia, Double sou, String horari, 
+            Integer ocupacio,String poblacio, String provincia, Double sou, String horari, 
             String tipusContracte, Integer formacio, String estat, 
             String descripcio) {
         this.codiOferta = codiOferta;
         this.nifEmpresa = nifEmpresa;
         this.titolOferta = titolOferta;
         this.ocupacio=ocupacio;
-        this.ciutat=ciutat;
+        this.poblacio=poblacio;
         this.provincia=provincia;
         this.sou = sou;
         this.horari = horari;
@@ -121,8 +71,8 @@ public class Oferta implements Serializable{
         return ocupacio;
     }
 
-    public String getCiutat() {
-        return ciutat;
+    public String getPoblacio() {
+        return poblacio;
     }
 
     public String getProvincia() {
@@ -176,11 +126,11 @@ public class Oferta implements Serializable{
     public void setOcupacio(Integer ocupacio) {
         this.ocupacio = ocupacio;
     }
-    
-    public void setCiutat(String ciutat) {
-        this.ciutat = ciutat;
-    }
 
+    public void setPoblacio(String poblacio) {
+        this.poblacio = poblacio;
+    }
+    
     public void setProvincia(String provincia) {
         this.provincia = provincia;
     }
@@ -209,11 +159,11 @@ public class Oferta implements Serializable{
         this.descripcio = descripcio;
     }
 
-    public void addHabilitats(ArrayList<Habilitat> habilitats) {
+    public void setHabilitats(ArrayList<Habilitat> habilitats) {
         this.habilitats = habilitats;
     }
 
-    public void addCandidats(ArrayList<Candidat> candidats) {
+    public void setCandidats(ArrayList<Candidat> candidats) {
         this.candidats = candidats;
     }
     

@@ -15,40 +15,19 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name="candidats")
-public class Candidat extends Usuari implements Serializable{
+public class Candidat extends Usuari{
     
-    private static final long serialVersionUID=1L;
-    
-    @NotNull
-    @Size(max=50)
-    @Column(name="cognoms")
     protected String cognoms;
-    
-    @NotNull
-    @Size(max=10)
-    @Column(name="dataNaix")
     protected Date dataNaix;
-    
-    @NotNull
-    @Column(name="formacio")
     protected Integer formacio;
-    
-    @NotNull
-    @Column(name="ocupacio")
     protected Integer ocupacio;
-
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Integer> habilitats = new ArrayList();
-    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Experiencia> experiencies = new ArrayList();
 
 
-    public Candidat (String nom,String cognoms, String dniNif,Date dataNaix,String adreca, String ciutat,String provincia,String telefon, String email, String observacions, String pass, String cPass, Integer codi, Integer formacio,Integer ocupacio) {
-        super(codi,nom,dniNif,adreca,ciutat,provincia,telefon,email,observacions,pass,cPass);
+    public Candidat (String nom,String cognoms, String dniNif,Date dataNaix,String adreca, String poblacio,String provincia,String telefon, String email, String observacions, String pass, String cPass, Integer codi, Integer formacio,Integer ocupacio) {
+        super(codi,nom,dniNif,adreca,poblacio,provincia,telefon,email,observacions,pass,cPass);
         this.cognoms = cognoms;
         this.dataNaix = dataNaix;
         this.formacio = formacio;

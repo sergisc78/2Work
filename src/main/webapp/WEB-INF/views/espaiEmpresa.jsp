@@ -83,14 +83,14 @@
                     </div>
                     <div class="form-group">
                         <label for="nifEmpresa">Nif de l'empresa</label>
-                        <form:input type="text" class="form-control" id="nifEmpresa"path="nifEmpresa" aria-describedby="nif" placeholder="Introdueix el nif empresa" required="required"/>
+                        <form:input type="text" class="form-control" id="nifEmpresa"path="nifEmpresa" maxlength="9" aria-describedby="nif" placeholder="Introdueix el nif empresa" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix el nif de l'empresa
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="titolOferta">Títol de l'oferta</label>
-                        <form:input type="text" class="form-control" id="titolOferta" path="titolOferta" aria-describedby="titol" placeholder="Introdueix el títol de l'oferta" required="required"/>
+                        <form:input type="text" class="form-control" id="titolOferta" path="titolOferta" maxlength="50" aria-describedby="titol" placeholder="Introdueix el títol de l'oferta" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix el títol de l'oferta
                         </div>
@@ -201,15 +201,15 @@
                         </form:select>
                     </div>
                     <div class="form-group ">
-                        <label for="ciutat">Ciutat</label>
-                        <form:input type="text" class="form-control" id="ciutat"path="ciutat" aria-describedby="emailHelp" placeholder="Introdueix la ciutat " required="required"/>
+                        <label for="poblacio">Població</label>
+                        <form:input type="text" class="form-control" id="poblacio"path="poblacio" maxlength="50" aria-describedby="emailHelp" placeholder="Introdueix la població " required="required"/>
                         <div class="invalid-feedback">
-                            Introdueix la ciutat 
+                            Introdueix la població 
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="provincia">Província</label>
-                        <form:input type="text" class="form-control" id="provincia" path="provincia"  placeholder="Introdueix la provincia" required="required"/>
+                        <form:input type="text" class="form-control" id="provincia" path="provincia" maxlength="50" placeholder="Introdueix la provincia" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix la província
                         </div>
@@ -223,7 +223,7 @@
                     </div>                  
                     <div class="form-group">
                         <label for="horari">Horari</label>
-                        <form:input type="text" class="form-control" id="horari" path="horari" placeholder="Introdueix l'horari"required="required" />
+                        <form:input type="text" class="form-control" id="horari" path="horari" maxlength="15" placeholder="Introdueix l'horari"required="required" />
                         <div class="invalid-feedback">
                             Introdueix l'horari
                         </div>

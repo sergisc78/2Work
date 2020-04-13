@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,6 +25,7 @@ import towork.domain.Empresa;
 import towork.domain.Experiencia;
 import towork.formularis.LlistaFormacions;
 import towork.formularis.LlistaOcupacions;
+import towork.service.EmpresaService;
 
 /**
  *
@@ -31,7 +33,10 @@ import towork.formularis.LlistaOcupacions;
  */
 @Controller
 public class HomeController {
-
+       
+      @Autowired
+      EmpresaService empresaService;
+      
       @RequestMapping(value = "/", method = RequestMethod.GET)
       public ModelAndView homeRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
@@ -127,7 +132,7 @@ public class HomeController {
         
         //Formulari d'alta empresa 
         Empresa formEmpresa = new Empresa();
-        //modelview.getModelMap().addAttribute("act", "empresa/add");
+        modelview.getModelMap().addAttribute("act", "empresa/add");
         modelview.getModelMap().addAttribute("formEmpresa", formEmpresa);
         
         modelview.getModelMap().addAttribute("tagline", "La teva web de cerca de feina");
@@ -137,11 +142,11 @@ public class HomeController {
     /*
      FORM D'empresa POST
      */
-    /*@RequestMapping(value = "/empresa/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/empresa/add", method = RequestMethod.POST)
     public String processAddForm(@ModelAttribute("formEmpresa") Empresa formEmpresa, BindingResult result) {
-        EmpresaService.addEmpresa(formEmpresa);
-        return "redirect:/all"; //return "redirect:/";
-    }*/
+        empresaService.addEmpresa(formEmpresa);
+        return "redirect:/"; //"redirect:/all"; //return "redirect:/espaiEmpresa";
+    }
      
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public ModelAndView infoRequest(HttpServletRequest request, HttpServletResponse response)

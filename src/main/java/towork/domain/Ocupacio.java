@@ -17,29 +17,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author gonem
- */
-@Entity
-@Table(name="ocupacions")
-public class Ocupacio implements Serializable{
-    private static final long serialVersionUID=1L;
+public class Ocupacio {
     
-    @Id
-    @NotNull
-    @Column (name="codiOcupacio")
     protected Integer codiOcupacio;
-    
-    @NotNull    
-    @Size(max=100)
-    @Column (name="nomOcupacio")
     protected String nomOcupacio;
-    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Candidat> candidats=new ArrayList();
-    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Habilitat> habilitats=new ArrayList();
 
     public Ocupacio(Integer codiOcupacio, String nomOcupacio) {
@@ -76,11 +58,11 @@ public class Ocupacio implements Serializable{
         this.nomOcupacio = nomOcupacio;
     }
 
-    public void addCandidats(ArrayList<Candidat> candidats) {
+    public void setCandidats(ArrayList<Candidat> candidats) {
         this.candidats = candidats;
     }
 
-    public void addHabilitats(ArrayList<Habilitat> habilitats) {
+    public void setHabilitats(ArrayList<Habilitat> habilitats) {
         this.habilitats = habilitats;
     }
     

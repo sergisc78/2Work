@@ -9,76 +9,28 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-@Entity
-
-public class Usuari implements Serializable{
+public class Usuari {
     
-    private static final long serialVersionUID=1L;
-    
-    @Id
-    @NotNull
-    @Column (name="codi")
     protected Integer codi;
-    
-    
-    @NotNull
-    @Size(max=20)
-    @Column (name="nom")
-    protected String nom;
-    
-    
-    @NotNull
-    @Size(max=9)
-    @Column (name="dniNif")            
+    protected String nom;           
     protected String dniNif;
-    
-    @NotNull
-    @Size(max=50)
-    @Column (name="adreca")
     protected String adreca;
-    
-    @NotNull
-    @Size(max=50)
-    @Column (name="ciutat")
-    protected String ciutat;
-    
-    @NotNull
-    @Size(max=50)
-    @Column (name="provincia")
+    protected String poblacio;
     protected String provincia;
-    
-    @NotNull
-    @Size(max=12)
-    @Column (name="telefon")
     protected String telefon;
-    
-    @Size(max=50)
-    @Pattern(regexp="^(.+)@(.+)$",message="El correu no és vàlid")
-    @Column (name="email")
     protected String email;
-    
-    @Size(max=500)
-    @Column (name="observacions")
     protected String observacions;
-    
-    @NotNull
-    @Size(max=8)
-    @Column (name="pass")
     protected String pass;
-    
-    @NotNull
-    @Size(max=8)
-    @Column (name="cPass")
     protected String cPass;
     
    
 
-    public Usuari(Integer codi,String nom, String dniNif, String adreca, String ciutat, String provincia,String telefon, String email, String observacions, String pass, String cPass) {   
+    public Usuari(Integer codi,String nom, String dniNif, String adreca, String poblacio, String provincia,String telefon, String email, String observacions, String pass, String cPass) {   
         this.codi=codi;
         this.nom = nom;
         this.dniNif = dniNif;
         this.adreca = adreca;
-        this.ciutat=ciutat;
+        this.poblacio=poblacio;
         this.provincia=provincia;
         this.telefon = telefon;
         this.email = email;
@@ -106,8 +58,8 @@ public class Usuari implements Serializable{
         return adreca;
     }
 
-    public String getCiutat() {
-        return ciutat;
+    public String getPoblacio() {
+        return poblacio;
     }
 
     public String getProvincia() {
@@ -150,8 +102,8 @@ public class Usuari implements Serializable{
         this.adreca = adreca;
     }
 
-    public void setCiutat(String ciutat) {
-        this.ciutat = ciutat;
+    public void setPoblacio(String poblacio) {
+        this.poblacio = poblacio;
     }
 
     public void setProvincia(String provincia) {

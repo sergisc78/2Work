@@ -89,21 +89,21 @@
                 </div> 
                     <div class="form-group">
                         <label for="nom">Nom de l'empresa</label>
-                        <form:input type="text" class="form-control" id="nom"path="nom" aria-describedby="nomEmpresa" placeholder="Introdueix el nom empresa" required="required"/>
+                        <form:input type="text" class="form-control" id="nom"path="nom" maxlength="20" aria-describedby="nomEmpresa" placeholder="Introdueix el nom empresa" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix el nom de l'empresa
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="responsable">Responsable</label>
-                        <form:input type="text" class="form-control" id="responsable" path="responsable" aria-describedby="responsable" placeholder="Introdueix el nom del responsable" required="required"/>
+                        <form:input type="text" class="form-control" id="responsable" maxlength="50" path="responsable" aria-describedby="responsable" placeholder="Introdueix el nom del responsable" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix el nom del responsable de l'empresa
                         </div>
                     </div>
                     <div class="form-group ">
                         <label for="dniNif">NIF</label>
-                        <form:input type="text" class="form-control" id="dniNif"path="dniNif" aria-describedby="nif" placeholder="Introdueix el NIF" required="required"/>
+                        <form:input type="text" class="form-control" id="dniNif"path="dniNif" maxlength="9" aria-describedby="nif" placeholder="Introdueix el NIF" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix el NIF
                         </div>
@@ -111,28 +111,28 @@
 
                     <div class="form-group">
                         <label for="adreca">Adreça</label>
-                        <form:input type="text" class="form-control" id="adreca" path="adreca" placeholder="Introdueix l'adreça" required="required"/>
+                        <form:input type="text" class="form-control" id="adreca" path="adreca" maxlength="50" placeholder="Introdueix l'adreça" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix l'adreça
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="ciutat">Ciutat</label>
-                        <form:input type="text" class="form-control" id="ciutat" path="ciutat"  placeholder="Introdueix la ciutat" required="required"/>
+                        <label for="poblacio">Població</label>
+                        <form:input type="text" class="form-control" id="poblacio" path="poblacio" maxlength="50" placeholder="Introdueix la població" required="required"/>
                         <div class="invalid-feedback">
-                            Introdueix la ciutat
+                            Introdueix la població
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="provincia">Provincia</label>
-                        <form:input type="text" class="form-control" id="provincia" path="provincia"  placeholder="Introdueix la provincia" required="required"/>
+                        <form:input type="text" class="form-control" id="provincia" path="provincia" maxlength="50" placeholder="Introdueix la provincia" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix la provincia
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="telefon">Telèfon</label>
-                        <form:input type="text" class="form-control" id="telefon" path="telefon" placeholder="Introdueix el telèfon" required="required"/>
+                        <form:input type="text" class="form-control" id="telefon" path="telefon" maxlength="20" placeholder="Introdueix el telèfon" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix el telèfon
                         </div>
@@ -140,7 +140,7 @@
 
                     <div class="form-group">
                           <label for="web">Web de l'empresa <small>(* Camp no obligatori)</small></label>
-                        <form:input type="text" class="form-control" id="web"path="web" placeholder="Introdueix la web"/>
+                        <form:input type="text" class="form-control" id="web"path="web" maxlength="30" placeholder="Introdueix la web"/>
 
                     </div>
                     <div class="form-group">
@@ -153,21 +153,21 @@
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail</label>
-                        <form:input type="email" class="form-control" id="email" path="email" placeholder="Introdueix l'e-mail"/>
+                        <form:input type="email" class="form-control" id="email" path="email" maxlength="50" placeholder="Introdueix l'e-mail"/>
                         <div class="invalid-feedback">
                             Introdueix l'email
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="observacions">Observacions</label>
-                        <form:textarea rows="8" cols="30" class="form-control" id="observacions" path="observacions"placeholder="Observacions"/>
+                        <form:textarea rows="8" cols="30" class="form-control" id="observacions" path="observacions" maxlength="500" placeholder="Observacions"/>
                         <div class="invalid-feedback">
                            Observacions
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="pass">Password</label>
-                        <form:input type="password" class="form-control" id="pass" path="pass" pattern=".{8,}"  placeholder="Mínim 8 caràcters" required="required"/>
+                        <label for="pass">Password (max 8 caracters)</label>
+                        <form:input type="password" class="form-control" id="pass" path="pass" pattern=".{8,}" maxlength="8" placeholder="Mínim 8 caràcters" required="required"/>
                         <div class="invalid-feedback">
                             Introdueix password
                         </div>
@@ -175,7 +175,7 @@
 
                     <div class="form-group">
                         <label for="cPass">Validar password</label>
-                        <form:input type="password" class="form-control" id="cPass" path="cPass"placeholder="Validar password" required="required"/>
+                        <form:input type="password" class="form-control" id="cPass" path="cPass" maxlength="8" placeholder="Validar password" required="required"/>
                         <div class="invalid-feedback">
                             Confirma password
                         </div>

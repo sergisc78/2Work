@@ -12,22 +12,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name="formacions")
-public class Formacio implements Serializable {
-    private static final long serialVersionUID=1L;
+
+public class Formacio  {
     
-    @Id
-    @NotNull
-    @Column (name="codiFormacio")
     protected Integer codiFormacio;
-    
-    @NotNull    
-    @Size(max=50)
-    @Column (name="nomFormacio")
     protected String nomFormacio;
-    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected ArrayList<Candidat> candidats=new ArrayList();
 
     public Formacio(Integer codiFormacio, String nomFormacio) {
@@ -59,7 +48,7 @@ public class Formacio implements Serializable {
         this.nomFormacio = nomFormacio;
     }
 
-    public void addCandidats(ArrayList<Candidat> candidats) {
+    public void setCandidats(ArrayList<Candidat> candidats) {
         this.candidats = candidats;
     }
     

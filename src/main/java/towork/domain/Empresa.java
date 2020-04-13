@@ -13,74 +13,26 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name="empreses")
-public class Empresa extends Usuari implements Serializable{
-    
-    private static final long serialVersionUID=1L;
-    
-    
-    @NotNull
-    @Size(max=50)
-    @Column (name="responsable")
-    protected String responsable;    
-    
-    @Size(max=30)
-    @Column(name="web")
-    protected String web;
-    
-    @Column(name="tamany")
-    protected Integer tamany;
-    
-    @NotNull    
-    @Column (name="sector")
-    protected Integer sector;
-     
-    @NotNull
-    @Column (name="codiEmpresa")
-    protected Integer codiEmpresa;
-    
-    
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    protected ArrayList<Oferta> ofertes=new ArrayList();
 
-    public Empresa( Integer codi,String nom, String responsable, String dniNif,String adreca, String ciutat, String provincia,
+public class Empresa extends Usuari{  
+    
+    protected String responsable;    
+    protected String web;
+    protected Integer tamany;
+    protected Integer sector;
+   
+
+    public Empresa(Integer codi,String nom, String responsable, String dniNif,String adreca, String poblacio, String provincia,
             String telefon,String web, Integer tamany, String email, String observacions,
-            String pass, String cPass, Integer sector,Integer codiEmpresa) {
-        super(codi,nom,dniNif,adreca,ciutat,provincia,telefon,email,observacions,pass,cPass);
+            String pass, String cPass, Integer sector) {
+        super(codi,nom,dniNif,adreca,poblacio,provincia,telefon,email,observacions,pass,cPass);
         this.responsable=responsable;
         this.web = web;
         this.tamany = tamany;
         this.sector=sector;
-        this.codiEmpresa=codiEmpresa;
-        this.ofertes= new ArrayList<Oferta>();
     }
 
     public Empresa() {
-    }
-
-    public String getResponsable() {
-        return responsable;
-    }
-
-    public String getWeb() {
-        return web;
-    }
-
-    public Integer getTamany() {
-        return tamany;
-    }
-
-    public Integer getSector() {
-        return sector;
-    }
-
-    public Integer getCodiEmpresa() {
-        return codiEmpresa;
-    }
-
-    public ArrayList<Oferta> getOfertes() {
-        return ofertes;
     }
 
     public void setResponsable(String responsable) {
@@ -99,15 +51,21 @@ public class Empresa extends Usuari implements Serializable{
         this.sector = sector;
     }
 
-    public void setCodiEmpresa(Integer codiEmpresa) {
-        this.codiEmpresa = codiEmpresa;
+    public String getResponsable() {
+        return responsable;
     }
 
-    public void addOfertes(ArrayList<Oferta> ofertes) {
-        this.ofertes = ofertes;
+    public String getWeb() {
+        return web;
     }
 
-   
+    public Integer getTamany() {
+        return tamany;
+    }
+
+    public Integer getSector() {
+        return sector;
+    }
+
     
-     
 }

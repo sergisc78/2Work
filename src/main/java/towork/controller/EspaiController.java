@@ -70,9 +70,9 @@ public class EspaiController {
             of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi ha podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
             of.setEstat("Pendent");
             of.setFormacio(1);
-            of.addHabilitats(habs);
+            of.setHabilitats(habs);
             of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
-            of.setCiutat("Cardona");
+            of.setPoblacio("Cardona");
             of.setNifEmpresa("22333444K"); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
             of.setSou(25000d);
             of.setTipusContracte("Indefinit");

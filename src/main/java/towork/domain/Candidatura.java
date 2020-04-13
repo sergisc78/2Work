@@ -12,30 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author gonem
- */
-@Entity
-@Table(name="candidatures")
-public class Candidatura implements Serializable{
-    private static final long serialVersionUID=1L;
-    
-    @Id
-    @NotNull
-    @Column (name="codiCandidatura")
+public class Candidatura {
+  
     protected Integer codiCandidatura;
-    
-    @NotNull
-    @Column (name="codiOferta")
     protected Integer codiOferta;
-    
-    @NotNull
-    @Column (name="codiCandidat")
     protected Integer codiCandidat;
-    
-    @NotNull
-    @Column (name="estat")
     protected Integer estat;
 
     public Candidatura(Integer codiCandidatura, Integer codiOferta, Integer codiCandidat, Integer estat) {
