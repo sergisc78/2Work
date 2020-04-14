@@ -474,17 +474,17 @@ public class EspaiController {
             // Opció Administrador a la barra de navegació
             HashMap<String, String> admin = new HashMap<>();
             admin.put("paraula","Administrador");
-            admin.put("url","/loginAdmin");
+            admin.put("url","/espaiAdmin");
         
             // Opció Candidat a la barra de navegació
             HashMap<String, String> candidat = new HashMap<>();
             candidat.put("paraula","Candidat");
-            candidat.put("url","/loginCandidat");
+            candidat.put("url","/espaiCandidat");
         
             // Opció Empresa a la barra de navegació
             HashMap<String, String> empresa = new HashMap<>();
             empresa.put("paraula","Empresa");
-            empresa.put("url","/loginEmpresa");
+            empresa.put("url","/espaiEmpresa");
         
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{admin,candidat,empresa};  

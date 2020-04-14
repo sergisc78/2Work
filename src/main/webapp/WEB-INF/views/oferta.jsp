@@ -85,7 +85,7 @@
                                           <h4>Empresa</h4>
                                           <p>${oferta.nifEmpresa}</p>
                                           <h4>Localitat</h4>
-                                          <p>${oferta.ciutat}</p>
+                                          <p>${oferta.poblacio}</p>
                                     </c:if>
                                     <h4>Tipus de contracte</h4>
                                     <p>${oferta.tipusContracte}</p>
@@ -102,7 +102,7 @@
                                       <h4>Habilitats addicionals requerides</h4>
                                       <p>
                                             <c:forEach items="${oferta.habilitats}" var="map" varStatus="loop">
-                                                  ${map.nomHab}
+                                                  Habilitat nº ${map}
                                                   <c:if test="${!loop.last}">, </c:if>
                                             </c:forEach>
                                       </p>

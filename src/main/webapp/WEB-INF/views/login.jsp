@@ -18,48 +18,34 @@
         <!-- Tipografia-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
+        <!-- Estils afegits -->
+        <spring:url value="/resources/css/login.css" var="estilsCSS" />
+        <link href="${estilsCSS}" rel="stylesheet" />
 
-        <title>2 work</title>
+        <title>2Work</title>
     </head>
     <body>
 
-        <section>
-            <div class="jumbotron">
-                <div class="container">
-                    <h1 class="text-center"> LOGIN </h1>
-                </div>
-            </div>
-        </section>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Introdueix les dades per entrar a l´aplicació</h3>
-                        </div>
-                        <div class="panel-body">
-                            <c:if test="${not empty error}">
+                                    
+      <section class="text-center" id="login">
+              <h3 class="blau">Login</h3>
+              <p>Introdueix les teves credencials</p>
+              <c:if test="${not empty error}">
                                 <div class="alert alert-danger">
                                     Email o password incorrecte
                                 </div>
-                            </c:if>
-                            <form action="<c:url value= "/j_spring_security_check"> </c:url>" method="post">
-                                    <fieldset>
-                                        <div class="form-group">
-                                            <input class="form-control" placeholder="Introdueix l´email" name='j_username' type="email">
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="form-control" placeholder="Introdueix el password" name='j_password' type="password">
-                                        </div>
-                                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Entrar">
-                                    </fieldset>
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </c:if>
+              <form class="form-signin" action="<c:url value= "/j_spring_security_check"> </c:url>" method="post">
+                  <label for="inputEmail" class="sr-only">Adreça d'e-mail</label>
+                  <input type="email" name='j_username' id="inputEmail" class="form-control" placeholder="Adreça d'e-mail" required autofocus>
+                  <label for="inputPassword" class="sr-only">Password</label>
+                  <input type="password" name='j_password' id="inputPassword" class="form-control" placeholder="Password" required>
+                  
+                  <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>  
+                  
+              </form>
+              <p><a class="small-text text-muted" href="<spring:url value='/'/>">Tornar</a></p>
+        </section>
 
         
     </body>
