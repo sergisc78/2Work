@@ -123,7 +123,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="ciutat">Població</label>
+                    <label for="poblacio">Població</label>
                     <form:input type="text" class="form-control" id="poblacio" path="poblacio"  maxlength="50" placeholder="Introdueix la població" required="required"/>
                     <div class="invalid-feedback">
                         Introdueix la població
