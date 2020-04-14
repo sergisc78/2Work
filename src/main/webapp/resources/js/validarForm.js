@@ -83,11 +83,10 @@
     }
     function validarOferta(){
         
-        var nifEmpresa,titolOferta,poblacio,provincia,sou,horari; 
-    
+        var nifEmpresa,titolOferta,poblacio,provincia,sou,horari;  
 
             // codiOferta=document.getElementById('codiOferta').value;
-            // nifEmpresa=document.getElementById('nifEmpresa').value;
+            nifEmpresa=document.getElementById('nifEmpresa').value;
             titolOferta=document.getElementById('titolOferta').value;
             poblacio=document.getElementById('poblacio').value;
             provincia=document.getElementById('provincia').value;

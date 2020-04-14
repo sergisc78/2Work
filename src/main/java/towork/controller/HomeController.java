@@ -161,9 +161,8 @@ public class HomeController {
             System.out.println("--- Ja tenim l'empresa a l'objecte formEmpresa. Fem amb ell el que faci falta.");
             
             // Invocarem els mètodes corresponents un cop fets els filtres que calguin
-            // CandidatService.addCandidat(formCandidat);
-            // service.addExperiencies
-            //....
+            
+            empresaService.addEmpresa(formEmpresa);
             
             // segons el resultat de l'execució del mètode...
             // ... haurem de redirigir a la vista que vulguem passant feedback a l'usuari (alta feta/alta no feta)
