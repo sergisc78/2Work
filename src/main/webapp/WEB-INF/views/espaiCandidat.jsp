@@ -47,6 +47,13 @@
                         </li>
                         
                         </c:forEach>
+                        
+                        <!-- LOGOUT -->
+                        <sec:authorize access="hasRole('ROLE_USER')">
+                        <li role="Presentation" class="nav-item">
+                            <a class="nav-link" href="<c:url value="/j_spring_security_logout" />">Logout</a>
+                        </li>
+                    </sec:authorize>
                 </ul>
             </div>  
 

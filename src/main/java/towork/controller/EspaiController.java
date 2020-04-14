@@ -139,13 +139,10 @@ public class EspaiController {
             candidatures.put("paraula","Candidatures");  
             candidatures.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
         
-            // Opció logout a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");
-            logout.put("url","/logout");
+            
         
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,candidatures,logout};  
+            HashMap[] opcions = new HashMap[]{perfil,candidatures};  
           
             ModelAndView modelview = new ModelAndView("espaiCandidat");
             modelview.getModelMap().addAttribute("ubicacio", "Ofertes escaients per les teves dades");
