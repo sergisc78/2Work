@@ -118,8 +118,8 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="ciutat">Població</label>
-                            <form:input type="text" class="form-control" id="ciutat" path="ciutat"  placeholder="Introdueix la població" required="required"/>
+                            <label for="poblacio">Població</label>
+                            <form:input type="text" class="form-control" id="poblacio" path="poblacio"  placeholder="Introdueix la població" required="required"/>
                             <div class="invalid-feedback">
                                 Introdueix la població
                             </div>
