@@ -9,6 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.MatrixVariable;
@@ -18,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import towork.domain.Candidat;
 import towork.domain.Candidatura;
@@ -126,18 +131,20 @@ public class EspaiController {
       @RequestMapping(value = "/espaiCandidat", method = RequestMethod.GET)
       public ModelAndView EspaiCandidatRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
           
-
-            // AQUEST CONTROLADOR HAURÀ DE REBRE EL CODI DE CANDIDAT
+            // Desem a la variable 'username' el nom de l'usuari que s'ha acreditat
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            // Crec que a partir del nom d'usuari/email hem d'agafar el codi d'usuari de la bbdd per passar-lo com a paràmetre a les opcions que ho requereixin
             
             // Opció perfil a la barra de navegació
             HashMap<String, String> perfil = new HashMap<>();
             perfil.put("paraula","Perfil");
-            perfil.put("url","/perfil");
+            perfil.put("url","/perfil/"+username);
         
             // Opció candidatures a la barra de navegació
             HashMap<String, String> cands = new HashMap<>();
             cands.put("paraula","Candidatures");  
-            cands.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
+            cands.put("url","/candidatures?candidat="+username); // ÉS UNA PROVA, LI HAURIEM DE PASSAR EL CODI
             
             // Opció candidatures a la barra de navegació
             HashMap<String, String> logout = new HashMap<>();
