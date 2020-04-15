@@ -135,14 +135,17 @@ public class EspaiController {
             perfil.put("url","/perfil");
         
             // Opció candidatures a la barra de navegació
-            HashMap<String, String> candidatures = new HashMap<>();
-            candidatures.put("paraula","Candidatures");  
-            candidatures.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
-        
+            HashMap<String, String> cands = new HashMap<>();
+            cands.put("paraula","Candidatures");  
+            cands.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
             
+            // Opció candidatures a la barra de navegació
+            HashMap<String, String> logout = new HashMap<>();
+            logout.put("paraula","Logout");  
+            logout.put("url","/j_spring_security_logout");
         
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,candidatures};  
+            HashMap[] opcions = new HashMap[]{perfil,cands,logout};  
           
             ModelAndView modelview = new ModelAndView("espaiCandidat");
             modelview.getModelMap().addAttribute("ubicacio", "Ofertes escaients per les teves dades");
@@ -192,11 +195,11 @@ public class EspaiController {
             candidatures.put("paraula","Candidatures");  
             candidatures.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
         
-            // Opció logout a la barra de navegació
+            // Opció candidatures a la barra de navegació
             HashMap<String, String> logout = new HashMap<>();
             logout.put("paraula","Logout");
-            logout.put("url","/logout");
-        
+            logout.put("url","/j_spring_security_logout");
+            
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{perfil,ofertes,candidatures,logout};  
         
@@ -230,8 +233,6 @@ public class EspaiController {
             // Opció ofertes a la barra de navegació
             HashMap<String, String> ofertes = new HashMap<>();
             
-            System.out.println("--- Entrem al switch amb el següent valor a tipusUsuari: "+tipusUsuari);
-            
             ofertes.put("paraula","Ofertes");
             switch(tipusUsuari){
                   case "candidat": { 
@@ -249,10 +250,10 @@ public class EspaiController {
             candidatures.put("paraula","Candidatures");  
             candidatures.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
         
-            // Opció logout a la barra de navegació
+            // Opció candidatures a la barra de navegació
             HashMap<String, String> logout = new HashMap<>();
             logout.put("paraula","Logout");
-            logout.put("url","/logout");
+            logout.put("url","/j_spring_security_logout");
         
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{perfil,ofertes,candidatures,logout};  
@@ -285,10 +286,10 @@ public class EspaiController {
             ofertes.put("paraula","Ofertes");
             ofertes.put("url","/ofertesEmpresa"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
 
-            // Opció logout a la barra de navegació
+            // Opció candidatures a la barra de navegació
             HashMap<String, String> logout = new HashMap<>();
             logout.put("paraula","Logout");
-            logout.put("url","/logout");
+            logout.put("url","/j_spring_security_logout");
 
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{perfil,ofertes,logout};  
@@ -334,10 +335,10 @@ public class EspaiController {
             perfil.put("paraula","Perfil");
             perfil.put("url","/perfil");
         
-            // Opció logout a la barra de navegació
+            // Opció candidatures a la barra de navegació
             HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");
-            logout.put("url","/logout");
+            logout.put("paraula","Logout");  
+            logout.put("url","/j_spring_security_logout");
         
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{perfil,logout};  
@@ -369,10 +370,10 @@ public class EspaiController {
             ofertes.put("paraula","Ofertes");
             ofertes.put("url","/ofertesEmpresa"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
 
-            // Opció logout a la barra de navegació
+            // Opció candidatures a la barra de navegació
             HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");
-            logout.put("url","/logout");
+            logout.put("paraula","Logout");  
+            logout.put("url","/j_spring_security_logout");
 
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{perfil,ofertes,logout};  
@@ -437,10 +438,10 @@ public class EspaiController {
             ofertes.put("paraula","Ofertes");
             ofertes.put("url","/espaiCandidat"); // AQUI LI HAUREM DE PASSAR A LA URL EL CODI DE CANDIDAT PERQUE ENS MOSTRI LA INFO ESCAIENTS
 
-            // Opció logout a la barra de navegació
+            // Opció logout  a la barra de navegació
             HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");
-            logout.put("url","/logout");
+            logout.put("paraula","Logout");  
+            logout.put("url","/j_spring_security_logout");
 
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{perfil,ofertes,logout};
@@ -526,10 +527,10 @@ public class EspaiController {
             candidatures.put("paraula","Candidatures");  
             candidatures.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
         
-            // Opció logout a la barra de navegació
+            // Opció logout  a la barra de navegació
             HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");
-            logout.put("url","/logout");
+            logout.put("paraula","Logout");  
+            logout.put("url","/j_spring_security_logout");
         
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{perfil,candidatures,logout};  
@@ -577,10 +578,10 @@ public class EspaiController {
             ofertes.put("paraula","Ofertes");
             ofertes.put("url","/espaiCandidat"); // AQUI LI HAUREM DE PASSAR A LA URL EL CODI DE CANDIDAT PERQUE ENS MOSTRI LA INFO ESCAIENTS
 
-            // Opció logout a la barra de navegació
+            // Opció logout  a la barra de navegació
             HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");
-            logout.put("url","/logout");
+            logout.put("paraula","Logout");  
+            logout.put("url","/j_spring_security_logout");
 
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{perfil,ofertes,logout};
@@ -672,10 +673,10 @@ public class EspaiController {
             ofertes.put("paraula","Ofertes");
             ofertes.put("url","/ofertesEmpresa");
 
-            // Opció logout a la barra de navegació
+            // Opció logout  a la barra de navegació
             HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");
-            logout.put("url","/logout");
+            logout.put("paraula","Logout");  
+            logout.put("url","/j_spring_security_logout");
             
             // AQUI LI HEM DE PASSAR ELS LLISTATS PER OMPLIR ELS SELECTS QUE VINDRAN DE LA BBDD
             // PER ARA ESTÀ SIMULAT AIXÍ
