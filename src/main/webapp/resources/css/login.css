@@ -73,4 +73,12 @@ a, button {
   background: #2daae1;
   border-color: #63c0e9; }
 
+.alert {
+  padding: 0.6em;
+  margin-bottom: 0.75em; }
+  .alert.alert-danger {
+    color: #fff;
+    background: #e1642d;
+    border-color: #e7855a; }
+
 /*# sourceMappingURL=login.css.map */

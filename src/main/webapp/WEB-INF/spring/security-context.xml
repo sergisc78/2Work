@@ -14,17 +14,17 @@
         <security:intercept-url pattern="/espaiAdmin" access="hasRole('ROLE_ADMIN')"/>
         <security:form-login login-page="/login" default-target-url="/espaiAdmin" login-processing-url="/j_spring_security_check"
                              username-parameter="j_username" password-parameter="j_password" authentication-failure-url="/loginfailed"/>
-        <security:logout logout-success-url="/" />
+        <security:logout logout-success-url="/logout" />
         
         <security:intercept-url pattern="/espaiCandidat" access="hasRole('ROLE_USER')"/>
         <security:form-login login-page="/login" default-target-url="/espaiCandidat" login-processing-url="/j_spring_security_check"
                              username-parameter="j_username" password-parameter="j_password" authentication-failure-url="/loginfailed"/>
-        <security:logout logout-success-url="/" />
+        <security:logout logout-success-url="/logout" />
         
         <security:intercept-url pattern="/espaiEmpresa" access="hasRole('ROLE_EMPRESA')"/>
         <security:form-login login-page="/login" default-target-url="/espaiEmpresa" login-processing-url="/j_spring_security_check"
                              username-parameter="j_username" password-parameter="j_password" authentication-failure-url="/loginfailed"/>
-        <security:logout logout-success-url="/" />
+        <security:logout logout-success-url="/logout" />
         
     </security:http> 
     
@@ -39,4 +39,3 @@
         </security:authentication-provider>
     </security:authentication-manager>
 </beans>
-

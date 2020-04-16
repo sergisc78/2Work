@@ -33,18 +33,18 @@
 
     <body>
 
-            <!-- Modal info política de protecció de dades i privacitat-->
-            <div class="modal fade" id="modalPrivacitat" tabindex="-1" role="dialog" aria-labelledby="proteccioDadesPrivacitat" aria-hidden="true">
+            <!-- Modal info política de protecció dels drets candidat-->
+            <div class="modal fade" id="modalProteccioCandidat" tabindex="-1" role="dialog" aria-labelledby="proteccioDadesPrivacitat" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                               <div class="modal-header">
-                                    <h5 class="modal-title">Política de protecció de dades i privacitat</h5>
+                                    <h5 class="modal-title">Política de protecció de drets del candidat</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                           <span aria-hidden="true">&times;</span>
                                     </button>
                               </div>
                               <div class="modal-body">
-                                    <%@include  file='/resources/html/proteccioDadesPrivacitat.html' %>
+                                    <%@include  file='/resources/html/proteccioDretsCandidat.html' %>
                               </div>
                         </div>
                   </div>
@@ -178,8 +178,8 @@
                 <div class="form-group">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" required>
-                        <label class="form-check-label" for="invalidCheck3">D'acord amb la política de privacitat i protecció de dades</label>
-                        <a data-toggle="modal" data-target="#modalPrivacitat" ><span class="badge badge-pill badge-primary">Llegir</span></a>
+                        <label class="form-check-label" for="invalidCheck3">D'acord amb la política de política de protecció del candidat de 2Work</label>
+                        <a data-toggle="modal" data-target="#modalProteccioCandidat" ><span class="badge badge-pill badge-primary">Llegir</span></a>
                         <div class="invalid-feedback">
                             Has d'estar d'acord, abans d'enviar el formulari
                         </div>

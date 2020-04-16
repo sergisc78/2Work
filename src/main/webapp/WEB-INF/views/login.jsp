@@ -30,12 +30,10 @@
       <section class="text-center" id="login">
               <h3 class="blau">Login</h3>
               <p>Introdueix les teves credencials</p>
-              <c:if test="${not empty error}">
-                                <div class="alert alert-danger">
-                                    Email o password incorrecte
-                                </div>
-            </c:if>
               <form class="form-signin" action="<c:url value= "/j_spring_security_check"> </c:url>" method="post">
+                  <c:if test="${not empty error}">
+                        <div class="alert alert-danger">Email o password incorrecte</div>
+                  </c:if>
                   <label for="inputEmail" class="sr-only">Adreça d'e-mail</label>
                   <input type="email" name='j_username' id="inputEmail" class="form-control" placeholder="Adreça d'e-mail" required autofocus>
                   <label for="inputPassword" class="sr-only">Password</label>

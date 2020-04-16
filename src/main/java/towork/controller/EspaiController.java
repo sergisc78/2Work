@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import towork.domain.Candidat;
 import towork.domain.Candidatura;
@@ -134,7 +131,7 @@ public class EspaiController {
             // Desem a la variable 'username' el nom de l'usuari que s'ha acreditat
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
-            // Crec que a partir del nom d'usuari/email hem d'agafar el codi d'usuari de la bbdd per passar-lo com a paràmetre a les opcions que ho requereixin
+            // Crec que a partir del nom d'usuari/email hem d'agafar el codi d'usuari de la bbdd, mitjançant el mètode del servei corresponent, per passar-lo com a paràmetre a les opcions que ho requereixin
             
             // Opció perfil a la barra de navegació
             HashMap<String, String> perfil = new HashMap<>();
@@ -476,6 +473,7 @@ public class EspaiController {
           
             
             // AQUI HEM DE CRIDAR EL MÈTODE QUE FARÀ EL LOGOUT 
+            System.out.println("--- Hem entrat al mètode logout");
            
             // Creem les opcions que aniràn a la barra de navegació
             
