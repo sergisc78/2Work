@@ -22,7 +22,7 @@
         <spring:url value="/resources/css/login.css" var="estilsCSS" />
         <link href="${estilsCSS}" rel="stylesheet" />
 
-        <title>2Work</title>
+        <title>2Work - ${ubicacio}</title>
     </head>
     <body>
 

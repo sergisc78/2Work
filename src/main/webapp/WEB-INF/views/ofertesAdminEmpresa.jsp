@@ -42,26 +42,11 @@
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     
                       <c:forEach items="${opcions}" var="map">
-                      
-                        <c:choose>
-                                    
-                              <c:when test="${map.paraula != 'Logout'}">
+
                                     <li class="nav-item">
                                           <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
                                     </li>
-                              </c:when>
-                                    
-                              <c:otherwise>
-                                    <!-- Opció Logout -->
-                                    <sec:authorize access="hasRole('ROLE_EMPRESA')">
-                                          <li role="Presentation" class="nav-item">
-                                                <a class="nav-link" href="<c:url value='${map.url}' />">${map.paraula}</a>
-                                          </li>
-                                    </sec:authorize>
-                              </c:otherwise>
-                                          
-                        </c:choose>
-
+                        
                      </c:forEach>
 
                 </ul>
@@ -90,8 +75,13 @@
                                           <%@include  file='/resources/svg/edit.svg' %>
                                     </svg>
                               </a>
-                                    
-                              <a href="<spring:url value= "/ofertaPropietari?ref='" />${loop.index}'" class="flex-grow-1"><p>Títol de l'oferta número ${loop.index}</p></a>
+                              
+                              <sec:authorize access="hasRole('ROLE_EMPRESA')">
+                                    <a href="<spring:url value= "/ofertaPropietari/" />${loop.index}'" class="flex-grow-1"><p>Títol de l'oferta número ${loop.index}</p></a>
+                              </sec:authorize>
+                              <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                                    <a href="<spring:url value= "/oferta/${loop.index}" />" class="flex-grow-1"><p>Títol de l'oferta número ${loop.index}</p></a>
+                              </sec:authorize>
                               
                               <c:choose>
                                     <c:when test="${loop.index % 4 == 0}">

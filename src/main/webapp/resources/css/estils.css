@@ -275,7 +275,7 @@ section#alta-candidat a:not([href]), section#alta-empresa a:not([href]) {
 #modalPrivacitat .modal-content {
   font-size: 0.9em; }
 
-section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat {
+section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat, section#empresa {
   padding-top: 4rem; }
 
 section#ofertes .card {
@@ -286,35 +286,39 @@ section#ofertes .card {
   section#ofertes .card .card-body svg {
     margin-bottom: 0.1em; }
 
-section#oferta .card, section#candidat .card {
+section#oferta .card, section#candidat .card, section#empresa .card {
   background: #f5f5f5;
   border: none;
   margin-bottom: 1.5rem; }
-  section#oferta .card .card-header, section#candidat .card .card-header {
-    background: #f5f5f5; }
-  section#oferta .card .card-footer, section#candidat .card .card-footer {
+  section#oferta .card .card-header, section#candidat .card .card-header, section#empresa .card .card-header {
+    background: #e0f2fb; }
+  section#oferta .card .card-body, section#candidat .card .card-body, section#empresa .card .card-body {
+    padding: 2rem 1.25rem; }
+    section#oferta .card .card-body .row, section#candidat .card .card-body .row, section#empresa .card .card-body .row {
+      margin-bottom: 1em; }
+  section#oferta .card .card-footer, section#candidat .card .card-footer, section#empresa .card .card-footer {
     padding: 1.25rem; }
-  section#oferta .card h1, section#candidat .card h1 {
+  section#oferta .card h1, section#candidat .card h1, section#empresa .card h1 {
     font-size: 1.5em;
     font-weight: 900;
     margin-bottom: 0; }
-  section#oferta .card h4, section#candidat .card h4 {
+  section#oferta .card h4, section#candidat .card h4, section#empresa .card h4 {
     font-size: 0.7em;
     text-transform: uppercase;
     color: #1d70b7;
     margin-bottom: 0; }
-  section#oferta .card .col:last-of-type h4, section#candidat .card .col:last-of-type h4 {
+  section#oferta .card .col:last-of-type h4, section#candidat .card .col:last-of-type h4, section#empresa .card .col:last-of-type h4 {
     color: #2daae1; }
-section#oferta a, section#candidat a {
+section#oferta a, section#candidat a, section#empresa a {
   margin-right: 15px; }
-section#oferta #llistat-candidatures, section#candidat #llistat-candidatures {
+section#oferta #llistat-candidatures, section#candidat #llistat-candidatures, section#empresa #llistat-candidatures {
   padding: 0; }
-  section#oferta #llistat-candidatures li, section#candidat #llistat-candidatures li {
+  section#oferta #llistat-candidatures li, section#candidat #llistat-candidatures li, section#empresa #llistat-candidatures li {
     background: inherit;
     list-style-type: none; }
-    section#oferta #llistat-candidatures li form, section#candidat #llistat-candidatures li form {
+    section#oferta #llistat-candidatures li form, section#candidat #llistat-candidatures li form, section#empresa #llistat-candidatures li form {
       margin-bottom: 0; }
-  section#oferta #llistat-candidatures a p, section#candidat #llistat-candidatures a p {
+  section#oferta #llistat-candidatures a p, section#candidat #llistat-candidatures a p, section#empresa #llistat-candidatures a p {
     margin: 0; }
 
 section#info h3 {

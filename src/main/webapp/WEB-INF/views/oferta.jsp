@@ -137,7 +137,7 @@
                                     
                                     <c:forEach items="${Candidatures.llista}" var="candidatura" varStatus="loop">
                                           <li class="list-group-item d-flex justify-content-between align-items-center">   
-                                                <a href="<spring:url value='/candidat?codi="1"'/>" class="flex-grow-1"><p>Candidat random número ${loop.index}</p></a>
+                                                <a href="<spring:url value='/candidat/${loop.index}'/>" class="flex-grow-1"><p>Candidat random número ${loop.index}</p></a>
                                                 <form:select path="llista[${loop.index}].estat">
                                                       <form:options items="${estatsPossiblesCandidatura}" />
                                                 </form:select>
@@ -168,8 +168,10 @@
                               <a href="<spring:url value='${referer}'/>" class="text-center btn btn-primary" role="button">Tornar</a>
                         </c:when> 
                         <c:otherwise>
-                              <a href="<spring:url value='/inscripcioOferta/oferta=1;candidat=1'/>" class="text-center btn btn-primary" role="button">Inscriure'm a l'oferta</a>
-                              <a href="#" class="text-center btn btn-warning" role="button">Denunciar l'oferta</a>
+                              <sec:authorize access="hasRole('ROLE_USER')">
+                                    <a href="<spring:url value='/inscripcioOferta/oferta=1;candidat=1'/>" class="text-center btn btn-primary" role="button">Inscriure'm a l'oferta</a>
+                                    <a href="#" class="text-center btn btn-warning" role="button">Denunciar l'oferta</a>
+                              </sec:authorize>
                         </c:otherwise> 
                   </c:choose>
                  </p>

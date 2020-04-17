@@ -25,7 +25,7 @@ section#alta-candidat, section#alta-empresa {
 }
 
 
-section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat {
+section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat, section#empresa {
       padding-top: 4rem;
 }
 
@@ -46,13 +46,23 @@ section#ofertes {
 }
 
 
-section#oferta, section#candidat {
+section#oferta, section#candidat, section#empresa {
       .card {
             background: $color-basic-gris-clar;
             border: none;
             margin-bottom: 1.5rem;
             
-            .card-header { background: $color-basic-gris-clar; }
+            .card-header { 
+                  // background: $color-basic-gris-clar; 
+                  background: $color-basic-blau-clar-rebaixat
+            }
+            
+            .card-body {
+                  padding: 2rem 1.25rem;
+                  .row {
+                        margin-bottom: 1em;
+                  }
+            }
             
             .card-footer { padding: 1.25rem; }
             
