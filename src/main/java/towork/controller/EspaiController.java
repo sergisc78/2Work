@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import towork.domain.Candidat;
@@ -60,7 +58,13 @@ public class EspaiController {
       // Aquesta part potser es pot deixar definida aqui. Valorar si és un bon lloc.
       public HashMap<Integer, String> estatsPossibles = new HashMap<>();
       
-      
+      /**
+      * 
+      * Constructor del controlador, sense paràmetres
+      * 
+      * @author Daniel Sevilla i Junyent
+      * 
+      */
       public EspaiController() {
             // Constructor de la classe
         
@@ -135,8 +139,14 @@ public class EspaiController {
        }
       
       ///////////////////////////////////////////////////////////////////////////////////////////////
-
-      // Mètode provisional que afegeig una llista de candidatures
+      
+      /**
+      * 
+      * Mètode provisional que afegeig una llista de candidatures
+      * 
+      * @author Daniel Sevilla i Junyent
+      * @return Una llista d'objectes candidatura que farem servir de prova 
+      */
       private List<Candidatura> getListOfCandidatures() {
             
             List<Candidatura> cands = new ArrayList<>();
@@ -153,15 +163,23 @@ public class EspaiController {
       //
       
       
+      /**
+       *
+       * Prepara i retorna la vista que mostra les ofertes disponibles per l'usuari candidat que està loguejat
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Objecte modelandview que representa la vista que mostra les ofertes adients per un candidat en concret
+       * @throws ServletException
+       * @throws IOException 
+       */
       @RequestMapping(value = "/espaiCandidat", method = RequestMethod.GET)
       public ModelAndView EspaiCandidatRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
           
             // Desem a la variable 'username' el nom de l'usuari que s'ha acreditat
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
-            
-            if (authentication.getAuthorities().contains("ROLE_ADMIN")) {
-            }
                     
             // Crec que a partir del nom d'usuari/email hem d'agafar el codi d'usuari de la bbdd, mitjançant el mètode del servei corresponent, per passar-lo com a paràmetre a les opcions que ho requereixin
             
@@ -191,6 +209,15 @@ public class EspaiController {
       }
     
       
+      /**
+      * 
+      * @author Daniel Sevilla i Junyent
+      * @param request La petició http
+      * @param response La resposta http
+      * @return Objecte modelandview que representa el model i la vista
+      * @throws ServletException
+      * @throws IOException 
+      */
       @RequestMapping(value = "/espaiEmpresa", method = RequestMethod.GET)
       public ModelAndView EspaiEmpresaRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             ModelAndView modelview = new ModelAndView("espaiEmpresa");
@@ -202,6 +229,15 @@ public class EspaiController {
       }
 
       
+      /**
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Objecte modelandview que representa el model i la vista 
+       * @throws ServletException
+       * @throws IOException 
+       */
       @RequestMapping(value = "/espaiAdmin", method = RequestMethod.GET)
       public ModelAndView EspaiAdministradorRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             ModelAndView modelview = new ModelAndView("espaiAdmin");
@@ -213,8 +249,20 @@ public class EspaiController {
       }
 
       
+      /**
+      *
+      * Prepara i retorna la vista que mostra els detalls d'una oferta concreta, el codi del qual rebem a la url com a PathVariable
+      * 
+      * @author Daniel Sevilla i Junyent
+      * @param codiOferta El codi de l'oferta el detall de la qual mostrarà la vista
+      * @param request La petició http
+      * @param response La resposta http
+      * @return Objecte modelabdview que representa el model i la vista que mostrarà a l'usuari el detall d'una oferta concreta
+      * @throws ServletException
+      * @throws IOException 
+      */
       @RequestMapping(value = "/oferta/{codiOferta}", method = RequestMethod.GET)
-      public ModelAndView OfertaPerRef(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView OfertaPerCodi(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             
@@ -257,8 +305,21 @@ public class EspaiController {
       }
       
       
-      @RequestMapping(value = "/ofertaTornar", method = RequestMethod.GET)
-      public ModelAndView OfertaPerRefTornar(@RequestParam("ref") String ref, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      /**
+      *
+      * Prepara i retorna la vista que mostra els detalls d'una oferta concreta, el codi del qual rebem a la url com a PathVariable
+      * En aquest cas passarem a la vista el referer perque pugui incloure un botó 'tornar' funcional
+      * 
+      * @author Daniel Sevilla i Junyent
+      * @param codi El codi de l'oferta lea dades de la qual mostrarem
+      * @param request La petició http
+      * @param response La resposta http
+      * @return objecte modelandview que representa el model i la vista oferta només amb el botó 'Tornar' al cos
+      * @throws ServletException
+      * @throws IOException 
+      */
+      @RequestMapping(value = "/ofertaTornar/{codi}", method = RequestMethod.GET)
+      public ModelAndView OfertaPerRefTornar(@PathVariable("codi") Integer codi, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       
             // Controlador que invoca la vista perque aquesta mostri només el botó 'Tornar'
             // Pensat per quan el candidat vulgui consultar l'oferta des del llistat de candidatures
@@ -267,8 +328,6 @@ public class EspaiController {
             // Obtenim el rol de l'usuari loguejat
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String role = auth.getAuthorities().toString();
-            
-            System.out.println("--- Rol de l'usuari loguejat: ");
             
             
             // Opció perfil a la barra de navegació
@@ -317,6 +376,19 @@ public class EspaiController {
       }
 
       
+      /**
+       * 
+       * Prepara i retorna la vista que mostra els detalls d'una oferta a l'usuari empresa (propietari) de l'oferta
+       * (comparteix vista amb altres tipus d'usuari però en aquest cas mostra més contingut
+       * 
+       * @author Daniel Sevilla i junyent
+       * @param codiOferta El codi de l'oferta (un Integer) les dades de la qual mostrarem al propietari d'aquesta
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Un objecte modelandview que representa el model i la vista que mostrarem a l'usuari
+       * @throws ServletException
+       * @throws IOException 
+       */
       @RequestMapping(value = "/ofertaPropietari/{codiOferta}", method = RequestMethod.GET)
       public ModelAndView OfertaPropietariPerRef(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
@@ -369,6 +441,17 @@ public class EspaiController {
       }
     
         
+      /**
+       * 
+       * Prepara i retorna la vista d'ofertes que veu l'administrador
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Un objecte modelandview que representa el model i la vista que mostrarem a l'usuari
+       * @throws ServletException
+       * @throws IOException 
+       */
       @RequestMapping(value = "/ofertesAdmin", method = RequestMethod.GET)
       public ModelAndView OfertesAdminRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
@@ -411,6 +494,18 @@ public class EspaiController {
       }    
 
       
+      /**
+       * 
+       * Prepara i retorna la vista d'ofertes, filtrades per l'empresa que les ha creat, a l'administrador
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param codiEmpresa Un integer que representa el codi de l'empresa les ofertes creades per la qual mostrarem a l'administrador
+       * @param request La petició http
+       * @param response La respsta http
+       * @return Un objecte modelandview que representa el model i la vista que mostrarem a l'usuari
+       * @throws ServletException
+       * @throws IOException 
+       */
       @RequestMapping(value = "/ofertesAdmin/{codiEmpresa}", method = RequestMethod.GET)
       public ModelAndView OfertesAdminPerEmpresaRequest(@PathVariable("codiEmpresa") int codiEmpresa, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             // Mostrarà a l'administrador les ofertes d'una empresa concreta, el codi de la qual li passem per PathVariable
@@ -467,6 +562,18 @@ public class EspaiController {
       }
       
       
+      /**
+       * 
+       * Prepara i retorna la vista d'ofertes a l'empresa que les ha creat
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param codiEmpresa El codi de l'empresa les ofertes creades per la qual mostrarem a l'usuari empresa
+       * @param request La petició http
+       * @param response La resposta http
+       * @return OUn objecte modelandview que representa el model i la vista que mostrarem a l'usuari
+       * @throws ServletException
+       * @throws IOException 
+       */
       @RequestMapping(value = "/ofertesEmpresa/{codiEmpresa}", method = RequestMethod.GET)
       public ModelAndView OfertesEmpresaRequest(@PathVariable("codiEmpresa") int codiEmpresa, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             ModelAndView modelview = new ModelAndView("ofertesAdminEmpresa");
@@ -502,8 +609,21 @@ public class EspaiController {
             return modelview;
       }
 
+      
+      /**
+       * 
+       * Prepara i retorna la vista que mostra les dades del candidat que es passa com a PathVariable
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param codiCandidat El codi del candidat les dades del qual mostrarà la vista
+       * @param request La petició http
+       * @param response La resposta http
+       * @return L'objecte modelandview que representa el model i la vista que mostrarem a l'usuari
+       * @throws ServletException
+       * @throws IOException 
+       */
       @RequestMapping(value = "/candidat/{codiCandidat}", method = RequestMethod.GET)
-      public ModelAndView CandidatPerCodi(@PathVariable("codiCandidat") String codiCandidat, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView CandidatPerCodi(@PathVariable("codiCandidat") Integer codiCandidat, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
           
             // Passem a la vista les opcions de la barra de navegacó PER USUARI EMPRESA
             // Aquesta mateixa vista l'hauria de poder veure com a mínim l'admin, probablement amb altres opcions a la barra de navegació
@@ -570,6 +690,18 @@ public class EspaiController {
       }
     
  
+      /**
+       * 
+       * Prepara i retorna la vista que mostra totes les candidatures del candidat el codi del qual passem com a PathVariable
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param codiCandidat El codi del qual la vista mostrarà les candidatures
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Un objecte modelandview que representa el model i la vista que mostrarem a l'usuari
+       * @throws ServletException
+       * @throws IOException 
+       */
       @RequestMapping(value = "/candidatures/{codiCandidat}", method = RequestMethod.GET)
       public ModelAndView CandidaturesPerCandidat(@PathVariable("codiCandidat") Integer codiCandidat, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
           
@@ -613,12 +745,16 @@ public class EspaiController {
       }
 
     
+      /**
+       * 
+       * Prepara i retorna la vista que es mostrarà a l'usuari quan s'hagi executat el logout
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param request La petició http
+       * @return Un objecte modelandview que representa la vista que es mostrarà a l'usuari
+       */
       @RequestMapping(value = "/logout", method = RequestMethod.GET)
       public ModelAndView logout(HttpServletRequest request) {
-          
-            
-            // AQUI HEM DE CRIDAR EL MÈTODE QUE FARÀ EL LOGOUT 
-            System.out.println("--- Hem entrat al mètode logout");
            
             // Creem les opcions que aniràn a la barra de navegació
             
@@ -647,11 +783,21 @@ public class EspaiController {
             modelview.getModelMap().addAttribute("classeFeedback", "alert-warning");
             
             return modelview;
-    }
+      }
       
       
-     @RequestMapping(value = "/inscripcioOferta/{dadesInscripcio}", method = RequestMethod.GET)
-     public ModelAndView inscripcioOferta(@MatrixVariable(pathVar="dadesInscripcio") Map<String, Integer> dades){
+      /**
+       * 
+       * El mètode que s'invocarà quan el candidat premi l'opció 'inscriure'm a l'oferta'
+       * Ha de cridar el mètode del servei que executi la inscripció a la bbdd
+       * Retorna la vista d'ofertes seleccionades per l'usuari, a la qual li passarem la nova llista d'ofertes que ja no han d'incloure l'oferta a la qual l'usuari s'acaba d'inscriure.
+       * 
+       * @author Daniel Sevilla i junyent
+       * @param dades Un map de tuples <String, dades>. Ens interesa el tuples amb claus 'oferta' i 'candidat' per executar la inscripció
+       * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
+       */
+      @RequestMapping(value = "/inscripcioOferta/{dadesInscripcio}", method = RequestMethod.GET)
+      public ModelAndView inscripcioOferta(@MatrixVariable(pathVar="dadesInscripcio") Map<String, Integer> dades){
            
            Boolean inscripcioOK=false;
            
@@ -696,8 +842,8 @@ public class EspaiController {
                   missatgeFeedback = "Inscripció a l'oferta NO realitzada.";
                   classeFeedback = "alert-danger";
             }
-            
-            // LI HAUREM DE PASSAR AL MODEL EL CODI DEL CANDIDAT
+
+            // També li haurem de passar la llista d'ofertes per l'usuari
             ModelAndView modelview = new ModelAndView("espaiCandidat");
             modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
             modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
@@ -707,7 +853,15 @@ public class EspaiController {
            return modelview;
      }
      
-     
+     /**
+      * 
+      * El mètode que s'invocarà quan el candidat premi l'opció 'cancel·lar/eliminar candidatura'
+      * Ha de cridar el mètode o mètodes del servei que executi/n l'operació a la bbdd
+      * 
+      * @author Daniel Sevilla i Junyent
+      * @param dades Un map de tuples <String, dades>. Ens interessen el tuples amb claus 'oferta' i 'candidat' per executar la cancel·lació.
+      * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
+      */
      @RequestMapping(value = "/cancelarCandidatura/{dadesCancelacio}", method = RequestMethod.GET)
      public ModelAndView cancelacioCandidatura(@MatrixVariable(pathVar="dadesCancelacio") Map<String, Integer> dades){
            
@@ -767,9 +921,18 @@ public class EspaiController {
            return modelview;       
      }
      
-     
+      /**
+       * 
+       * Mètode que invoca la funció jQuery/Ajax que ha d'omplir l'element 'select' dels formularis corresponent a les habilitats 
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param idOcupacio La id de l'ocupació de la qual hem de retornar la llista d'habilitats relacionades
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Una llista d'objectes de tipus Habilitat
+       */
       @RequestMapping(value = "/getHabilitats/{idOcupacio}", method = RequestMethod.GET)
-      public @ResponseBody  List<Habilitat> getHabilitatsPerOcupacio(@PathVariable("idOcupacio") int idOcupacio,HttpServletRequest request, HttpServletResponse response) {
+      public @ResponseBody  List<Habilitat> getHabilitatsPerOcupacio(@PathVariable("idOcupacio") Integer idOcupacio,HttpServletRequest request, HttpServletResponse response) {
             // Li retornem al select d'habilitats habilitats que hi han d'anar SEGONS EL CODI D'OCUPACIÓ QUE LI PASSEM
             // Retornem una llista d'objectes Habilitat
             
@@ -798,16 +961,25 @@ public class EspaiController {
             // return categoryService.getAllSubcategories(categoryId);
       }
     
-    
+      /**
+       * 
+       * Prepara i retorna la vista que mostra el formulari mitjançant el qual una empresa crea una oferta nova
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
+       * @throws ServletException
+       * @throws IOException 
+       */
      @RequestMapping(value = "/altaOferta", method = RequestMethod.GET)
       public ModelAndView addOfertaRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             // Controlador que munta la vista d'alta d'oferta
             ModelAndView modelview = new ModelAndView("altaOferta");
             
-            // Formulari d'alta oferta 
+            // Objecte buit de tipus Oferta que li passarem al formulari
             Oferta formOferta = new Oferta();
 
-            
             // Opció Inici a la barra de navegació
             HashMap<String, String> inici = new HashMap<>();
             inici.put("paraula","Inici");
@@ -846,7 +1018,17 @@ public class EspaiController {
             return modelview;
       }
       
-      
+      /**
+       * 
+       * Rep l'objecte de tipus Oferta de la vista d'alta d'oferta
+       * Executa l'alta invocant el/s mètode/s necessari/s del servei
+       * Ha de passar feedback a l'usuari
+       *
+       * @author Daniel Sevilla i Junyent
+       * @param formOferta L'objecte de tipus Oferta que rebem del formulari
+       * @param result
+       * @return Un objecte String que conrindrà la redirecció a la home
+       */
       @RequestMapping(value = "/executaAltaOferta", method = RequestMethod.POST)
       public String executaAltaOferta(@ModelAttribute("formOferta") Oferta  formOferta, BindingResult result) {
             
@@ -859,10 +1041,21 @@ public class EspaiController {
             // segons el resultat de l'execució del mètode...
             // ... haurem de redirigir a la vista que vulguem passant feedback a l'usuari (alta feta/alta no feta)
             return "redirect:/";
-    }
+      }
       
+      
+      /**
+       * 
+       * Mostra la 'fitxa' d'informació d'una empresa, el codi de la qual rebem a la url com a pathVariable 
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param codiEmp El codi de l'empresa les dades de la qual mostrarem a la vista
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
+       */
       @RequestMapping(value = "/empresa/{codiEmpresa}", method = RequestMethod.GET)
-      public ModelAndView mostraEmpresa(@PathVariable("codiEmpresa") int codiEmp,HttpServletRequest request, HttpServletResponse response) {
+      public ModelAndView mostraEmpresa(@PathVariable("codiEmpresa") Integer codiEmp,HttpServletRequest request, HttpServletResponse response) {
             // Controlador que munta la vista que mostra les dades de l'empresa el codi de la qual rebem com a PathVariable
             ModelAndView modelview = new ModelAndView("empresa");
             
@@ -922,6 +1115,14 @@ public class EspaiController {
       }
       
       
+      /**
+       * 
+       * Prepara i retorna la vista que mostra totes les empreses donades d'alta a l'aplicació
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param request La petició http
+       * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
+       */
       @RequestMapping(value = "/empreses", method = RequestMethod.GET)
       public ModelAndView mostraEmpreses(HttpServletRequest request) {
             
@@ -958,6 +1159,14 @@ public class EspaiController {
       }
       
       
+      /**
+       * 
+       * Prepara i retorna la vista que mostra tots els candidats donats d'alta a l'aplicació
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param request La petició hhtp
+       * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
+       */
       @RequestMapping(value = "/candidats", method = RequestMethod.GET)
       public ModelAndView mostraCandidats(HttpServletRequest request) {
             
@@ -998,8 +1207,19 @@ public class EspaiController {
       }
       
       
+      /**
+       * 
+       * Gestiona la petició d'eliminació d'un candidat concret, el codi de la qual rebem a la url com a PathVariable
+       * Retorna un objecte modelanview amb referència a la vista candidats, que mostrarà el llistat de candidats actualitzat
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param codiCand El codi del candidat que s'ha d'esborrar
+       * @param request La petició hhtp
+       * @param response La resposta http
+       * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
+       */
       @RequestMapping(value = "/esborraCandidat/{codiCandidat}", method = RequestMethod.GET)
-      public ModelAndView esborraCandidat(@PathVariable("codiCandidat") int codiCand,HttpServletRequest request, HttpServletResponse response) {
+      public ModelAndView esborraCandidat(@PathVariable("codiCandidat") Integer codiCand,HttpServletRequest request, HttpServletResponse response) {
             // Gestiona l'eliminació d'un candidat
             // Aqui hem de cridar el mètode del servei que esborra el candidat i tornar true si s'ha fet l'operació o false si no s'ha completat.
             // Passarem la llista de candidats actualitzada a la vista.
@@ -1055,7 +1275,14 @@ public class EspaiController {
             return modelview;
       }
       
-      
+      /**
+      * 
+      * Gestiona la petició dels botons 'Tornar', que retorna una redirecció al referer (url de la qual veniem)
+      * 
+      * @author Daniel Sevilla i Junyent
+      * @param request La petició http
+      * @return Una cadena que conté una redirecció a la url anterior
+      */
       @RequestMapping(value = "/enrera", method = RequestMethod.GET)
       public String anarEnrera(HttpServletRequest request) {
             // Controlador que utilitzem per tornar a la pàgina anterior 

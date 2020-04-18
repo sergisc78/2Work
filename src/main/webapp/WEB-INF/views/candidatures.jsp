@@ -107,7 +107,7 @@
                                     <svg><use xlink:href="#esborrar" /></svg>
                               </a>
                                     
-                              <a href="<spring:url value= "/ofertaTornar?ref='" />${loop.index}'" class="flex-grow-1"><p>Títol de l'oferta ${candidatura.codiOferta}</p></a>
+                              <a href="<spring:url value= "/ofertaTornar/${loop.index}" />" class="flex-grow-1"><p>Títol de l'oferta ${candidatura.codiOferta}</p></a>
                               
                               <c:choose>
                                     <c:when test="${candidatura.estat == '0'}">
