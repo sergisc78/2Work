@@ -29,6 +29,8 @@
 
       <body>
 
+            <%@include  file='/resources/svg/icones_llistes.svg' %>
+            
             <!--- Barra de navegació -->
             <nav class="navbar navbar-expand-lg navbar-dark">
 
@@ -100,11 +102,9 @@
                   <c:forEach items="${candidatures}" var="candidatura" varStatus="loop">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                               
-                              <!-- PENDENT DEIXAR L'ENLLAÇ DEFINITIU -->
-                              <a href=" <spring:url value='/cancelarCandidatura/oferta=1;candidat=1'/>" alt="eliminar candidatura">
-                                    <svg id="icona_esborrar" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18.207px" height="18.285px" viewBox="0 0 18.207 18.285" enable-background="new 0 0 18.207 18.285" xml:space="preserve">
-                                          <%@include  file='/resources/svg/trash.svg' %>
-                                    </svg>
+                              <!-- PENDENT DEIXAR L'ENLLAÇ DEFINITIU --> 
+                              <a href=" <spring:url value='/cancelarCandidatura/oferta=1;candidat=1'/>" alt="eliminar candidatura" class="icona_accio">
+                                    <svg><use xlink:href="#esborrar" /></svg>
                               </a>
                                     
                               <a href="<spring:url value= "/ofertaTornar?ref='" />${loop.index}'" class="flex-grow-1"><p>Títol de l'oferta ${candidatura.codiOferta}</p></a>

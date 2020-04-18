@@ -27,10 +27,12 @@
         <title>2Work - ${ubicacio}</title>
     </head>
 
-    <body>
+      <body>
 
-        <!--- Barra de navegació -->
-        <nav class="navbar navbar-expand-lg navbar-dark">
+            <%@include  file='/resources/svg/icones_llistes.svg' %>
+          
+            <!--- Barra de navegació -->
+            <nav class="navbar navbar-expand-lg navbar-dark">
 
             <%@include  file='/resources/html/linkLogo.html' %>
 
@@ -70,12 +72,11 @@
                   <c:forEach begin="1" end="12" varStatus="loop">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                               
-                              <a href="#">
-                                    <svg id="icona_edit" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18.207px" height="18.285px" viewBox="0 0 18.207 18.285" enable-background="new 0 0 18.207 18.285" xml:space="preserve">
-                                          <%@include  file='/resources/svg/edit.svg' %>
-                                    </svg>
+                              <!-- PENDENT AFEGIR-HI L'ENLLAÇ -->
+                              <a href="#" class="icona_accio">
+                                    <svg><use xlink:href="#esborrar" /></svg>
                               </a>
-                              
+                                    
                               <sec:authorize access="hasRole('ROLE_EMPRESA')">
                                     <a href="<spring:url value= "/ofertaPropietari/" />${loop.index}'" class="flex-grow-1"><p>Títol de l'oferta número ${loop.index}</p></a>
                               </sec:authorize>

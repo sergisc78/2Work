@@ -31,8 +31,10 @@
       </head>
 
       <body>
+            
+            <%@include  file='/resources/svg/icones_llistes.svg' %>
 
-      <!--- Barra de navegació -->
+            <!--- Barra de navegació -->
             <nav class="navbar navbar-expand-lg navbar-dark">
 
             <%@include  file='/resources/html/linkLogo.html' %>
@@ -77,7 +79,7 @@
       </section>
         
 
-        <section class="container" id="ofertes-empresa">
+        <section class="container" id="candidats">
 
             <ul class="list-group">
                   
@@ -87,11 +89,9 @@
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                     
                               <a href="<spring:url value= '/candidat/${candidat.codi}' />"><p>${candidat.nom} ${candidat.cognoms}</p></a>
-                              
-                              <a href="<spring:url value= '/esborraCandidat/${candidat.codi}' />" onclick="return confirm('Segur que vols eliminar el candidat?');">
-                                    <svg id="icona_delete" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18.207px" height="18.285px" viewBox="0 0 18.207 18.285" enable-background="new 0 0 18.207 18.285" xml:space="preserve">
-                                          <%@include  file='/resources/svg/trash.svg' %>
-                                    </svg>
+                                  
+                              <a href="<spring:url value= '/esborraCandidat/${candidat.codi}' />" onclick="return confirm('Segur que vols eliminar el candidat?');" class="icona_accio">
+                                    <svg><use xlink:href="#esborrar" /></svg>
                               </a>
                                     
                         </li>

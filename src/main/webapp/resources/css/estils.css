@@ -275,7 +275,7 @@ section#alta-candidat a:not([href]), section#alta-empresa a:not([href]) {
 #modalPrivacitat .modal-content {
   font-size: 0.9em; }
 
-section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat, section#empresa {
+section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat, section#candidats, section#empresa, section#empreses {
   padding-top: 4rem; }
 
 section#ofertes .card {
@@ -328,30 +328,23 @@ section#info section {
   section#info section:not(:first-child) {
     margin-top: 3em; }
 
-section#ofertes-empresa .list-group-item p, #llistat-candidatures .list-group-item p {
+section#ofertes-empresa .list-group-item p, section#empreses .list-group-item p, section#candidats .list-group-item p, #llistat-candidatures .list-group-item p {
   margin: 0; }
-section#ofertes-empresa .list-group-item a, #llistat-candidatures .list-group-item a {
-  color: #1d70b7; }
-  section#ofertes-empresa .list-group-item a:hover, #llistat-candidatures .list-group-item a:hover {
+section#ofertes-empresa .list-group-item a, section#empreses .list-group-item a, section#candidats .list-group-item a, #llistat-candidatures .list-group-item a {
+  color: #1d70b7;
+  transition: all 0.3s ease; }
+  section#ofertes-empresa .list-group-item a:hover, section#empreses .list-group-item a:hover, section#candidats .list-group-item a:hover, #llistat-candidatures .list-group-item a:hover {
     color: #2daae1;
     text-decoration: none; }
-  section#ofertes-empresa .list-group-item a:first-of-type, #llistat-candidatures .list-group-item a:first-of-type {
-    margin-right: 0.75em;
-    margin-bottom: 0.25em; }
-    section#ofertes-empresa .list-group-item a:first-of-type svg, #llistat-candidatures .list-group-item a:first-of-type svg {
-      width: 90%;
-      fill: #1d70b7;
-      -webkit-transition: ease-in 0.2s;
-      -moz-transition: ease-in 0.2s;
-      -o-transition: ease-in 0.2s;
-      transition: ease-in 0.2s; }
-      section#ofertes-empresa .list-group-item a:first-of-type svg:hover, #llistat-candidatures .list-group-item a:first-of-type svg:hover {
-        fill: #2daae1;
-        transform: scale(1.2);
-        -webkit-transition: ease-in 0.2s;
-        -moz-transition: ease-in 0.2s;
-        -o-transition: ease-in 0.2s;
-        transition: ease-in 0.2s; }
+  section#ofertes-empresa .list-group-item a:not(:last-of-type), section#empreses .list-group-item a:not(:last-of-type), section#candidats .list-group-item a:not(:last-of-type), #llistat-candidatures .list-group-item a:not(:last-of-type) {
+    margin-right: 1.1em; }
+  section#ofertes-empresa .list-group-item a.icona_accio svg, section#empreses .list-group-item a.icona_accio svg, section#candidats .list-group-item a.icona_accio svg, #llistat-candidatures .list-group-item a.icona_accio svg {
+    height: 1.1em;
+    width: 1.1em;
+    margin-bottom: 0.2em;
+    fill: #1d70b7; }
+    section#ofertes-empresa .list-group-item a.icona_accio svg:hover, section#empreses .list-group-item a.icona_accio svg:hover, section#candidats .list-group-item a.icona_accio svg:hover, #llistat-candidatures .list-group-item a.icona_accio svg:hover {
+      fill: #2daae1; }
 
 #llistat-candidatures {
   margin-top: 1em; }

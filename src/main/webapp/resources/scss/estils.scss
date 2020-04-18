@@ -25,7 +25,7 @@ section#alta-candidat, section#alta-empresa {
 }
 
 
-section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat, section#empresa {
+section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat, section#candidats, section#empresa, section#empreses {
       padding-top: 4rem;
 }
 
@@ -117,7 +117,7 @@ section#info {
       }
 }
 
-section#ofertes-empresa, #llistat-candidatures {
+section#ofertes-empresa, section#empreses, section#candidats, #llistat-candidatures {
           
       .list-group-item {
             p {
@@ -125,33 +125,26 @@ section#ofertes-empresa, #llistat-candidatures {
             }
             
             a { 
-                  color: $color-basic-blau-fosc; 
+                  color: $color-basic-blau-fosc;
+                  transition:all 0.3s ease;
                   
                   &:hover {
                         color: $color-basic-blau-clar;
                         text-decoration: none;
                   }
                   
-                  &:first-of-type {
-                        margin-right: 0.75em;
-                        margin-bottom: 0.25em;
-                        
-                        svg {
-                              width: 90%;
-                              fill: $color-basic-blau-fosc;
-                              -webkit-transition: ease-in 0.2s;
-                              -moz-transition: ease-in 0.2s;
-                              -o-transition: ease-in 0.2s;
-                              transition: ease-in 0.2s;
-                              
-                              &:hover { 
-                                    fill: $color-basic-blau-clar; 
-                                    transform: scale(1.2);
-                                    -webkit-transition: ease-in 0.2s;
-                                    -moz-transition: ease-in 0.2s;
-                                    -o-transition: ease-in 0.2s;
-                                    transition: ease-in 0.2s;
-                              }
+                  &:not(:last-of-type) {
+                        margin-right: 1.1em;
+                  }
+                  
+                  &.icona_accio svg{
+                        height: 1.1em;
+                        width:1.1em;
+                        margin-bottom: 0.2em;
+                        fill: $color-basic-blau-fosc;
+
+                        &:hover {
+                              fill: $color-basic-blau-clar;
                         }
                   }
             }

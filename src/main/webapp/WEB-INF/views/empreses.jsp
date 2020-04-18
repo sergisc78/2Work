@@ -29,6 +29,8 @@
 
     <body>
 
+        <%@include  file='/resources/svg/icones_llistes.svg' %>
+          
         <!--- Barra de navegació -->
         <nav class="navbar navbar-expand-lg navbar-dark">
 
@@ -76,7 +78,7 @@
         </section>
         
 
-        <section class="container" id="ofertes-empresa">
+        <section class="container" id="empreses">
 
             <ul class="list-group">
                   
@@ -85,10 +87,8 @@
                   <c:forEach begin="1" end="12" varStatus="loop">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                               
-                              <a href="#">
-                                    <svg id="icona_delete" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18.207px" height="18.285px" viewBox="0 0 18.207 18.285" enable-background="new 0 0 18.207 18.285" xml:space="preserve">
-                                          <%@include  file='/resources/svg/trash.svg' %>
-                                    </svg>
+                              <a href="#" class="icona_accio">
+                                    <svg><use xlink:href="#esborrar" /></svg>
                               </a>
                                     
                               <a href="<spring:url value= '/empresa/${loop.index}' />" class="flex-grow-1"><p>Nom de de l'empresa número ${loop.index}</p></a>
@@ -96,8 +96,7 @@
                               <c:if test="${loop.index % 4 == 0}">
                                     <span class="badge badge-danger badge-pill">Denunciada</span>
                               </c:if>
-                              
-                                          
+                                     
                         </li>
                   </c:forEach>
                         
