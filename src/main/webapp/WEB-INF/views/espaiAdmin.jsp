@@ -32,9 +32,7 @@
         <!--- Barra de navegació -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
-            <a class="navbar-brand" href="#">
-                <img src="${pageContext.request.contextPath}/resources/svg/logo_2work.svg" id="navbarlogo" alt="logo2Work">
-            </a>
+            <%@include  file='/resources/html/linkLogo.html' %>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHomeToggler" aria-controls="navbarHomeToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -42,27 +40,44 @@
 
             <div class="collapse navbar-collapse" id="navbarHomeToggler">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    <sec:authorize access="hasRole('ROLE_ADMIN')">
-                        <li role="Presentation" class="nav-item">
-                            <a class="nav-link" href="<c:url value="/j_spring_security_logout" />">Logout</a>
-                        </li>
-                    </sec:authorize>
+                      
+                        <c:forEach items="${opcions}" var="map">
+                      
+                              <c:choose>
+                                    
+                                    <c:when test="${map.paraula != 'Logout'}">
+                                    <li class="nav-item">
+                                          <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
+                                    </li>
+                                    </c:when>
+                                          
+                              </c:choose>
+                        
+                        </c:forEach>
+                    
                 </ul>
             </div>  
 
-        </nav>
-        <section>
+      </nav>
+            
+      <sec:authorize access="isAuthenticated()">
+            <%@include  file='/resources/html/barra-usuari.html' %>
+      </sec:authorize>
+            
+      <section>
             <div class="jumbotron">
                 <div class="container ">
                     <h1> ${tagline} </h1>
                 </div>
-        </section>
-        <h2 class="text-center">Benvingut a l´espai administrador</h2><br>
+            </div>
+      </section>
+                
+        <h2 class="text-center">Benvingut a l'espai administrador</h2><br>
         <h3 class="text-center">Què desitges fer?</h3><br>
         <div class="container">
             <ul class="text-center">
-                <a href="#">Consultar ofertes creades</a><br><br>
-                <a href="#">Consultar candidats</a><br><br>
+                <a href="<c:url value="/ofertesAdmin" />">Consultar ofertes creades</a><br><br>
+                <a href="<c:url value="/candidats" />">Consultar candidats</a><br><br>
                 <a href="#">Consultar empreses</a><br><br>
                 <a href="#">Esborrar candidats</a><br><br>
                 <a href="#">Esborrar empreses</a><br><br>

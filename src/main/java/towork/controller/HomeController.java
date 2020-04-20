@@ -14,6 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -41,6 +43,11 @@ public class HomeController {
       
       @RequestMapping(value = "/", method = RequestMethod.GET)
       public ModelAndView homeRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            
+            // Obtenim el rol de l'usuari loguejat
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String role = auth.getAuthorities().iterator().next().toString(); // El primer element dela collection auth.getAuthoritie. Assumim que només conté un element.
+            System.out.println(role);
         
             // Creem el modelview
             ModelAndView modelview = new ModelAndView("home");
@@ -68,6 +75,15 @@ public class HomeController {
             opcions.add(admin);
             opcions.add(candidat);
             opcions.add(empresa);
+
+            if (!role.equals("ROLE_ANONYMOUS")) {
+                  // Si hi ha algun usuari loguejat
+                  // Opció Logout a la barra de navegació
+                  HashMap<String, String> logout = new HashMap<>();
+                  logout.put("paraula","Logout");
+                  logout.put("url","/j_spring_security_logout");
+                  opcions.add(logout);
+            }
             
             modelview.getModelMap().addAttribute("ubicacio", "La teva web de cerca de feina");
             modelview.getModelMap().addAttribute("opcions", opcions);

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8" session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -51,12 +51,19 @@
             </div>  
 
         </nav>
+                    
+      <sec:authorize access="isAuthenticated()">
+            <%@include  file='/resources/html/barra-usuari.html' %>
+      </sec:authorize>
+                    
         <section>
             <div class="jumbotron">
                 <div class="container ">
                     <h1> ${tagline} </h1>
                 </div>
+            </div>
         </section>
+                
         <h2 class="text-center">Benvingut a l´espai empresa</h2><br>
         <h3 class="text-center">Què desitges fer?</h3><br>
         <div class="container" style="border:#ccc 2px solid;padding: 10px">

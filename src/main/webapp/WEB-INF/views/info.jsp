@@ -47,8 +47,12 @@
             </div>  
 
         </nav>
+
+      <sec:authorize access="isAuthenticated()">
+            <%@include  file='/resources/html/barra-usuari.html' %>
+      </sec:authorize>
                     
-        <section class="container" id="info">
+      <section class="container" id="info">
               
               <section class="container-sm" id="nosaltres">
                   <h3 class="text-center blau">Informació sobre nosaltres</h3>
@@ -73,9 +77,9 @@
                   <%@include  file='/resources/html/proteccioDadesPrivacitat.html' %>
               </section>
               
-        </section>
+      </section>
 
-        <%@include  file='/resources/html/footer.html' %>
+      <%@include  file='/resources/html/footer.html' %>
         
     </body>
 </html>

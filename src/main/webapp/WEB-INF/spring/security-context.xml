@@ -33,6 +33,7 @@
         <security:intercept-url pattern="/candidats" access="hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/ofertesAdmin" access="hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/ofertesAdmin/*" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/altaOferta" access="hasRole('ROLE_EMPRESA')"/>
         <security:intercept-url pattern="/inscripcioOferta/*" access="hasRole('ROLE_USER')"/>
         
     </security:http> 

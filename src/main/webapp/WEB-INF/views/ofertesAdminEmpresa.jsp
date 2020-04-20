@@ -56,11 +56,15 @@
 
         </nav>
 
-        <section class="barra-ubicacio">
-              <div class="container">
+      <sec:authorize access="isAuthenticated()">
+            <%@include  file='/resources/html/barra-usuari.html' %>
+      </sec:authorize>
+            
+      <section class="barra-ubicacio">
+            <div class="container">
                   <p>${ubicacio}</p>
-              </div>
-        </section>
+            </div>
+      </section>
         
 
         <section class="container" id="ofertes-empresa">

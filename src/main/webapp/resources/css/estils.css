@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* 
     Created on : 20/03/2020, 20:33:07
     Author     : Daniel Sevilla i Junyent
@@ -6,6 +7,11 @@
     Created on : 01/04/2020, 07:27:41
     Author     : Daniel Sevilla i Junyent
 */
+/* 
+    Created on : 20/04/2020, 07:08:58
+    Author     : Daniel Sevilla i Junyent
+*/
+/* Amplades mínimes*/
 /* 
     Created on : 01/04/2020, 07:27:41
     Author     : Daniel Sevilla i Junyent
@@ -129,16 +135,16 @@ a {
 body > nav:first-of-type {
   background-image: linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.1) 50%), linear-gradient(90deg, #1d70b7 0%, #2daae1 100%);
   background-size: 2px 100%, 100%; }
-  body > nav:first-of-type .nav-link {
+  body > nav:first-of-type a.nav-link {
     padding-top: 0;
-    padding-bottom: 0; }
-  body > nav:first-of-type a {
+    padding-bottom: 0;
+    padding-right: 0;
     transition: all 0.3s ease; }
 
 #navbarlogo {
   width: 45%;
   height: auto;
-  fill: #ffffff;
+  fill: #fff;
   transition: translateX(0) 1s ease-in-out;
   -webkit-transition: translateX(0) 0.5s 1 ease-in-out; }
   #navbarlogo:hover #dreta {
@@ -156,6 +162,24 @@ body > nav:first-of-type {
     transform: translateX(-2%); }
   100% {
     transform: translateX(0); } }
+/* 
+    Created on : 20/04/2020, 06:56:45
+    Author     : Daniel Sevilla i Junyent
+*/
+#barra-nav {
+  background: #555;
+  height: 2em;
+  padding: 0 1.5rem;
+  color: #ddd;
+  font-size: 0.75em;
+  width: 100%; }
+  #barra-nav p {
+    line-height: 2em;
+    text-align: center; }
+    @media (min-width: 768px) {
+      #barra-nav p {
+        text-align: right; } }
+
 /* 
     Created on : 11/04/2020, 11:10:13
     Author     : Daniel Sevilla i Junyent

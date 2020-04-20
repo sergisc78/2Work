@@ -59,6 +59,10 @@
 
       </nav>
 
+      <sec:authorize access="isAuthenticated()">
+            <%@include  file='/resources/html/barra-usuari.html' %>
+      </sec:authorize>
+            
       <c:if test="${not empty missatgeFeedback}">
       <section id="feedback" role="alert" class="${classeFeedback} alert  alert-dismissible fade show">
             <div class="container">

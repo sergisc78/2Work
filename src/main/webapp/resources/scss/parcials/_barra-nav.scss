@@ -9,14 +9,10 @@ body > nav:first-of-type {
       background-image: linear-gradient(90deg, transparent 50%, rgba(255,255,255,.1) 50%), $degradat-blaus;
       background-size: 2px 100%, 100%;
       
-      
-      
-      .nav-link {
+      a.nav-link {
             padding-top: 0;
             padding-bottom: 0;
-      }
-      
-      a {
+            padding-right: 0;
             transition:all 0.3s ease;
       }
       
@@ -25,7 +21,7 @@ body > nav:first-of-type {
 #navbarlogo {
       width: 45%;
       height: auto;
-      fill: #ffffff;
+      fill: $blanc;
       
       transition: translateX(0) 1s ease-in-out;
       -webkit-transition: translateX(0) 0.5s 1 ease-in-out; 

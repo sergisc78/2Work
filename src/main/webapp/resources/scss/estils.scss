@@ -7,8 +7,10 @@
 
 // Seria millor treballar amb @use i mòduls, però per ara ho farem així
 @import 'parcials/colors';
+@import 'parcials/breakpoints';
 @import 'parcials/generals';
 @import 'parcials/barra-nav';
+@import 'parcials/barra-usuari';
 @import 'parcials/formularis';
 @import 'parcials/footer';
 @import 'parcials/home';

@@ -1,0 +1,23 @@
+/* 
+    Created on : 20/04/2020, 06:56:45
+    Author     : Daniel Sevilla i Junyent
+*/
+
+#barra-nav {
+      background: #555; 
+      height: 2em; 
+      padding: 0 1.5rem; 
+      color:#ddd; 
+      font-size: 0.75em; 
+      width:100%;
+      
+      p {
+            line-height: 2em;
+            text-align: center;
+            
+            @media (min-width: $breakpoint-petit) {
+                  text-align: right;
+            }
+      }
+      
+}

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8" session="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -69,13 +69,17 @@
                 </ul>
             </div>  
 
-        </nav>
+      </nav>
+            
+      <sec:authorize access="isAuthenticated()">
+            <%@include  file='/resources/html/barra-usuari.html' %>
+      </sec:authorize>
                     
-        <section class="barra-ubicacio">
-              <div class="container">
+      <section class="barra-ubicacio">
+            <div class="container">
                   <p>${ubicacio}</p>
-              </div>
-        </section>
+            </div>
+      </section>
         
       <section class="container" id="candidat">
             <div class="card">

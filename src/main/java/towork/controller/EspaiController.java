@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -171,8 +170,8 @@ public class EspaiController {
        * @param request La petició http
        * @param response La resposta http
        * @return Objecte modelandview que representa la vista que mostra les ofertes adients per un candidat en concret
-       * @throws ServletException
-       * @throws IOException 
+       * @throws ServletException Indica que hi ha alguna errada general al servlet
+       * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/espaiCandidat", method = RequestMethod.GET)
       public ModelAndView EspaiCandidatRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -193,7 +192,7 @@ public class EspaiController {
             cands.put("paraula","Candidatures");  
             cands.put("url","/candidatures/"+username); // ÉS UNA PROVA, LI HAURIEM DE PASSAR EL CODI
             
-            // Opció candidatures a la barra de navegació
+            // Opció logout a la barra de navegació
             HashMap<String, String> logout = new HashMap<>();
             logout.put("paraula","Logout");  
             logout.put("url","/j_spring_security_logout");
@@ -215,15 +214,22 @@ public class EspaiController {
       * @param request La petició http
       * @param response La resposta http
       * @return Objecte modelandview que representa el model i la vista
-      * @throws ServletException
-      * @throws IOException 
+      * @throws ServletException Indica que hi ha alguna errada general al servlet
+      * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
       */
       @RequestMapping(value = "/espaiEmpresa", method = RequestMethod.GET)
       public ModelAndView EspaiEmpresaRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             ModelAndView modelview = new ModelAndView("espaiEmpresa");
-            modelview.getModelMap().addAttribute("banner", "2work");
-            modelview.getModelMap().addAttribute("tagline", "La teva web de cerca de feina");
-            modelview.getModelMap().addAttribute("footer", "2Work Copyright 2020");
+            
+            // Opció logout a la barra de navegació
+            HashMap<String, String> logout = new HashMap<>();
+            logout.put("paraula","Logout");  
+            logout.put("url","/j_spring_security_logout");
+        
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{logout};  
+            
+            modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;
       }
@@ -235,15 +241,42 @@ public class EspaiController {
        * @param request La petició http
        * @param response La resposta http
        * @return Objecte modelandview que representa el model i la vista 
-       * @throws ServletException
-       * @throws IOException 
+       * @throws ServletException Indica que hi ha alguna errada general al servlet
+       * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/espaiAdmin", method = RequestMethod.GET)
       public ModelAndView EspaiAdministradorRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             ModelAndView modelview = new ModelAndView("espaiAdmin");
-            modelview.getModelMap().addAttribute("banner", "2work");
-            modelview.getModelMap().addAttribute("tagline", "La teva web de cerca de feina");
-            modelview.getModelMap().addAttribute("footer", "2Work Copyright 2020");
+            
+            // Opció inici a la barra de navegació
+            HashMap<String, String> inici = new HashMap<>();
+            inici.put("paraula","Inici");  
+            inici.put("url","/");
+            
+            // Opció candidats a la barra de navegació
+            HashMap<String, String> cands = new HashMap<>();
+            cands.put("paraula","Candidats");  
+            cands.put("url","/candidats");
+            
+            // Opció empreses a la barra de navegació
+            HashMap<String, String> empreses = new HashMap<>();
+            empreses.put("paraula","Empreses");  
+            empreses.put("url","/empreses");
+            
+            // Opció ofertes a la barra de navegació
+            HashMap<String, String> ofertes = new HashMap<>();
+            ofertes.put("paraula","Ofertes");  
+            ofertes.put("url","/ofertesAdmin");
+            
+            // Opció logout a la barra de navegació
+            HashMap<String, String> logout = new HashMap<>();
+            logout.put("paraula","Logout");  
+            logout.put("url","/j_spring_security_logout");
+        
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{inici,cands,empreses,ofertes,logout};  
+            
+            modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;
       }
@@ -258,8 +291,8 @@ public class EspaiController {
       * @param request La petició http
       * @param response La resposta http
       * @return Objecte modelabdview que representa el model i la vista que mostrarà a l'usuari el detall d'una oferta concreta
-      * @throws ServletException
-      * @throws IOException 
+      * @throws ServletException Indica que hi ha alguna errada general al servlet
+      * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
       */
       @RequestMapping(value = "/oferta/{codiOferta}", method = RequestMethod.GET)
       public ModelAndView OfertaPerCodi(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -283,7 +316,7 @@ public class EspaiController {
             // Opció candidatures a la barra de navegació
             HashMap<String, String> cands = new HashMap<>();
             cands.put("paraula","Candidatures");  
-            cands.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
+            cands.put("url","/candidatures/3"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
         
             // Opció candidatures a la barra de navegació
             HashMap<String, String> logout = new HashMap<>();
@@ -315,8 +348,8 @@ public class EspaiController {
       * @param request La petició http
       * @param response La resposta http
       * @return objecte modelandview que representa el model i la vista oferta només amb el botó 'Tornar' al cos
-      * @throws ServletException
-      * @throws IOException 
+      * @throws ServletException Indica que hi ha alguna errada general al servlet
+      * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
       */
       @RequestMapping(value = "/ofertaTornar/{codi}", method = RequestMethod.GET)
       public ModelAndView OfertaPerRefTornar(@PathVariable("codi") Integer codi, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -327,7 +360,7 @@ public class EspaiController {
           
             // Obtenim el rol de l'usuari loguejat
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String role = auth.getAuthorities().toString();
+            String role = auth.getAuthorities().iterator().next().toString(); // El primer element dela collection auth.getAuthoritie. Assumim que només conté un element.
             
             
             // Opció perfil a la barra de navegació
@@ -346,6 +379,10 @@ public class EspaiController {
                   }
                   case "ROLE_EMPRESA": {
                         ofertes.put("url","/ofertesEmpresa");
+                        break;
+                  }
+                  case "ROLE_ADMIN": {
+                        ofertes.put("url","/ofertesAdmin");
                         break;
                   }
             }
@@ -386,8 +423,8 @@ public class EspaiController {
        * @param request La petició http
        * @param response La resposta http
        * @return Un objecte modelandview que representa el model i la vista que mostrarem a l'usuari
-       * @throws ServletException
-       * @throws IOException 
+       * @throws ServletException Indica que hi ha alguna errada general al servlet
+       * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/ofertaPropietari/{codiOferta}", method = RequestMethod.GET)
       public ModelAndView OfertaPropietariPerRef(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -449,8 +486,8 @@ public class EspaiController {
        * @param request La petició http
        * @param response La resposta http
        * @return Un objecte modelandview que representa el model i la vista que mostrarem a l'usuari
-       * @throws ServletException
-       * @throws IOException 
+       * @throws ServletException Indica que hi ha alguna errada general al servlet
+       * @throws IOException Indica que s'ha produït algun error d'entrada/sortida 
        */
       @RequestMapping(value = "/ofertesAdmin", method = RequestMethod.GET)
       public ModelAndView OfertesAdminRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -503,8 +540,8 @@ public class EspaiController {
        * @param request La petició http
        * @param response La respsta http
        * @return Un objecte modelandview que representa el model i la vista que mostrarem a l'usuari
-       * @throws ServletException
-       * @throws IOException 
+       * @throws ServletException Indica que hi ha alguna errada general al servlet
+       * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/ofertesAdmin/{codiEmpresa}", method = RequestMethod.GET)
       public ModelAndView OfertesAdminPerEmpresaRequest(@PathVariable("codiEmpresa") int codiEmpresa, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -571,8 +608,8 @@ public class EspaiController {
        * @param request La petició http
        * @param response La resposta http
        * @return OUn objecte modelandview que representa el model i la vista que mostrarem a l'usuari
-       * @throws ServletException
-       * @throws IOException 
+       * @throws ServletException Indica que hi ha alguna errada general al servlet
+       * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/ofertesEmpresa/{codiEmpresa}", method = RequestMethod.GET)
       public ModelAndView OfertesEmpresaRequest(@PathVariable("codiEmpresa") int codiEmpresa, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -619,8 +656,8 @@ public class EspaiController {
        * @param request La petició http
        * @param response La resposta http
        * @return L'objecte modelandview que representa el model i la vista que mostrarem a l'usuari
-       * @throws ServletException
-       * @throws IOException 
+       * @throws ServletException Indica que hi ha alguna errada general al servlet
+       * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/candidat/{codiCandidat}", method = RequestMethod.GET)
       public ModelAndView CandidatPerCodi(@PathVariable("codiCandidat") Integer codiCandidat, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -699,8 +736,8 @@ public class EspaiController {
        * @param request La petició http
        * @param response La resposta http
        * @return Un objecte modelandview que representa el model i la vista que mostrarem a l'usuari
-       * @throws ServletException
-       * @throws IOException 
+       * @throws ServletException Indica que hi ha alguna errada general al servlet
+       * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/candidatures/{codiCandidat}", method = RequestMethod.GET)
       public ModelAndView CandidaturesPerCandidat(@PathVariable("codiCandidat") Integer codiCandidat, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -793,7 +830,7 @@ public class EspaiController {
        * Retorna la vista d'ofertes seleccionades per l'usuari, a la qual li passarem la nova llista d'ofertes que ja no han d'incloure l'oferta a la qual l'usuari s'acaba d'inscriure.
        * 
        * @author Daniel Sevilla i junyent
-       * @param dades Un map de tuples <String, dades>. Ens interesa el tuples amb claus 'oferta' i 'candidat' per executar la inscripció
+       * @param dades Un seguit de maps (String, Integer). Ens interessen els parells amb claus 'oferta' i 'candidat' per executar la inscripció
        * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
        */
       @RequestMapping(value = "/inscripcioOferta/{dadesInscripcio}", method = RequestMethod.GET)
@@ -859,7 +896,7 @@ public class EspaiController {
       * Ha de cridar el mètode o mètodes del servei que executi/n l'operació a la bbdd
       * 
       * @author Daniel Sevilla i Junyent
-      * @param dades Un map de tuples <String, dades>. Ens interessen el tuples amb claus 'oferta' i 'candidat' per executar la cancel·lació.
+      * @param dades X mapes (String, Integer). Ens interessen el mapes amb claus 'oferta' i 'candidat' per executar la cancel·lació.
       * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
       */
      @RequestMapping(value = "/cancelarCandidatura/{dadesCancelacio}", method = RequestMethod.GET)
@@ -921,6 +958,7 @@ public class EspaiController {
            return modelview;       
      }
      
+     
       /**
        * 
        * Mètode que invoca la funció jQuery/Ajax que ha d'omplir l'element 'select' dels formularis corresponent a les habilitats 
@@ -960,6 +998,7 @@ public class EspaiController {
             // exemple de la crida al mètode del servei (que al seu torn cridaria al del repositori, si ho implementem així)
             // return categoryService.getAllSubcategories(categoryId);
       }
+      
     
       /**
        * 
@@ -969,8 +1008,8 @@ public class EspaiController {
        * @param request La petició http
        * @param response La resposta http
        * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
-       * @throws ServletException
-       * @throws IOException 
+       * @throws ServletException Indica que hi ha alguna errada general al servlet
+       * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
      @RequestMapping(value = "/altaOferta", method = RequestMethod.GET)
       public ModelAndView addOfertaRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -1018,6 +1057,7 @@ public class EspaiController {
             return modelview;
       }
       
+      
       /**
        * 
        * Rep l'objecte de tipus Oferta de la vista d'alta d'oferta
@@ -1030,7 +1070,7 @@ public class EspaiController {
        * @return Un objecte String que conrindrà la redirecció a la home
        */
       @RequestMapping(value = "/executaAltaOferta", method = RequestMethod.POST)
-      public String executaAltaOferta(@ModelAttribute("formOferta") Oferta  formOferta, BindingResult result) {
+      public String executaAltaOferta(@ModelAttribute("formOferta") Oferta  formOferta) {
             
             Boolean altaOfertaOK=false;
             System.out.println("--- Ja tenim la oferta a l'objecte formOferta. Fem amb ell el que faci falta.");
@@ -1286,10 +1326,10 @@ public class EspaiController {
       @RequestMapping(value = "/enrera", method = RequestMethod.GET)
       public String anarEnrera(HttpServletRequest request) {
             // Controlador que utilitzem per tornar a la pàgina anterior 
-            String referer = request.getHeader("Referer");            
+            String referer = request.getHeader("Referer");
+            
             return "redirect:"+ referer;
       }
       
       
-       
 }

@@ -69,9 +69,13 @@
                 </ul>
             </div>  
 
-        </nav>
-                    
-        <section class="barra-ubicacio">
+      </nav>
+            
+      <sec:authorize access="isAuthenticated()">
+            <%@include  file='/resources/html/barra-usuari.html' %>
+      </sec:authorize>
+            
+      <section class="barra-ubicacio">
               <div class="container">
                   <p>${ubicacio}</p>
               </div>
