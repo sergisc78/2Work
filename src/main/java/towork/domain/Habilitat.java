@@ -18,9 +18,9 @@ public class Habilitat {
     
     private Integer codiHab;
     private String nomHab;
-    protected Integer ocupacio;
-    protected ArrayList<Habilitat> candidats = new ArrayList();
-    protected ArrayList<Oferta> ofertes=new ArrayList();
+    private Integer ocupacio;
+    private ArrayList<Habilitat> candidats = new ArrayList();
+    private ArrayList<Oferta> ofertes=new ArrayList();
 
     public Habilitat(Integer codiHab, String nomHab, Integer ocupacio) {
         this.codiHab = codiHab;

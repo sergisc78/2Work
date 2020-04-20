@@ -5,6 +5,7 @@
  */
 package towork.service;
 
+import java.util.List;
 import towork.domain.Empresa;
 
 /**
@@ -12,6 +13,14 @@ import towork.domain.Empresa;
  * @author gonem
  */
 public interface EmpresaService {
+    
     Empresa getEmpresaByCodi(Integer codi);
+    
     void addEmpresa(Empresa empresa);
+    
+    void updateEmpresa(Empresa empresa);
+    
+    Empresa getEmpresaBydniNif(String dniNif);
+    
+    List<Empresa> getAllEmpreses();
 }

@@ -9,7 +9,7 @@ public class Oferta {
     private Integer codiOferta;
     private String nifEmpresa;
     private String titolOferta;
-    protected Integer ocupacio;
+    private Integer ocupacio;
     private String poblacio;
     private String provincia;
     private Double sou;
@@ -19,8 +19,8 @@ public class Oferta {
     private String estat;
     private String descripcio;
     
-    protected ArrayList<Integer> habilitats = new ArrayList();
-    protected ArrayList<Candidat> candidats = new ArrayList();
+    private ArrayList<Integer> habilitats = new ArrayList();
+    private ArrayList<Candidat> candidats = new ArrayList();
 
     public Oferta(Integer codiOferta, String nifEmpresa, String titolOferta, Integer ocupacio,String poblacio, String provincia, Double sou, String horari, String tipusContracte, Integer formacio, String estat, String descripcio) {
         this.codiOferta = codiOferta;

@@ -133,6 +133,20 @@ public class EmpresaDAO implements EmpresaRepository{
         }
         return null;
     }
+    /*Empresa per nif*/
+    @Override
+    public Empresa getEmpresaBydniNif(String dniNif){
+        String qry = "select * from empreses where dniNif = ?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = getPreparedStatement(qry);
+            preparedStatement.setString(1, dniNif);
+            return findUniqueResult(preparedStatement);
+        } catch (Exception ex) {
+            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     private Empresa createOrUpdateEmpresa(Integer codi, PreparedStatement preparedStatement) throws Exception {
            
         int result=executeUpdateQuery(preparedStatement);
@@ -167,5 +181,36 @@ public class EmpresaDAO implements EmpresaRepository{
         }catch (Exception ex) {
             Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }   
+    }
+    
+    /*Actualitzar les dades de l'empresa */
+    @Override
+    public void updateEmpresa(Empresa empresa) {
+               
+        String qry = "DELETE FROM empreses WHERE dniNif = ?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = getPreparedStatement(qry);
+            preparedStatement.setString(1, empresa.getDniNif());
+            createOrUpdateEmpresa(empresa.getCodi(), preparedStatement);
+            this.addEmpresa(empresa);
+        } catch (Exception ex) {
+            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    /*Totes les empreses*/
+    @Override
+    public List<Empresa> getAllEmpreses() {
+        
+        String qry = "select * from empreses";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = getPreparedStatement(qry);
+            List<Empresa> empreses = executeQuery(preparedStatement);
+            return empreses;
+        } catch (SQLException ex) {
+            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

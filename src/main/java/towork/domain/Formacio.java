@@ -15,9 +15,9 @@ import javax.validation.constraints.Size;
 
 public class Formacio  {
     
-    protected Integer codiFormacio;
-    protected String nomFormacio;
-    protected ArrayList<Candidat> candidats=new ArrayList();
+    private Integer codiFormacio;
+    private String nomFormacio;
+    private ArrayList<Candidat> candidats=new ArrayList();
 
     public Formacio(Integer codiFormacio, String nomFormacio) {
         this.codiFormacio = codiFormacio;

@@ -5,6 +5,7 @@
  */
 package towork.service.impl;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import towork.domain.Empresa;
@@ -28,5 +29,17 @@ public class EmpresaServiceImpl implements EmpresaService{
     @Override
     public void addEmpresa(Empresa empresa){
         empresaRepository.addEmpresa(empresa);
+    }
+     @Override
+    public void updateEmpresa(Empresa empresa){
+        empresaRepository.updateEmpresa(empresa);
+    }
+    @Override
+    public Empresa getEmpresaBydniNif(String dniNif){
+        return empresaRepository.getEmpresaBydniNif(dniNif);
+    }
+    @Override
+    public List<Empresa> getAllEmpreses(){
+        return empresaRepository.getAllEmpreses();
     }
 }

@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import towork.domain.Candidat;
 import towork.domain.Empresa;
@@ -190,6 +191,51 @@ public class HomeController {
     public ModelAndView infoRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ModelAndView modelview = new ModelAndView("info");
+        return modelview;
+    }
+    
+     /*
+     Empresa per codi
+     */
+    
+    @RequestMapping("/empresa") //http://localhost:8080/2Work/empresa?codi=1
+    public ModelAndView getSerieByCodi(@RequestParam("codi") Integer codi, HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ModelAndView modelview;
+
+        if (codi != null) {
+            modelview = new ModelAndView("empresa");
+            Empresa formEmpresa = empresaService.getEmpresaByCodi(codi);
+            //modelview.getModelMap().addAttribute("act", "empresa/update");
+           
+            modelview.getModelMap().addAttribute("formEmpresa", formEmpresa);
+             modelview.getModelMap().addAttribute("updateEmp", "/updateEmp");
+            LlistaSectors llistaSectors = new LlistaSectors();
+            modelview.getModelMap().addAttribute("llistaSectors", llistaSectors);
+        }else{
+            modelview = new ModelAndView("espaiEmpresa");
+        }
+        
+        return modelview;
+    } 
+     /*
+     FORM DE Serie POST
+     */
+     
+    @RequestMapping(value = "/updateEmp", method = RequestMethod.POST)
+    public String updateEmp(@ModelAttribute("formEmpresa") Empresa formEmpresa, BindingResult result) {
+        empresaService.updateEmpresa(formEmpresa);
+        return "redirect:/";
+    }
+    
+    /*
+     Totes les series
+     */
+    @RequestMapping("/all")
+    public ModelAndView allEmpreses(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ModelAndView modelview = new ModelAndView("empreses");
+        modelview.getModelMap().addAttribute("empreses", empresaService.getAllEmpreses());
         return modelview;
     }
 }

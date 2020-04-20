@@ -16,9 +16,9 @@ import javax.validation.constraints.Size;
 
 public class Sector {
     
-    protected Integer codiSector;
-    protected String nomSector;
-    protected ArrayList<Empresa> empreses=new ArrayList();
+    private Integer codiSector;
+    private String nomSector;
+    private ArrayList<Empresa> empreses=new ArrayList();
     
     public Sector(Integer codiSector, String nomSector) {
         this.codiSector = codiSector;

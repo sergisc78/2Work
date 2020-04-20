@@ -19,10 +19,10 @@ import javax.validation.constraints.Size;
 
 public class Ocupacio {
     
-    protected Integer codiOcupacio;
-    protected String nomOcupacio;
-    protected ArrayList<Candidat> candidats=new ArrayList();
-    protected ArrayList<Habilitat> habilitats=new ArrayList();
+    private Integer codiOcupacio;
+    private String nomOcupacio;
+    private ArrayList<Candidat> candidats=new ArrayList();
+    private ArrayList<Habilitat> habilitats=new ArrayList();
 
     public Ocupacio(Integer codiOcupacio, String nomOcupacio) {
         this.codiOcupacio = codiOcupacio;

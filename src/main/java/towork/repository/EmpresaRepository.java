@@ -5,9 +5,18 @@
  */
 package towork.repository;
 
+import java.util.List;
 import towork.domain.Empresa;
 
 public interface EmpresaRepository {
+    
         Empresa getEmpresaByCodi(Integer codi);
-        void addEmpresa(Empresa empresa);
+        
+        void addEmpresa(Empresa empresa);  
+        
+        void updateEmpresa(Empresa empresa);
+        
+        Empresa getEmpresaBydniNif(String dniNif);
+        
+        List<Empresa> getAllEmpreses();  
 }

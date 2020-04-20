@@ -14,10 +14,10 @@ import javax.validation.constraints.NotNull;
 
 public class Candidatura {
   
-    protected Integer codiCandidatura;
-    protected Integer codiOferta;
-    protected Integer codiCandidat;
-    protected Integer estat;
+    private Integer codiCandidatura;
+    private Integer codiOferta;
+    private Integer codiCandidat;
+    private Integer estat;
 
     public Candidatura(Integer codiCandidatura, Integer codiOferta, Integer codiCandidat, Integer estat) {
         this.codiCandidatura = codiCandidatura;
