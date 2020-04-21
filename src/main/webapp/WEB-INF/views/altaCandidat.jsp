@@ -159,8 +159,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="pass">Password (max 8 caracters)</label>
-                    <form:input type="password" class="form-control" id="pass" path="pass" pattern=".{8,}" maxlength="8" placeholder="Mínim 8 caràcters" required="required"/>
+                    <label for="pass">Password (mínim 8 caràcters)</label>
+                    <form:input type="password" class="form-control" id="pass" path="pass" pattern=".{8,}" placeholder="Mínim 8 caràcters" required="required"/>
                     <div class="invalid-feedback">
                         Introdueix password
                     </div>
@@ -168,7 +168,7 @@
 
                 <div class="form-group">
                     <label for="cPass">Confirmar password</label>
-                    <form:input type="password" class="form-control" id="cPass" path="cPass" maxlength="8" placeholder="Torna a escriure el password" required="required"/>
+                    <form:input type="password" class="form-control" id="cPass" path="cPass" pattern=".{8,}" placeholder="Torna a escriure el password" required="required"/>
                     <div class="invalid-feedback">
                         Confirma el password
                     </div>
