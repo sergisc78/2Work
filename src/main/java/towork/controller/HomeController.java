@@ -21,7 +21,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import towork.domain.Candidat;
 import towork.domain.Empresa;
@@ -38,9 +37,62 @@ import towork.formularis.LlistaSectors;
  */
 @Controller
 public class HomeController {
-       
+             
       @Autowired
       EmpresaService empresaService;
+      
+      // Opcions reutilitzables per la barra de navegació
+      HashMap<String, String> op_entrar_candidat = new HashMap<>();
+      HashMap<String, String> op_entrar_empresa = new HashMap<>();
+      HashMap<String, String> op_entrar_admin = new HashMap<>();
+      HashMap<String, String> op_inici = new HashMap<>();
+      HashMap<String, String> op_logout = new HashMap<>();
+      HashMap<String, String> op_ofertesCandidat = new HashMap<>();
+      HashMap<String, String> op_candidatures = new HashMap<>();
+      HashMap<String, String> op_perfil = new HashMap<>();
+      HashMap<String, String> op_ofertesEmpresa = new HashMap<>();
+      HashMap<String, String> op_candidats = new HashMap<>();
+      HashMap<String, String> op_empreses = new HashMap<>();
+      HashMap<String, String> op_ofertesAdmin = new HashMap<>();
+      
+      
+      /**
+      * 
+      * Constructor del controlador, sense paràmetres
+      * 
+      * @author Daniel Sevilla i Junyent
+      * 
+      */
+      public HomeController() {
+            
+            // Opcions reutilitzables per la barra de navegació
+            op_entrar_candidat.put("paraula","Candidat");
+            op_entrar_candidat.put("url","/espaiCandidat");
+            op_entrar_empresa.put("paraula","Empresa");
+            op_entrar_empresa.put("url","/espaiEmpresa");
+            op_entrar_admin.put("paraula","Administrador");
+            op_entrar_admin.put("url","/espaiAdmin");
+            op_inici.put("paraula","Inici");
+            op_inici.put("url","/");
+            op_ofertesCandidat.put("paraula","Ofertes");
+            op_ofertesCandidat.put("url","/espaiCandidat");
+            op_candidatures.put("paraula","Candidatures");  
+            op_candidatures.put("url","/candidatures");
+            op_candidats.put("paraula","Candidats");  
+            op_candidats.put("url","/candidats");
+            op_empreses.put("paraula","Empreses");  
+            op_empreses.put("url","/empreses");
+            op_logout.put("paraula","Logout");
+            op_logout.put("url","/j_spring_security_logout");
+            op_perfil.put("paraula","Perfil");
+            op_perfil.put("url","/perfil");
+            op_ofertesEmpresa.put("paraula","Ofertes");
+            op_ofertesEmpresa.put("url","/ofertesEmpresa"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
+            op_ofertesAdmin.put("paraula","Ofertes");
+            op_ofertesAdmin.put("url","ofertesAdmin");
+
+      }
+      
       
       @RequestMapping(value = "/", method = RequestMethod.GET)
       public ModelAndView homeRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,36 +108,35 @@ public class HomeController {
             // Creem les opcions que aniràn a la barra de navegació
             List<Map<String, String>> opcions = new ArrayList<>();
             
-            
-            // Opció Administrador a la barra de navegació
-            HashMap<String, String> admin = new HashMap<>();
-            admin.put("paraula","Administrador");
-            admin.put("url","/espaiAdmin");
-        
-            // Opció Candidat a la barra de navegació
-            HashMap<String, String> candidat = new HashMap<>();
-            candidat.put("paraula","Candidat");
-            candidat.put("url","/espaiCandidat");
-        
-            // Opció Empresa a la barra de navegació
-            HashMap<String, String> empresa = new HashMap<>();
-            empresa.put("paraula","Empresa");
-            empresa.put("url","/espaiEmpresa");
-                  
-            // Afegim les opcions a l'array
-            opcions.add(admin);
-            opcions.add(candidat);
-            opcions.add(empresa);
-
-            if (!role.equals("ROLE_ANONYMOUS")) {
-                  // Si hi ha algun usuari loguejat
-                  // Opció Logout a la barra de navegació
-                  HashMap<String, String> logout = new HashMap<>();
-                  logout.put("paraula","Logout");
-                  logout.put("url","/j_spring_security_logout");
-                  opcions.add(logout);
+            // Afegim les opcions a l'array          
+            switch(role){
+                  case "ROLE_ANONYMOUS":
+                        // No hi ha cap usuari loguejat
+                        opcions.add(op_entrar_candidat);
+                        opcions.add(op_entrar_empresa);
+                        opcions.add(op_entrar_admin);
+                        break;
+                  case "ROLE_USER":
+                        // HI ha un usuari candidat loguejat
+                        opcions.add(op_ofertesCandidat);
+                        opcions.add(op_candidatures);
+                        opcions.add(op_perfil);
+                        opcions.add(op_logout);
+                        break;
+                  case "ROLE_EMPRESA":
+                        // Hi ha un usuari empresa empresa loguejat
+                        opcions.add(op_ofertesEmpresa);
+                        opcions.add(op_perfil);
+                        opcions.add(op_logout);
+                        break;
+                  case "ROLE_ADMIN":
+                        opcions.add(op_candidats);
+                        opcions.add(op_empreses);
+                        opcions.add(op_ofertesAdmin);
+                        opcions.add(op_logout);
+                        break;
             }
-            
+                  
             modelview.getModelMap().addAttribute("ubicacio", "La teva web de cerca de feina");
             modelview.getModelMap().addAttribute("opcions", opcions);
             return modelview;
@@ -96,13 +147,8 @@ public class HomeController {
       public ModelAndView addCandidatRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             ModelAndView modelview = new ModelAndView("altaCandidat");
         
-            // Opció Inici a la barra de navegació
-            HashMap<String, String> inici = new HashMap<>();
-            inici.put("paraula","Inici");
-            inici.put("url","/");
-        
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{inici};
+            HashMap[] opcions = new HashMap[]{op_inici};
             
             // Formulari d'alta candidat 
             Candidat formCandidat = new Candidat();
@@ -150,13 +196,8 @@ public class HomeController {
             // Invoca la vista que mostra el formulari d'alta d'empresa
             ModelAndView modelview = new ModelAndView("altaEmpresa");     
             
-            // Opció Inici a la barra de navegació
-            HashMap<String, String> inici = new HashMap<>();
-            inici.put("paraula","Inici");
-            inici.put("url","/");
-            
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{inici};
+            HashMap[] opcions = new HashMap[]{op_inici};
             
             //Formulari d'alta empresa 
             Empresa formEmpresa = new Empresa();
@@ -171,19 +212,37 @@ public class HomeController {
             return modelview;
     }
     
-
+      /**
+       * 
+       * Prova d'executar l'alta de l'empresa que rebem de la vista 
+       * Passa feedback a l'usuari
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param formEmpresa L'objecte de tipus Empresa que rebem del formulari d'alta d'empresa
+       * @return Un objecte modelandview que invoca la vista home amb un missatge de feedback per l'usuari.
+       */
       @RequestMapping(value = "/executaAltaEmpresa", method = RequestMethod.POST)
-      public String executaAltaEmpresa(@ModelAttribute("formEmpresa") Empresa formEmpresa, BindingResult result) {
+      public ModelAndView executaAltaEmpresa(@ModelAttribute("formEmpresa") Empresa formEmpresa) {
+            ModelAndView modelview = new ModelAndView("home");
             
-            System.out.println("--- Ja tenim l'empresa a l'objecte formEmpresa. Fem amb ell el que faci falta.");
+            String missatgeFeedback;
+            String classeFeedback;
             
-            // Invocarem els mètodes corresponents un cop fets els filtres que calguin
+            try {
+                  empresaService.addEmpresa(formEmpresa);
+                  missatgeFeedback = "L'alta s'ha realitzat amb èxit :)";
+                  classeFeedback = "alert-warning";
+            } catch (Exception e) {
+                  missatgeFeedback = "L'alta no s'ha pogut realitzar :(";
+                  classeFeedback = "alert-danger";
+            }
             
-            empresaService.addEmpresa(formEmpresa);
+            HashMap[] opcions = new HashMap[]{op_entrar_candidat, op_entrar_empresa, op_entrar_admin};
+            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
+            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+            modelview.getModelMap().addAttribute("opcions", opcions);
             
-            // segons el resultat de l'execució del mètode...
-            // ... haurem de redirigir a la vista que vulguem passant feedback a l'usuari (alta feta/alta no feta)
-            return "redirect:/";
+            return modelview;
     }
       
      
@@ -195,31 +254,7 @@ public class HomeController {
     }
     
      /*
-     Empresa per codi
-     */
-    
-    @RequestMapping("/empresa") //http://localhost:8080/2Work/empresa?codi=1
-    public ModelAndView getSerieByCodi(@RequestParam("codi") Integer codi, HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        ModelAndView modelview;
-
-        if (codi != null) {
-            modelview = new ModelAndView("empresa");
-            Empresa formEmpresa = empresaService.getEmpresaByCodi(codi);
-            //modelview.getModelMap().addAttribute("act", "empresa/update");
-           
-            modelview.getModelMap().addAttribute("formEmpresa", formEmpresa);
-             modelview.getModelMap().addAttribute("updateEmp", "/updateEmp");
-            LlistaSectors llistaSectors = new LlistaSectors();
-            modelview.getModelMap().addAttribute("llistaSectors", llistaSectors);
-        }else{
-            modelview = new ModelAndView("espaiEmpresa");
-        }
-        
-        return modelview;
-    } 
-     /*
-     FORM DE Serie POST
+     FORM DE EMPRESA POST
      */
      
     @RequestMapping(value = "/updateEmp", method = RequestMethod.POST)
@@ -228,14 +263,5 @@ public class HomeController {
         return "redirect:/";
     }
     
-    /*
-     Totes les series
-     */
-    @RequestMapping("/all")
-    public ModelAndView allEmpreses(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        ModelAndView modelview = new ModelAndView("empreses");
-        modelview.getModelMap().addAttribute("empreses", empresaService.getAllEmpreses());
-        return modelview;
-    }
+
 }

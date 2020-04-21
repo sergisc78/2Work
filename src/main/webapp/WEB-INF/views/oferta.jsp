@@ -45,24 +45,9 @@
                       
                         <c:forEach items="${opcions}" var="map">
                       
-                              <c:choose>
-                                    
-                                    <c:when test="${map.paraula != 'Logout'}">
                                     <li class="nav-item">
                                           <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
                                     </li>
-                                    </c:when>
-                                    
-                                    <c:otherwise>
-                                          <!-- Opció Logout -->
-                                          <sec:authorize access="hasRole('ROLE_USER')">
-                                          <li role="Presentation" class="nav-item">
-                                                <a class="nav-link" href="<c:url value='${map.url}' />">${map.paraula}</a>
-                                          </li>
-                                          </sec:authorize>
-                                    </c:otherwise>
-                                          
-                              </c:choose>
                         
                         </c:forEach>
                     
@@ -139,7 +124,7 @@
                               
                               <form:form id="formulariCandidatures" modelAttribute="Candidatures" method="post" action="desaEstatCandidatura">
                                     
-                                    <c:forEach items="${Candidatures.llista}" var="candidatura" varStatus="loop">
+                                    <c:forEach items="${candidatures.llista}" var="candidatura" varStatus="loop">
                                           <li class="list-group-item d-flex justify-content-between align-items-center">   
                                                 <a href="<spring:url value='/candidat/${loop.index}'/>" class="flex-grow-1"><p>Candidat random número ${loop.index}</p></a>
                                                 <form:select path="llista[${loop.index}].estat">
@@ -153,9 +138,40 @@
                         </ul>
                   </div>
                   </c:if>
+                  
+                  <!--- Només per l'admin --->
+                  <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                  <div class="card-footer">
+                        <h4>Candidatures</h4>
+                        <ul class="list-group-flush" id="llistat-candidatures">
+                              <c:forEach items="${candidatures.llista}" var="candidatura" varStatus="loop">
+                              <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <p>El candidat ${candidatura.codiCandidat} s'ha inscrit a l'oferta.</p>
+                                    <c:choose>
+                                    <c:when test="${loop.index % 4 == 0}">
+                                          <span class="badge badge-primary badge-pill">Estat ${candidatura.estat}</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                          <span class="badge badge-success badge-pill">Estat ${candidatura.estat}</span>
+                                    </c:otherwise>
+                              </c:choose>
+                              </li>                                    
+                              </c:forEach>
+                              
+                        </ul>
+                  </div>
+                  </sec:authorize>
                     
             </div>
               
+            <!--- Només per l'admin --->
+            <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                  <c:if test="${oferta.estat='per revisar'}">
+                        <a href="<spring:url value='/oferta/${oferta.codiOferta}/validar'/>" class="text-center btn btn-primary" role="button">Validar l'oferta</a>
+                  </c:if>
+                  <a href="<spring:url value='/oferta/${oferta.codiOferta}/esborrar'/>" class="text-center btn btn-warning" role="button">Esborrar l'oferta</a>
+            </sec:authorize>
+            
             <!--- NOMÉS PEL PROPIETARI/CREADOR DE L'OFERTA --->
             <c:if test="${propietari}">
             <p>
@@ -174,7 +190,6 @@
                         <c:otherwise>
                               <sec:authorize access="hasRole('ROLE_USER')">
                                     <a href="<spring:url value='/inscripcioOferta/oferta=1;candidat=1'/>" class="text-center btn btn-primary" role="button">Inscriure'm a l'oferta</a>
-                                    <a href="#" class="text-center btn btn-warning" role="button">Denunciar l'oferta</a>
                               </sec:authorize>
                         </c:otherwise> 
                   </c:choose>

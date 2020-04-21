@@ -80,12 +80,15 @@
                               <a href="#" class="icona_accio">
                                     <svg><use xlink:href="#esborrar" /></svg>
                               </a>
-                                    
+
+                              <sec:authorize access="hasRole('ROLE_USER')">
+                                    <a href="<spring:url value= "/oferta/${loop.index}" />" class="flex-grow-1"><p>Títol de l'oferta número ${loop.index}</p></a>
+                              </sec:authorize>
                               <sec:authorize access="hasRole('ROLE_EMPRESA')">
                                     <a href="<spring:url value= "/ofertaPropietari/" />${loop.index}'" class="flex-grow-1"><p>Títol de l'oferta número ${loop.index}</p></a>
                               </sec:authorize>
-                              <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-                                    <a href="<spring:url value= "/oferta/${loop.index}" />" class="flex-grow-1"><p>Títol de l'oferta número ${loop.index}</p></a>
+                              <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                    <a href="<spring:url value= "/ofertaAdmin/${loop.index}" />" class="flex-grow-1"><p>Títol de l'oferta número ${loop.index}</p></a>
                               </sec:authorize>
                               
                               <c:choose>

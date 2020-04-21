@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -28,9 +29,30 @@ import towork.formularis.LlistaHabilitats;
 import towork.domain.Oferta;
 import towork.formularis.LlistaFormacions;
 import towork.formularis.LlistaOcupacions;
+import towork.service.EmpresaService;
 
 @Controller
 public class EspaiController {
+      
+      @Autowired
+      EmpresaService empresaService;
+      
+      // Opcions reutilitzables per la barra de navegació
+      HashMap<String, String> op_entrar_candidat = new HashMap<>();
+      HashMap<String, String> op_entrar_empresa = new HashMap<>();
+      HashMap<String, String> op_entrar_admin = new HashMap<>();
+      HashMap<String, String> op_logout = new HashMap<>();
+      HashMap<String, String> op_inici = new HashMap<>();
+      HashMap<String, String> op_candidats = new HashMap<>();
+      HashMap<String, String> op_candidatures = new HashMap<>(); // candidatures
+      HashMap<String, String> op_empreses = new HashMap<>();
+      HashMap<String, String> op_ofertes = new HashMap<>();
+      HashMap<String, String> op_ofertesEmpresa = new HashMap<>();
+      HashMap<String, String> op_ofertesAdmin = new HashMap<>();
+      
+      // Missatges de feedback reutilitzables
+      final String msgErrorBBDD = "Hi ha hagut algun problema rebent les dades de la base de dades.";
+
     
       ///// GENEREM OBJECTES DE PROVA QUE HAUREM D'ESBORRAR QUAN TINGUEM CREATS ELS MÈTODES QUE ELS
       //// AGAFARAN DE LA BASE DE DADES
@@ -65,7 +87,31 @@ public class EspaiController {
       * 
       */
       public EspaiController() {
-            // Constructor de la classe
+            
+            // Opcions reutilitzables per la barra de navegació
+            op_entrar_candidat.put("paraula","Candidat");
+            op_entrar_candidat.put("url","/espaiCandidat");
+            op_entrar_empresa.put("paraula","Empresa");
+            op_entrar_empresa.put("url","/espaiEmpresa");
+            op_entrar_admin.put("paraula","Administrador");
+            op_entrar_admin.put("url","/espaiAdmin");
+            op_logout.put("paraula","Logout");  
+            op_logout.put("url","/j_spring_security_logout");
+            op_inici.put("paraula","Inici");  
+            op_inici.put("url","/");
+            op_candidats.put("paraula","Candidats");  
+            op_candidats.put("url","/candidats");
+            op_candidatures.put("paraula","Candidatures");  
+            op_candidatures.put("url","/candidatures");
+            op_empreses.put("paraula","Empreses");  
+            op_empreses.put("url","/empreses");
+            op_ofertes.put("paraula","Ofertes");  
+            op_ofertes.put("url","/espaiCandidat");
+            op_ofertesEmpresa.put("paraula","Ofertes");
+            op_ofertesEmpresa.put("url","/ofertesEmpresa"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
+            op_ofertesAdmin.put("paraula","Ofertes");
+            op_ofertesAdmin.put("url","ofertesAdmin");
+            
         
             //// Dono valors als objectes de prova creats 
             
@@ -102,6 +148,7 @@ public class EspaiController {
             habs.add(h3.getCodiHab());
         
             // Oferta
+            of.setCodiOferta(666);
             of.setDescripcio("Aquesta és la descripció de l'oferta blablabla. Aquest text en principi ha podria ser una mica llarg. És l'únic camp que permet explicar lliurement segons quins detalls de l'oferta. Com, per exemple, que pretenen explotar el treballador o bé pagar-li amb hortalisses o objectes d'escriptori usats.");
             of.setEstat("Pendent");
             of.setFormacio(1);
@@ -188,17 +235,12 @@ public class EspaiController {
             perfil.put("url","/perfil/"+username);
         
             // Opció candidatures a la barra de navegació
-            HashMap<String, String> cands = new HashMap<>();
-            cands.put("paraula","Candidatures");  
-            cands.put("url","/candidatures/"+username); // ÉS UNA PROVA, LI HAURIEM DE PASSAR EL CODI
-            
-            // Opció logout a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
-        
+            HashMap<String, String> candidatures_usuari = new HashMap<>();
+            candidatures_usuari.put("paraula","Candidatures");  
+            candidatures_usuari.put("url","/candidatures/"+username); // ÉS UNA PROVA, LI HAURIEM DE PASSAR EL CODI
+                  
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,cands,logout};  
+            HashMap[] opcions = new HashMap[]{perfil,candidatures_usuari,op_logout};  
           
             ModelAndView modelview = new ModelAndView("espaiCandidat");
             modelview.getModelMap().addAttribute("ubicacio", "Ofertes escaients per les teves dades");
@@ -221,13 +263,9 @@ public class EspaiController {
       public ModelAndView EspaiEmpresaRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             ModelAndView modelview = new ModelAndView("espaiEmpresa");
             
-            // Opció logout a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
-        
+;        
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{logout};  
+            HashMap[] opcions = new HashMap[]{op_logout};  
             
             modelview.getModelMap().addAttribute("opcions", opcions);
             
@@ -247,34 +285,9 @@ public class EspaiController {
       @RequestMapping(value = "/espaiAdmin", method = RequestMethod.GET)
       public ModelAndView EspaiAdministradorRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             ModelAndView modelview = new ModelAndView("espaiAdmin");
-            
-            // Opció inici a la barra de navegació
-            HashMap<String, String> inici = new HashMap<>();
-            inici.put("paraula","Inici");  
-            inici.put("url","/");
-            
-            // Opció candidats a la barra de navegació
-            HashMap<String, String> cands = new HashMap<>();
-            cands.put("paraula","Candidats");  
-            cands.put("url","/candidats");
-            
-            // Opció empreses a la barra de navegació
-            HashMap<String, String> empreses = new HashMap<>();
-            empreses.put("paraula","Empreses");  
-            empreses.put("url","/empreses");
-            
-            // Opció ofertes a la barra de navegació
-            HashMap<String, String> ofertes = new HashMap<>();
-            ofertes.put("paraula","Ofertes");  
-            ofertes.put("url","/ofertesAdmin");
-            
-            // Opció logout a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
-        
+                   
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{inici,cands,empreses,ofertes,logout};  
+            HashMap[] opcions = new HashMap[]{op_inici, op_candidats, op_empreses, op_ofertesAdmin, op_logout};  
             
             modelview.getModelMap().addAttribute("opcions", opcions);
             
@@ -297,7 +310,9 @@ public class EspaiController {
       @RequestMapping(value = "/oferta/{codiOferta}", method = RequestMethod.GET)
       public ModelAndView OfertaPerCodi(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            // Obtenim el rol de l'usuari loguejat
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String role = auth.getAuthorities().iterator().next().toString(); // El primer element dela collection auth.getAuthorities. Assumim que només conté un element.
             
             // Opció perfil a la barra de navegació
             HashMap<String, String> perfil = new HashMap<>();
@@ -305,26 +320,21 @@ public class EspaiController {
             perfil.put("url","/perfil");
         
             // Opció ofertes a la barra de navegació
-            HashMap<String, String> ofertes = new HashMap<>();
-            ofertes.put("paraula","Ofertes");            
-            if (authentication.getAuthorities().contains("ROLE_USER")) {
-                  ofertes.put("url","/espaiCandidat"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes pels candidats
+            HashMap<String, String> _ofertes = new HashMap<>();
+            _ofertes.put("paraula","Ofertes");            
+            if (role.equals("ROLE_USER")) {
+                  _ofertes.put("url","/espaiCandidat"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes pels candidats
             } else {
-                  ofertes.put("url","/ofertesAdminEmpresa");
+                  _ofertes.put("url","/ofertesAdminEmpresa");
             }
                                                                                     
             // Opció candidatures a la barra de navegació
-            HashMap<String, String> cands = new HashMap<>();
-            cands.put("paraula","Candidatures");  
-            cands.put("url","/candidatures/3"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
-        
-            // Opció candidatures a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");
-            logout.put("url","/j_spring_security_logout");
-            
+            HashMap<String, String> _cands = new HashMap<>();
+            _cands.put("paraula","Candidatures");  
+            _cands.put("url","/candidatures/3"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
+                    
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,ofertes,cands,logout};  
+            HashMap[] opcions = new HashMap[]{perfil,_ofertes,_cands,op_logout};  
         
             ModelAndView modelview = new ModelAndView("oferta");
             // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
@@ -334,6 +344,35 @@ public class EspaiController {
             modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
             modelview.getModelMap().addAttribute("opcions", opcions);
                     
+            return modelview;
+      }
+      
+      /**
+       * 
+       * Prepara i retorna la vista que mostra els detalls d'una oferta concreta a administrador, el codi de la qual rebem a la url com a PathVariable
+       * Reutilitza la vista oferta
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param codiOferta El codi de l'oferta els detalls de la qual mostrarà la vista
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Objecte modelabdview que representa el model i la vista que mostrarà a l'usuari el detall d'una oferta concreta
+       * @throws ServletException
+       * @throws IOException 
+       */
+      @RequestMapping(value = "/ofertaAdmin/{codiOferta}", method = RequestMethod.GET)
+      public ModelAndView OfertaAdminPerCodi(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            
+            ModelAndView modelview = new ModelAndView("oferta");
+                                  
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{op_inici, op_candidats, op_empreses, op_ofertesAdmin, op_logout};  
+            
+            modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
+            modelview.getModelMap().addAttribute("candidatures", llistaCandidatures);
+            modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
+            modelview.getModelMap().addAttribute("opcions", opcions);
+            
             return modelview;
       }
       
@@ -360,7 +399,7 @@ public class EspaiController {
           
             // Obtenim el rol de l'usuari loguejat
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String role = auth.getAuthorities().iterator().next().toString(); // El primer element dela collection auth.getAuthoritie. Assumim que només conté un element.
+            String role = auth.getAuthorities().iterator().next().toString(); // El primer element dela collection auth.getAuthorities. Assumim que només conté un element.
             
             
             // Opció perfil a la barra de navegació
@@ -388,17 +427,12 @@ public class EspaiController {
             }
         
             // Opció candidatures a la barra de navegació
-            HashMap<String, String> candidatures = new HashMap<>();
-            candidatures.put("paraula","Candidatures");  
-            candidatures.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
-        
-            // Opció candidatures a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");
-            logout.put("url","/j_spring_security_logout");
+            HashMap<String, String> _cands = new HashMap<>();
+            _cands.put("paraula","Candidatures");  
+            _cands.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
         
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,ofertes,candidatures,logout};  
+            HashMap[] opcions = new HashMap[]{perfil,ofertes,_cands,op_logout};  
         
             ModelAndView modelview = new ModelAndView("oferta");
             // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
@@ -436,26 +470,11 @@ public class EspaiController {
             perfil.put("paraula","Perfil");
             perfil.put("url","/perfil");
 
-            // Opció ofertes a la barra de navegació
-            HashMap<String, String> ofertes = new HashMap<>();
-            ofertes.put("paraula","Ofertes");
-            ofertes.put("url","/ofertesEmpresa"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
-
-            // Opció candidatures a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");
-            logout.put("url","/j_spring_security_logout");
-
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,ofertes,logout};  
+            HashMap[] opcions = new HashMap[]{perfil, op_ofertesEmpresa, op_logout};  
 
             ModelAndView modelview = new ModelAndView("oferta");
             // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
-
-            // Omplo un arrayList amb les candidatures de prova per poder enviar-les al controlador
-            List<Candidatura> candidatures = getListOfCandidatures();
-            LlistaCandidatures llistaCandidatures = new LlistaCandidatures();
-            llistaCandidatures.setLlista(candidatures);
 
             Candidatura formCandidatura = new Candidatura();
 
@@ -468,7 +487,7 @@ public class EspaiController {
             modelview.getModelMap().addAttribute("opcions", opcions);
 
             modelview.getModelMap().addAttribute("estatsPossiblesCandidatura", estatsPossibles);
-            modelview.getModelMap().addAttribute("Candidatures", llistaCandidatures);
+            modelview.getModelMap().addAttribute("candidatures", llistaCandidatures);
             modelview.getModelMap().addAttribute("formCandidatura", formCandidatura);
 
             modelview.getModelMap().addAttribute("propietari", true); // Indica a la vista que hem de mostrar la informació que només és pel propietari de l'oferta
@@ -496,33 +515,14 @@ public class EspaiController {
             
             // Aquesta vista en principi haurà de mostrar totes les ofertes
             // Les hem d'obtenir de la bbdd mitjançant el mètode de la capa servei
-            
-            // Opció inici a la barra de navegació
-            HashMap<String, String> inici = new HashMap<>();
-            inici.put("paraula","Inici");
-            inici.put("url","/");
-            
-            // Opció candidats a la barra de navegació
-            HashMap<String, String> candidats = new HashMap<>();
-            candidats.put("paraula","Candidats");
-            candidats.put("url","candidats/");
-            
-            // Opció empreses a la barra de navegació
-            HashMap<String, String> empreses = new HashMap<>();
-            empreses.put("paraula","Empreses");
-            empreses.put("url","empreses/");
-        
-            // Opció candidatures a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
-        
+
             // Llista que contindrà les opcions que hi haurà a la barra de navegació
             List<Map<String , String>> opcions  = new ArrayList<>();
             
-            opcions.add(candidats);
-            opcions.add(empreses);
-            opcions.add(logout);
+            opcions.add(op_inici);
+            opcions.add(op_candidats);
+            opcions.add(op_empreses);
+            opcions.add(op_logout);
         
             modelview.getModelMap().addAttribute("ubicacio", "Vista general de les ofertes");
             modelview.getModelMap().addAttribute("opcions", opcions);
@@ -561,36 +561,11 @@ public class EspaiController {
             // Llista que contindrà les opcions que hi haurà a la barra de navegació
             List<Map<String , String>> opcions  = new ArrayList<>();
             
-            // Opció inici a la barra de navegació
-            HashMap<String, String> inici = new HashMap<>();
-            inici.put("paraula","Inici");
-            inici.put("url","/");
-            
-            // Opció candidats a la barra de navegació
-            HashMap<String, String> candidats = new HashMap<>();
-            candidats.put("paraula","Candidats");
-            candidats.put("url","/candidats");
-            
-            // Opció empreses a la barra de navegació
-            HashMap<String, String> empreses = new HashMap<>();
-            empreses.put("paraula","Empreses");
-            empreses.put("url","/empreses");
-        
-            // Opció ofertes a la barra de navegació
-            HashMap<String, String> ofertes = new HashMap<>();
-            ofertes.put("paraula","Ofertes");
-            ofertes.put("url","/ofertesAdmin");
-            
-            // Opció candidatures a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
-            
-            opcions.add(inici);
-            opcions.add(candidats);
-            opcions.add(empreses);
-            opcions.add(ofertes);
-            opcions.add(logout);
+            opcions.add(op_inici);
+            opcions.add(op_candidats);
+            opcions.add(op_empreses);
+            opcions.add(op_ofertesAdmin);
+            opcions.add(op_logout);
             
             modelview.getModelMap().addAttribute("ubicacio", "Vista d'ofertes per empresa");
             modelview.getModelMap().addAttribute("opcions", opcions);
@@ -621,24 +596,14 @@ public class EspaiController {
             // Llista que contindrà les opcions que hi haurà a la barra de navegació
             List<Map<String , String>> opcions  = new ArrayList<>();
             
-            // Opció inici a la barra de navegació
-            HashMap<String, String> inici = new HashMap<>();
-            inici.put("paraula","Inici");
-            inici.put("url","/");
-            
             // Opció perfil a la barra de navegació
-            HashMap<String, String> perfil = new HashMap<>();
-            inici.put("paraula","Perfil");
-            inici.put("url","/perfil");
+            HashMap<String, String> op_perfil = new HashMap<>();
+            op_inici.put("paraula","Perfil");
+            op_inici.put("url","/perfil");
             
-            // Opció candidatures a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
-            
-            opcions.add(inici);
-            opcions.add(perfil);
-            opcions.add(logout);
+            opcions.add(op_inici);
+            opcions.add(op_perfil);
+            opcions.add(op_logout);
             
             modelview.getModelMap().addAttribute("ubicacio", "Ofertes generades");
             modelview.getModelMap().addAttribute("opcions", opcions);
@@ -671,37 +636,11 @@ public class EspaiController {
             perfil.put("paraula","Perfil");
             perfil.put("url","/perfil");
 
-            // Opció ofertes a la barra de navegació
-            HashMap<String, String> ofertes = new HashMap<>();
-            ofertes.put("paraula","Ofertes");
-            ofertes.put("url","/ofertesEmpresa"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
-
-            // Opció candidatures a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
-
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,ofertes,logout};  
+            HashMap[] opcions = new HashMap[]{perfil,op_ofertesEmpresa,op_logout};  
 
 
             ///// Inici dels objectes de prova que genero per poder muntar la vista ////////////////////////////////////////////////////////////////////////////////////////////
-
-            // Genero habilitats de prova
-            Habilitat h1 = new Habilitat();
-            h1.setNomHab("habilitat1");
-
-            Habilitat h2 = new Habilitat();
-            h2.setNomHab("habilitat2");
-
-            Habilitat h3 = new Habilitat();
-            h3.setNomHab("habilitat3");
-
-            // Omplo un arrayList amb les habilitats de prova per afegir-lo a l'objecte de prova
-            ArrayList<Integer> habs = new ArrayList();
-            habs.add(h1.getCodiHab());
-            habs.add(h2.getCodiHab());
-            habs.add(h3.getCodiHab());
 
             // Genero objecte Formacio de prova
             Formacio formacio = new Formacio();
@@ -752,17 +691,12 @@ public class EspaiController {
             perfil.put("url","/perfil");
 
             // Opció ofertes a la barra de navegació
-            HashMap<String, String> ofertes = new HashMap<>();
-            ofertes.put("paraula","Ofertes");
-            ofertes.put("url","/espaiCandidat"); // AQUI LI HAUREM DE PASSAR A LA URL EL CODI DE CANDIDAT PERQUE ENS MOSTRI LA INFO ESCAIENTS
-
-            // Opció logout  a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
+            HashMap<String, String> ofertesCandidat = new HashMap<>();
+            ofertesCandidat.put("paraula","Ofertes");
+            ofertesCandidat.put("url","/espaiCandidat"); // AQUI LI HAUREM DE PASSAR A LA URL EL CODI DE CANDIDAT PERQUE ENS MOSTRI LA INFO ESCAIENTS
 
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,ofertes,logout};
+            HashMap[] opcions = new HashMap[]{perfil,ofertesCandidat,op_logout};
             
             // També li haurem de passar la LLISTA AMB LES CANDIDATURES, amb l'estat en que estiguin, si no passen integrades dins l'objecte Oferta
             // Omplo un arrayList amb les candidatures de prova per poder enviar-les al controlador
@@ -860,13 +794,8 @@ public class EspaiController {
             candidatures.put("paraula","Candidatures");  
             candidatures.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
         
-            // Opció logout  a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
-        
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,candidatures,logout};  
+            HashMap[] opcions = new HashMap[]{perfil,candidatures,op_logout};  
             
             // missatge i classe del missatge de feedback que rebrà l'usuari
             String missatgeFeedback =""; // missatge de feedback que rebrà l'usuari 
@@ -896,11 +825,11 @@ public class EspaiController {
       * Ha de cridar el mètode o mètodes del servei que executi/n l'operació a la bbdd
       * 
       * @author Daniel Sevilla i Junyent
-      * @param dades X mapes (String, Integer). Ens interessen el mapes amb claus 'oferta' i 'candidat' per executar la cancel·lació.
+      * @param codiCandidatura Codi (Integer) de la candidatura.
       * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
       */
-     @RequestMapping(value = "/cancelarCandidatura/{dadesCancelacio}", method = RequestMethod.GET)
-     public ModelAndView cancelacioCandidatura(@MatrixVariable(pathVar="dadesCancelacio") Map<String, Integer> dades){
+     @RequestMapping(value = "/cancelarCandidatura/{codiCandidatura}", method = RequestMethod.GET)
+     public ModelAndView cancelacioCandidatura(@PathVariable("codiCandidatura") Integer codiCandidatura) {
            
            Boolean cancelacioOK=false;
            
@@ -919,22 +848,14 @@ public class EspaiController {
             ofertes.put("paraula","Ofertes");
             ofertes.put("url","/espaiCandidat"); // AQUI LI HAUREM DE PASSAR A LA URL EL CODI DE CANDIDAT PERQUE ENS MOSTRI LA INFO ESCAIENTS
 
-            // Opció logout  a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
-
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,ofertes,logout};
+            HashMap[] opcions = new HashMap[]{perfil,ofertes,op_logout};
             
             // També li haurem de passar la LLISTA AMB LES CANDIDATURES, amb l'estat en que estiguin, si no passen integrades dins l'objecte Oferta
             // Omplo un arrayList amb les candidatures de prova per poder enviar-les al controlador
             // AL TANTO, HAUREM DE FER SERVIR UN MÈTODE QUE ENS PASSI EL TÍTOL DE L'OFERTA PASSANT-LI EL CODI
             // PQ A LA TAULA HAURIA DE SORTIR EL TÍTOL DE L'OFERTA I A L'OBJECTE CANDIDATURA HI HA EL CODI
-            List<Candidatura> candidatures = getListOfCandidatures();
-            LlistaCandidatures llistaCandidatures = new LlistaCandidatures();
-            llistaCandidatures.setLlista(candidatures);
-           
+            
            // missatge i classe del missatge de feedback que rebrà l'usuari
             String missatgeFeedback =""; // missatge de feedback que rebrà l'usuari 
             String classeFeedback = "";  // classe CSS que s'aplicarà al contenidor del missatge de feedback
@@ -1018,34 +939,20 @@ public class EspaiController {
             
             // Objecte buit de tipus Oferta que li passarem al formulari
             Oferta formOferta = new Oferta();
-
-            // Opció Inici a la barra de navegació
-            HashMap<String, String> inici = new HashMap<>();
-            inici.put("paraula","Inici");
-            inici.put("url","/");
             
             // Opció perfil a la barra de navegació
-            HashMap<String, String> perfil = new HashMap<>();
-            perfil.put("paraula","Perfil");
-            perfil.put("url","/perfil");
+            HashMap<String, String> op_perfil = new HashMap<>();
+            op_perfil.put("paraula","Perfil");
+            op_perfil.put("url","/perfil");
 
-            // Opció ofertes a la barra de navegació
-            HashMap<String, String> ofertes = new HashMap<>();
-            ofertes.put("paraula","Ofertes");
-            ofertes.put("url","/ofertesEmpresa");
 
-            // Opció logout  a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
-            
             // AQUI LI HEM DE PASSAR ELS LLISTATS PER OMPLIR ELS SELECTS QUE VINDRAN DE LA BBDD
             // PER ARA ESTÀ SIMULAT AIXÍ
             LlistaFormacions llistaFormacions = new LlistaFormacions();
             LlistaOcupacions llistaOcupacions = new LlistaOcupacions();
             
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{inici,perfil,ofertes,logout};
+            HashMap[] opcions = new HashMap[]{op_inici,op_perfil,op_ofertesEmpresa,op_logout};
             
             modelview.getModelMap().addAttribute("formOferta", formOferta);
             modelview.getModelMap().addAttribute("ubicacio", "Alta d'oferta");
@@ -1066,7 +973,6 @@ public class EspaiController {
        *
        * @author Daniel Sevilla i Junyent
        * @param formOferta L'objecte de tipus Oferta que rebem del formulari
-       * @param result
        * @return Un objecte String que conrindrà la redirecció a la home
        */
       @RequestMapping(value = "/executaAltaOferta", method = RequestMethod.POST)
@@ -1095,60 +1001,32 @@ public class EspaiController {
        * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
        */
       @RequestMapping(value = "/empresa/{codiEmpresa}", method = RequestMethod.GET)
-      public ModelAndView mostraEmpresa(@PathVariable("codiEmpresa") Integer codiEmp,HttpServletRequest request, HttpServletResponse response) {
-            // Controlador que munta la vista que mostra les dades de l'empresa el codi de la qual rebem com a PathVariable
+      public ModelAndView mostraEmpresa(@PathVariable("codiEmpresa") Integer codiEmp, HttpServletRequest request, HttpServletResponse response) {
+            
             ModelAndView modelview = new ModelAndView("empresa");
             
-            // Creem un objecte empresa de prova que li passem a la vista.
-            // En realitat haurem de rebre aquest objecte de la bbdd mitjançant el mètode de la capa servei que invocarem aqui
+            Empresa empresa = null;
             
-            /////// CREACIÓ DE L'OBJECTE EMPRESA QUE PASSAREM A AL VISTA COM A PROVA
-            Empresa empresaProva = new Empresa();
-            empresaProva.setCodi(4);
-            empresaProva.setNom("Random Industries Inc.");
-            empresaProva.setDniNif("99666333K");
-            empresaProva.setAdreca("Carrer de la carretara, 23");
-            empresaProva.setPoblacio("L'Estany");
-            empresaProva.setProvincia("Barcelona");
-            empresaProva.setTelefon("+99 666 333 111");
-            empresaProva.setEmail("random@industries.cat");
-            empresaProva.setObservacions("Com evident experiència mostra, la debilitat de la nostra memòria, sotsmetent fàcilment a oblivió no solament los actes per longitud de temps envellits, mas encara los actes frescs de nostres dies, és estat doncs molt condecent, útil e expedient deduir en escrit les gestes e històries antigues dels homens forts e virtuosos, com sien espills molt clars, exemples e virtuosa doctrina de nostra vida, segons recita aquell gran orador Tul·li.");
-            empresaProva.setResponsable("Pere Palanca i Parés");
-            empresaProva.setTamany(120);
-            empresaProva.setSector(4);
-            empresaProva.setWeb("www.randomindustries.cat");
-            //////
+            if (codiEmp != null) {
+                  empresa = empresaService.getEmpresaByCodi(codiEmp);
+            }
             
-            // Opció inici a la barra de navegació
-            HashMap<String, String> inici = new HashMap<>();
-            inici.put("paraula","Inici");  
-            inici.put("url","/");
-            
-            // Opció ofertes a la barra de navegació
-            HashMap<String, String> ofertes = new HashMap<>();
-            ofertes.put("paraula","Ofertes");  
-            ofertes.put("url","/ofertes");
-            
-            // Opció empreses a la barra de navegació
-            HashMap<String, String> empreses = new HashMap<>();
-            empreses.put("paraula","Empreses");  
-            empreses.put("url","/empreses");
-            
-            // Opció candidats a la barra de navegació
-            HashMap<String, String> candidats = new HashMap<>();
-            candidats.put("paraula","Candidats");  
-            candidats.put("url","/candidats");
-            
-            // Opció logout a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
+            if ( codiEmp == null || empresa == null) {
+                  modelview.setViewName("home");
+                  
+                  HashMap[] opcions = new HashMap[]{op_candidats,op_ofertes,op_empreses,op_logout};
+                  modelview.getModelMap().addAttribute("ubicacio", "La teva web de cerca de feina");
+                  modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
+                  modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                  modelview.getModelMap().addAttribute("opcions", opcions);
+                  return modelview;
+            }
             
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{inici,ofertes,empreses,candidats,logout};
+            HashMap[] opcions = new HashMap[]{op_inici, op_candidats, op_ofertes, op_empreses, op_logout};
             
             modelview.getModelMap().addAttribute("ubicacio", "Dades de l'empresa");
-            modelview.getModelMap().addAttribute("empresa", empresaProva);
+            modelview.getModelMap().addAttribute("empresa", empresa);
             modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;
@@ -1166,33 +1044,29 @@ public class EspaiController {
       @RequestMapping(value = "/empreses", method = RequestMethod.GET)
       public ModelAndView mostraEmpreses(HttpServletRequest request) {
             
-            // Correspon a la vista que mostra el llistat de totes les empreses a l'admin
             ModelAndView modelview = new ModelAndView("empreses");
+            List<Empresa> empreses;
             
-             // Opció inici a la barra de navegació
-            HashMap<String, String> inici = new HashMap<>();
-            inici.put("paraula","Inici");  
-            inici.put("url","/");
+            try {
+                  empreses = empresaService.getAllEmpreses();
+            } catch (Exception e) {
+                  // Si la petició a la base de dades no té èxit
+                  modelview.setViewName("home");
+                  // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+                  HashMap[] opcions = new HashMap[]{op_logout};
+                  modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
+                  modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                  modelview.getModelMap().addAttribute("ubicacio", "La teva web de cerca de feina");
+                  modelview.getModelMap().addAttribute("opcions", opcions);
+                  return modelview;
+            }
             
-            // Opció candidats  a la barra de navegació
-            HashMap<String, String> candidats = new HashMap<>();
-            candidats.put("paraula","Candidats");  
-            candidats.put("url","/candidats");
-            
-            // Opció ofertes a la barra de navegació
-            HashMap<String, String> ofertes = new HashMap<>();
-            ofertes.put("paraula","Ofertes");  
-            ofertes.put("url","/ofertesAdmin");
-            
-            // Opció logout  a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
             
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{inici,ofertes,candidats,logout};
+            HashMap[] opcions = new HashMap[]{op_inici,op_ofertesAdmin,op_candidats,op_logout};
             
             modelview.getModelMap().addAttribute("ubicacio", "Empreses donades d'alta");
+            modelview.getModelMap().addAttribute("empreses", empreses);
             modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;
@@ -1216,28 +1090,8 @@ public class EspaiController {
             // Li passarem a la vista una llista de candidats que en realitat haurem de rebre de la bbd mitjançant el corresponent mètode del servei
             // Aquesta llista està iniciliatitzada a l'inici, i al constructor, de la classe
             
-            // Opció inici a la barra de navegació
-            HashMap<String, String> inici = new HashMap<>();
-            inici.put("paraula","Inici");  
-            inici.put("url","/");
-            
-            // Opció empreses  a la barra de navegació
-            HashMap<String, String> empreses = new HashMap<>();
-            empreses.put("paraula","Empreses");  
-            empreses.put("url","/empreses");
-            
-            // Opció ofertes a la barra de navegació
-            HashMap<String, String> ofertes = new HashMap<>();
-            ofertes.put("paraula","Ofertes");  
-            ofertes.put("url","/ofertesAdmin");
-            
-            // Opció logout  a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
-            
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{inici,empreses,ofertes,logout};
+            HashMap[] opcions = new HashMap[]{op_inici,op_empreses,op_ofertesAdmin,op_logout};
             
             modelview.getModelMap().addAttribute("ubicacio", "Llistat de tots els candidats");
             modelview.getModelMap().addAttribute("candidats", candidats);
@@ -1271,28 +1125,8 @@ public class EspaiController {
             // Li passarem a la vista una llista de candidats que en realitat haurem de rebre de la bbd mitjançant el corresponent mètode del servei
             // Aquesta llista està iniciliatitzada a l'inici, i al constructor, de la classe
             
-            // Opció inici a la barra de navegació
-            HashMap<String, String> inici = new HashMap<>();
-            inici.put("paraula","Inici");  
-            inici.put("url","/");
-            
-            // Opció empreses  a la barra de navegació
-            HashMap<String, String> empreses = new HashMap<>();
-            empreses.put("paraula","Empreses");  
-            empreses.put("url","/empreses");
-            
-            // Opció ofertes a la barra de navegació
-            HashMap<String, String> ofertes = new HashMap<>();
-            ofertes.put("paraula","Ofertes");  
-            ofertes.put("url","/ofertesAdmin");
-            
-            // Opció logout  a la barra de navegació
-            HashMap<String, String> logout = new HashMap<>();
-            logout.put("paraula","Logout");  
-            logout.put("url","/j_spring_security_logout");
-            
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{inici,empreses,ofertes,logout};
+            HashMap[] opcions = new HashMap[]{op_inici, op_empreses, op_ofertesAdmin, op_logout};
             
             // missatge i classe del missatge de feedback que rebrà l'usuari
             String missatgeFeedback =""; // missatge de feedback que rebrà l'usuari 

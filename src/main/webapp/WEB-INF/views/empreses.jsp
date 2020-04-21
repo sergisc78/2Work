@@ -44,26 +44,9 @@
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     
                       <c:forEach items="${opcions}" var="map">
-                      
-                        <c:choose>
-                                    
-                              <c:when test="${map.paraula != 'Logout'}">
-                                    <li class="nav-item">
-                                          <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
-                                    </li>
-                              </c:when>
-                                    
-                              <c:otherwise>
-                                    <!-- Opció Logout -->
-                                    <sec:authorize access="hasRole('ROLE_EMPRESA')">
-                                          <li role="Presentation" class="nav-item">
-                                                <a class="nav-link" href="<c:url value='${map.url}' />">${map.paraula}</a>
-                                          </li>
-                                    </sec:authorize>
-                              </c:otherwise>
-                                          
-                        </c:choose>
-
+                        <li class="nav-item">
+                              <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
+                        </li>
                      </c:forEach>
 
                 </ul>
@@ -88,18 +71,14 @@
                   
                   <!-- PENDENT D'IMPLEMENTAR L'AVÍS QUE MOSTRAREM QUAN NO HI HAGI CAP OFERTA PER ENSENYAR -->
                   
-                  <c:forEach begin="1" end="12" varStatus="loop">
+                  <c:forEach items="${empreses}" var="empresa" varStatus="loop">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                               
-                              <a href="#" class="icona_accio">
+                              <a href="<spring:url value= '/empresa/${empresa.codi}/esborrar' />" class="icona_accio">
                                     <svg><use xlink:href="#esborrar" /></svg>
                               </a>
                                     
-                              <a href="<spring:url value= '/empresa/${loop.index}' />" class="flex-grow-1"><p>Nom de de l'empresa número ${loop.index}</p></a>
-                              
-                              <c:if test="${loop.index % 4 == 0}">
-                                    <span class="badge badge-danger badge-pill">Denunciada</span>
-                              </c:if>
+                              <a href="<spring:url value= '/empresa/${empresa.codi}' />" class="flex-grow-1"><p>${empresa.nom}</p></a>
                                      
                         </li>
                   </c:forEach>

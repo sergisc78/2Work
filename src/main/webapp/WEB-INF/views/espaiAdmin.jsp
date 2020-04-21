@@ -42,17 +42,9 @@
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                       
                         <c:forEach items="${opcions}" var="map">
-                      
-                              <c:choose>
-                                    
-                                    <c:when test="${map.paraula != 'Logout'}">
-                                    <li class="nav-item">
-                                          <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
-                                    </li>
-                                    </c:when>
-                                          
-                              </c:choose>
-                        
+                              <li class="nav-item">
+                                    <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
+                              </li>
                         </c:forEach>
                     
                 </ul>
