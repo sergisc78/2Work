@@ -16,7 +16,7 @@ public interface CandidatService {
     
     public void addCandidat (Candidat candidat);
     List <Candidat> selectCandidat();
-    void updatePerfil (Candidat candidat,String newMail);
+    void updateCandidat(Candidat candidat);
     void deletePerfil (Candidat candidat);
     
 }

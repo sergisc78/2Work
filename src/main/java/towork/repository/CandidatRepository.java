@@ -19,8 +19,8 @@ public interface CandidatRepository {
 
     List<Candidat> selectCandidat();
 
-    void updatePerfil(Candidat candidat, String newMail);
-
+    void updateCandidat(Candidat candidat);
+    
     void deletePerfil(Candidat candidat);
 
 }

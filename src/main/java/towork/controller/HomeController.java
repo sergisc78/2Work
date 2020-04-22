@@ -29,6 +29,7 @@ import towork.formularis.LlistaFormacions;
 import towork.formularis.LlistaOcupacions;
 import towork.service.EmpresaService;
 import towork.formularis.LlistaSectors;
+import towork.service.CandidatService;
 
 
 /**
@@ -40,6 +41,8 @@ public class HomeController {
              
       @Autowired
       EmpresaService empresaService;
+      @Autowired
+      CandidatService candidatService;
       
       // Opcions reutilitzables per la barra de navegació
       HashMap<String, String> op_entrar_candidat = new HashMap<>();
@@ -172,14 +175,14 @@ public class HomeController {
       public String executaAltaCandidat(@ModelAttribute("formCandidat") Candidat formCandidat, BindingResult result) {
             
             System.out.println("--- Ja tenim el candidat a l'objecte formCandidat. Fem amb ell el que faci falta.");
-            for (Experiencia exp : formCandidat.getExperiencies()) {
+            /*for (Experiencia exp : formCandidat.getExperiencies()) {
                   System.out.println("--- Experiencia: "+exp.getDescripcio());
             }
-            System.out.println("--- Habilitats: "+formCandidat.getHabilitats());
+            System.out.println("--- Habilitats: "+formCandidat.getHabilitats());*/
             // System.out.println("--- Propietat d'una de les experiències no omplertes: "+formCandidat.getExperiencies());
             
             // Invocarem els mètodes corresponents un cop fets els filtres que calguin
-            // CandidatService.addCandidat(formCandidat);
+              candidatService.addCandidat(formCandidat);
             // service.addExperiencies
             //....
             
