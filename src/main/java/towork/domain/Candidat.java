@@ -26,7 +26,7 @@ public class Candidat extends Usuari{
     protected ArrayList<Experiencia> experiencies = new ArrayList();
 
 
-    public Candidat (String nom,String cognoms, String dniNif,Date dataNaix,String adreca, String poblacio,String provincia,String telefon, String email, String observacions, String pass, String cPass, Integer codi, Integer formacio,Integer ocupacio) {
+    public Candidat (Integer codi,String nom,String cognoms, String dniNif,Date dataNaix,String adreca, String poblacio,String provincia,String telefon, String email, String observacions, String pass, String cPass,  Integer formacio,Integer ocupacio) {
         super(codi,nom,dniNif,adreca,poblacio,provincia,telefon,email,observacions,pass,cPass);
         this.cognoms = cognoms;
         this.dataNaix = dataNaix;

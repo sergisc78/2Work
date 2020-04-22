@@ -23,4 +23,8 @@ public interface EmpresaService {
     Empresa getEmpresaBydniNif(String dniNif);
     
     List<Empresa> getAllEmpreses();
+    
+    Empresa getEmpresaByEmail(String email);
+    
+    Integer getCodiByEmail(String email);
 }

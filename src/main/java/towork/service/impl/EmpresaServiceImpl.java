@@ -42,4 +42,13 @@ public class EmpresaServiceImpl implements EmpresaService{
     public List<Empresa> getAllEmpreses(){
         return empresaRepository.getAllEmpreses();
     }
+    @Override
+    public Empresa getEmpresaByEmail(String email){
+        return empresaRepository.getEmpresaByEmail(email);
+    }
+    @Override
+    public Integer getCodiByEmail(String email){
+        return empresaRepository.getCodiByEmail(email);
+    }
+    
 }

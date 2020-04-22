@@ -204,7 +204,7 @@ public class AdminDAO implements AdminRepository {
         Integer formacio = rs.getInt("formacio");
         Integer ocupacio = rs.getInt("ocupacio");
 
-        Candidat candidat = new Candidat(nom, cognoms, dniNif, dataNaix, adreca, poblacio, provincia, telefon, email, observacions, pass, cPass, codi, formacio, ocupacio);
+        Candidat candidat = new Candidat(codi,nom, cognoms, dniNif, dataNaix, adreca, poblacio, provincia, telefon, email, observacions, pass, cPass, formacio, ocupacio);
 
         return candidat;
 

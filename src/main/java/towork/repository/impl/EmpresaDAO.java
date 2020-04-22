@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package towork.repository.impl;
 
 import java.io.IOException;
@@ -25,10 +21,18 @@ import towork.service.impl.EmpresaServiceImpl;
 public class EmpresaDAO implements EmpresaRepository{
     private Dbconnection dBConnection;
     private Connection connection;
-  
+    
+     /**
+     * Constructor 
+     * @param dBConnection 
+     */
     public EmpresaDAO(Dbconnection dBConnection) {
         this.dBConnection = dBConnection;
     }
+    
+    /**
+     * Constructor sense paràmetres 
+     */
     public EmpresaDAO() {
         try {
             dBConnection = (Dbconnection) new InitialContext().lookup("java:global/2work/Dbconnection");
@@ -37,13 +41,30 @@ public class EmpresaDAO implements EmpresaRepository{
             Logger.getLogger(EmpresaServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    /**
+     * Per obtenir la connexió
+     * @return la connexió
+     */
     public Connection getConnection() {
         return connection;
     }
-
+    
+    /**
+     * Establir connexió
+     * @param connection 
+     */
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
+    
+    /**
+     * S'encarrega d'obtenir un objecte PreparedStatement ja sigui reutilitzant una connexió 
+     * existent o creant-ne una nova
+     * @param query
+     * @return connexió
+     * @throws SQLException 
+     */
      private PreparedStatement getPreparedStatement(String query) throws SQLException {
         if (getConnection() == null) {
             try {
@@ -54,6 +75,12 @@ public class EmpresaDAO implements EmpresaRepository{
         }
         return getConnection().prepareStatement(query);
     }
+     
+     /**
+      * 
+      * @param preparedStatement
+      * @return result
+      */
     private int executeUpdateQuery(PreparedStatement preparedStatement) {
         
         int result = 0;
@@ -71,6 +98,14 @@ public class EmpresaDAO implements EmpresaRepository{
         }
         return result;
     }
+    
+    /**
+     * S'encarrega de construir un objecte empresa a partir del resultat 
+     * d'executar la consulta SQL
+     * @param rs
+     * @return empresa
+     * @throws SQLException 
+     */
      private Empresa buildEmpresaFromResultSet(ResultSet rs) throws SQLException {
                  
         Integer codi = rs.getInt("codi");
@@ -93,6 +128,12 @@ public class EmpresaDAO implements EmpresaRepository{
         Empresa empresa = new Empresa(codi,nom,responsable,dniNif,adreca,poblacio,provincia,telefon,web,tamany,email,observacions,pass,cPass,sector);
         return empresa;
     }
+     
+     /**
+      * Afegir empresa a empreses
+      * @param preparedStatement
+      * @return totes les empreses que resultin d'executar la consulta
+      */
     private List<Empresa> executeQuery(PreparedStatement preparedStatement) {
             
        List<Empresa> empreses=new ArrayList<>();
@@ -108,6 +149,14 @@ public class EmpresaDAO implements EmpresaRepository{
        }
         return empreses;
     }
+    
+    /**
+     * Examina la llista retornada per executeQuery
+     * @param preparedStatement
+     * @return un objecte null si no hi ha cap resultat per a la consulta i 
+     * un objecte Empresa,si hi és, troba un resultat
+     * @throws Exception 
+     */
     private Empresa findUniqueResult(PreparedStatement preparedStatement) throws Exception {
              
         List<Empresa> empreses=executeQuery(preparedStatement);
@@ -119,6 +168,12 @@ public class EmpresaDAO implements EmpresaRepository{
         }
         return empreses.get(0);
     }
+    
+    /**
+     * Obtenir empresa a partir del codi
+     * @param codi
+     * @return empresa o null
+     */
     @Override
     public Empresa getEmpresaByCodi(Integer codi) {
               
@@ -133,7 +188,13 @@ public class EmpresaDAO implements EmpresaRepository{
         }
         return null;
     }
-    /*Empresa per nif*/
+    
+    /**
+     * Obtenir empresa per nif
+     * @param dniNif
+     * @return un objecte null si no hi ha cap resultat per a la consulta o
+     * un objecte Empresa 
+     */
     @Override
     public Empresa getEmpresaBydniNif(String dniNif){
         String qry = "select * from empreses where dniNif = ?";
@@ -147,12 +208,25 @@ public class EmpresaDAO implements EmpresaRepository{
         }
         return null;
     }
+    
+    /**
+     * Crear o actulitzar empresa a partir del codi
+     * @param codi
+     * @param preparedStatement
+     * @return l'empresa a partir del codi
+     * @throws Exception 
+     */
     private Empresa createOrUpdateEmpresa(Integer codi, PreparedStatement preparedStatement) throws Exception {
            
         int result=executeUpdateQuery(preparedStatement);
         
         return getEmpresaByCodi(codi);
     }
+    
+    /**
+     * Afegir empresa 
+     * @param empresa 
+     */
     @Override
     public void addEmpresa(Empresa empresa) {
         
@@ -183,7 +257,10 @@ public class EmpresaDAO implements EmpresaRepository{
         }   
     }
     
-    /*Actualitzar les dades de l'empresa */
+    /**
+     * Actualitzar les dades de l'empresa
+     * @param empresa 
+     */
     @Override
     public void updateEmpresa(Empresa empresa) {
                
@@ -198,7 +275,11 @@ public class EmpresaDAO implements EmpresaRepository{
             Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    /*Totes les empreses*/
+    
+    /**
+     * Obtenir totes les empreses
+     * @return totes les empreses o null
+     */
     @Override
     public List<Empresa> getAllEmpreses() {
         
@@ -212,5 +293,36 @@ public class EmpresaDAO implements EmpresaRepository{
             Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+   
+    /**
+     * Obtenir Empresa a partir de l'email
+     * @param email
+     * @return empresa o null
+     */
+    
+    @Override
+    public Empresa getEmpresaByEmail(String email){
+        String qry = "select * from empreses where email = ?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = getPreparedStatement(qry);
+            preparedStatement.setString(1, email);
+            return findUniqueResult(preparedStatement);
+        } catch (Exception ex) {
+            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    /**
+     * Obtenir el codi a partir de l'email
+     * @param email
+     * @return el codi de l'empresa
+     */
+    @Override
+    public Integer getCodiByEmail(String email){
+        Empresa empCodi=getEmpresaByEmail(email);
+        return empCodi.getCodi();
     }
 }
