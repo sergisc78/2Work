@@ -35,52 +35,115 @@ public class CandidatDAO implements CandidatRepository {
     public CandidatDAO() {
 
         try {
-            dBConnection = (Dbconnection) new InitialContext().lookup("java:global/2work/Dbconnection");   
+            dBConnection = (Dbconnection) new InitialContext().lookup("java:global/2work/Dbconnection");   // DADES NO OK??
             dBConnection.setConnectionFile("db.properties");
         } catch (NamingException ex) {
             Logger.getLogger(CandidatServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-    public Connection getConnection() {
-        return connection;
-    }
 
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
+    // Retorna el candidat quan es passa el DNI per paràmetre
+    public Candidat getCandidatByDniNif(String dniNif) {
 
-    
-    private PreparedStatement getPreparedStatement(String query) throws SQLException {
+        String query = "select * from candidats where dniNif =? ";
 
-        if (getConnection() == null) {
-            try {
-                setConnection(dBConnection.getConnection());
-            } catch (SQLException | IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return getConnection().prepareStatement(query);
-    }
-    private int executeUpdateQuery(PreparedStatement preparedStatement) {
-
-       int result = 0;
-        if (getConnection() == null) {
-            try {
-                setConnection(dBConnection.getConnection());
-            } catch (SQLException | IOException e) {
-                e.printStackTrace();
-            }
-        }
         try {
-            result = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            PreparedStatement preparedStatement = getPreparedStatement(query);
+            preparedStatement.setString(1, dniNif);
+            return findUniqueResult(preparedStatement);
+        } catch (Exception ex) {
+            Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return result;
+        return null;
+
     }
-     private Candidat buildUsuariFromResultSet(ResultSet rs) throws SQLException {
+
+    // Consultar dades perfil
+    @Override
+    public List<Candidat> selectCandidat() {
+
+        String query = "Select * from candidats";
+        try {
+            PreparedStatement preparedStatement = getPreparedStatement(query);
+            List<Candidat> candidat = executeQuery(preparedStatement);
+            return candidat;
+        } catch (SQLException ex) {
+            Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
+    }
+
+    // Donar-se d´alta a l´aplicació
+    @Override
+    public void addCandidat(Candidat candidat) {
+
+        String query = "INSERT INTO candidats (nom, cognoms, dniNif,dataNaix,adreca,poblacio,provincia, telefon, email,observacions, pass, cPass,formacio,ocupacio) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = getPreparedStatement(query);
+
+            preparedStatement.setString(1, candidat.getNom());
+            preparedStatement.setString(2, candidat.getCognoms());
+            preparedStatement.setString(3, candidat.getDniNif());
+            preparedStatement.setDate(4, (Date) candidat.getDataNaix());
+            preparedStatement.setString(5, candidat.getAdreca());
+            preparedStatement.setString(6, candidat.getPoblacio());
+            preparedStatement.setString(7, candidat.getProvincia());
+            preparedStatement.setString(8, candidat.getTelefon());
+            preparedStatement.setString(9, candidat.getEmail());
+            preparedStatement.setString(10, candidat.getObservacions());
+            preparedStatement.setString(11, candidat.getPass());
+            preparedStatement.setString(12, candidat.getcPass());
+            preparedStatement.setInt(13, candidat.getFormacio());
+            preparedStatement.setInt(14, candidat.getOcupacio());
+            createOrUpdateCandidat(candidat.getDniNif(), preparedStatement);
+
+        } catch (Exception ex) {
+            Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    // Actualitzar perfil
+    @Override
+    public void updateCandidat(Candidat candidat) {
+
+        String query = "UPDATE candidats SET email=?";
+       /* try {
+            PreparedStatement preparedStatement = getPreparedStatement(query);
+            preparedStatement.setString(1, newMail);
+            createOrUpdateCandidat(candidat.getEmail(), preparedStatement);
+            this.addCandidat(candidat);
+        } catch (Exception ex) {
+            Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+
+    }
+
+    // Esborrar perfil a través de l´email
+    @Override
+    public void deletePerfil(Candidat candidat) {
+
+        String query = "DELETE  from candidats where email=?";
+
+        try {
+            PreparedStatement preparedStatement = getPreparedStatement(query);
+            preparedStatement.setString(1, candidat.getEmail());
+            createOrUpdateCandidat(candidat.getEmail(), preparedStatement);
+            this.addCandidat(candidat);
+        } catch (Exception ex) {
+            Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    // Relaciona candidat amb ofertes
+    public void selectOferta() {
+
+    }
+
+    private Candidat buildCandidatFromResultSet(ResultSet rs) throws SQLException {
 
         Integer codi = rs.getInt("codi");
         String nom = rs.getString("nom");
@@ -98,29 +161,18 @@ public class CandidatDAO implements CandidatRepository {
         Integer formacio = rs.getInt("formacio");
         Integer ocupacio = rs.getInt("ocupacio");
 
-        Candidat candidat = new Candidat(codi,nom, cognoms, dniNif, dataNaix, adreca, poblacio, provincia, telefon, email, observacions, pass, cPass, formacio, ocupacio);
+        Candidat candidat = new Candidat(codi, nom, cognoms, dniNif, dataNaix, adreca, poblacio, provincia, telefon, email, observacions, pass, cPass, formacio, ocupacio);
 
         return candidat;
     }
-     private List<Candidat> executeQuery(PreparedStatement preparedStatement) {
 
-        List<Candidat> usuaris = new ArrayList<>();
+    private Candidat createOrUpdateCandidat(String dniNif, PreparedStatement preparedStatement) throws Exception {
 
-        try {
+        executeUpdateQuery(preparedStatement);
+        return getCandidatByDniNif(dniNif);
 
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                Candidat candidat = buildUsuariFromResultSet(rs);
-                if (candidat != null) {
-                    usuaris.add(candidat);
-                }
-            }
-
-        } catch (SQLException e) {
-        }
-
-        return usuaris;
     }
+
     private Candidat findUniqueResult(PreparedStatement preparedStatement) throws Exception {
 
         List<Candidat> candidats = executeQuery(preparedStatement);
@@ -134,134 +186,55 @@ public class CandidatDAO implements CandidatRepository {
         return candidats.get(0);
     }
 
-    public Candidat getCandidatByCodi(Integer codi) {
+    private List<Candidat> executeQuery(PreparedStatement preparedStatement) {
 
-        String query = "select * from candidats where codi =? ";
-
-        try {
-            PreparedStatement preparedStatement = getPreparedStatement(query);
-            preparedStatement.setInt(1, codi);
-            return findUniqueResult(preparedStatement);
-        } catch (Exception ex) {
-            Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-
-    }
-    
-     // Retorna el candidat quan es passa el DNI per paràmetre
-    public Candidat getCandidatByDniNif(String dniNif) {
-
-        String query = "select * from candidats where dniNif =? ";
+        List<Candidat> candidats = new ArrayList<>();
 
         try {
-            PreparedStatement preparedStatement = getPreparedStatement(query);
-            preparedStatement.setString(1, dniNif);
-            return findUniqueResult(preparedStatement);
-        } catch (Exception ex) {
-            Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
 
-    }
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Candidat candidat = buildCandidatFromResultSet(rs);
+                candidats.add(candidat);
+            }
 
-     private Candidat createOrUpdateCandidat(Integer codi, PreparedStatement preparedStatement) throws Exception {
-
-        executeUpdateQuery(preparedStatement);
-        return getCandidatByCodi(codi);
-
-    }
-    // Donar-se d´alta a l´aplicació
-    @Override
-    public void addCandidat(Candidat candidat) {
-
-        String query = "INSERT INTO candidats (nom, cognoms, dniNif,dataNaix,adreca,poblacio,provincia, telefon, email,observacions, pass, cPass,formacio,ocupacio) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try {
-            PreparedStatement preparedStatement = getPreparedStatement(query);
-            
-            preparedStatement.setString(1, candidat.getNom());
-            preparedStatement.setString(2, candidat.getCognoms());
-            preparedStatement.setString(3, candidat.getDniNif());
-            preparedStatement.setDate(4, (Date) candidat.getDataNaix());
-            preparedStatement.setString(5, candidat.getAdreca());
-            preparedStatement.setString(6, candidat.getPoblacio());
-            preparedStatement.setString(7, candidat.getProvincia());
-            preparedStatement.setString(8, candidat.getTelefon());
-            preparedStatement.setString(9, candidat.getEmail());
-            preparedStatement.setString(10, candidat.getObservacions());
-            preparedStatement.setString(11, candidat.getPass());
-            preparedStatement.setString(12, candidat.getcPass());
-            preparedStatement.setInt(13, candidat.getFormacio());
-            preparedStatement.setInt(14, candidat.getOcupacio());
-            createOrUpdateCandidat(candidat.getCodi(), preparedStatement);
-
-        } catch (Exception ex) {
-            Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-    }
- // Actualitzar perfil
-    @Override
-    public void updateCandidat(Candidat candidat) {
-        String qry = "DELETE FROM candidats WHERE dniNif = ?";
-        PreparedStatement preparedStatement;
-        try {
-            preparedStatement = getPreparedStatement(qry);
-            preparedStatement.setString(1, candidat.getDniNif());
-            createOrUpdateCandidat(candidat.getCodi(), preparedStatement);
-            this.addCandidat(candidat);
-        } catch (Exception ex) {
-            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        return candidats;
     }
 
-    // Consultar dades perfil
-    @Override
-    public List<Candidat> selectCandidat() {
+    private int executeUpdateQuery(PreparedStatement preparedStatement) {
 
-        String query = "Select * from candidat";
         try {
-            PreparedStatement preparedStatement = getPreparedStatement(query);
-            List<Candidat> candidat = executeQuery(preparedStatement);
-            return candidat;
+            return preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
 
+        return 0;
     }
-   
-    // Esborrar perfil a través de l´email
-    @Override
-    public void deletePerfil(Candidat candidat) {
 
-        String query = "DELETE  from candidat where email=?";
+    private PreparedStatement getPreparedStatement(String query) throws SQLException {
 
-        try {
-            PreparedStatement preparedStatement = getPreparedStatement(query);
-            preparedStatement.setString(1, candidat.getEmail());
-            createOrUpdateCandidat(candidat.getCodi(), preparedStatement);
-            this.addCandidat(candidat);
-        } catch (Exception ex) {
-            Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
+        if (getConnection() == null) {
+            try {
+                setConnection(dBConnection.getConnection());
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
+            }
         }
+
+        return getConnection().prepareStatement(query);
     }
 
-    // Relaciona candidat amb ofertes
-    public void selectOferta() {
-
+    public Connection getConnection() {
+        return connection;
     }
 
-   
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
-   
-    
-   
-
-    
-
-
-    
 }
