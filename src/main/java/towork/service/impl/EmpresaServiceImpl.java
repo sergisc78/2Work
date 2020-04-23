@@ -55,5 +55,8 @@ public class EmpresaServiceImpl implements EmpresaService{
     public void deleteEmpresa(String email){
         empresaRepository.deleteEmpresa(email);
     }
-    
+    @Override
+    public void esborrarEmpresa(Integer codi){
+        empresaRepository.esborrarEmpresa(codi);    
+    }
 }
