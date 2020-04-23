@@ -3,6 +3,7 @@ package towork.domain;
 
 
 import java.io.Serializable;
+import static java.time.temporal.WeekFields.ISO;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.CascadeType;
@@ -12,12 +13,18 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class Candidat extends Usuari{
     
     protected String cognoms;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     protected Date dataNaix;
     protected Integer formacio;
     protected Integer ocupacio;
