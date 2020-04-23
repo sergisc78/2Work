@@ -46,7 +46,7 @@
                       <c:forEach items="${opcions}" var="map">
 
                                     <li class="nav-item">
-                                          <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
+                                          <a class="nav-link" href="<spring:url value='${map.url}${map.usuari}'/>">${map.paraula}</a>
                                     </li>
                         
                      </c:forEach>

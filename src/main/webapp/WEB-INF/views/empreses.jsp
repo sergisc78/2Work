@@ -57,6 +57,19 @@
       <sec:authorize access="isAuthenticated()">
             <%@include  file='/resources/html/barra-usuari.html' %>
       </sec:authorize>
+            
+      <c:if test="${not empty missatgeFeedback}">
+      <section id="feedback" role="alert" class="${classeFeedback} alert  alert-dismissible fade show">
+            <div class="container">
+                  <div>
+                        ${missatgeFeedback}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                        </button>
+                  </div>
+            </div>
+      </section>                  
+      </c:if>                        
 
       <section class="barra-ubicacio">
             <div class="container">
@@ -74,7 +87,7 @@
                   <c:forEach items="${empreses}" var="empresa" varStatus="loop">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                               
-                              <a href="<spring:url value= '/empresa/${empresa.codi}/esborrar' />" class="icona_accio">
+                              <a href="<spring:url value= '/empresa/${empresa.codi}/esborrar' />" class="icona_accio" onclick="return confirm('Segur que vols eliminar l\'empresa?');" >
                                     <svg><use xlink:href="#esborrar" /></svg>
                               </a>
                                     

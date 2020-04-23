@@ -85,8 +85,23 @@ a {
       background: $color-gris-text;
 }
 
-.badge-danger {
-      background: $color-basic-taronja;
+.badge-danger, .alert-danger {
+      background-color: $color-basic-taronja;
+}
+
+.alert-danger {
+      background-color: $color-basic-taronja-rebaixat;
+      border-color: lighten($color-basic-taronja, 20%);
+      color: $color-basic-taronja;
+      
+      h4{
+            font-weight: 600;
+      }
+      
+      hr {
+            border-color: $color-basic-taronja;
+            background-color: $color-basic-taronja;
+      }
 }
 
 .wobble {

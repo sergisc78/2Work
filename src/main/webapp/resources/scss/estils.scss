@@ -15,7 +15,7 @@
 @import 'parcials/footer';
 @import 'parcials/home';
 
-section#alta-candidat, section#alta-empresa {
+section#alta-candidat, section#alta-empresa, section#alta-oferta {
       a:not([href]) {
             cursor: pointer;
       }

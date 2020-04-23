@@ -6,7 +6,7 @@
 .formulari-alta, .formulari-login {
       padding-top: 3rem;
       
-      @media only screen and (min-width: 720px) {
+      @media only screen and (min-width: $breakpoint-petit) {
             max-width: 50%;
       }
       
@@ -62,4 +62,12 @@
             
       }
       
+}
+
+#esborrar-empresa {
+      margin-top: 4em;
+      
+      @media only screen and (min-width: $breakpoint-petit) {
+            max-width: 50%;
+      }
 }

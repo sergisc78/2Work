@@ -66,7 +66,7 @@
                                     
                                     <c:when test="${map.paraula != 'Logout'}">
                                           <li class="nav-item">
-                                                <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
+                                                <a class="nav-link" href="<spring:url value='${map.url}${map.usuari}'/>">${map.paraula}</a>
                                           </li>
                                     </c:when>
                                     

@@ -50,10 +50,12 @@ public class HomeController {
       HashMap<String, String> op_ofertesCandidat = new HashMap<>();
       HashMap<String, String> op_candidatures = new HashMap<>();
       HashMap<String, String> op_perfil = new HashMap<>();
+      HashMap<String, String> op_perfilEmpresa = new HashMap<>();
       HashMap<String, String> op_ofertesEmpresa = new HashMap<>();
       HashMap<String, String> op_candidats = new HashMap<>();
       HashMap<String, String> op_empreses = new HashMap<>();
       HashMap<String, String> op_ofertesAdmin = new HashMap<>();
+      HashMap<String, String> op_altaOferta = new HashMap<>();
       
       
       /**
@@ -86,10 +88,14 @@ public class HomeController {
             op_logout.put("url","/j_spring_security_logout");
             op_perfil.put("paraula","Perfil");
             op_perfil.put("url","/perfil");
+            op_perfilEmpresa.put("url","/perfilEmpresa");
+            op_perfilEmpresa.put("paraula","Perfil");
             op_ofertesEmpresa.put("paraula","Ofertes");
             op_ofertesEmpresa.put("url","/ofertesEmpresa"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
             op_ofertesAdmin.put("paraula","Ofertes");
             op_ofertesAdmin.put("url","ofertesAdmin");
+            op_altaOferta.put("paraula","Crear oferta");
+            op_altaOferta.put("url","/altaOferta");
 
       }
       
@@ -101,7 +107,8 @@ public class HomeController {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String role = auth.getAuthorities().iterator().next().toString(); // El primer element dela collection auth.getAuthoritie. Assumim que només conté un element.
             System.out.println(role);
-        
+            String nom = auth.getName();
+            
             // Creem el modelview
             ModelAndView modelview = new ModelAndView("home");
             
@@ -125,8 +132,15 @@ public class HomeController {
                         break;
                   case "ROLE_EMPRESA":
                         // Hi ha un usuari empresa empresa loguejat
+                        try {
+                              Integer codiEmpresa = empresaService.getCodiByEmail(nom);
+                              op_altaOferta.put("usuari","/"+codiEmpresa);
+                              op_ofertesEmpresa.put("usuari","/"+codiEmpresa);
+                              op_perfilEmpresa.put("usuari","/"+codiEmpresa);
+                        } catch (Exception e){}
+                        opcions.add(op_altaOferta);
                         opcions.add(op_ofertesEmpresa);
-                        opcions.add(op_perfil);
+                        opcions.add(op_perfilEmpresa);
                         opcions.add(op_logout);
                         break;
                   case "ROLE_ADMIN":

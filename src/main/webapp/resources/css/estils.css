@@ -76,8 +76,18 @@ a {
 .badge-secondary {
   background: #666; }
 
-.badge-danger {
-  background: #e1642d; }
+.badge-danger, .alert-danger {
+  background-color: #e1642d; }
+
+.alert-danger {
+  background-color: #fbe8e0;
+  border-color: #eea686;
+  color: #e1642d; }
+  .alert-danger h4 {
+    font-weight: 600; }
+  .alert-danger hr {
+    border-color: #e1642d;
+    background-color: #e1642d; }
 
 .wobble:hover svg, .wobble:focus svg, .wobble:active svg {
   -webkit-animation-name: hvr-wobble-horizontal;
@@ -186,7 +196,7 @@ body > nav:first-of-type {
 */
 .formulari-alta, .formulari-login {
   padding-top: 3rem; }
-  @media only screen and (min-width: 720px) {
+  @media only screen and (min-width: 768px) {
     .formulari-alta, .formulari-login {
       max-width: 50%; } }
   .formulari-alta form, .formulari-login form {
@@ -215,6 +225,12 @@ body > nav:first-of-type {
 #alta-candidat #experiencia .item_experiencia:not(:first-of-type) {
   margin-top: 2em;
   display: none; }
+
+#esborrar-empresa {
+  margin-top: 4em; }
+  @media only screen and (min-width: 768px) {
+    #esborrar-empresa {
+      max-width: 50%; } }
 
 /* 
     Created on : 01/04/2020, 07:27:41
@@ -293,7 +309,7 @@ section#motius .col-lg-6:hover img {
 section#motius h5 {
   font-weight: 600; }
 
-section#alta-candidat a:not([href]), section#alta-empresa a:not([href]) {
+section#alta-candidat a:not([href]), section#alta-empresa a:not([href]), section#alta-oferta a:not([href]) {
   cursor: pointer; }
 
 #modalPrivacitat .modal-content {
