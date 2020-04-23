@@ -40,34 +40,7 @@
                   <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarHomeToggler">
-                  <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    
-                        <c:forEach items="${opcions}" var="map">
-                      
-                        <c:choose>
-                                    
-                                    <c:when test="${map.paraula != 'Logout'}">
-                                    <li class="nav-item">
-                                          <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
-                                    </li>
-                                    </c:when>
-                                    
-                                    <c:otherwise>
-                                          <!-- Opció Logout -->
-                                          <sec:authorize access="hasRole('ROLE_USER')">
-                                          <li role="Presentation" class="nav-item">
-                                                <a class="nav-link" href="<c:url value='${map.url}' />">${map.paraula}</a>
-                                          </li>
-                                          </sec:authorize>
-                                    </c:otherwise>
-                                          
-                              </c:choose>
-
-                        </c:forEach>
-
-                </ul>
-            </div>
+            <%@include  file='/resources/html/opcions_nav.html' %>
 
         </nav>
             

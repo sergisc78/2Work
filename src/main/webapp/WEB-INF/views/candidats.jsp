@@ -43,19 +43,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarHomeToggler">
-                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    
-                      <c:forEach items="${opcions}" var="map">
-                      
-                        <li class="nav-item">
-                              <a class="nav-link" href="<spring:url value='${map.url}'/>">${map.paraula}</a>
-                        </li>
-                              
-                     </c:forEach>
-
-                </ul>
-            </div>
+            <%@include  file='/resources/html/opcions_nav.html' %>
 
       </nav>
 

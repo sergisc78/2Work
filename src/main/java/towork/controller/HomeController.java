@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import towork.domain.Candidat;
 import towork.domain.Empresa;
-import towork.domain.Experiencia;
 import towork.formularis.LlistaFormacions;
 import towork.formularis.LlistaOcupacions;
 import towork.service.EmpresaService;
@@ -47,7 +46,6 @@ public class HomeController {
       // Opcions reutilitzables per la barra de navegació
       HashMap<String, String> op_entrar_candidat = new HashMap<>();
       HashMap<String, String> op_entrar_empresa = new HashMap<>();
-      HashMap<String, String> op_entrar_admin = new HashMap<>();
       HashMap<String, String> op_inici = new HashMap<>();
       HashMap<String, String> op_logout = new HashMap<>();
       HashMap<String, String> op_ofertesCandidat = new HashMap<>();
@@ -75,8 +73,6 @@ public class HomeController {
             op_entrar_candidat.put("url","/espaiCandidat");
             op_entrar_empresa.put("paraula","Empresa");
             op_entrar_empresa.put("url","/espaiEmpresa");
-            op_entrar_admin.put("paraula","Administrador");
-            op_entrar_admin.put("url","/espaiAdmin");
             op_inici.put("paraula","Inici");
             op_inici.put("url","/");
             op_ofertesCandidat.put("paraula","Ofertes");
@@ -124,7 +120,6 @@ public class HomeController {
                         // No hi ha cap usuari loguejat
                         opcions.add(op_entrar_candidat);
                         opcions.add(op_entrar_empresa);
-                        opcions.add(op_entrar_admin);
                         break;
                   case "ROLE_USER":
                         // HI ha un usuari candidat loguejat
@@ -254,7 +249,7 @@ public class HomeController {
                   classeFeedback = "alert-danger";
             }
             
-            HashMap[] opcions = new HashMap[]{op_entrar_candidat, op_entrar_empresa, op_entrar_admin};
+            HashMap[] opcions = new HashMap[]{op_entrar_candidat, op_entrar_empresa};
             modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
             modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
             modelview.getModelMap().addAttribute("opcions", opcions);

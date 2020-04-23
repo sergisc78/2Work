@@ -42,7 +42,6 @@ public class EspaiController {
       // Opcions reutilitzables per la barra de navegació
       HashMap<String, String> op_entrar_candidat = new HashMap<>();
       HashMap<String, String> op_entrar_empresa = new HashMap<>();
-      HashMap<String, String> op_entrar_admin = new HashMap<>();
       HashMap<String, String> op_logout = new HashMap<>();
       HashMap<String, String> op_inici = new HashMap<>();
       HashMap<String, String> op_candidats = new HashMap<>();
@@ -98,8 +97,6 @@ public class EspaiController {
             op_entrar_candidat.put("url","/espaiCandidat");
             op_entrar_empresa.put("paraula","Empresa");
             op_entrar_empresa.put("url","/espaiEmpresa");
-            op_entrar_admin.put("paraula","Administrador");
-            op_entrar_admin.put("url","/espaiAdmin");
             op_logout.put("paraula","Logout");  
             op_logout.put("url","/j_spring_security_logout");
             op_inici.put("paraula","Inici");  
@@ -320,9 +317,9 @@ public class EspaiController {
        * @throws ServletException Indica que hi ha alguna errada general al servlet
        * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
-      @RequestMapping(value = "/espaiAdmin", method = RequestMethod.GET)
+      @RequestMapping(value = "/admin", method = RequestMethod.GET)
       public ModelAndView EspaiAdministradorRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            ModelAndView modelview = new ModelAndView("espaiAdmin");
+            ModelAndView modelview = new ModelAndView("admin");
                    
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{op_inici, op_candidats, op_empreses, op_ofertesAdmin, op_logout};  
@@ -893,7 +890,7 @@ public class EspaiController {
       public ModelAndView logout(HttpServletRequest request) {
            
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{op_entrar_candidat,op_entrar_empresa,op_entrar_admin};  
+            HashMap[] opcions = new HashMap[]{op_entrar_candidat,op_entrar_empresa};  
           
             ModelAndView modelview = new ModelAndView("home");
             modelview.getModelMap().addAttribute("opcions", opcions);
@@ -1259,7 +1256,6 @@ public class EspaiController {
                               opcions.clear();
                               opcions.add(op_entrar_candidat);
                               opcions.add(op_entrar_empresa);
-                              opcions.add(op_entrar_admin);
                               missatgeFeedback += "Empresa eliminada correctament.";
                               classeFeedback = "alert-warning";
                               break;

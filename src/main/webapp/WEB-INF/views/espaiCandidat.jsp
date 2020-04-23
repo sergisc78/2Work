@@ -103,7 +103,8 @@
                                    </h6>
                             </div>
                             <div class="card-body">
-                                  <p class="card-text">Breu descripció de l'oferta</p>
+                                  <c:if test="${loop.index % 2 == 0}"><p class="card-text">Breu descripció de l'oferta</p></c:if>
+                                  <c:if test="${loop.index % 2 != 0}"><p class="card-text">Una descripció d'oferta bastant més llarga, per provar les cards amb alçades variables, i com es comporta tot plegat.</p></c:if>
                                   <a class="btn btn-primary wobble" href="<spring:url value='/oferta/${loop.index}' />" >
                                           Veure
                                           <svg class="text-light" width="15" height="20" viewBox="3 0 15 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
