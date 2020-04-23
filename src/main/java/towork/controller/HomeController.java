@@ -264,20 +264,15 @@ public class HomeController {
       
      
     @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public ModelAndView infoRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    public ModelAndView infoRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ModelAndView modelview = new ModelAndView("info");
         return modelview;
     }
     
-     /*
-     FORM DE EMPRESA POST
-     */
-     
-    @RequestMapping(value = "/updateEmp", method = RequestMethod.POST)
-    public String updateEmp(@ModelAttribute("formEmpresa") Empresa formEmpresa, BindingResult result) {
-        empresaService.updateEmpresa(formEmpresa);
-        return "redirect:/";
+    @RequestMapping(value = "/notFound", method = RequestMethod.GET)
+    public ModelAndView notFoundRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ModelAndView modelview = new ModelAndView("notFound");
+        return modelview;
     }
     
 

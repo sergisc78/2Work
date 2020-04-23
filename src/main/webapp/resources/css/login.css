@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* 
     Created on : 14/04/2020, 07:42:06
     Author     : Daniel Sevilla i Junyent
@@ -6,6 +7,11 @@
     Created on : 01/04/2020, 07:27:41
     Author     : Daniel Sevilla i Junyent
 */
+/* 
+    Created on : 20/04/2020, 07:08:58
+    Author     : Daniel Sevilla i Junyent
+*/
+/* Amplades mínimes*/
 html, body {
   height: 100%; }
 
@@ -80,5 +86,16 @@ a, button {
     color: #fff;
     background: #e1642d;
     border-color: #e7855a; }
+
+#notFound img {
+  clip-path: circle(50% at 50% 50%);
+  width: 50%; }
+  @media only screen and (max-width: 576px) {
+    #notFound img {
+      width: 70%; } }
+#notFound h3 {
+  margin-bottom: 0; }
+#notFound p:first-of-type {
+  color: #2daae1; }
 
 /*# sourceMappingURL=login.css.map */

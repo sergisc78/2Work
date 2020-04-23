@@ -48,7 +48,9 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
+    <error-page>
+    <location>/notFound</location>
+</error-page>
     
     
 </web-app>

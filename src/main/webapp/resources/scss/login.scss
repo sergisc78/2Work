@@ -4,6 +4,7 @@
 */
 
 @import 'parcials/colors';
+@import 'parcials/breakpoints';
 
 html, body {
   height: 100%;
@@ -102,5 +103,26 @@ a, button {
             color: $blanc;
             background: $color-basic-taronja;
             border-color: lighten( $color-basic-taronja, 10% );
+      }
+}
+
+
+#notFound {
+       img {
+            clip-path: circle(50% at 50% 50%);
+            width: 50%;
+      
+            @media only screen and (max-width: $breakpoint-mini) {
+            width: 70%;
+            }
+            
+      }
+      
+      h3 {
+            margin-bottom: 0;
+      }
+      
+      p:first-of-type {
+            color: $color-basic-blau-clar;
       }
 }
