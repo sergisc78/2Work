@@ -29,8 +29,8 @@ public class CandidatServiceImpl implements CandidatService {
     }
     
     @Override
-    public void updatePerfil(Candidat candidat,String newMail){
-        candidatRepository.updatePerfil(candidat, newMail);
+    public void updateCandidat(Candidat candidat){
+        candidatRepository.updateCandidat(candidat);
     }
     
     @Override
