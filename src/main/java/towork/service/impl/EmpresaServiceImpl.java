@@ -51,4 +51,9 @@ public class EmpresaServiceImpl implements EmpresaService{
         return empresaRepository.getCodiByEmail(email);
     }
     
+    @Override
+    public void deleteEmpresa(String email){
+        empresaRepository.deleteEmpresa(email);
+    }
+    
 }

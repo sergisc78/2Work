@@ -23,4 +23,6 @@ public interface EmpresaRepository {
         Empresa getEmpresaByEmail(String email);
         
         Integer getCodiByEmail(String email);
+        
+        void deleteEmpresa(String email);
 }

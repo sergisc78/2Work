@@ -325,4 +325,16 @@ public class EmpresaDAO implements EmpresaRepository{
         Empresa empCodi=getEmpresaByEmail(email);
         return empCodi.getCodi();
     }
+    
+    @Override
+    public void deleteEmpresa(String email){
+        String qry = "DELETE FROM empreses WHERE email = ?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = getPreparedStatement(qry);
+            preparedStatement.setString(1, email);            
+        } catch (Exception ex) {
+            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
