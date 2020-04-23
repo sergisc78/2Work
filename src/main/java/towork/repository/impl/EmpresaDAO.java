@@ -335,10 +335,13 @@ public class EmpresaDAO implements EmpresaRepository{
         PreparedStatement preparedStatement;
         try {
             preparedStatement = getPreparedStatement(qry);
-            preparedStatement.setString(1, email);            
+            preparedStatement.setString(1, email);
+            Empresa e=getEmpresaByEmail(email);
+            createOrUpdateEmpresa(e.getCodi(),preparedStatement);
         } catch (Exception ex) {
             Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
     /**
      * Mètode per esborrar una empresa a partir del codi
@@ -350,9 +353,11 @@ public class EmpresaDAO implements EmpresaRepository{
         PreparedStatement preparedStatement;
         try {
             preparedStatement = getPreparedStatement(qry);
-            preparedStatement.setInt(1, codi);            
+            preparedStatement.setInt(1, codi); 
+            createOrUpdateEmpresa(codi, preparedStatement);
         } catch (Exception ex) {
             Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }    
+        }
+       
     }
 }
