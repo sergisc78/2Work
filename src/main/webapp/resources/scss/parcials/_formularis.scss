@@ -16,7 +16,7 @@
       
 }
 
-#alta-candidat {
+#alta-candidat, #perfil-candidat {
       
       hr {
             width: 100%;
@@ -44,6 +44,7 @@
             .item_experiencia {
                   
                   a.esborrar_item {
+                        cursor: pointer;
                         margin-left: 15px;
                         &:hover {
                               color: $color-basic-blau-clar;
@@ -70,4 +71,11 @@
       @media only screen and (min-width: $breakpoint-petit) {
             max-width: 50%;
       }
+}
+
+#avis_zero_items_exp {
+      border-radius: 5px;
+      margin-top: 1em;
+      padding: 0.5em 0.8em;
+      display:none; // Si cal em mostrarem amb jQuery
 }

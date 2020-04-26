@@ -12,10 +12,10 @@ html {
 
 body {
       font-family: 'Montserrat', sans-serif;
-      padding-bottom: 10em;
+      padding-bottom: 24em;
       color: $color-gris-text;
       
-      background: url('../img/background_2work.png');
+      background: url('../svg/base.svg');
       background-position: bottom center;
       background-repeat: no-repeat;
       -webkit-background-size: auto;
@@ -87,6 +87,11 @@ a {
 
 .badge-danger, .alert-danger {
       background-color: $color-basic-taronja;
+}
+
+.alert-primary {
+      background-color: $color-basic-blau-fosc-rebaixat;
+      color: $color-basic-blau-fosc;
 }
 
 .alert-danger {

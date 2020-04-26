@@ -22,9 +22,9 @@ html {
 
 body {
   font-family: 'Montserrat', sans-serif;
-  padding-bottom: 10em;
+  padding-bottom: 24em;
   color: #666;
-  background: url("../img/background_2work.png");
+  background: url("../svg/base.svg");
   background-position: bottom center;
   background-repeat: no-repeat;
   -webkit-background-size: auto;
@@ -78,6 +78,10 @@ a {
 
 .badge-danger, .alert-danger {
   background-color: #e1642d; }
+
+.alert-primary {
+  background-color: #daebf9;
+  color: #1d70b7; }
 
 .alert-danger {
   background-color: #fbe8e0;
@@ -202,27 +206,28 @@ body > nav:first-of-type {
   .formulari-alta form, .formulari-login form {
     padding-top: 1rem; }
 
-#alta-candidat hr {
+#alta-candidat hr, #perfil-candidat hr {
   width: 100%;
   border: none;
   height: 1px;
   margin: 0 15px 1em;
   background-color: #1d70b7; }
-#alta-candidat #experiencia button.btn-sm {
+#alta-candidat #experiencia button.btn-sm, #perfil-candidat #experiencia button.btn-sm {
   font-size: 0.8em;
   padding: .1rem 0.3rem;
   color: #1d70b7;
   border-color: #1d70b7; }
-  #alta-candidat #experiencia button.btn-sm:hover {
+  #alta-candidat #experiencia button.btn-sm:hover, #perfil-candidat #experiencia button.btn-sm:hover {
     color: #fff;
     background-color: #1d70b7; }
-#alta-candidat #experiencia .item_experiencia a.esborrar_item {
+#alta-candidat #experiencia .item_experiencia a.esborrar_item, #perfil-candidat #experiencia .item_experiencia a.esborrar_item {
+  cursor: pointer;
   margin-left: 15px; }
-  #alta-candidat #experiencia .item_experiencia a.esborrar_item:hover {
+  #alta-candidat #experiencia .item_experiencia a.esborrar_item:hover, #perfil-candidat #experiencia .item_experiencia a.esborrar_item:hover {
     color: #2daae1; }
-#alta-candidat #experiencia .item_experiencia div:not(:last-of-type) {
+#alta-candidat #experiencia .item_experiencia div:not(:last-of-type), #perfil-candidat #experiencia .item_experiencia div:not(:last-of-type) {
   margin-bottom: 0.3em; }
-#alta-candidat #experiencia .item_experiencia:not(:first-of-type) {
+#alta-candidat #experiencia .item_experiencia:not(:first-of-type), #perfil-candidat #experiencia .item_experiencia:not(:first-of-type) {
   margin-top: 2em;
   display: none; }
 
@@ -232,12 +237,17 @@ body > nav:first-of-type {
     #esborrar-empresa {
       max-width: 50%; } }
 
+#avis_zero_items_exp {
+  border-radius: 5px;
+  margin-top: 1em;
+  padding: 0.5em 0.8em;
+  display: none; }
+
 /* 
     Created on : 01/04/2020, 07:27:41
     Author     : Daniel Sevilla i Junyent
 */
 footer {
-  clip-path: polygon(0 8%, 100% 0, 100% 100%, 0% 100%);
   position: absolute;
   bottom: 0;
   width: 100%;
