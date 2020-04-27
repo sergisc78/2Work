@@ -191,8 +191,10 @@
                     
                 <div id="experiencia" class="form-group" >
                         <label for="experiencia">Experiència</label>
-                        <!-- <a class="badge badge-pill badge-primary float-right" id="boto_afegir_camps">Afegir experiència</a> -->
+                        
                         <button type="button" class="btn btn-outline-primary btn-sm float-right" id="boto_afegir_camps">Afegir</button>
+                        
+                        <p id="avis_zero_items_exp" class="alert-primary">No hi ha cap item d'experiència definit</p>
                         
                         <div class="row item_experiencia" id="exp_0">
                               <div class="col-sm-6">
