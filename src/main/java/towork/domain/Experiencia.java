@@ -16,14 +16,14 @@ public class Experiencia {
     private Integer codiExperiencia;
     private Integer anys;
     private String nomEmpresa;
-    private String dniCandidat;
+    private Integer codiCandidat;
     private String descripcio;
 
-    public Experiencia(Integer codiExperiencia,Integer anys, String nomEmpresa, String dniCandidat, String descripcio) {
+    public Experiencia(Integer codiExperiencia,Integer anys, String nomEmpresa, Integer codiCandidat, String descripcio) {
         this.codiExperiencia=this.codiExperiencia;
         this.anys = anys;
         this.nomEmpresa = nomEmpresa;
-        this.dniCandidat = dniCandidat;
+        this.codiCandidat = codiCandidat;
         this.descripcio = descripcio;
     }
 
@@ -42,8 +42,8 @@ public class Experiencia {
         return nomEmpresa;
     }
 
-    public String getDniCandidat() {
-        return dniCandidat;
+    public Integer getCodiCandidat() {
+        return codiCandidat;
     }
 
     public String getDescripcio() {
@@ -58,8 +58,8 @@ public class Experiencia {
         this.nomEmpresa = nomEmpresa;
     }
 
-    public void setDniCandidat(String dniCandidat) {
-        this.dniCandidat = dniCandidat;
+    public void setCodiCandidat(Integer codiCandidat) {
+        this.codiCandidat = codiCandidat;
     }
 
     public void setDescripcio(String descripcio) {

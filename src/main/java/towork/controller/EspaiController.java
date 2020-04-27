@@ -161,7 +161,7 @@ public class EspaiController {
             of.setHabilitats(habs);
             of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
             of.setPoblacio("Cardona");
-            of.setNifEmpresa("22333444K"); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
+            of.setCodiEmpresa(1); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
             of.setSou(25000d);
             of.setTipusContracte("Indefinit");
             of.setTitolOferta("Títol de l'oferta");

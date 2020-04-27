@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Oferta {
     
     private Integer codiOferta;
-    private String nifEmpresa;
+    private Integer codiEmpresa;
     private String titolOferta;
     private Integer ocupacio;
     private String poblacio;
@@ -20,11 +20,11 @@ public class Oferta {
     private String descripcio;
     
     private ArrayList<Integer> habilitats = new ArrayList();
-    private ArrayList<Candidat> candidats = new ArrayList();
+    private ArrayList<Integer> candidats = new ArrayList();
 
-    public Oferta(Integer codiOferta, String nifEmpresa, String titolOferta, Integer ocupacio,String poblacio, String provincia, Double sou, String horari, String tipusContracte, Integer formacio, String estat, String descripcio) {
+    public Oferta(Integer codiOferta, Integer codiEmpresa, String titolOferta, Integer ocupacio,String poblacio, String provincia, Double sou, String horari, String tipusContracte, Integer formacio, String estat, String descripcio) {
         this.codiOferta = codiOferta;
-        this.nifEmpresa = nifEmpresa;
+        this.codiEmpresa = codiEmpresa;
         this.titolOferta = titolOferta;
         this.ocupacio=ocupacio;
         this.poblacio=poblacio;
@@ -36,7 +36,7 @@ public class Oferta {
         this.estat = estat;
         this.descripcio = descripcio;
         this.habilitats = new ArrayList<Integer>();
-        this.candidats =new ArrayList<Candidat>();
+        this.candidats =new ArrayList<Integer>();
     }
 
     public Oferta() {
@@ -50,8 +50,8 @@ public class Oferta {
         return codiOferta;
     }
 
-    public String getNifEmpresa() {
-        return nifEmpresa;
+    public Integer getCodiEmpresa() {
+        return codiEmpresa;
     }
 
     public String getTitolOferta() {
@@ -98,7 +98,7 @@ public class Oferta {
         return habilitats;
     }
 
-    public ArrayList<Candidat> getCandidats() {
+    public ArrayList<Integer> getCandidats() {
         return candidats;
     }
 
@@ -108,8 +108,8 @@ public class Oferta {
         this.codiOferta = codiOferta;
     }
 
-    public void setNifEmpresa(String nifEmpresa) {
-        this.nifEmpresa = nifEmpresa;
+    public void setCodiEmpresa(Integer codiEmpresa) {
+        this.codiEmpresa = codiEmpresa;
     }
 
     public void setTitolOferta(String titolOferta) {
@@ -156,7 +156,7 @@ public class Oferta {
         this.habilitats = habilitats;
     }
 
-    public void setCandidats(ArrayList<Candidat> candidats) {
+    public void setCandidats(ArrayList<Integer> candidats) {
         this.candidats = candidats;
     }
     
