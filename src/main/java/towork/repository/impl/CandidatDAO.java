@@ -44,13 +44,13 @@ public class CandidatDAO implements CandidatRepository {
     }
 
     // Retorna el candidat quan es passa el DNI per paràmetre
-    public Candidat getCandidatByDniNif(String dniNif) {
+    public Candidat getCandidatByEmail(String email) {
 
-        String query = "select * from candidats where dniNif =? ";
+        String query = "select * from candidats where email =? ";
 
         try {
             PreparedStatement preparedStatement = getPreparedStatement(query);
-            preparedStatement.setString(1, dniNif);
+            preparedStatement.setString(1, email);
             return findUniqueResult(preparedStatement);
         } catch (Exception ex) {
             Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -111,7 +111,7 @@ public class CandidatDAO implements CandidatRepository {
     public void updateCandidat(Candidat candidat) {
 
         String query = "UPDATE candidats SET email=?";
-       /* try {
+        /* try {
             PreparedStatement preparedStatement = getPreparedStatement(query);
             preparedStatement.setString(1, newMail);
             createOrUpdateCandidat(candidat.getEmail(), preparedStatement);
@@ -131,6 +131,39 @@ public class CandidatDAO implements CandidatRepository {
         try {
             PreparedStatement preparedStatement = getPreparedStatement(query);
             preparedStatement.setString(1, candidat.getEmail());
+            createOrUpdateCandidat(candidat.getEmail(), preparedStatement);
+            this.addCandidat(candidat);
+        } catch (Exception ex) {
+            Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    // Mostrar codi del candidat, a partir de l´email
+    @Override
+    public Candidat getCodiByEmail(String email){
+        
+        String query="SELECT codi from candidats WHERE email=?";
+        
+        try {
+            PreparedStatement preparedStatement = getPreparedStatement(query);
+            preparedStatement.setString(1, email);
+            return findUniqueResult(preparedStatement);
+        } catch (Exception ex) {
+            Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+        
+    }
+   
+    
+    // Esborrar un candidat a través de codi
+    @Override
+    public void deleteByCodi (Candidat candidat){
+        
+        String query="DELETE from candidats where codi=?";
+        try {
+            PreparedStatement preparedStatement = getPreparedStatement(query);
+            preparedStatement.setInt(1, candidat.getCodi());
             createOrUpdateCandidat(candidat.getEmail(), preparedStatement);
             this.addCandidat(candidat);
         } catch (Exception ex) {
@@ -166,12 +199,14 @@ public class CandidatDAO implements CandidatRepository {
         return candidat;
     }
 
-    private Candidat createOrUpdateCandidat(String dniNif, PreparedStatement preparedStatement) throws Exception {
+    private Candidat createOrUpdateCandidat(String email, PreparedStatement preparedStatement) throws Exception {
 
         executeUpdateQuery(preparedStatement);
-        return getCandidatByDniNif(dniNif);
+        return getCandidatByEmail(email);
 
     }
+    
+   
 
     private Candidat findUniqueResult(PreparedStatement preparedStatement) throws Exception {
 
