@@ -25,7 +25,7 @@ public interface CandidatRepository {
     
     Candidat getCodiByEmail(String email);
     
-    void deleteByCodi (Candidat candidat);
+    void deleteByCodi (Integer codi);
     
     
 }

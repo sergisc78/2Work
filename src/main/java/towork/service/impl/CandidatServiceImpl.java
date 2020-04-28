@@ -43,8 +43,8 @@ public class CandidatServiceImpl implements CandidatService {
     }
     
     @Override
-    public void deleteByCodi (Candidat candidat){
-        candidatRepository.deleteByCodi(candidat);
+    public void deleteByCodi (Integer codi){
+        candidatRepository.deleteByCodi(codi);
     }
     
 }

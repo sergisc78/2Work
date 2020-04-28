@@ -19,7 +19,7 @@ public interface CandidatService {
     void updateCandidat(Candidat candidat);
     void deletePerfil (Candidat candidat);
     Candidat getCodiByEmail(String email);
-    void deleteByCodi (Candidat candidat);
+    void deleteByCodi (Integer codi);
    
     
 }
