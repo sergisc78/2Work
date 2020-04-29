@@ -46,27 +46,53 @@
             <%@include  file='/resources/html/barra-usuari.html' %>
       </sec:authorize>
             
-      <section>
-            <div class="jumbotron">
-                <div class="container ">
-                    <h1> ${tagline} </h1>
-                </div>
-            </div>
+      <c:if test="${not empty missatgeFeedback}">
+            <section id="feedback" role="alert" class="${classeFeedback} alert  alert-dismissible fade show">
+                  <div class="container">
+                        <div>
+                              ${missatgeFeedback}
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                              </button>
+                        </div>
+                  </div>
+            </section>                  
+      </c:if>
+            
+      <section id="admin">
+            
+            <div class="container">
+                  
+                  <div class="row ">
+                        <div class="col col-md-4">
+                              <a href="<spring:url value='/candidats'/>" class="btn btn-lg btn-primary" role="button">Candidats</a>
+                        </div>
+                        <div class="col col-md-4">
+                              <a href="<spring:url value='/empreses'/>" class="btn btn-lg btn-primary" role="button">Empreses</a>
+                        </div>
+                        <div class="col col-md-4">
+                              <a href="<spring:url value='/ofertes'/>" class="btn btn-lg btn-primary" role="button">Ofertes</a>
+                        </div>
+                  </div>
+                  
+                   
+                  <div class=row" id="numeros">
+                        <ul class="list-group list-group-flush text-center">
+                              <c:if test="${not empty numCandidats}">
+                                    <li class="list-group-item">Hi ha ${numCandidats} candidats donats d'alta a l'aplicació</li>
+                              </c:if>
+                              <c:if test="${not empty numEmpreses}">
+                                    <li class="list-group-item">Hi ha ${numEmpreses} empreses donades d'alta a l'aplicació</li>
+                              </c:if>
+                              <c:if test="${not empty numOfertes}">
+                                    <li class="list-group-item">Hi ha ${numOfertes} ofertes generades a l'aplicació</li>
+                              </c:if>
+                        </ul>
+                  </div>
+                  
+                  
+            </div> 
       </section>
-                
-        <h2 class="text-center">Benvingut a l'espai administrador</h2><br>
-        <h3 class="text-center">Què desitges fer?</h3><br>
-        <div class="container">
-            <ul class="text-center">
-                <a href="<c:url value="/ofertesAdmin" />">Consultar ofertes creades</a><br><br>
-                <a href="<c:url value="/candidats" />">Consultar candidats</a><br><br>
-                <a href="#">Consultar empreses</a><br><br>
-                <a href="#">Esborrar candidats</a><br><br>
-                <a href="#">Esborrar empreses</a><br><br>
-
-
-            </ul>
-        </div>
 
         <%@include  file='/resources/html/footer.html' %>
 

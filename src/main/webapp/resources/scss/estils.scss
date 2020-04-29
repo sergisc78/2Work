@@ -201,3 +201,31 @@ section#baixaCandidat {
             } 
       }
 }
+
+
+section#admin {
+      
+      padding-top: 4em;
+      
+      @media only screen and (min-width: $breakpoint-mitja) {
+            padding-top: 8em;
+      }
+      
+      a[role="button"] {
+            height: 6em;
+            width: 100%;
+            font-size: 2em;
+            line-height: 5.4em;
+            margin-bottom: 1.1em;
+            
+            @media only screen and (min-width: $breakpoint-gran) {
+                  margin-bottom: 1.5em;
+            }
+            
+      }
+      
+      li {
+            font-size: 1.5em;
+      }      
+      
+}

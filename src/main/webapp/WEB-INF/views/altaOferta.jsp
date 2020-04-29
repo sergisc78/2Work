@@ -25,8 +25,8 @@
         <link href="${estilsCSS}" rel="stylesheet" />
         
         <!-- JS / Query afegit -->
-        <script type="text/javascript" src="resources/js/validarForm.js"></script>
-        <script type="text/javascript" src="resources/js/formularis.js"></script>        
+        <script type="text/javascript" src="<spring:url value="/resources/js/validarForm.js"/>"></script>
+        <script type="text/javascript" src="<spring:url value="/resources/js/formularis.js"/>"></script>
         
         <title>2Work - ${ubicacio}</title>
     </head>
@@ -69,8 +69,9 @@
             </section>
 
             <section id="alta-oferta" class="container-sm formulari-alta">        
-            
-                  <form:form id="formulariAltaOferta" modelAttribute="formOferta" class="needs-validation" novalidate="novalidate" onsubmit="return validarOferta();" method="post" action="executaAltaOferta">
+                  
+                  <spring:url value="executa" var="exec" />
+                  <form:form id="formulariAltaOferta" modelAttribute="formOferta" class="needs-validation" novalidate="novalidate" onsubmit="return validarOferta();" method="post" action="${exec}">
                
                   <div class="form-group">
                         <label for="titolOferta">Títol de l'oferta</label>
