@@ -20,5 +20,5 @@ public interface CandidatService {
     void deletePerfil (Candidat candidat);
     Candidat getCodiByEmail(String email);
     void deleteByCodi (Integer codi);
-    
+  
 }

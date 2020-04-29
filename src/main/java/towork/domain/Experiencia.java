@@ -1,15 +1,6 @@
 
 package towork.domain;
 
-import java.io.Serializable;
-import java.util.logging.Logger;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 
 public class Experiencia {
     
@@ -20,7 +11,7 @@ public class Experiencia {
     private String descripcio;
 
     public Experiencia(Integer codiExperiencia,Integer anys, String nomEmpresa, Integer codiCandidat, String descripcio) {
-        this.codiExperiencia=this.codiExperiencia;
+        this.codiExperiencia=codiExperiencia;
         this.anys = anys;
         this.nomEmpresa = nomEmpresa;
         this.codiCandidat = codiCandidat;
@@ -58,8 +49,9 @@ public class Experiencia {
         this.nomEmpresa = nomEmpresa;
     }
 
-    public void setCodiCandidat(Integer dniCandidat) {
-        this.codiCandidat = dniCandidat;
+    public void setCodiCandidat(Integer codiCandidat) {
+        this.codiCandidat = codiCandidat;
+
     }
 
     public void setDescripcio(String descripcio) {
