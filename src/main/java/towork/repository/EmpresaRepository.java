@@ -27,4 +27,6 @@ public interface EmpresaRepository {
         void deleteEmpresa(String email);
         
         void esborrarEmpresa(Integer codi);
+        
+        Boolean esborrarEmpresaBoolean(Integer codi);
 }

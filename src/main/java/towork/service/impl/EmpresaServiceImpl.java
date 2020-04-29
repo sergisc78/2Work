@@ -59,4 +59,8 @@ public class EmpresaServiceImpl implements EmpresaService{
     public void esborrarEmpresa(Integer codi){
         empresaRepository.esborrarEmpresa(codi);    
     }
+    @Override
+    public Boolean esborrarEmpresaBoolean(Integer codi){
+        return empresaRepository.esborrarEmpresaBoolean(codi);
+    }
 }

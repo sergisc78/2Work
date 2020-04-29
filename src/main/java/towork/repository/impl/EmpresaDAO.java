@@ -360,4 +360,28 @@ public class EmpresaDAO implements EmpresaRepository{
         }
        
     }
+    /**
+     * Mètode per esborrar empresa retornant si s'ha fet l'eliminació a la bd amb true o false
+     * @param codi
+     * @return true o false
+     */
+      @Override
+    public Boolean esborrarEmpresaBoolean(Integer codi){
+        Empresa empEsborrada=new Empresa();
+        String qry = "DELETE FROM empreses WHERE codi = ?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = getPreparedStatement(qry);
+            preparedStatement.setInt(1, codi); 
+            empEsborrada=createOrUpdateEmpresa(codi, preparedStatement);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       if (empEsborrada.getCodi()!=null){
+           return true;
+       }else{
+           return false;
+       }
+    }
 }
