@@ -38,4 +38,14 @@ public class CandidatServiceImpl implements CandidatService {
         candidatRepository.deletePerfil(candidat);
     }
     
+    @Override
+    public Candidat getCodiByEmail(String email){
+       return candidatRepository.getCodiByEmail(email);
+    }
+    
+    @Override
+    public void deleteByCodi (Integer codi){
+        candidatRepository.deleteByCodi(codi);
+    }
+    
 }

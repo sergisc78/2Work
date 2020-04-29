@@ -237,7 +237,7 @@ public class AdminDAO implements AdminRepository {
     private Oferta buildOfertaFromResultSet(ResultSet rs) throws SQLException {
 
         Integer codiOferta = rs.getInt("codiOferta");
-        String nifEmpresa = rs.getString("nifEmpresa");
+        Integer codiEmpresa = rs.getInt("codiEmpresa");
         String titolOferta = rs.getString("titolOferta");
         Integer ocupacio = rs.getInt("ocupacio");
         String poblacio = rs.getString("poblacio");
@@ -249,7 +249,7 @@ public class AdminDAO implements AdminRepository {
         String estat = rs.getString("estat");
         String descripcio = rs.getString("descripcio");
 
-        Oferta oferta = new Oferta(codiOferta, nifEmpresa, titolOferta, ocupacio, poblacio, provincia, sou, horari, tipusContracte, formacio, estat, descripcio);
+        Oferta oferta = new Oferta(codiOferta, codiEmpresa, titolOferta, ocupacio, poblacio, provincia, sou, horari, tipusContracte, formacio, estat, descripcio);
 
         return oferta;
 

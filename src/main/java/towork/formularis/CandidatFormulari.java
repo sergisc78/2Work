@@ -1,31 +1,26 @@
 
-package towork.domain;
+package towork.formularis;
 
 
-import java.io.Serializable;
-import static java.time.temporal.WeekFields.ISO;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.sql.Date;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
+import towork.domain.Experiencia;
+import towork.domain.Usuari;
 
-public class Candidat extends Usuari{
+/**
+ * 
+ * @author Daniel Sevilla i Junyent
+ * Aquesta classe és pràcticament igual a la classe Candidat però adaptada a les necessitats dels formularis:
+ *    L'atribut dataNaix és de tipus LocalDate (data sense dades horàries ni timezone)
+ *    L'atribut experiències serà un array d'objectes de tipus Experiencia, perque ha de tenir les dades que conté aquest tipus, no un array de codis d'Experiències
+ * 
+ */
+public class CandidatFormulari extends Usuari{
     
     protected String cognoms;
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    protected Date dataNaix;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    protected LocalDate dataNaix;
     protected Integer formacio;
     protected Integer ocupacio;
     
@@ -33,7 +28,7 @@ public class Candidat extends Usuari{
     protected ArrayList<Experiencia> experiencies = new ArrayList();
 
 
-    public Candidat (Integer codi,String nom,String cognoms, String dniNif,Date dataNaix,String adreca, String poblacio,String provincia,String telefon, String email, String observacions, String pass, String cPass,  Integer formacio,Integer ocupacio) {
+    public CandidatFormulari (Integer codi,String nom,String cognoms, String dniNif, LocalDate dataNaix,String adreca, String poblacio,String provincia,String telefon, String email, String observacions, String pass, String cPass,  Integer formacio,Integer ocupacio) {
         super(codi,nom,dniNif,adreca,poblacio,provincia,telefon,email,observacions,pass,cPass);
         this.cognoms = cognoms;
         this.dataNaix = dataNaix;
@@ -43,14 +38,14 @@ public class Candidat extends Usuari{
         this.experiencies= new ArrayList<Experiencia>();
     }
     
-    public Candidat() {
+    public CandidatFormulari() {
     }
 
     public String getCognoms() {
         return cognoms;
     }
 
-    public Date getDataNaix() {
+    public LocalDate getDataNaix() {
         return dataNaix;
     }
 
@@ -74,7 +69,7 @@ public class Candidat extends Usuari{
         this.cognoms = cognoms;
     }
 
-    public void setDataNaix(Date dataNaix) {
+    public void setDataNaix(LocalDate dataNaix) {
         this.dataNaix = dataNaix;
     }
 

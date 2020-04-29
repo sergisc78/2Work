@@ -1,6 +1,8 @@
 package towork.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +20,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import towork.domain.Candidat;
+import towork.formularis.CandidatFormulari;
 import towork.domain.Candidatura;
 import towork.domain.Empresa;
+import towork.domain.Experiencia;
 import towork.domain.Formacio;
 import towork.domain.Habilitat;
 import towork.formularis.LlistaCandidatures;
@@ -31,6 +36,7 @@ import towork.domain.Oferta;
 import towork.formularis.LlistaFormacions;
 import towork.formularis.LlistaOcupacions;
 import towork.formularis.LlistaSectors;
+import towork.service.CandidatService;
 import towork.service.EmpresaService;
 
 @Controller
@@ -39,18 +45,24 @@ public class EspaiController {
       @Autowired
       EmpresaService empresaService;
       
+      @Autowired
+      CandidatService candidatService;
+      
       // Opcions reutilitzables per la barra de navegació
-      HashMap<String, String> op_entrar_candidat = new HashMap<>();
-      HashMap<String, String> op_entrar_empresa = new HashMap<>();
+      HashMap<String, String> op_entrarCandidat = new HashMap<>();
+      HashMap<String, String> op_entrarEmpresa = new HashMap<>();
       HashMap<String, String> op_logout = new HashMap<>();
       HashMap<String, String> op_inici = new HashMap<>();
       HashMap<String, String> op_candidats = new HashMap<>();
-      HashMap<String, String> op_candidatures = new HashMap<>(); // candidatures
+      HashMap<String, String> op_candidatures = new HashMap<>();
       HashMap<String, String> op_empreses = new HashMap<>();
-      HashMap<String, String> op_ofertes = new HashMap<>();
+      HashMap<String, String> op_ofertesCandidat = new HashMap<>();
       HashMap<String, String> op_ofertesEmpresa = new HashMap<>();
       HashMap<String, String> op_ofertesAdmin = new HashMap<>();
       HashMap<String, String> op_perfilEmpresa = new HashMap<>();
+      HashMap<String, String> op_baixaEmpresa = new HashMap<>();
+      HashMap<String, String> op_perfilCandidat = new HashMap<>();
+      HashMap<String, String> op_baixaCandidat = new HashMap<>();
       HashMap<String, String> op_altaOferta = new HashMap<>();
       
       // Missatges reutilitzables
@@ -93,10 +105,10 @@ public class EspaiController {
       public EspaiController() {
                        
             // Opcions reutilitzables per la barra de navegació
-            op_entrar_candidat.put("paraula","Candidat");
-            op_entrar_candidat.put("url","/espaiCandidat");
-            op_entrar_empresa.put("paraula","Empresa");
-            op_entrar_empresa.put("url","/espaiEmpresa");
+            op_entrarCandidat.put("paraula","Candidat");
+            op_entrarCandidat.put("url","/espaiCandidat");
+            op_entrarEmpresa.put("paraula","Empresa");
+            op_entrarEmpresa.put("url","/espaiEmpresa");
             op_logout.put("paraula","Logout");  
             op_logout.put("url","/j_spring_security_logout");
             op_inici.put("paraula","Inici");  
@@ -107,14 +119,20 @@ public class EspaiController {
             op_candidatures.put("url","/candidatures");
             op_empreses.put("paraula","Empreses");  
             op_empreses.put("url","/empreses");
-            op_ofertes.put("paraula","Ofertes");  
-            op_ofertes.put("url","/espaiCandidat");
+            op_ofertesCandidat.put("paraula","Ofertes");  
+            op_ofertesCandidat.put("url","/espaiCandidat");
             op_ofertesEmpresa.put("paraula","Ofertes");
             op_ofertesEmpresa.put("url","/ofertesEmpresa"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes
             op_ofertesAdmin.put("paraula","Ofertes");
             op_ofertesAdmin.put("url","/ofertesAdmin");
             op_perfilEmpresa.put("paraula","Perfil");
             op_perfilEmpresa.put("url","/perfilEmpresa");
+            op_perfilCandidat.put("paraula","Perfil");
+            op_baixaEmpresa.put("paraula","Baixa");
+            op_baixaEmpresa.put("url","eliminaEmpresa");
+            op_perfilCandidat.put("url","/perfilCandidat");
+            op_baixaCandidat.put("paraula","Baixa");
+            op_baixaCandidat.put("url","/eliminaCandidat");
             op_altaOferta.put("paraula","Crear oferta");
             op_altaOferta.put("url","/altaOferta");
             
@@ -161,7 +179,7 @@ public class EspaiController {
             of.setHabilitats(habs);
             of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
             of.setPoblacio("Cardona");
-            of.setNifEmpresa("22333444K"); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
+            of.setCodiEmpresa(1); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
             of.setSou(25000d);
             of.setTipusContracte("Indefinit");
             of.setTitolOferta("Títol de l'oferta");
@@ -227,26 +245,22 @@ public class EspaiController {
        * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/espaiCandidat", method = RequestMethod.GET)
-      public ModelAndView EspaiCandidatRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView espaiCandidat(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
           
             // Desem a la variable 'username' el nom de l'usuari que s'ha acreditat
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
-                    
-            // Crec que a partir del nom d'usuari/email hem d'agafar el codi d'usuari de la bbdd, mitjançant el mètode del servei corresponent, per passar-lo com a paràmetre a les opcions que ho requereixin
             
-            // Opció perfil a la barra de navegació
-            HashMap<String, String> perfil = new HashMap<>();
-            perfil.put("paraula","Perfil");
-            perfil.put("url","/perfil/"+username);
-        
-            // Opció candidatures a la barra de navegació
-            HashMap<String, String> candidatures_usuari = new HashMap<>();
-            candidatures_usuari.put("paraula","Candidatures");  
-            candidatures_usuari.put("url","/candidatures/"+username); // ÉS UNA PROVA, LI HAURIEM DE PASSAR EL CODI
+            // A partir del nom d'usuari/email hem d'agafar el codi d'usuari de la bbdd, mitjançant el mètode del servei corresponent, per passar-lo com a paràmetre a les opcions que ho requereixin
+            Integer codiCandidat=1; // PER FER LES PROVES
+            
+            
+            op_perfilCandidat.put("usuari","/"+codiCandidat); // LI HAUREM DE PASSAR EL CODI DEL CANDIDAT
+            op_candidatures.put("usuari","/"+codiCandidat); // LI HAUREM DE PASSAR EL CODI DEL CANDIDAT
+            op_baixaCandidat.put("usuari","/"+codiCandidat+"/"); // LI HAUREM DE PASSAR EL CODI DEL CANDIDAT
                   
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,candidatures_usuari,op_logout};  
+            HashMap[] opcions = new HashMap[]{op_perfilCandidat, op_candidatures, op_baixaCandidat, op_logout};  
           
             ModelAndView modelview = new ModelAndView("espaiCandidat");
             modelview.getModelMap().addAttribute("ubicacio", "Ofertes escaients per les teves dades");
@@ -266,7 +280,7 @@ public class EspaiController {
       * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
       */
       @RequestMapping(value = "/espaiEmpresa", method = RequestMethod.GET)
-      public ModelAndView EspaiEmpresaRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView espaiEmpresa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             ModelAndView modelview = new ModelAndView("espaiEmpresa");
             
             // Obtenim el nom (e-mail) de l'usuari loguejat
@@ -276,12 +290,12 @@ public class EspaiController {
             Integer codiEmpresa;
             
             try {
-                  codiEmpresa= empresaService.getCodiByEmail(nom);
+                  codiEmpresa=empresaService.getCodiByEmail(nom);
             } catch (Exception e){
                   // Si hi ha hagut problema rebent el codi de la base de dades
                   modelview.setViewName("home");
                   // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-                  HashMap[] opcions = new HashMap[]{op_altaOferta, op_ofertesEmpresa, op_perfilEmpresa, op_logout};
+                  HashMap[] opcions = new HashMap[]{op_logout};
                   
                   modelview.getModelMap().addAttribute("ubicacio", baseline);
                   modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
@@ -291,16 +305,16 @@ public class EspaiController {
             }
             
             // EL CORREU QUE HI HA A LES DADES DE L'EMPRESA HA DE SER EL MATEIX QUE FA SERVIR PEL LOGIN
-
-            
+   
             // Afegim l'usuari als maps de les opcions amb el parell amb clau "usuari", que completarà la url dels enllaços
             op_altaOferta.put("usuari","/"+codiEmpresa);
             op_ofertesEmpresa.put("usuari","/"+codiEmpresa);
             op_perfilEmpresa.put("usuari","/"+codiEmpresa);
+            op_baixaEmpresa.put("usuari","/"+codiEmpresa);
       
             // Hashmap amb les opcions que hi haurà a la barra de navegació
             
-            HashMap[] opcions = new HashMap[]{op_altaOferta, op_ofertesEmpresa, op_perfilEmpresa, op_logout};  
+            HashMap[] opcions = new HashMap[]{op_altaOferta, op_ofertesEmpresa, op_perfilEmpresa, op_baixaEmpresa, op_logout};  
             
             modelview.getModelMap().addAttribute("opcions", opcions);
             
@@ -318,7 +332,7 @@ public class EspaiController {
        * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/admin", method = RequestMethod.GET)
-      public ModelAndView EspaiAdministradorRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView espaiAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             ModelAndView modelview = new ModelAndView("admin");
                    
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
@@ -343,35 +357,87 @@ public class EspaiController {
       * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
       */
       @RequestMapping(value = "/oferta/{codiOferta}", method = RequestMethod.GET)
-      public ModelAndView OfertaPerCodi(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView ofertaPerCodi(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             
             // Obtenim el rol de l'usuari loguejat
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String role = auth.getAuthorities().iterator().next().toString(); // El primer element dela collection auth.getAuthorities. Assumim que només conté un element.
+            // Obtenim el nom de l'usuari loguejat
+            String nom = auth.getName();
             
-            // Opció perfil a la barra de navegació
-            HashMap<String, String> perfil = new HashMap<>();
-            perfil.put("paraula","Perfil");
-            perfil.put("url","/perfil");
-        
-            // Opció ofertes a la barra de navegació
-            HashMap<String, String> _ofertes = new HashMap<>();
-            _ofertes.put("paraula","Ofertes");            
-            if (role.equals("ROLE_USER")) {
-                  _ofertes.put("url","/espaiCandidat"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes pels candidats
-            } else {
-                  _ofertes.put("url","/ofertesAdminEmpresa");
-            }
-                                                                                    
-            // Opció candidatures a la barra de navegació
-            HashMap<String, String> _cands = new HashMap<>();
-            _cands.put("paraula","Candidatures");  
-            _cands.put("url","/candidatures/3"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
-                    
-            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,_ofertes,_cands,op_logout};  
-        
             ModelAndView modelview = new ModelAndView("oferta");
+            
+            // Llista que contindrà les opcions que hi haurà a la barra de navegació
+            List<Map<String , String>> opcions  = new ArrayList<>();
+            
+            // Segons el rol de l'usuari loguejat...
+            switch(role){
+                  case "ROLE_USER":
+                        // HI ha un usuari candidat loguejat
+                        try {
+                              // Integer codiCandidat = candidatService.getCodiByEmail(nom);
+                              Integer codiCandidat = 1; // DE PROVA
+                              op_candidatures.put("usuari","/"+codiCandidat);
+                              op_ofertesCandidat.put("usuari","/"+codiCandidat);
+                              op_perfilCandidat.put("usuari","/"+codiCandidat);
+                              op_baixaCandidat.put("usuari","/"+codiCandidat);
+                              opcions.add(op_inici);
+                              opcions.add(op_candidatures);
+                              opcions.add(op_ofertesCandidat);
+                              opcions.add(op_perfilCandidat);
+                              opcions.add(op_baixaCandidat);
+                              opcions.add(op_logout);
+                              modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
+                              modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
+                              modelview.getModelMap().addAttribute("opcions", opcions);
+                              
+                        } catch (Exception e) {
+                              // No hem pogut obtenir el codi de l'usuari
+                              modelview.setViewName("home");
+                              opcions.add(op_inici);
+                              opcions.add(op_logout);
+                              modelview.getModelMap().addAttribute("ubicacio", baseline);
+                              modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
+                              modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                              modelview.getModelMap().addAttribute("opcions", opcions);
+                              modelview.getModelMap().addAttribute("ubicacio", baseline);
+                              return modelview;
+                        }
+                        break;
+                        
+                  case "ROLE_EMPRESA":
+                        // Hi ha un usuari empresa empresa loguejat
+                        try {
+                              Integer codiEmpresa = empresaService.getCodiByEmail(nom);
+                              op_altaOferta.put("usuari","/"+codiEmpresa);
+                              op_ofertesEmpresa.put("usuari","/"+codiEmpresa);
+                              op_perfilEmpresa.put("usuari","/"+codiEmpresa);
+                              op_baixaEmpresa.put("usuari","/"+codiEmpresa);
+                              opcions.add(op_altaOferta);
+                              opcions.add(op_ofertesEmpresa);
+                              opcions.add(op_perfilEmpresa);
+                              opcions.add(op_baixaEmpresa);
+                              opcions.add(op_logout);
+                              modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
+                              modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
+                              modelview.getModelMap().addAttribute("opcions", opcions);
+                              
+                        } catch (Exception e){
+                              // No hem pogut obtenir el codi de l'empresa
+                              modelview.setViewName("home");
+                              opcions.add(op_inici);
+                              opcions.add(op_logout);
+                              modelview.getModelMap().addAttribute("ubicacio", baseline);
+                              modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
+                              modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                              modelview.getModelMap().addAttribute("opcions", opcions);
+                              modelview.getModelMap().addAttribute("ubicacio", baseline);
+                              return modelview;
+                        }
+                        break;
+                        
+            } // del switch
+            
             // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
            
             // Afegeixo els atributs per passar a la vista
@@ -381,6 +447,7 @@ public class EspaiController {
                     
             return modelview;
       }
+      
       
       /**
        * 
@@ -396,7 +463,7 @@ public class EspaiController {
        * @throws IOException 
        */
       @RequestMapping(value = "/ofertaAdmin/{codiOferta}", method = RequestMethod.GET)
-      public ModelAndView OfertaAdminPerCodi(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView ofertaAdminPerCodi(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             
             ModelAndView modelview = new ModelAndView("oferta");
                                   
@@ -418,15 +485,15 @@ public class EspaiController {
       * En aquest cas passarem a la vista el referer perque pugui incloure un botó 'tornar' funcional
       * 
       * @author Daniel Sevilla i Junyent
-      * @param codi El codi de l'oferta lea dades de la qual mostrarem
+      * @param codiOferta El codi de l'oferta lea dades de la qual mostrarem
       * @param request La petició http
       * @param response La resposta http
       * @return objecte modelandview que representa el model i la vista oferta només amb el botó 'Tornar' al cos
       * @throws ServletException Indica que hi ha alguna errada general al servlet
       * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
       */
-      @RequestMapping(value = "/ofertaTornar/{codi}", method = RequestMethod.GET)
-      public ModelAndView OfertaPerRefTornar(@PathVariable("codi") Integer codi, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      @RequestMapping(value = "/ofertaTornar/{codiOferta}", method = RequestMethod.GET)
+      public ModelAndView ofertaPerCodiTornar(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       
             // Controlador que invoca la vista perque aquesta mostri només el botó 'Tornar'
             // Pensat per quan el candidat vulgui consultar l'oferta des del llistat de candidatures
@@ -435,42 +502,83 @@ public class EspaiController {
             // Obtenim el rol de l'usuari loguejat
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String role = auth.getAuthorities().iterator().next().toString(); // El primer element dela collection auth.getAuthorities. Assumim que només conté un element.
+            // Obtenim el nom de l'usuari loguejat
+            String nom = auth.getName();
             
+            ModelAndView modelview = new ModelAndView("oferta");
+            // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
             
-            // Opció perfil a la barra de navegació
-            HashMap<String, String> perfil = new HashMap<>();
-            perfil.put("paraula","Perfil");
-            perfil.put("url","/perfil");
-        
-            // Opció ofertes a la barra de navegació
-            HashMap<String, String> ofertes = new HashMap<>();
-            ofertes.put("paraula","Ofertes");
-            
+            // Llista que contindrà les opcions que hi haurà a la barra de navegació
+            List<Map<String , String>> opcions  = new ArrayList<>();
+                        
             switch(role){
-                  case "ROLE_USER": { 
-                        ofertes.put("url","/espaiCandidat"); // Fins que no la canviem aquesta és la url que porta a la vista on mostrem totes les ofertes pels candidats
+                  // L'usuari loguejat és un candidat
+                  case "ROLE_USER": {                        
+                        // provem de recuperar el codi del candidat
+                        try {
+                              // codiCandidat = candidatService.getCodiByEmail(nom);
+                              Integer codiCandidat = 1; // Per poder provar, mentre no tinguem el mètode corresponent
+                              // Afegim el codi a les opcions que el necessiten
+                              op_perfilCandidat.put("usuari", "/"+codiCandidat);
+                              op_ofertesCandidat.put("usuari", "/"+codiCandidat);
+                              op_candidatures.put("usuari", "/"+codiCandidat);
+                              op_perfilCandidat.put("usuari", "/"+codiCandidat);
+                              op_baixaCandidat.put("usuari", "/"+codiCandidat);
+                              // Afegim les opcions a la llista d'opcions per la barra de navegació
+                              opcions.add(op_inici);
+                              opcions.add(op_ofertesCandidat);
+                              opcions.add(op_candidatures);
+                              opcions.add(op_perfilCandidat);
+                              opcions.add(op_baixaCandidat);
+                              opcions.add(op_logout);
+                        } catch(Exception e){
+                              // SI no hem pogut recuperar el codi
+                              modelview.setViewName("home");
+                              opcions.add(op_logout);
+                              modelview.getModelMap().addAttribute("ubicacio", baseline);
+                              modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
+                              modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                              modelview.getModelMap().addAttribute("opcions", opcions);
+                              return modelview;
+                        }
                         break;
                   }
+                  // L'usuari loguejat és una empresa
                   case "ROLE_EMPRESA": {
-                        ofertes.put("url","/ofertesEmpresa");
+                        // provem de recuperar el codi de l'empresa
+                        try {
+                              Integer codiEmpresa = empresaService.getCodiByEmail(nom);
+                              // Afegim el codi a les opcions que el necessiten
+                              op_ofertesEmpresa.put("usuari","/"+codiEmpresa);
+                              op_perfilEmpresa.put("usuari","/"+codiEmpresa);
+                              op_baixaEmpresa.put("usuari","/"+codiEmpresa);
+                              // Afegim les opcions a la llista d'opcions per la barra de navegació
+                              opcions.add(op_inici);
+                              opcions.add(op_ofertesEmpresa);
+                              opcions.add(op_perfilEmpresa);
+                              opcions.add(op_baixaEmpresa);
+                              opcions.add(op_logout);
+                        } catch (Exception e) {
+                              // SI no hem pogut recuperar el codi
+                              modelview.setViewName("home");
+                              opcions.add(op_logout);
+                              modelview.getModelMap().addAttribute("ubicacio", baseline);
+                              modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
+                              modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                              modelview.getModelMap().addAttribute("opcions", opcions);
+                              return modelview;
+                        }
                         break;
                   }
                   case "ROLE_ADMIN": {
-                        ofertes.put("url","/ofertesAdmin");
+                        opcions.add(op_inici);
+                        opcions.add(op_candidats);
+                        opcions.add(op_empreses);
+                        opcions.add(op_ofertesAdmin);
+                        opcions.add(op_logout);
                         break;
                   }
             }
-        
-            // Opció candidatures a la barra de navegació
-            HashMap<String, String> _cands = new HashMap<>();
-            _cands.put("paraula","Candidatures");  
-            _cands.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
-        
-            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,ofertes,_cands,op_logout};  
-        
-            ModelAndView modelview = new ModelAndView("oferta");
-            // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
             
             // Afegeixo els atributs per passar a la vista
             modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
@@ -486,6 +594,7 @@ public class EspaiController {
        * 
        * Prepara i retorna la vista que mostra els detalls d'una oferta a l'usuari empresa (propietari) de l'oferta
        * (comparteix vista amb altres tipus d'usuari però en aquest cas mostra més contingut
+       * Només hi accedeixen usuaris amb rol empresa
        * 
        * @author Daniel Sevilla i junyent
        * @param codiOferta El codi de l'oferta (un Integer) les dades de la qual mostrarem al propietari d'aquesta
@@ -496,25 +605,47 @@ public class EspaiController {
        * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/ofertaPropietari/{codiOferta}", method = RequestMethod.GET)
-      public ModelAndView OfertaPropietariPerRef(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView ofertaPropietariPerCodi(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-            // Mostrarà l'oferta al seu propietari (de manera diferent als no propietaris, però compartirem vista)      
-
-            // Opció perfil a la barra de navegació
-            HashMap<String, String> perfil = new HashMap<>();
-            perfil.put("paraula","Perfil");
-            perfil.put("url","/perfil");
-
-            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil, op_ofertesEmpresa, op_logout};  
-
+            // Obtenim el nom de l'usuari loguejat
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String nom = auth.getName();
+            
             ModelAndView modelview = new ModelAndView("oferta");
             // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
+            
+            // Llista que contindrà les opcions que hi haurà a la barra de navegació
+            List<Map<String , String>> opcions  = new ArrayList<>();
 
+            Integer codiEmpresa;
+            
+            // Tractem d'obtenir el codi de l'empresa loguejada per afegir-lo a les urls de les opcions de la barra de navegació
+            try {
+                  codiEmpresa = empresaService.getCodiByEmail(nom);      
+            } catch (Exception e){
+                  // Si no hem pogut obtenir el codi de l'empresa
+                  modelview.setViewName("home");
+                  opcions.add(op_inici);
+                  opcions.add(op_logout);
+                  modelview.getModelMap().addAttribute("ubicacio", baseline);
+                  modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
+                  modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                  modelview.getModelMap().addAttribute("opcions", opcions);
+                  modelview.getModelMap().addAttribute("ubicacio", baseline);
+                  return modelview;
+            }
+
+            // Afegim el codi de l'empresa a les urls de les opcions a la barra de navegació
+            op_altaOferta.put("usuari","/"+codiEmpresa);
+            op_ofertesEmpresa.put("usuari","/"+codiEmpresa);
+            op_perfilEmpresa.put("usuari","/"+codiEmpresa);
+            // Omplir l'array d'opcions per la barra de navegació
+            opcions.add(op_altaOferta);
+            opcions.add(op_ofertesEmpresa);
+            opcions.add(op_perfilEmpresa);
+            opcions.add(op_logout);
+                       
             Candidatura formCandidatura = new Candidatura();
-
-            ///// Final dels objectes de prova que genero per poder muntar la vista ////////////////////////////////////////////////////////////////////////////////////////////
-
 
             // Afegeixo els atributs per passar a la vista
             modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
@@ -544,7 +675,7 @@ public class EspaiController {
        * @throws IOException Indica que s'ha produït algun error d'entrada/sortida 
        */
       @RequestMapping(value = "/ofertesAdmin", method = RequestMethod.GET)
-      public ModelAndView OfertesAdminRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView ofertesAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
             ModelAndView modelview = new ModelAndView("ofertesAdminEmpresa");
             
@@ -579,7 +710,7 @@ public class EspaiController {
        * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/ofertesAdmin/{codiEmpresa}", method = RequestMethod.GET)
-      public ModelAndView OfertesAdminPerEmpresaRequest(@PathVariable("codiEmpresa") int codiEmpresa, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView ofertesAdminPerEmpresa(@PathVariable("codiEmpresa") int codiEmpresa, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             // Mostrarà a l'administrador les ofertes d'una empresa concreta, el codi de la qual li passem per PathVariable
             // Caldrà invocar el mètode que retornarà ofertes per codi d'empresa
             
@@ -621,7 +752,7 @@ public class EspaiController {
        * @throws IOException 
        */
       @RequestMapping(value = "/perfilEmpresa/{codiEmpresa}", method = RequestMethod.GET)
-      public ModelAndView updateEmpresaRequest(@PathVariable("codiEmpresa") Integer codiEmpresa,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView modifEmpresa(@PathVariable("codiEmpresa") Integer codiEmpresa,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
               
             ModelAndView modelview = new ModelAndView("perfilEmpresa");
             Empresa empresa;
@@ -640,14 +771,17 @@ public class EspaiController {
                   // Afegim l'usuari als maps de les opcions amb el parell amb clau "usuari", que completarà la url dels enllaços
                   op_perfilEmpresa.put("usuari","/"+codiEmpresa);
                   op_ofertesEmpresa.put("usuari","/"+codiEmpresa);
+                  op_baixaEmpresa.put("usuari","/"+codiEmpresa);
                   
-                  opcions.add(op_perfilEmpresa);
                   opcions.add(op_ofertesEmpresa);
+                  opcions.add(op_perfilEmpresa);
+                  opcions.add(op_baixaEmpresa);
                   opcions.add(op_logout);
 
                   modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
                   modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
                   modelview.getModelMap().addAttribute("opcions", opcions);
+                  
                   return modelview;
             }
             
@@ -680,11 +814,11 @@ public class EspaiController {
        * Retorna la vista home amb feedback sobre el resultat
        * 
        * @author Daniel Sevilla i Junyent
-       * @param formEmpresa
+       * @param formEmpresa L'objecte de tipus Empresa que el mètode rep del formulari
        * @return Un objecte modelandview que representa el model i la vista que mostrarem a l'usuari un cop provada d'executar l'actualització a la base de dades
        */
       @RequestMapping(value = "/perfilEmpresa/actualitza", method = RequestMethod.POST)
-      public ModelAndView executaActualitzaEmpresa( @ModelAttribute("formEmpresa") Empresa formEmpresa) {
+      public ModelAndView executaModifEmpresa( @ModelAttribute("formEmpresa") Empresa formEmpresa) {
             
             // Obtenim el nom (e-mail) de l'usuari loguejat
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -738,6 +872,154 @@ public class EspaiController {
       
       /**
        * 
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param codiCandidat El codi del candidat que rebem com a PathVariable a la url
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Un objecte ModelAndView amb la vista, que contindrà el formulari per modificar el candidat
+       * @throws ServletException
+       * @throws IOException 
+       */
+      @RequestMapping(value = "/perfilCandidat/{codiCandidat}", method = RequestMethod.GET)
+      public ModelAndView modifCandidat(@PathVariable("codiCandidat") Integer codiCandidat,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+              
+            ModelAndView modelview = new ModelAndView("perfilCandidat");
+            
+            // Creo un candidat DE PROVA per passar a la vista.
+            // En realitat l'haurem de treure de la bbdd
+            
+            LocalDate data_naix = LocalDate.now();
+            CandidatFormulari candidat = new CandidatFormulari (1,"Ramonet","Rocaguinarda", "39363936M", data_naix, "Carrer del bar, 23", "Gironella", "Barcelona","938698122", "ramon@emiliu.cat", "Aquestes son les observacions", "contrassenya", "contrassenya",2,3);
+            System.out.println("--- Data de naixement amb que inicialitzem el candidat: "+data_naix);
+            ArrayList<Integer> habilitatsProva = new ArrayList();
+            habilitatsProva.add(3); // Ha de correspondre amb l'ocupació que li hem posat al candidat de prova
+            habilitatsProva.add(15); // Ha de correspondre amb l'ocupació que li hem posat al candidat de prova
+            candidat.setHabilitats(habilitatsProva);
+            
+            Experiencia ex1 = new Experiencia(1,5, "Empresa Inc.", 1, "Vaig treballar molt");
+            Experiencia ex2 = new Experiencia(2,3, "Empresot Corp.", 1, "No vaig treballar gaire");
+            List<Integer> experiencies = new ArrayList();
+            experiencies.add(ex1.getCodiExperiencia());
+            experiencies.add(ex2.getCodiExperiencia());
+            // No podem passar a la banda del client els objectes
+            // Li passarem a la vista una llista de codis i allà recuperarem les dades mitjançant AJAX per omplir el formulari amb les dades 
+            
+            
+            // Formulari de modificació de candidat
+            CandidatFormulari formCandidat = new CandidatFormulari();
+            // Llistat d'ocupacions
+            LlistaOcupacions llistaOcupacions = new LlistaOcupacions();
+            // Llistat de formacions
+            LlistaFormacions llistaFormacions = new LlistaFormacions();
+            // Llistat d'habilitats
+            LlistaHabilitats llistaHabilitats = new LlistaHabilitats();
+            
+            op_ofertesCandidat.put("usuari","/"+codiCandidat);
+            op_candidatures.put("usuari","/"+codiCandidat);
+            
+            // Genero les opcions de la barra de navegació per passar a la vista
+            HashMap[] opcions = new HashMap[]{op_inici, op_ofertesCandidat, op_candidatures, op_logout};
+            
+            
+            
+            modelview.getModelMap().addAttribute("formCandidat", formCandidat);
+            modelview.getModelMap().addAttribute("ubicacio", "Editar dades associades al perfil");
+            modelview.getModelMap().addAttribute("candidat", candidat);
+            modelview.getModelMap().addAttribute("experiencies", experiencies);
+            modelview.getModelMap().addAttribute("llistaOcupacions", llistaOcupacions);
+            modelview.getModelMap().addAttribute("llistaFormacions", llistaFormacions);
+            modelview.getModelMap().addAttribute("llistaHabilitats", llistaHabilitats);
+            modelview.getModelMap().addAttribute("opcions", opcions);
+            
+            return modelview;
+            
+      }
+      
+      /**
+       * 
+       * S'executa en fer submit del formulari de modificar dades del candidat
+       * Ha de rebre un objecte de tipus Candidat i invocar el mètode del servei per executar l'update
+       * Ha de retornar feedback a l'usuari del resultat
+       * Utilitza la classe CandidatFormulari, que és com Candidat però adaptat a les necessitats del formulari
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param formCandidat L'objecte de tipus Candidat que rebem del formulari per POST
+       * @return Un objecte modelandview que representa el model i la vista que mostrarem a l'usuari un cop provada d'executar l'actualització a la base de dades
+       */
+      @RequestMapping(value = "/perfilCandidat/actualitza", method = RequestMethod.POST)
+      public ModelAndView executaModifCandidat( @ModelAttribute("formCandidat") CandidatFormulari formCandidat) {
+            
+            // proves que podrem carregar-nos...
+            //
+            System.out.println("--- Dades rebudes del formulari ---");
+            System.out.println("--- Nom complet: "+formCandidat.getNom()+" "+formCandidat.getCognoms());
+            System.out.println("--- Data de naixement: "+formCandidat.getDataNaix());
+            System.out.println("--- Habilitats: "+formCandidat.getHabilitats());
+            for (Experiencia item : formCandidat.getExperiencies()) {
+                  System.out.println("--- Experiencia  ---");
+                  System.out.println("--- Anys: "+item.getAnys());
+                  System.out.println("--- Empresa: "+item.getNomEmpresa());
+                  System.out.println("--- Descripció: "+item.getDescripcio());
+            }
+            //
+            // ...fins aqui.
+
+            // Obtenim el nom (e-mail) de l'usuari loguejat
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String nom = auth.getName();
+            
+            String missatgeFeedback;
+            String classeFeedback;
+            
+            List<Map<String , String>> opcions  = new ArrayList<>();
+            
+            try {
+                  // Tractem de recuperar el codi del candidat a partir del nom de l'usuari loguejat
+                  // codiCandidat=candidatService.getCodiByEmail(nom);
+                  
+                  // PENDENTS DE TENIR EL MÈTODE QUE TORNI EL CODI D'USUARI PASSANT-LI L'E-MAIL                  
+                  Integer codiCandidat=1; // de prova
+                  // Afegim el codi d'usuari a les urls de les opcions
+                  op_ofertesCandidat.put("usuari","/"+codiCandidat);
+                  op_candidatures.put("usuari","/"+codiCandidat);
+                  op_perfilCandidat.put("usuari","/"+codiCandidat);
+                  op_baixaCandidat.put("usuari","/"+codiCandidat);
+                  opcions.add(op_ofertesCandidat);
+                  opcions.add(op_candidatures);
+                  opcions.add(op_perfilCandidat);
+                  opcions.add(op_baixaCandidat);
+                  opcions.add(op_logout);
+            } catch(Exception e){
+                  // Si no hem pogut recuperar el codi de l'usuari no podem muntar les urls de les opcions de la barra de navegació
+                  opcions.add(op_logout);
+            }
+            
+            ModelAndView modelview = new ModelAndView("home");
+            
+            try {
+                  // Provem de fer l'update a la base de dates mitjançant el corresponent mètode del servei
+                  // PENDENT DE TENIR EL MÈTODE
+                  
+                  missatgeFeedback = "Les dades s'han actualitzat correctament (DE MOMENT NO ÉS AIXÍ PQ MANCA EL MÈTODE)";
+                  classeFeedback = "alert-warning";
+            } catch (Exception e) {
+                  // No s'ha pogut fer l'update
+                  missatgeFeedback = msgErrorBBDD;
+                  classeFeedback = "alert-danger";
+            }
+                       
+            modelview.getModelMap().addAttribute("ubicacio", baseline);
+            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
+            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+            modelview.getModelMap().addAttribute("opcions", opcions);
+            
+            return modelview;
+      }
+      
+      
+      /**
+       * 
        * Prepara i retorna la vista d'ofertes a l'empresa que les ha creat
        * 
        * @author Daniel Sevilla i Junyent
@@ -749,7 +1031,8 @@ public class EspaiController {
        * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/ofertesEmpresa/{codiEmpresa}", method = RequestMethod.GET)
-      public ModelAndView OfertesEmpresaRequest(@PathVariable("codiEmpresa") int codiEmpresa, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView ofertesEmpresa(@PathVariable("codiEmpresa") int codiEmpresa, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            
             ModelAndView modelview = new ModelAndView("ofertesAdminEmpresa");
             
             // En aquest cas haurem de mostrar les ofertes que pertanyen a l'empresa el codi de la qual passem com a PathVariable
@@ -787,7 +1070,7 @@ public class EspaiController {
        * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/candidat/{codiCandidat}", method = RequestMethod.GET)
-      public ModelAndView CandidatPerCodi(@PathVariable("codiCandidat") Integer codiCandidat, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView candidatPerCodi(@PathVariable("codiCandidat") Integer codiCandidat, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
           
             // Passem a la vista les opcions de la barra de navegacó PER USUARI EMPRESA
             // Aquesta mateixa vista l'hauria de poder veure com a mínim l'admin, probablement amb altres opcions a la barra de navegació
@@ -841,7 +1124,7 @@ public class EspaiController {
        * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
       @RequestMapping(value = "/candidatures/{codiCandidat}", method = RequestMethod.GET)
-      public ModelAndView CandidaturesPerCandidat(@PathVariable("codiCandidat") Integer codiCandidat, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView candidaturesPerCandidat(@PathVariable("codiCandidat") Integer codiCandidat, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
           
             // Passem a la vista les opcions de la barra de navegacó PER USUARI EMPRESA
             // Aquesta mateixa vista l'hauria de poder veure com a mínim l'admin, probablement amb altres opcions a la barra de navegació
@@ -890,7 +1173,7 @@ public class EspaiController {
       public ModelAndView logout(HttpServletRequest request) {
            
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{op_entrar_candidat,op_entrar_empresa};  
+            HashMap[] opcions = new HashMap[]{op_entrarCandidat,op_entrarEmpresa};  
           
             ModelAndView modelview = new ModelAndView("home");
             modelview.getModelMap().addAttribute("opcions", opcions);
@@ -974,7 +1257,7 @@ public class EspaiController {
       * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
       */
      @RequestMapping(value = "/cancelarCandidatura/{codiCandidatura}", method = RequestMethod.GET)
-     public ModelAndView cancelacioCandidatura(@PathVariable("codiCandidatura") Integer codiCandidatura) {
+     public ModelAndView cancelarCandidatura(@PathVariable("codiCandidatura") Integer codiCandidatura) {
            
            Boolean cancelacioOK=false;
            
@@ -1065,6 +1348,36 @@ public class EspaiController {
             // return categoryService.getAllSubcategories(categoryId);
       }
       
+      
+      /**
+       * 
+       * Ha de retornar els objectes de tipus Experiència de la bbdd associats a un candidat
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param idCandidat El codi del candidat els objectes Experiència associats al qual ha de retornar el mètode
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Una llista d'objectes de tipus Experiència
+       */
+      @RequestMapping(value = "/getExperiencies/{idCandidat}", method = RequestMethod.GET)
+      public @ResponseBody  List<Experiencia> getExperienciesPerCandidat(@PathVariable("idCandidat") Integer idCandidat,HttpServletRequest request, HttpServletResponse response) {
+            
+            //
+            //
+            // Mentre no tinguem el mètode de la capa servei desenvolupat retornarem una llista d'objectes experiència de prova
+            //
+            //
+            
+            Experiencia ex1 = new Experiencia(1,5, "Empresa Inc.", 1, "Vaig treballar molt");
+            Experiencia ex2 = new Experiencia(2,3, "Empresot Corp.", 2, "No vaig treballar gaire");
+            List<Experiencia> experiencies = new ArrayList();
+            experiencies.add(ex1);
+            experiencies.add(ex2);
+           
+            return experiencies;
+     
+      }
+      
     
       /**
        * 
@@ -1079,7 +1392,7 @@ public class EspaiController {
        * @throws IOException Indica que s'ha produït algun error d'entrada/sortida
        */
      @RequestMapping(value = "/altaOferta/{codiEmpresa}", method = RequestMethod.GET)
-      public ModelAndView addOfertaRequest(@PathVariable("codiEmpresa") Integer codiEmp,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      public ModelAndView altaOferta(@PathVariable("codiEmpresa") Integer codiEmp,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             // Controlador que munta la vista d'alta d'oferta
             ModelAndView modelview = new ModelAndView("altaOferta");
             
@@ -1163,7 +1476,7 @@ public class EspaiController {
             if ( codiEmp == null || empresa == null) {
                   modelview.setViewName("home");
                   
-                  HashMap[] opcions = new HashMap[]{op_candidats,op_ofertes,op_empreses,op_logout};
+                  HashMap[] opcions = new HashMap[]{op_candidats,op_ofertesCandidat,op_empreses,op_logout};
                   modelview.getModelMap().addAttribute("ubicacio", baseline);
                   modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
                   modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
@@ -1172,7 +1485,7 @@ public class EspaiController {
             }
             
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{op_inici, op_candidats, op_ofertes, op_empreses, op_logout};
+            HashMap[] opcions = new HashMap[]{op_inici, op_candidats, op_ofertesCandidat, op_empreses, op_logout};
             
             modelview.getModelMap().addAttribute("ubicacio", "Dades de l'empresa");
             modelview.getModelMap().addAttribute("empresa", empresa);
@@ -1182,7 +1495,7 @@ public class EspaiController {
       }
       
       
-      @RequestMapping(value = "/empresa/{codiEmpresa}/esborrar", method = RequestMethod.GET)
+      @RequestMapping(value = "/empresa/{codiEmpresa}/esborra", method = RequestMethod.GET)
       public ModelAndView esborraEmpresa(@PathVariable("codiEmpresa") Integer codiEmp, HttpServletRequest request, HttpServletResponse response) {
             
             // Obtenim el rol de l'usuari loguejat
@@ -1210,22 +1523,18 @@ public class EspaiController {
                         op_altaOferta.put("usuari","/"+codiEmp);
                         op_ofertesEmpresa.put("usuari","/"+codiEmp);
                         op_perfilEmpresa.put("usuari","/"+codiEmp);
+                        op_baixaEmpresa.put("usuari","/"+codiEmp);
                         
                         opcions.add(op_altaOferta);
                         opcions.add(op_ofertesEmpresa);
                         opcions.add(op_perfilEmpresa);
+                        opcions.add(op_baixaEmpresa);
                         opcions.add(op_logout);
                         break;
                   case "ROLE_ADMIN":
                         // HI ha l'admin loguejat
                         modelview.setViewName("empreses");
                         modelview.getModelMap().addAttribute("ubicacio", "Empreses donades d'alta");
-                        try {
-                              List<Empresa> empreses = empresaService.getAllEmpreses();
-                              modelview.getModelMap().addAttribute("empreses", empreses);
-                        } catch(Exception e)  {
-                              missatgeFeedback =msgErrorBBDD;
-                        }
                         opcions.add(op_candidats);
                         opcions.add(op_empreses);
                         opcions.add(op_ofertesAdmin);
@@ -1233,17 +1542,12 @@ public class EspaiController {
                         break;
             }
             
-            Boolean operacioOK = false;
-            //
-            //
-            //
-            // Aqui haurem de cridar el mètode que esborra l'empresa
-            //
-            //
-            //
             
-            if (operacioOK) {
-                  // Si l'empresa ha estat esborrada correctament
+            try {
+                  // Invoquem el corresponent mètode el servei
+                  empresaService.esborrarEmpresa(codiEmp);
+                  System.out.println("--- hem executat el mètode esborrarEmpresa");
+                  
                   switch(role) {
                         case "ROLE_EMPRESA":
                               // Fem el logout
@@ -1254,19 +1558,26 @@ public class EspaiController {
                                     cookie.setMaxAge(0);
                               } */
                               opcions.clear();
-                              opcions.add(op_entrar_candidat);
-                              opcions.add(op_entrar_empresa);
-                              missatgeFeedback += "Empresa eliminada correctament.";
-                              classeFeedback = "alert-warning";
+                              opcions.add(op_entrarCandidat);
+                              opcions.add(op_entrarEmpresa);
                               break;
+                              
                         case "ROLE_ADMIN":
                               // Hi ha un usuari admin loguejat
-                              missatgeFeedback += "Empresa eliminada correctament.";
-                              classeFeedback = "alert-warning";
+                              try {
+                                    List<Empresa> empreses = empresaService.getAllEmpreses();
+                                    modelview.getModelMap().addAttribute("empreses", empreses);
+                              } catch(Exception e)  {
+                                    missatgeFeedback =msgErrorBBDD;
+                              }
                               break;
-                  }
+                              
+                  } // del switch
                   
-            } else {
+                  missatgeFeedback += "Empresa eliminada correctament.";
+                  classeFeedback = "alert-warning";
+                  
+            } catch (Exception e){
                   // Si l'operació d'esborrat de l'empresa no ha estat exitosa
                   missatgeFeedback = "L'empresa no ha pogut ésser eliminada amb èxit.";
                   classeFeedback = "alert-danger"; 
@@ -1300,7 +1611,7 @@ public class EspaiController {
                   // Si la petició a la base de dades no té èxit
                   modelview.setViewName("home");
                   // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-                  HashMap[] opcions = new HashMap[]{op_inici, op_candidats, op_empreses, op_ofertes, op_logout};
+                  HashMap[] opcions = new HashMap[]{op_inici, op_candidats, op_empreses, op_ofertesCandidat, op_logout};
                   modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
                   modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
                   modelview.getModelMap().addAttribute("ubicacio", baseline);
@@ -1336,6 +1647,7 @@ public class EspaiController {
                         
             // Li passarem a la vista una llista de candidats que en realitat haurem de rebre de la bbd mitjançant el corresponent mètode del servei
             // Aquesta llista està iniciliatitzada a l'inici, i al constructor, de la classe
+            // List<Candidat> candidats = candidatService...
             
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{op_inici,op_empreses,op_ofertesAdmin,op_logout};
@@ -1354,47 +1666,150 @@ public class EspaiController {
        * Retorna un objecte modelanview amb referència a la vista candidats, que mostrarà el llistat de candidats actualitzat
        * 
        * @author Daniel Sevilla i Junyent
-       * @param codiCand El codi del candidat que s'ha d'esborrar
+       * @param codiCandidat El codi del candidat que s'ha d'esborrar
        * @param request La petició hhtp
        * @param response La resposta http
        * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
        */
-      @RequestMapping(value = "/esborraCandidat/{codiCandidat}", method = RequestMethod.GET)
-      public ModelAndView esborraCandidat(@PathVariable("codiCandidat") Integer codiCand,HttpServletRequest request, HttpServletResponse response) {
+      @RequestMapping(value = "/eliminaCandidat/{codiCandidat}", method = RequestMethod.GET)
+      public ModelAndView eliminaCandidat(@PathVariable("codiCandidat") Integer codiCandidat,HttpServletRequest request, HttpServletResponse response) {
             // Gestiona l'eliminació d'un candidat
             // Aqui hem de cridar el mètode del servei que esborra el candidat i tornar true si s'ha fet l'operació o false si no s'ha completat.
-            // Passarem la llista de candidats actualitzada a la vista.
+
+            System.out.println("--- Rol abans d'executar la baixa: "+SecurityContextHolder.getContext().getAuthentication().getAuthorities().iterator().next().toString());
             
-            Boolean eliminacioOK=false;
+            ModelAndView modelview = new ModelAndView("eliminaCandidat");
+            
+            // Opcions a la barra de navegació
+            op_ofertesCandidat.put("usuari","/"+codiCandidat);
+            op_candidatures.put("usuari","/"+codiCandidat);
+            op_perfilCandidat.put("usuari","/"+codiCandidat);
+            op_candidatures.put("usuari","/"+codiCandidat);
+                  
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{op_inici, op_ofertesCandidat, op_candidatures, op_perfilCandidat, op_logout};  
+            
+            // Objecte CandidatFormulari per passar al formulari
+            CandidatFormulari cand = new CandidatFormulari();
+            
+            modelview.getModelMap().addAttribute("opcions", opcions);
+            modelview.getModelMap().addAttribute("ubicacio", "Baixa del perfil de candidat");
+            modelview.getModelMap().addAttribute("formCandidat", cand);
+           
+            return modelview;
+      }
+      
+      
+      /**
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param codiCandidat El codi del candidat
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Un objecte modelandview que representa el model i la vista que es mostrarà a l'usuari.
+       */
+      @RequestMapping(value = "/eliminaCandidat/{codiCandidat}/executa", method = RequestMethod.POST)
+      public ModelAndView executaEliminaCandidat(@ModelAttribute("formCandidat") Candidat formCandidat, @PathVariable("codiCandidat") Integer codiCandidat, HttpServletRequest request, HttpServletResponse response) {
+            
+            // Obtenim el rol de l'usuari loguejat
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String role = auth.getAuthorities().iterator().next().toString(); // El primer element de la collection auth.getAuthorities. Assumim que només conté un element.
+            String nom = auth.getName(); // email de l'usuari loguejat
+            
+            ModelAndView modelview = new ModelAndView("home");
+            
+            System.out.println("--- Codi del candidat passat per la url: "+codiCandidat);
+            System.out.println("--- Rol loguejat: "+role);
+            System.out.println("--- E-mail loguejat: "+nom);
+            System.out.println("--- E-mail rebut del formulari: "+formCandidat.getEmail());
+            
+            // Missatge i classe del missatge de feedback que rebrà l'usuari
+            String missatgeFeedback =""; // missatge de feedback que rebrà l'usuari 
+            String classeFeedback = "";  // classe CSS que s'aplicarà al contenidor del missatge de feedback
+
+            // Creem les opcions que aniràn a la barra de navegació
+            List<Map<String, String>> opcions = new ArrayList<>();
+            
+            if (nom.equals(formCandidat.getEmail())) {
+                  // Si el correu de l'usuari loguejat coincideix amb el que ha entrat l'usuari manualment al formulari
+                  // Provem d'executar la baixa
+                  
+                  try {
+                        // Tractem d'esborrar el candidat de la bbdd
+                        candidatService.deleteByCodi(codiCandidat);
+                        // Fem el logout
+                        HttpSession session= request.getSession(false);
+                        SecurityContextHolder.clearContext();
+                        if(session != null) { session.invalidate();}
+                        // Posem les opcions i els missatges per la vista
+                        opcions.add(op_entrarCandidat);
+                        opcions.add(op_entrarEmpresa);
+                        missatgeFeedback = "La baixa de l'usuari s'ha realitzat correctament.";
+                        classeFeedback = "alert-warning";
+                        
+                  } catch (Exception e){
+                        // si no s'ha pogut executar la baixa del candidat
+                        op_ofertesCandidat.put("usuari", "/"+codiCandidat);
+                        op_candidatures.put("usuari", "/"+codiCandidat);
+                        op_perfilCandidat.put("usuari", "/"+codiCandidat);
+                        op_baixaCandidat.put("usuari", "/"+codiCandidat);
+                        opcions.add(op_ofertesCandidat);
+                        opcions.add(op_candidatures);
+                        opcions.add(op_perfilCandidat);
+                        opcions.add(op_baixaCandidat);
+                        opcions.add(op_logout);
+                        missatgeFeedback = "La baixa del perfil no s'ha pogut realitzar correctament. Contacta amb l'administrador.";
+                        classeFeedback = "alert-danger";
+                        
+                  } // del try-catch
+                  
+            } else {
+                  
+                  // No coincideixen els correus (el de l'usuari loguejat i el que ha entrat al formulari per confirmar)
+                  modelview.setViewName("eliminaCandidat");
+                  missatgeFeedback = "La baixa del perfil no s'ha realitzat. El correu introduït no correspon amb el del perfil.";
+                  classeFeedback = "alert-warning";
+                  op_ofertesCandidat.put("usuari", "/"+codiCandidat);
+                  op_candidatures.put("usuari", "/"+codiCandidat);
+                  op_perfilCandidat.put("usuari", "/"+codiCandidat);
+                  opcions.add(op_inici);
+                  opcions.add(op_ofertesCandidat);
+                  opcions.add(op_candidatures);
+                  opcions.add(op_perfilCandidat);
+                  opcions.add(op_logout);
+                  modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
+                  modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+                  modelview.getModelMap().addAttribute("ubicacio", "Baixa del perfil de candidat");
+                  modelview.getModelMap().addAttribute("opcions", opcions);
+                  return modelview;
+            }
+                 
+            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
+            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+            modelview.getModelMap().addAttribute("ubicacio", baseline);
+            modelview.getModelMap().addAttribute("opcions", opcions);
+            return modelview;
+            
+      }
+      
+      
+      
+      @RequestMapping(value = "/eliminaCandidatAdmin/{codiCandidat}", method = RequestMethod.GET)
+      public ModelAndView eliminaCandidatAdmin(@PathVariable("codiCandidat") Integer codiCand,HttpServletRequest request, HttpServletResponse response) {
             
             ModelAndView modelview = new ModelAndView("candidats");
+
+            
+            // NOMÉS PER L'ADMIN
+            // PENDENTS DE TENIR EL MÈTODE D'ESBORRAR PER CODI
+            
             
             // Li passarem a la vista una llista de candidats que en realitat haurem de rebre de la bbd mitjançant el corresponent mètode del servei
             // Aquesta llista està iniciliatitzada a l'inici, i al constructor, de la classe
             
-            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{op_inici, op_empreses, op_ofertesAdmin, op_logout};
-            
-            // missatge i classe del missatge de feedback que rebrà l'usuari
-            String missatgeFeedback =""; // missatge de feedback que rebrà l'usuari 
-            String classeFeedback = "";  // classe CSS que s'aplicarà al contenidor del missatge de feedback
-           
-            if (eliminacioOK) {
-                  missatgeFeedback = "Candidat eliminat correctament.";
-                  classeFeedback = "alert-warning";
-            } else {
-                  missatgeFeedback = "Degut a un error el candidat no ha estat eliminat.";
-                  classeFeedback = "alert-danger";
-            }
-            
-            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
-            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
-            modelview.getModelMap().addAttribute("ubicacio", "Llistat de tots els candidats");
-            modelview.getModelMap().addAttribute("candidats", candidats);
-            modelview.getModelMap().addAttribute("opcions", opcions);
-           
             return modelview;
       }
+      
       
       /**
       * 
@@ -1411,6 +1826,42 @@ public class EspaiController {
             
             return "redirect:"+ referer;
       }
+      
+      
+      /**
+ * 
+ * Converteix un item de candidat, de tipus Candidat (el que desem a la bbdd) a tipus CandidatFormulari, apte per utilitzar amb els formularis
+ * Diferències implementades:
+ *    La data de naixement, a la classe CandidatFormulari, és de tipus LocalDate / per desar a la bbdd ha de ser de tipus java.sql.Date
+ * 
+ * @author Daniel Sevilla i Junyent
+ * @param c El candidat, de tipus CandidatFormulari, que li passem
+ * @return L'objecte convertit a objecte de la classe CandidatFormulari
+ */
+    public CandidatFormulari aCandidatFormulari(Candidat c){
+          
+          CandidatFormulari retornar = new CandidatFormulari();
+          
+          retornar.setCodi(c.getCodi());
+          retornar.setNom(c.getNom());
+          retornar.setCognoms(c.getCognoms());
+          retornar.setDniNif(c.getDniNif());
+          retornar.setTelefon(c.getTelefon());
+          retornar.setPoblacio(c.getPoblacio());
+          retornar.setProvincia(c.getProvincia());
+          retornar.setDataNaix(c.getDataNaix().toLocalDate()); // La tarnsformem a tipus LocalDate
+          retornar.setEmail(c.getEmail());
+          retornar.setPass(c.getPass());
+          retornar.setcPass(c.getcPass());
+          retornar.setAdreca(c.getAdreca());
+          retornar.setFormacio(c.getFormacio());
+          retornar.setOcupacio(c.getOcupacio());
+          retornar.setObservacions(c.getObservacions());
+          retornar.setHabilitats(c.getHabilitats());
+          retornar.setExperiencies(c.getExperiencies());
+          
+          return retornar;
+    }
       
       
 }

@@ -27,7 +27,7 @@ section#alta-candidat, section#alta-empresa, section#alta-oferta {
 }
 
 
-section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat, section#candidats, section#empresa, section#empreses {
+section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat, section#candidats, section#empresa, section#empreses, section#baixaCandidat {
       padding-top: 4rem;
 }
 
@@ -157,4 +157,47 @@ section#ofertes-empresa, section#empreses, section#candidats, #llistat-candidatu
 
 #llistat-candidatures {
       margin-top: 1em;
+}
+
+section#baixaCandidat {
+      
+      div {
+            max-width: 330px;
+            margin: auto;
+            text-align: justify;
+            text-justify: auto;
+            
+            p {
+                  color: $color-gris-text;
+                  font-size: 0.9em;
+                  padding: 0 10%;
+                  
+                  span { 
+                        color: $color-basic-blau-fosc;
+                        font-weight: 600;
+                  }
+                  
+                  &:last-of-type {
+                        text-align: center;
+                  }
+            }
+            
+            form {
+                  padding: 0 10%;
+                  &:focus {
+                        z-index: 2;
+                  }
+                  input{
+                        box-sizing: border-box;
+                        height: auto;
+                        padding: 10px;
+                        font-size: 16px;
+                  }
+            }
+            
+            button{
+                  width:100%;
+                  margin-top: 10px;
+            } 
+      }
 }

@@ -22,5 +22,9 @@ public interface CandidatRepository {
     void updateCandidat(Candidat candidat);
     
     void deletePerfil(Candidat candidat);
+    
+    Candidat getCodiByEmail(String email);
+    
+    void deleteByCodi (Integer codi);
 
 }

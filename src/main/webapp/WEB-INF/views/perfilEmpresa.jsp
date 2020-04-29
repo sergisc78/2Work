@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" session="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -71,7 +71,8 @@
             <section id="perfil-empresa" class="container-sm formulari-alta">       
                   <h3 class="text-center blau">Dades de l'empresa</h3><br>
 
-                  <form:form modelAttribute="formEmpresa" class="needs-validation" novalidate="novalidate" onsubmit="return validarEmp();" action="actualitza">
+                  <spring:url value="actualitza" var="act" />
+                  <form:form modelAttribute="formEmpresa" class="needs-validation" novalidate="novalidate" onsubmit="return validarEmp();" action="${act}">
 
                         <div class="form-group">
                               <label for="nom">Nom de l'empresa</label>

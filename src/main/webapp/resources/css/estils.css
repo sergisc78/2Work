@@ -325,7 +325,7 @@ section#alta-candidat a:not([href]), section#alta-empresa a:not([href]), section
 #modalPrivacitat .modal-content {
   font-size: 0.9em; }
 
-section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat, section#candidats, section#empresa, section#empreses {
+section#motius, section#info, section#ofertes, section#oferta, section#ofertes-empresa, section#candidat, section#candidats, section#empresa, section#empreses, section#baixaCandidat {
   padding-top: 4rem; }
 
 section#ofertes .card {
@@ -398,5 +398,32 @@ section#ofertes-empresa .list-group-item a, section#empreses .list-group-item a,
 
 #llistat-candidatures {
   margin-top: 1em; }
+
+section#baixaCandidat div {
+  max-width: 330px;
+  margin: auto;
+  text-align: justify;
+  text-justify: auto; }
+  section#baixaCandidat div p {
+    color: #666;
+    font-size: 0.9em;
+    padding: 0 10%; }
+    section#baixaCandidat div p span {
+      color: #1d70b7;
+      font-weight: 600; }
+    section#baixaCandidat div p:last-of-type {
+      text-align: center; }
+  section#baixaCandidat div form {
+    padding: 0 10%; }
+    section#baixaCandidat div form:focus {
+      z-index: 2; }
+    section#baixaCandidat div form input {
+      box-sizing: border-box;
+      height: auto;
+      padding: 10px;
+      font-size: 16px; }
+  section#baixaCandidat div button {
+    width: 100%;
+    margin-top: 10px; }
 
 /*# sourceMappingURL=estils.css.map */
