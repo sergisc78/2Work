@@ -74,6 +74,7 @@ public class EspaiController {
       final String classeKO  = "alert-danger";
       
       // Missatges de feedback reutilitzables a les vistes
+      HashMap<String, String> fb_TEST = new HashMap<>();
       HashMap<String, String> fb_ofertaDesadaOK = new HashMap<>();
       HashMap<String, String> fb_ofertaNoDesada = new HashMap<>();
       HashMap<String, String> fb_canvisOK = new HashMap<>();
@@ -159,6 +160,8 @@ public class EspaiController {
             op_altaOferta.put("url","/altaOferta");
             
             //Missatges reutilitzables a les vistes
+            fb_TEST.put("missatge","Aquest és un missatge de test.");
+            fb_TEST.put("classe", classeOK);
             fb_ofertaDesadaOK.put("missatge","L'oferta s'ha desat correctament.");
             fb_ofertaDesadaOK.put("classe", classeOK);
             fb_ofertaNoDesada.put("missatge","L'oferta no ha pogut ésser desada correctament.");
@@ -469,6 +472,21 @@ public class EspaiController {
             // Llista que contindrà les opcions que hi haurà a la barra de navegació
             List<Map<String , String>> opcions  = new ArrayList<>();
             
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+                  
+            
+            Oferta oferta = new Oferta();
+            System.out.println("Codi d'una oferta acabada de crear, sense contingut: "+oferta.getCodiOferta());
+            
+            // PER ACABAR
+            
+            try {
+                  oferta = ofertaService.getOfertaByCodi(codiOferta);
+            } catch(Exception e) {
+                  feedback.add(fb_problemaBBDD);
+            }
+            
             // Segons el rol de l'usuari loguejat...
             switch(role){
                   case "ROLE_USER":
@@ -496,9 +514,8 @@ public class EspaiController {
                               opcions.add(op_inici);
                               opcions.add(op_logout);
                               
-                              // Llista que conté els missatges de feedback que passarem a la vista
-                              List<Map<String, String>> feedback = new ArrayList<>();
                               feedback.add(fb_problemaBBDD);
+                              
                               modelview.getModelMap().addAttribute("ubicacio", baseline);
                               modelview.getModelMap().addAttribute("feedback", feedback);
                               modelview.getModelMap().addAttribute("opcions", opcions);
@@ -530,8 +547,6 @@ public class EspaiController {
                               opcions.add(op_inici);
                               opcions.add(op_logout);
                               
-                              // Llista que conté els missatges de feedback que passarem a la vista
-                              List<Map<String, String>> feedback = new ArrayList<>();
                               feedback.add(fb_problemaBBDD);
                               
                               modelview.getModelMap().addAttribute("ubicacio", baseline);
@@ -544,10 +559,10 @@ public class EspaiController {
                         
             } // del switch
             
-            // Oferta of = toWorkService.getOfertaByRef(ref); // En aquesta linia invocarem el mètode del servei per recuperar l'objecte oferta que després passarem a la vista
-           
+            
             // Afegeixo els atributs per passar a la vista
             modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
+            modelview.getModelMap().addAttribute("feedback", feedback);
             modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
             modelview.getModelMap().addAttribute("opcions", opcions);
                     
@@ -576,13 +591,15 @@ public class EspaiController {
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{op_iniciAdmin, op_candidats, op_empreses, op_ofertesAdmin, op_logout};  
             
+            // Llista que conté els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+            
             Oferta oferta = new Oferta();
             
             try{
                   oferta = ofertaService.getOfertaByCodi(codiOferta);
             } catch (Exception e) {
-                  // Llista que conté els missatges de feedback que passarem a la vista
-                  List<Map<String, String>> feedback = new ArrayList<>();
+                  
                   feedback.add(fb_problemaBBDD);
                   modelview.getModelMap().addAttribute("feedback", feedback);
             }
@@ -742,27 +759,53 @@ public class EspaiController {
             
             // Llista que contindrà les opcions que hi haurà a la barra de navegació
             List<Map<String , String>> opcions  = new ArrayList<>();
+            
+            // Llista que conté els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
 
+            Oferta oferta = new Oferta();
             Integer codiEmpresa;
             
-            // Tractem d'obtenir el codi de l'empresa loguejada per afegir-lo a les urls de les opcions de la barra de navegació
+            // Tractem d'obtenir de la base de dades l'oferta 
             try {
-                  codiEmpresa = empresaService.getCodiByEmail(nom);      
-            } catch (Exception e){
-                  // Si no hem pogut obtenir el codi de l'empresa
+                  oferta = ofertaService.getOfertaByCodi(codiOferta);
+            } catch(Exception e){
+                  feedback.add(fb_problemaBBDD);
+            }
+            
+            
+            if (oferta.getCodiOferta() != null) {
+                  // Hem obtingut l'oferta
+                  // Tractem d'obtenir el codi de l'empresa loguejada per afegir-lo a les urls de les opcions de la barra de navegació
+                  
+                  try {
+                        codiEmpresa = empresaService.getCodiByEmail(nom);      
+                  } catch (Exception e){
+                        // Si no hem pogut obtenir el codi de l'empresa
+                        modelview.setViewName("home");
+                        opcions.add(op_inici);
+                        opcions.add(op_logout);
+                  
+                        feedback.add(fb_problemaBBDD);
+                  
+                        modelview.getModelMap().addAttribute("ubicacio", baseline);
+                        modelview.getModelMap().addAttribute("feedback", feedback);
+                        modelview.getModelMap().addAttribute("opcions", opcions);
+                        return modelview;
+                  }
+            } else {
+                  // No hem obtingut l'oferta
                   modelview.setViewName("home");
                   opcions.add(op_inici);
                   opcions.add(op_logout);
-                  
-                  // Llista que conté els missatges de feedback que passarem a la vista
-                  List<Map<String, String>> feedback = new ArrayList<>();
                   feedback.add(fb_problemaBBDD);
-                  
                   modelview.getModelMap().addAttribute("ubicacio", baseline);
                   modelview.getModelMap().addAttribute("feedback", feedback);
                   modelview.getModelMap().addAttribute("opcions", opcions);
                   return modelview;
             }
+                        
+            // Arribem a aquest punt si tenim l'oferta i el codi de l'empresa
 
             // Afegim el codi de l'empresa a les urls de les opcions a la barra de navegació
             op_altaOferta.put("usuari","/"+codiEmpresa+"/");
@@ -774,11 +817,12 @@ public class EspaiController {
             opcions.add(op_perfilEmpresa);
             opcions.add(op_logout);
                        
+            // LES CANDIDATURES ENCARA SON DE PROVA FINS QUE ESTIGUI IMPLEMENTADA AQUESTA PART DEL REPOSITORI/SERVEI
             Candidatura formCandidatura = new Candidatura();
 
             // Afegeixo els atributs per passar a la vista
             modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
-            modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
+            modelview.getModelMap().addAttribute("oferta", oferta);
             modelview.getModelMap().addAttribute("opcions", opcions);
 
             modelview.getModelMap().addAttribute("estatsPossiblesCandidatura", estatsPossibles);
@@ -1174,12 +1218,22 @@ public class EspaiController {
             
             ModelAndView modelview = new ModelAndView("ofertesAdminEmpresa");
             
-            // En aquest cas haurem de mostrar les ofertes que pertanyen a l'empresa el codi de la qual passem com a PathVariable
-            // Les hem d'obtenir de la bbdd mitjançant el mètode de la capa servei
-            
             // Llista que contindrà les opcions que hi haurà a la barra de navegació
             List<Map<String , String>> opcions  = new ArrayList<>();
             
+            // Llista que conté els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+            
+            List<Oferta> ofertes = new ArrayList<Oferta>();
+            
+            try {
+                  // Provem de recuperar de la base de dades les ofertes generades per l'empresa
+                  ofertes = ofertaService.getOfertaByCodiEmpresa(codiEmpresa);
+            } catch (Exception e) {
+                  // Si no hem pogut recuperar les dades
+                  feedback.add(fb_problemaBBDD);
+            }
+                   
             // Afegim l'usuari als maps de les opcions amb el parell amb clau "usuari", que completarà la url dels enllaços
             op_altaOferta.put("usuari","/"+codiEmpresa+"/");
             op_perfilEmpresa.put("usuari","/"+codiEmpresa);
@@ -1190,6 +1244,8 @@ public class EspaiController {
             opcions.add(op_logout);
             
             modelview.getModelMap().addAttribute("ubicacio", "Ofertes generades");
+            modelview.getModelMap().addAttribute("feedback", feedback);
+            modelview.getModelMap().addAttribute("ofertes", ofertes);
             modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;
