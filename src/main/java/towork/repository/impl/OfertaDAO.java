@@ -181,7 +181,7 @@ public class OfertaDAO implements OfertaRepository{
     @Override
     public Oferta getOfertaByCodi(Integer codi) {
               
-        String qry = "select * from ofertes where codi = ?";
+        String qry = "select * from ofertes where codiOferta = ?";
         PreparedStatement preparedStatement;
         try {
             preparedStatement = getPreparedStatement(qry);
