@@ -219,7 +219,7 @@ public class OfertaDAO implements OfertaRepository{
             String qry="INSERT INTO ofertes(codiEmpresa,titolOferta,ocupacio,poblacio,provincia,sou,horari,tipusContracte,formacio,estat,descripcio) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement=getPreparedStatement(qry);
            
-            preparedStatement.setInt(1,1); //Aquí hem d'aconseguir posar el mètode que dona el codi d'empresa a partir de l'email que s'ha registrat per exemple?
+            preparedStatement.setInt(1,oferta.getCodiEmpresa()); //Aquí hem d'aconseguir posar el mètode que dona el codi d'empresa a partir de l'email que s'ha registrat per exemple?
             preparedStatement.setString(2,oferta.getTitolOferta());           
             preparedStatement.setInt(3,oferta.getOcupacio());           
             preparedStatement.setString(4,oferta.getPoblacio());
@@ -228,7 +228,7 @@ public class OfertaDAO implements OfertaRepository{
             preparedStatement.setString(7,oferta.getHorari());
             preparedStatement.setString(8,oferta.getTipusContracte());            
             preparedStatement.setInt(9,oferta.getFormacio());
-            preparedStatement.setString(10,"No coberta");
+            preparedStatement.setString(10,oferta.getEstat());
             preparedStatement.setString(11,oferta.getDescripcio());
              
             createOrUpdateOferta(oferta.getCodiOferta(),preparedStatement);
