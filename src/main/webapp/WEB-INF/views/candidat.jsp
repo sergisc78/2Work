@@ -47,6 +47,10 @@
       <sec:authorize access="isAuthenticated()">
             <%@include  file='/resources/html/barra-usuari.html' %>
       </sec:authorize>
+            
+      <c:if test="${not empty feedback}">
+            <%@include  file='/resources/html/feedback.html' %> 
+      </c:if>
                     
       <section class="barra-ubicacio">
             <div class="container">

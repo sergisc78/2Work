@@ -55,17 +55,8 @@
             <%@include  file='/resources/html/barra-usuari.html' %>
       </sec:authorize>
             
-      <c:if test="${not empty missatgeFeedback}">
-      <section id="feedback" role="alert" class="${classeFeedback} alert  alert-dismissible fade show">
-            <div class="container">
-                  <div>
-                        ${missatgeFeedback}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                        </button>
-                  </div>
-            </div>
-      </section>                  
+      <c:if test="${not empty feedback}">
+            <%@include  file='/resources/html/feedback.html' %> 
       </c:if>
             
         <section class="barra-ubicacio">
@@ -88,6 +79,24 @@
                             <div class="card-body">
                                   <c:if test="${loop.index % 2 == 0}"><p class="card-text">Breu descripció de l'oferta</p></c:if>
                                   <c:if test="${loop.index % 2 != 0}"><p class="card-text">Una descripció d'oferta bastant més llarga, per provar les cards amb alçades variables, i com es comporta tot plegat.</p></c:if>
+                                  <a class="btn btn-primary wobble" href="<spring:url value='/oferta/${loop.index}' />" >
+                                          Veure
+                                          <svg class="text-light" width="15" height="20" viewBox="3 0 15 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/> 
+                                          </svg>
+                                  </a>
+                            </div>
+                      </div>
+                  </div>
+                </c:forEach>
+              </div>
+              
+              <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+                  <c:forEach items="${ofertes}" var="oferta">
+                  <div class="col">      
+                        <div class="card">
+                            <div class="card-body">
+                                  <p class="card-text">{$oferta.descripcio}</p>
                                   <a class="btn btn-primary wobble" href="<spring:url value='/oferta/${loop.index}' />" >
                                           Veure
                                           <svg class="text-light" width="15" height="20" viewBox="3 0 15 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

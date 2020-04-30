@@ -46,17 +46,8 @@
             <%@include  file='/resources/html/barra-usuari.html' %>
       </sec:authorize>
             
-      <c:if test="${not empty missatgeFeedback}">
-            <section id="feedback" role="alert" class="${classeFeedback} alert  alert-dismissible fade show">
-                  <div class="container">
-                        <div>
-                              ${missatgeFeedback}
-                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                              </button>
-                        </div>
-                  </div>
-            </section>                  
+      <c:if test="${not empty feedback}">
+            <%@include  file='/resources/html/feedback.html' %> 
       </c:if>
             
       <section id="admin">
@@ -71,7 +62,7 @@
                               <a href="<spring:url value='/empreses'/>" class="btn btn-lg btn-primary" role="button">Empreses</a>
                         </div>
                         <div class="col col-md-4">
-                              <a href="<spring:url value='/ofertes'/>" class="btn btn-lg btn-primary" role="button">Ofertes</a>
+                              <a href="<spring:url value='/ofertesAdmin'/>" class="btn btn-lg btn-primary" role="button">Ofertes</a>
                         </div>
                   </div>
                   

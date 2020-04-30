@@ -47,9 +47,10 @@ public class HomeController {
       CandidatService candidatService;
       
       // Opcions reutilitzables per la barra de navegació
-      HashMap<String, String> op_entrar_candidat = new HashMap<>();
-      HashMap<String, String> op_entrar_empresa = new HashMap<>();
+      HashMap<String, String> op_entrarCandidat = new HashMap<>();
+      HashMap<String, String> op_entrarEmpresa = new HashMap<>();
       HashMap<String, String> op_inici = new HashMap<>();
+      HashMap<String, String> op_iniciAdmin = new HashMap<>();
       HashMap<String, String> op_logout = new HashMap<>();
       HashMap<String, String> op_ofertesCandidat = new HashMap<>();
       HashMap<String, String> op_candidatures = new HashMap<>();
@@ -79,12 +80,14 @@ public class HomeController {
       public HomeController() {
             
             // Opcions reutilitzables per la barra de navegació
-            op_entrar_candidat.put("paraula","Candidat");
-            op_entrar_candidat.put("url","/espaiCandidat");
-            op_entrar_empresa.put("paraula","Empresa");
-            op_entrar_empresa.put("url","/espaiEmpresa");
+            op_entrarCandidat.put("paraula","Candidat");
+            op_entrarCandidat.put("url","/espaiCandidat");
+            op_entrarEmpresa.put("paraula","Empresa");
+            op_entrarEmpresa.put("url","/espaiEmpresa");
             op_inici.put("paraula","Inici");
             op_inici.put("url","/");
+            op_iniciAdmin.put("paraula","Inici");
+            op_iniciAdmin.put("url","/admin");
             op_ofertesCandidat.put("paraula","Ofertes");
             op_ofertesCandidat.put("url","/espaiCandidat");
             op_candidatures.put("paraula","Candidatures");  
@@ -134,8 +137,8 @@ public class HomeController {
             switch(role){
                   case "ROLE_ANONYMOUS":
                         // No hi ha cap usuari loguejat
-                        opcions.add(op_entrar_candidat);
-                        opcions.add(op_entrar_empresa);
+                        opcions.add(op_entrarCandidat);
+                        opcions.add(op_entrarEmpresa);
                         break;
                         
                   case "ROLE_USER":
@@ -182,6 +185,7 @@ public class HomeController {
                         break;
                         
                   case "ROLE_ADMIN":
+                        opcions.add(op_iniciAdmin);
                         opcions.add(op_candidats);
                         opcions.add(op_empreses);
                         opcions.add(op_ofertesAdmin);
@@ -309,7 +313,7 @@ public class HomeController {
                   classeFeedback = "alert-danger";
             }
             
-            HashMap[] opcions = new HashMap[]{op_entrar_candidat, op_entrar_empresa};
+            HashMap[] opcions = new HashMap[]{op_entrarCandidat, op_entrarEmpresa};
             modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
             modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
             modelview.getModelMap().addAttribute("opcions", opcions);

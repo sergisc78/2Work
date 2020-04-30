@@ -1,6 +1,7 @@
 package towork.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,6 +54,7 @@ public class EspaiController {
       HashMap<String, String> op_entrarEmpresa = new HashMap<>();
       HashMap<String, String> op_logout = new HashMap<>();
       HashMap<String, String> op_inici = new HashMap<>();
+      HashMap<String, String> op_iniciAdmin = new HashMap<>();
       HashMap<String, String> op_candidats = new HashMap<>();
       HashMap<String, String> op_candidatures = new HashMap<>();
       HashMap<String, String> op_empreses = new HashMap<>();
@@ -70,8 +72,24 @@ public class EspaiController {
       final String baseline = "La teva web de cerca de feina";
       final String classeOK  = "alert-warning";
       final String classeKO  = "alert-danger";
-
-    
+      
+      // Missatges de feedback reutilitzables a les vistes
+      HashMap<String, String> fb_ofertaDesadaOK = new HashMap<>();
+      HashMap<String, String> fb_ofertaNoDesada = new HashMap<>();
+      HashMap<String, String> fb_canvisOK = new HashMap<>();
+      HashMap<String, String> fb_canvisKO = new HashMap<>();
+      HashMap<String, String> fb_problemaBBDD = new HashMap<>();
+      HashMap<String, String> fb_inscripcioOfertaOK = new HashMap<>();
+      HashMap<String, String> fb_inscripcioOfertaKO = new HashMap<>();
+      HashMap<String, String> fb_cancelacioCandidaturaOK  = new HashMap<>();
+      HashMap<String, String> fb_cancelacioCandidaturaKO  = new HashMap<>();
+      HashMap<String, String> fb_baixaEmpresaOK = new HashMap<>();
+      HashMap<String, String> fb_baixaEmpresaKO = new HashMap<>();
+      HashMap<String, String> fb_baixaCandidatOK = new HashMap<>();
+      HashMap<String, String> fb_baixaCandidatKO = new HashMap<>();
+      HashMap<String, String> fb_baixaCandidatCorreuNoValid = new HashMap<>();
+      HashMap<String, String> fb_logoutOK  = new HashMap<>();
+      
       ///// GENEREM OBJECTES DE PROVA QUE HAUREM D'ESBORRAR QUAN TINGUEM CREATS ELS MÈTODES QUE ELS
       //// AGAFARAN DE LA BASE DE DADES
       public Habilitat h1 = new Habilitat();
@@ -115,6 +133,8 @@ public class EspaiController {
             op_logout.put("url","/j_spring_security_logout");
             op_inici.put("paraula","Inici");  
             op_inici.put("url","/");
+            op_iniciAdmin.put("paraula","Inici");  
+            op_iniciAdmin.put("url","/admin");
             op_candidats.put("paraula","Candidats");  
             op_candidats.put("url","/candidats");
             op_candidatures.put("paraula","Candidatures");  
@@ -138,7 +158,39 @@ public class EspaiController {
             op_altaOferta.put("paraula","Crear oferta");
             op_altaOferta.put("url","/altaOferta");
             
-        
+            //Missatges reutilitzables a les vistes
+            fb_ofertaDesadaOK.put("missatge","L'oferta s'ha desat correctament.");
+            fb_ofertaDesadaOK.put("classe", classeOK);
+            fb_ofertaNoDesada.put("missatge","L'oferta no ha pogut ésser desada correctament.");
+            fb_ofertaNoDesada.put("classe",classeKO);
+            fb_canvisOK.put("missatge","Els canvis s'han desat correctament.");
+            fb_canvisOK.put("classe",classeOK);
+            fb_canvisOK.put("missatge","Els canvis no s'han pogut desar correctament.");
+            fb_canvisOK.put("classe",classeKO);
+            fb_problemaBBDD.put("missatge",msgErrorBBDD);
+            fb_problemaBBDD.put("classe",classeKO);
+            fb_inscripcioOfertaOK.put("missatge","Inscripció a l'oferta realitzada correctament.");
+            fb_inscripcioOfertaOK.put("classe",classeOK);
+            fb_inscripcioOfertaOK.put("missatge","Inscripció a l'oferta NO realitzada.");
+            fb_inscripcioOfertaOK.put("classe",classeKO);
+            fb_cancelacioCandidaturaOK.put("missatge","Cancel·lació de la candidatura realitzada correctament");
+            fb_cancelacioCandidaturaOK.put("classe",classeOK);
+            fb_cancelacioCandidaturaKO.put("missatge","Cancel·lació de la candidatura NO realitzada.");
+            fb_cancelacioCandidaturaKO.put("classe",classeKO);
+            fb_baixaEmpresaOK.put("missatge","Empresa eliminada correctament.");
+            fb_baixaEmpresaOK.put("classe",classeOK);
+            fb_baixaEmpresaKO.put("missatge","L'empresa NO ha pogut ésser eliminada. Contacta amb l'administrador.");
+            fb_baixaEmpresaKO.put("classe",classeKO);
+            fb_baixaCandidatOK.put("missatge","La baixa de l'usuari s'ha realitzat correctament.");
+            fb_baixaCandidatOK.put("classe",classeOK);
+            fb_baixaCandidatKO.put("missatge","La baixa de l'usuari no s'ha pogut realitzar. Contacta amb l'administrador");
+            fb_baixaCandidatKO.put("classe",classeKO);
+            fb_baixaCandidatCorreuNoValid.put("missatge","La baixa del perfil no s'ha realitzat. El correu introduït no correspon amb el del perfil.");
+            fb_baixaCandidatCorreuNoValid.put("classe",classeKO);
+            fb_logoutOK.put("missatge","Has sortit de l'aplicació. Fins aviat!");
+            fb_logoutOK.put("classe",classeOK);
+            
+
             //// Dono valors als objectes de prova creats 
             
             // Habilitats
@@ -250,6 +302,16 @@ public class EspaiController {
       public ModelAndView espaiCandidat(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
           
             ModelAndView modelview = new ModelAndView("espaiCandidat");
+            List<Oferta> ofertes = new ArrayList<Oferta>();
+            
+            
+            // PER ACABAR QUAN TINGUEM EL GETCODIBY EMAIL DE L'EMPRESA OK
+            try{
+                  ofertes = ofertaService.getAllOfertes();
+            } catch (Exception e){
+                  System.out.println("--- Error en rebre les ofertes");
+            }
+            
             
             // Desem a la variable 'username' el nom de l'usuari que s'ha acreditat
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -261,15 +323,18 @@ public class EspaiController {
             try {
                   // Provem de recuperar el codi del candidat loguejat per afegir-lo a les urls del menú de navegació
                   System.out.println("--- Correu de l'usuari loguejat: "+username);
-                  codiCandidat = candidatService.getCodiByEmail(username).getCodi();
+                  codiCandidat = candidatService.getCodiByEmail(username).getCodi(); // ARA NO FUNCIONA
                   System.out.println("--- Codi de l'usuari loguejat: "+codiCandidat);
             } catch (Exception e) {
                   modelview.setViewName("home");
                   // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
                   HashMap[] opcions = new HashMap[]{op_logout};
+                  // Llista que conté els missatges de feedback que passarem a la vista
+                  List<Map<String, String>> feedback = new ArrayList<>();
+                  feedback.add(fb_problemaBBDD);
+                  
                   modelview.getModelMap().addAttribute("ubicacio", baseline);
-                  modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
-                  modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                  modelview.getModelMap().addAttribute("feedback", feedback);
                   modelview.getModelMap().addAttribute("opcions", opcions);
                   return modelview;
             }
@@ -282,6 +347,7 @@ public class EspaiController {
             HashMap[] opcions = new HashMap[]{op_perfilCandidat, op_candidatures, op_baixaCandidat, op_logout};  
           
             modelview.getModelMap().addAttribute("ubicacio", "Ofertes escaients per les teves dades");
+            modelview.getModelMap().addAttribute("ofertes", ofertes);
             modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;
@@ -314,10 +380,12 @@ public class EspaiController {
                   modelview.setViewName("home");
                   // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
                   HashMap[] opcions = new HashMap[]{op_logout};
+                  // Llista que conté els missatges de feedback que passarem a la vista
+                  List<Map<String, String>> feedback = new ArrayList<>();
+                  feedback.add(fb_problemaBBDD);
                   
                   modelview.getModelMap().addAttribute("ubicacio", baseline);
-                  modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
-                  modelview.getModelMap().addAttribute("classeFeedback", classeKO);
+                  modelview.getModelMap().addAttribute("feedback", feedback);
                   modelview.getModelMap().addAttribute("opcions", opcions);
                   return modelview;
             }
@@ -361,12 +429,14 @@ public class EspaiController {
                   modelview.getModelMap().addAttribute("numEmpreses", numEmpreses);
                   modelview.getModelMap().addAttribute("numOfertes", numOfertes);
             } catch(Exception e){
-                  modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
-                  modelview.getModelMap().addAttribute("classeFeedback", classeKO);
+                  // Llista que conté els missatges de feedback que passarem a la vista
+                  List<Map<String, String>> feedback = new ArrayList<>();
+                  feedback.add(fb_problemaBBDD);
+                  modelview.getModelMap().addAttribute("feedback", feedback);
             }
               
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{op_inici, op_candidats, op_empreses, op_ofertesAdmin, op_logout};  
+            HashMap[] opcions = new HashMap[]{op_iniciAdmin, op_candidats, op_empreses, op_ofertesAdmin, op_logout};  
             modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;
@@ -425,9 +495,12 @@ public class EspaiController {
                               modelview.setViewName("home");
                               opcions.add(op_inici);
                               opcions.add(op_logout);
+                              
+                              // Llista que conté els missatges de feedback que passarem a la vista
+                              List<Map<String, String>> feedback = new ArrayList<>();
+                              feedback.add(fb_problemaBBDD);
                               modelview.getModelMap().addAttribute("ubicacio", baseline);
-                              modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
-                              modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                              modelview.getModelMap().addAttribute("feedback", feedback);
                               modelview.getModelMap().addAttribute("opcions", opcions);
                               modelview.getModelMap().addAttribute("ubicacio", baseline);
                               return modelview;
@@ -456,9 +529,13 @@ public class EspaiController {
                               modelview.setViewName("home");
                               opcions.add(op_inici);
                               opcions.add(op_logout);
+                              
+                              // Llista que conté els missatges de feedback que passarem a la vista
+                              List<Map<String, String>> feedback = new ArrayList<>();
+                              feedback.add(fb_problemaBBDD);
+                              
                               modelview.getModelMap().addAttribute("ubicacio", baseline);
-                              modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
-                              modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                              modelview.getModelMap().addAttribute("feedback", feedback);
                               modelview.getModelMap().addAttribute("opcions", opcions);
                               modelview.getModelMap().addAttribute("ubicacio", baseline);
                               return modelview;
@@ -497,11 +574,23 @@ public class EspaiController {
             ModelAndView modelview = new ModelAndView("oferta");
                                   
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{op_inici, op_candidats, op_empreses, op_ofertesAdmin, op_logout};  
+            HashMap[] opcions = new HashMap[]{op_iniciAdmin, op_candidats, op_empreses, op_ofertesAdmin, op_logout};  
+            
+            Oferta oferta = new Oferta();
+            
+            try{
+                  oferta = ofertaService.getOfertaByCodi(codiOferta);
+            } catch (Exception e) {
+                  // Llista que conté els missatges de feedback que passarem a la vista
+                  List<Map<String, String>> feedback = new ArrayList<>();
+                  feedback.add(fb_problemaBBDD);
+                  modelview.getModelMap().addAttribute("feedback", feedback);
+            }
+            
             
             modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
             modelview.getModelMap().addAttribute("candidatures", llistaCandidatures);
-            modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
+            modelview.getModelMap().addAttribute("oferta", oferta); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
             modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;
@@ -564,9 +653,13 @@ public class EspaiController {
                               // SI no hem pogut recuperar el codi
                               modelview.setViewName("home");
                               opcions.add(op_logout);
+                              
+                              // Llista que conté els missatges de feedback que passarem a la vista
+                              List<Map<String, String>> feedback = new ArrayList<>();
+                              feedback.add(fb_problemaBBDD);
+                              
                               modelview.getModelMap().addAttribute("ubicacio", baseline);
-                              modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
-                              modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                              modelview.getModelMap().addAttribute("feedback",feedback);
                               modelview.getModelMap().addAttribute("opcions", opcions);
                               return modelview;
                         }
@@ -591,16 +684,20 @@ public class EspaiController {
                               // SI no hem pogut recuperar el codi
                               modelview.setViewName("home");
                               opcions.add(op_logout);
+                              
+                              // Llista que conté els missatges de feedback que passarem a la vista
+                              List<Map<String, String>> feedback = new ArrayList<>();
+                              feedback.add(fb_problemaBBDD);
+                              
                               modelview.getModelMap().addAttribute("ubicacio", baseline);
-                              modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
-                              modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                              modelview.getModelMap().addAttribute("feedback", feedback);
                               modelview.getModelMap().addAttribute("opcions", opcions);
                               return modelview;
                         }
                         break;
                   }
                   case "ROLE_ADMIN": {
-                        opcions.add(op_inici);
+                        opcions.add(op_iniciAdmin);
                         opcions.add(op_candidats);
                         opcions.add(op_empreses);
                         opcions.add(op_ofertesAdmin);
@@ -656,11 +753,14 @@ public class EspaiController {
                   modelview.setViewName("home");
                   opcions.add(op_inici);
                   opcions.add(op_logout);
+                  
+                  // Llista que conté els missatges de feedback que passarem a la vista
+                  List<Map<String, String>> feedback = new ArrayList<>();
+                  feedback.add(fb_problemaBBDD);
+                  
                   modelview.getModelMap().addAttribute("ubicacio", baseline);
-                  modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
-                  modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                  modelview.getModelMap().addAttribute("feedback", feedback);
                   modelview.getModelMap().addAttribute("opcions", opcions);
-                  modelview.getModelMap().addAttribute("ubicacio", baseline);
                   return modelview;
             }
 
@@ -708,18 +808,32 @@ public class EspaiController {
         
             ModelAndView modelview = new ModelAndView("ofertesAdminEmpresa");
             
+            List<Oferta> ofertes = new ArrayList<Oferta>();
+            
+            // Llista que conté els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+            
+            try {
+                  ofertes = ofertaService.getAllOfertes();
+            } catch(Exception e){
+                  // No hem pogut recuperar totes les ofertes generades per l'empresa de la bbdd
+                  feedback.add(fb_problemaBBDD);
+            }
+            
             // Aquesta vista en principi haurà de mostrar totes les ofertes
             // Les hem d'obtenir de la bbdd mitjançant el mètode de la capa servei
 
             // Llista que contindrà les opcions que hi haurà a la barra de navegació
             List<Map<String , String>> opcions  = new ArrayList<>();
             
-            opcions.add(op_inici);
+            opcions.add(op_iniciAdmin);
             opcions.add(op_candidats);
             opcions.add(op_empreses);
             opcions.add(op_logout);
         
             modelview.getModelMap().addAttribute("ubicacio", "Vista general de les ofertes");
+            modelview.getModelMap().addAttribute("feedback", feedback);
+            modelview.getModelMap().addAttribute("ofertes", ofertes);
             modelview.getModelMap().addAttribute("opcions", opcions);
         
             return modelview;
@@ -756,7 +870,7 @@ public class EspaiController {
             // Llista que contindrà les opcions que hi haurà a la barra de navegació
             List<Map<String , String>> opcions  = new ArrayList<>();
             
-            opcions.add(op_inici);
+            opcions.add(op_iniciAdmin);
             opcions.add(op_candidats);
             opcions.add(op_empreses);
             opcions.add(op_ofertesAdmin);
@@ -806,9 +920,12 @@ public class EspaiController {
                   opcions.add(op_perfilEmpresa);
                   opcions.add(op_baixaEmpresa);
                   opcions.add(op_logout);
+                  
+                  // Llista que conté els missatges de feedback que passarem a la vista
+                  List<Map<String, String>> feedback = new ArrayList<>();
+                  feedback.add(fb_problemaBBDD);
 
-                  modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
-                  modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                  modelview.getModelMap().addAttribute("feedback", feedback);
                   modelview.getModelMap().addAttribute("opcions", opcions);
                   
                   return modelview;
@@ -855,19 +972,16 @@ public class EspaiController {
             
             ModelAndView modelview = new ModelAndView("home");
             
-            String missatgeFeedback;
-            String classeFeedback;
-            
+            // Llista que conté els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+                              
             try {
                   // Tractem de fer l'actualització a la base de dades
                   empresaService.updateEmpresa(formEmpresa);
                   // Si funciona informem a l'usuari
-                  missatgeFeedback = "L'actualització s'ha realitzat amb èxit :)";
-                  classeFeedback = classeOK;
+                  feedback.add(fb_canvisOK);
             } catch (Exception e) {
-                  // Si no es pot donem feedback diferent 
-                  missatgeFeedback = "L'actualització no s'ha pogut realitzar :(";
-                  classeFeedback = classeKO;
+                  feedback.add(fb_canvisKO);
             }
             
             // Hem de recuperar el codi de l'empresa perque amb l'actualització aquest codi ha variat
@@ -882,17 +996,16 @@ public class EspaiController {
                   // Si falla la recuperació del nom a la base de dades
                   // Retornarem la mateixa vista però sense les opcions que necessiten que la url inclogui el codi de l'empresa
                   HashMap[] opcions = new HashMap[]{op_inici, op_logout};
+                  feedback.add(fb_problemaBBDD);
                   modelview.getModelMap().addAttribute("ubicacio", baseline);
-                  modelview.getModelMap().addAttribute("missatgeFeedback", "L'actualització s'ha realitzat amb èxit però hi ha hagut un problema amb la base de dades");
-                  modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                  modelview.getModelMap().addAttribute("feedback", feedback);
                   modelview.getModelMap().addAttribute("opcions", opcions);
                   return modelview;
             }
             
             HashMap[] opcions = new HashMap[]{op_altaOferta, op_ofertesEmpresa, op_perfilEmpresa, op_logout};
             modelview.getModelMap().addAttribute("ubicacio", baseline);
-            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
-            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+            modelview.getModelMap().addAttribute("feedback", feedback);
             modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;
@@ -976,7 +1089,7 @@ public class EspaiController {
        * @param formCandidat L'objecte de tipus Candidat que rebem del formulari per POST
        * @return Un objecte modelandview que representa el model i la vista que mostrarem a l'usuari un cop provada d'executar l'actualització a la base de dades
        */
-      @RequestMapping(value = "/perfilCandidat/actualitza", method = RequestMethod.POST)
+      @RequestMapping(value = "/perfilCandidat/{codiCandidat}/actualitza", method = RequestMethod.POST)
       public ModelAndView executaModifCandidat( @ModelAttribute("formCandidat") CandidatFormulari formCandidat) {
             
             // proves que podrem carregar-nos...
@@ -998,9 +1111,10 @@ public class EspaiController {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String nom = auth.getName();
             
-            String missatgeFeedback;
-            String classeFeedback;
+            // Llista que conté els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
             
+            // Llista que conté les opcions que passarem a la vista per la barra de navegació
             List<Map<String , String>> opcions  = new ArrayList<>();
             
             try {
@@ -1027,20 +1141,16 @@ public class EspaiController {
             ModelAndView modelview = new ModelAndView("home");
             
             try {
-                  // Provem de fer l'update a la base de dates mitjançant el corresponent mètode del servei
-                  // PENDENT DE TENIR EL MÈTODE
-                  
-                  missatgeFeedback = "Les dades s'han actualitzat correctament (DE MOMENT NO ÉS AIXÍ PQ MANCA EL MÈTODE)";
-                  classeFeedback = classeOK;
+                  // PENDENT DE PROVAR
+                  candidatService.updateCandidat(aCandidat(formCandidat)); // Abans de passar-lo el converteixo a objecte de la classe Candidat
+                  feedback.add(fb_canvisOK);
             } catch (Exception e) {
                   // No s'ha pogut fer l'update
-                  missatgeFeedback = msgErrorBBDD;
-                  classeFeedback = classeKO;
+                  feedback.add(fb_canvisKO);
             }
                        
             modelview.getModelMap().addAttribute("ubicacio", baseline);
-            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
-            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+            modelview.getModelMap().addAttribute("feedback", feedback);
             modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;
@@ -1176,8 +1286,7 @@ public class EspaiController {
             // Omplo un arrayList amb les candidatures de prova per poder enviar-les al controlador
             // AL TANTO, HAUREM DE FER SERVIR UN MÈTODE QUE ENS PASSI EL TÍTOL DE L'OFERTA PASSANT-LI EL CODI
             // PQ A LA TAULA HAURIA DE SORTIR EL TÍTOL DE L'OFERTA I A L'OBJECTE CANDIDATURA HI HA EL CODI
-            List<Candidatura> candidatures = getListOfCandidatures();
-            LlistaCandidatures llistaCandidatures = new LlistaCandidatures();
+            
             llistaCandidatures.setLlista(candidatures);
 
             
@@ -1202,13 +1311,17 @@ public class EspaiController {
       public ModelAndView logout(HttpServletRequest request) {
            
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{op_entrarCandidat,op_entrarEmpresa};  
+            HashMap[] opcions = new HashMap[]{op_entrarCandidat,op_entrarEmpresa};
+            
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+            
+            feedback.add(fb_logoutOK);
           
             ModelAndView modelview = new ModelAndView("home");
             modelview.getModelMap().addAttribute("opcions", opcions);
             modelview.getModelMap().addAttribute("ubicacio", baseline);
-            modelview.getModelMap().addAttribute("missatgeFeedback", "Has sortit de l'aplicació. Fins aviat!");
-            modelview.getModelMap().addAttribute("classeFeedback", classeOK);
+            modelview.getModelMap().addAttribute("feedback", feedback);
             
             return modelview;
       }
@@ -1249,27 +1362,27 @@ public class EspaiController {
             // Opció candidatures a la barra de navegació
             HashMap<String, String> candidatures = new HashMap<>();
             candidatures.put("paraula","Candidatures");  
-            candidatures.put("url","/candidatures?candidat='0'"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
+            candidatures.put("url","/candidatures/0"); // LI HEM DE PODER PASSAR LA REFERÈNCIA A L'USUARI 
         
-            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,candidatures,op_logout};  
+            //
+            // PENDENT AFEGIR EL CODI D'USUARI A LA URL A LES OPCIONS DE LA BARRA DE NAVEGACIÓ
+            //
             
-            // missatge i classe del missatge de feedback que rebrà l'usuari
-            String missatgeFeedback =""; // missatge de feedback que rebrà l'usuari 
-            String classeFeedback = "";  // classe CSS que s'aplicarà al contenidor del missatge de feedback
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{op_perfilCandidat, op_candidatures, op_logout};  
+            
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
             
             if (inscripcioOK) {
-                  missatgeFeedback = "Inscripció a l'oferta realitzada correctament";
-                  classeFeedback = classeOK;
+                  feedback.add(fb_inscripcioOfertaOK);
             } else {
-                  missatgeFeedback = "Inscripció a l'oferta NO realitzada.";
-                  classeFeedback = classeKO;
+                  feedback.add(fb_inscripcioOfertaKO);
             }
 
             // També li haurem de passar la llista d'ofertes per l'usuari
             ModelAndView modelview = new ModelAndView("espaiCandidat");
-            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
-            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+            modelview.getModelMap().addAttribute("feedback", feedback);
             modelview.getModelMap().addAttribute("ubicacio", "Ofertes escaients per les teves dades");
             modelview.getModelMap().addAttribute("opcions", opcions);
            
@@ -1305,30 +1418,31 @@ public class EspaiController {
             ofertes.put("paraula","Ofertes");
             ofertes.put("url","/espaiCandidat"); // AQUI LI HAUREM DE PASSAR A LA URL EL CODI DE CANDIDAT PERQUE ENS MOSTRI LA INFO ESCAIENTS
 
+            //
+            // Pendent afegir el codi d'usuari a les urls de les opcions de la barra de navegació
+            //
+            
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil,ofertes,op_logout};
+            HashMap[] opcions = new HashMap[]{op_perfilCandidat, op_ofertesCandidat, op_logout};
+            
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
             
             // També li haurem de passar la LLISTA AMB LES CANDIDATURES, amb l'estat en que estiguin, si no passen integrades dins l'objecte Oferta
             // Omplo un arrayList amb les candidatures de prova per poder enviar-les al controlador
             // AL TANTO, HAUREM DE FER SERVIR UN MÈTODE QUE ENS PASSI EL TÍTOL DE L'OFERTA PASSANT-LI EL CODI
             // PQ A LA TAULA HAURIA DE SORTIR EL TÍTOL DE L'OFERTA I A L'OBJECTE CANDIDATURA HI HA EL CODI
             
-           // missatge i classe del missatge de feedback que rebrà l'usuari
-            String missatgeFeedback; // missatge de feedback que rebrà l'usuari 
-            String classeFeedback;  // classe CSS que s'aplicarà al contenidor del missatge de feedback
            
            if (cancelacioOK) {
-                  missatgeFeedback = "Cancel·lació de la candidatura realitzada correctament";
-                  classeFeedback = classeOK;
+                 feedback.add(fb_cancelacioCandidaturaOK);
             } else {
-                  missatgeFeedback = "Cancel·lació de la candidatura NO realitzada.";
-                  classeFeedback = classeKO;
+                 feedback.add(fb_cancelacioCandidaturaKO);
             }
             
             // LI HAUREM DE PASSAR AL MODEL EL CODI DEL CANDIDAT
             ModelAndView modelview = new ModelAndView("candidatures");
-            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
-            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+            modelview.getModelMap().addAttribute("feedback", feedback);
             modelview.getModelMap().addAttribute("ubicacio", "Les meves candidatures");
             modelview.getModelMap().addAttribute("candidatures", candidatures);
             modelview.getModelMap().addAttribute("opcions", opcions);
@@ -1470,34 +1584,50 @@ public class EspaiController {
       @RequestMapping(value = "/altaOferta/{codiEmpresa}/executa", method = RequestMethod.POST)
       public ModelAndView executaAltaOferta(@PathVariable("codiEmpresa") Integer codiEmpresa, @ModelAttribute("formOferta") Oferta  formOferta) {
             
-            ModelAndView modelview = new ModelAndView("ofertes");
+            ModelAndView modelview = new ModelAndView("ofertesAdminEmpresa"); 
+            
+            //
+            // Falta passar a la vista el llistat d'ofertes per codi d'empresa
+            //
+            
+            List<Oferta> ofertes = new ArrayList<Oferta>();
             
             // Afegim a l'oferta els atributs que no venen del mètode
             formOferta.setCodiEmpresa(codiEmpresa);
-            formOferta.setEstat("Publicable");
-
-            String missatgeFeedback;
-            String classeFeedback;
+            formOferta.setEstat("Publicable"); // Estat que donem a les ofertes quan s'acaben de donar d'alta
             
+            op_ofertesEmpresa.put("usuari","/"+codiEmpresa);
+            op_perfilEmpresa.put("usuari","/"+codiEmpresa);
+            op_baixaEmpresa.put("usuari","/"+codiEmpresa);
             // Hashmap que conté les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{op_inici,op_ofertesEmpresa,op_perfilEmpresa,op_logout};
+            HashMap[] opcions = new HashMap[]{op_inici,op_ofertesEmpresa,op_perfilEmpresa,op_baixaEmpresa,op_logout};
+            
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
             
             try{
-                  System.out.println("-- Arriba correctament al try del mètode executaAltaOferta");
                   // Provem de donar d'alta l'oferta a la bbdd
                   ofertaService.addOferta(formOferta);
-                  missatgeFeedback = "L'oferta s'ha desat correctament.";
-                  classeFeedback = classeOK; 
-                  
+                  feedback.add(fb_ofertaDesadaOK);
             } catch (Exception e){
                   // L'alta de l'oferta no ha tingut èxit
-                  missatgeFeedback = "L'oferta no ha pogut ésser desada correctament.";
-                  classeFeedback = classeKO; 
+                  feedback.add(fb_ofertaNoDesada);
             }
             
+            
+            try {
+                  // Provem de recuperar totes les ofertes generades per l'empresa de la bbdd per passar-les a la vista
+                  ofertes = ofertaService.getOfertaByCodiEmpresa(codiEmpresa);
+                  
+            } catch(Exception e){
+                  // No hem pogut recuperar totes les ofertes generades per l'empresa de la bbdd
+                  feedback.add(fb_problemaBBDD);
+            }
+            
+            
             modelview.getModelMap().addAttribute("ubicacio", "Ofertes generades");
-            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
-            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+            modelview.getModelMap().addAttribute("ofertes", ofertes);
+            modelview.getModelMap().addAttribute("feedback", feedback);
             modelview.getModelMap().addAttribute("opcions", opcions);
             return modelview;
       }
@@ -1518,19 +1648,21 @@ public class EspaiController {
             
             ModelAndView modelview = new ModelAndView("empresa");
             
-            Empresa empresa = null;
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
             
-            if (codiEmp != null) {
+            Empresa empresa;
+            
+            try{
+                  // Provem de recuperar l'empresa de la bbdd
                   empresa = empresaService.getEmpresaByCodi(codiEmp);
-            }
-            
-            if ( codiEmp == null || empresa == null) {
+            } catch (Exception e) {
+                  // No l'hem pogut recuperar
                   modelview.setViewName("home");
-                  
                   HashMap[] opcions = new HashMap[]{op_candidats,op_ofertesCandidat,op_empreses,op_logout};
+                  feedback.add(fb_problemaBBDD);
                   modelview.getModelMap().addAttribute("ubicacio", baseline);
-                  modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
-                  modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                  modelview.getModelMap().addAttribute("feedback", feedback);
                   modelview.getModelMap().addAttribute("opcions", opcions);
                   return modelview;
             }
@@ -1559,9 +1691,9 @@ public class EspaiController {
             // Creem les opcions que aniràn a la barra de navegació
             List<Map<String, String>> opcions = new ArrayList<>();
             
-            // missatge i classe del missatge de feedback que rebrà l'usuari
-            String missatgeFeedback =""; // missatge de feedback que rebrà l'usuari 
-            String classeFeedback = "";  // classe CSS que s'aplicarà al contenidor del missatge de feedback
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+            
             
             // Depenent del rol de l'usuari loguejat (pot ser empresa o admin)
             switch(role){
@@ -1586,6 +1718,7 @@ public class EspaiController {
                         // HI ha l'admin loguejat
                         modelview.setViewName("empreses");
                         modelview.getModelMap().addAttribute("ubicacio", "Empreses donades d'alta");
+                        opcions.add(op_iniciAdmin);
                         opcions.add(op_candidats);
                         opcions.add(op_empreses);
                         opcions.add(op_ofertesAdmin);
@@ -1597,7 +1730,6 @@ public class EspaiController {
             try {
                   // Invoquem el corresponent mètode el servei
                   empresaService.esborrarEmpresa(codiEmp);
-                  System.out.println("--- hem executat el mètode esborrarEmpresa");
                   
                   switch(role) {
                         case "ROLE_EMPRESA":
@@ -1619,23 +1751,20 @@ public class EspaiController {
                                     List<Empresa> empreses = empresaService.getAllEmpreses();
                                     modelview.getModelMap().addAttribute("empreses", empreses);
                               } catch(Exception e)  {
-                                    missatgeFeedback =msgErrorBBDD;
+                                    feedback.add(fb_problemaBBDD);
                               }
                               break;
                               
                   } // del switch
                   
-                  missatgeFeedback += "Empresa eliminada correctament.";
-                  classeFeedback = classeOK;
+                  feedback.add(fb_baixaEmpresaOK);
                   
             } catch (Exception e){
                   // Si l'operació d'esborrat de l'empresa no ha estat exitosa
-                  missatgeFeedback = "L'empresa no ha pogut ésser eliminada amb èxit.";
-                  classeFeedback = classeKO; 
+                  feedback.add(fb_baixaEmpresaKO);
             }
             
-            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
-            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+            modelview.getModelMap().addAttribute("feedback", feedback);
             modelview.getModelMap().addAttribute("opcions", opcions);
             return modelview;
       }
@@ -1656,15 +1785,19 @@ public class EspaiController {
             ModelAndView modelview = new ModelAndView("empreses");
             List<Empresa> empreses;
             
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+            
             try {
                   empreses = empresaService.getAllEmpreses();
             } catch (Exception e) {
                   // Si la petició a la base de dades no té èxit
                   modelview.setViewName("home");
                   // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-                  HashMap[] opcions = new HashMap[]{op_inici, op_candidats, op_empreses, op_ofertesCandidat, op_logout};
+                  HashMap[] opcions = new HashMap[]{op_iniciAdmin, op_candidats, op_empreses, op_ofertesCandidat, op_logout};
                   modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
-                  modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                  feedback.add(fb_problemaBBDD);
+                  modelview.getModelMap().addAttribute("feedback", feedback);
                   modelview.getModelMap().addAttribute("ubicacio", baseline);
                   modelview.getModelMap().addAttribute("opcions", opcions);
                   return modelview;
@@ -1672,7 +1805,7 @@ public class EspaiController {
             
             
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{op_inici,op_ofertesAdmin,op_candidats,op_logout};
+            HashMap[] opcions = new HashMap[]{op_iniciAdmin,op_ofertesAdmin,op_candidats,op_logout};
             
             modelview.getModelMap().addAttribute("ubicacio", "Empreses donades d'alta");
             modelview.getModelMap().addAttribute("empreses", empreses);
@@ -1774,12 +1907,12 @@ public class EspaiController {
             System.out.println("--- E-mail loguejat: "+nom);
             System.out.println("--- E-mail rebut del formulari: "+formCandidat.getEmail());
             
-            // Missatge i classe del missatge de feedback que rebrà l'usuari
-            String missatgeFeedback =""; // missatge de feedback que rebrà l'usuari 
-            String classeFeedback = "";  // classe CSS que s'aplicarà al contenidor del missatge de feedback
-
             // Creem les opcions que aniràn a la barra de navegació
             List<Map<String, String>> opcions = new ArrayList<>();
+            
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+            
             
             if (nom.equals(formCandidat.getEmail())) {
                   // Si el correu de l'usuari loguejat coincideix amb el que ha entrat l'usuari manualment al formulari
@@ -1795,8 +1928,7 @@ public class EspaiController {
                         // Posem les opcions i els missatges per la vista
                         opcions.add(op_entrarCandidat);
                         opcions.add(op_entrarEmpresa);
-                        missatgeFeedback = "La baixa de l'usuari s'ha realitzat correctament.";
-                        classeFeedback = classeOK;
+                        feedback.add(fb_baixaCandidatOK);
                         
                   } catch (Exception e){
                         // si no s'ha pogut executar la baixa del candidat
@@ -1809,8 +1941,7 @@ public class EspaiController {
                         opcions.add(op_perfilCandidat);
                         opcions.add(op_baixaCandidat);
                         opcions.add(op_logout);
-                        missatgeFeedback = "La baixa del perfil no s'ha pogut realitzar correctament. Contacta amb l'administrador.";
-                        classeFeedback = "alert-danger";
+                        feedback.add(fb_baixaCandidatKO);
                         
                   } // del try-catch
                   
@@ -1818,8 +1949,7 @@ public class EspaiController {
                   
                   // No coincideixen els correus (el de l'usuari loguejat i el que ha entrat al formulari per confirmar)
                   modelview.setViewName("eliminaCandidat");
-                  missatgeFeedback = "La baixa del perfil no s'ha realitzat. El correu introduït no correspon amb el del perfil.";
-                  classeFeedback = classeKO;
+                  feedback.add(fb_baixaCandidatCorreuNoValid);
                   op_ofertesCandidat.put("usuari", "/"+codiCandidat);
                   op_candidatures.put("usuari", "/"+codiCandidat);
                   op_perfilCandidat.put("usuari", "/"+codiCandidat);
@@ -1828,15 +1958,13 @@ public class EspaiController {
                   opcions.add(op_candidatures);
                   opcions.add(op_perfilCandidat);
                   opcions.add(op_logout);
-                  modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
-                  modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+                  modelview.getModelMap().addAttribute("feedback", feedback);
                   modelview.getModelMap().addAttribute("ubicacio", "Baixa del perfil de candidat");
                   modelview.getModelMap().addAttribute("opcions", opcions);
                   return modelview;
             }
                  
-            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
-            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+            modelview.getModelMap().addAttribute("feedback", feedback);
             modelview.getModelMap().addAttribute("ubicacio", baseline);
             modelview.getModelMap().addAttribute("opcions", opcions);
             return modelview;
@@ -1913,6 +2041,43 @@ public class EspaiController {
           
           return retornar;
     }
+    
+    
+      /**
+      * 
+      * Converteix un item de candidat, de tipus CandidatFormulari (el que fa servir el formulari) a tipus Candidat, apte per desar a la base de dades
+      * Diferències implementades:
+      *    La data de naixement, a la classe CandidatFormulari, és de tipus LocalDate / per desar a la bbdd ha de ser de tipus java.sql.Date
+      * 
+      * @author Daniel Sevilla i Junyent
+      * @param c El candidat, de tipus CandidatFormulari, que li passem
+      * @return L'objecte convertit a objecte de la classe Candidat
+      */
+       public Candidat aCandidat(CandidatFormulari c){
+          
+            Candidat retornar = new Candidat();
+
+            retornar.setCodi(c.getCodi());
+            retornar.setNom(c.getNom());
+            retornar.setCognoms(c.getCognoms());
+            retornar.setDniNif(c.getDniNif());
+            retornar.setTelefon(c.getTelefon());
+            retornar.setPoblacio(c.getPoblacio());
+            retornar.setProvincia(c.getProvincia());
+            retornar.setDataNaix(Date.valueOf(c.getDataNaix())); // La tarnsformem a tipus java.sql.Date
+            retornar.setEmail(c.getEmail());
+            retornar.setPass(c.getPass());
+            retornar.setcPass(c.getcPass());
+            retornar.setAdreca(c.getAdreca());
+            retornar.setFormacio(c.getFormacio());
+            retornar.setOcupacio(c.getOcupacio());
+            retornar.setObservacions(c.getObservacions());
+            retornar.setHabilitats(c.getHabilitats());
+            retornar.setExperiencies(c.getExperiencies());
+          
+            return retornar;
+      }
+    
       
       
 }

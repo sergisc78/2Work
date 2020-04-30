@@ -48,6 +48,12 @@
                   <%@include  file='/resources/html/barra-usuari.html' %>
             </sec:authorize>
 
+            
+            <c:if test="${not empty feedback}">
+                  <%@include  file='/resources/html/feedback.html' %> 
+            </c:if>
+                  
+                  
             <section class="barra-ubicacio">
                   <div class="container">
                         <p>${ubicacio}</p>
@@ -57,42 +63,34 @@
 
             <section class="container" id="ofertes-empresa">
 
+                <!-- PENDENT D'IMPLEMENTAR L'AVÍS QUE MOSTRAREM QUAN NO HI HAGI CAP OFERTA PER ENSENYAR -->
+
+
                 <ul class="list-group">
-
-                      <!-- PENDENT D'IMPLEMENTAR L'AVÍS QUE MOSTRAREM QUAN NO HI HAGI CAP OFERTA PER ENSENYAR -->
-
-                      <c:forEach begin="1" end="12" varStatus="loop">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-
+                      <c:forEach items="${ofertes}" var="oferta">
+                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                            
                                   <!-- PENDENT AFEGIR-HI L'ENLLAÇ -->
                                   <a href="#" class="icona_accio">
                                         <svg><use xlink:href="#esborrar" /></svg>
                                   </a>
-
+                                  
                                   <sec:authorize access="hasRole('ROLE_USER')">
-                                        <a href="<spring:url value= "/oferta/${loop.index}" />" class="flex-grow-1"><p>Títol de l'oferta número ${loop.index}</p></a>
+                                        <a href="<spring:url value= "/oferta/${oferta.codiOferta}" />" class="flex-grow-1"><p>${oferta.titolOferta}</p></a>
                                   </sec:authorize>
                                   <sec:authorize access="hasRole('ROLE_EMPRESA')">
-                                        <a href="<spring:url value= "/ofertaPropietari/" />${loop.index}'" class="flex-grow-1"><p>Títol de l'oferta número ${loop.index}</p></a>
+                                        <a href="<spring:url value= "/ofertaPropietari/${oferta.codiOferta}" />'" class="flex-grow-1"><p>${oferta.titolOferta}</p></a>
                                   </sec:authorize>
                                   <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                        <a href="<spring:url value= "/ofertaAdmin/${loop.index}" />" class="flex-grow-1"><p>Títol de l'oferta número ${loop.index}</p></a>
+                                        <a href="<spring:url value= "/ofertaAdmin/${oferta.codiOferta}" />" class="flex-grow-1"><p>${oferta.titolOferta}</p></a>
                                   </sec:authorize>
 
-                                  <c:choose>
-                                        <c:when test="${loop.index % 4 == 0}">
-                                              <span class="badge badge-primary badge-pill">Habilitada</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                              <span class="badge badge-success badge-pill">Completa</span>
-                                        </c:otherwise>
-                                  </c:choose>
-
-                            </li>
+                                 <span class="badge badge-primary badge-pill">${oferta.estat}</span>
+                            
                       </c:forEach>
-
+                        
                 </ul>
-
+                  
         </section>
 
         <%@include  file='/resources/html/footer.html' %>

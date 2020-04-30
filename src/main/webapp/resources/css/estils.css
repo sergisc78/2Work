@@ -46,13 +46,13 @@ a {
 .blau {
   color: #1d70b7; }
 
-#feedback {
+.feedback_item {
   padding: 0.5em 0;
   margin: 0;
   border: none; }
-  #feedback .container div {
+  .feedback_item .container div {
     position: relative; }
-    #feedback .container div button {
+    .feedback_item .container div button {
       top: -50%; }
 
 .btn-primary {

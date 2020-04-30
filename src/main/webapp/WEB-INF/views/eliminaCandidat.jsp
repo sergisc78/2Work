@@ -49,18 +49,9 @@
             <%@include  file='/resources/html/barra-usuari.html' %>
         </sec:authorize>
 
-       <c:if test="${not empty missatgeFeedback}">
-            <section id="feedback" role="alert" class="${classeFeedback} alert  alert-dismissible fade show">
-                  <div class="container">
-                        <div>
-                              ${missatgeFeedback}
-                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                              </button>
-                        </div>
-                  </div>
-            </section>                  
-        </c:if>
+       <c:if test="${not empty feedback}">
+            <%@include  file='/resources/html/feedback.html' %> 
+       </c:if>
             
         <section>
             <div class="jumbotron">

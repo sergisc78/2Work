@@ -147,7 +147,7 @@
                         </div>
                         <div class="form-group">
                             <label for="email">E-mail</label>
-                            <form:input type="email" class="form-control" id="email" path="email" maxlength="50" placeholder="Introdueix l'e-mail"/>
+                            <form:input type="email" class="form-control" id="email" path="email" maxlength="50" placeholder="Introdueix l'e-mail" required="required"/>
                             <div class="invalid-feedback">
                                 Introdueix l'email
                             </div>
