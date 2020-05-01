@@ -68,7 +68,15 @@ public class HomeController {
       // Missatges reutilitzables
       final String msgErrorBBDD = "Hi ha hagut algun problema rebent les dades de la base de dades.";
       final String baseline = "La teva web de cerca de feina";
+      final String classeOK  = "alert-warning";
+      final String classeKO  = "alert-danger";
       
+      // Missatges de feedback reutilitzables a les vistes
+      HashMap<String, String> fb_problemaBBDD = new HashMap<>();
+      HashMap<String, String> fb_altaCandidatOK = new HashMap<>();
+      HashMap<String, String> fb_altaCandidatKO = new HashMap<>();
+      HashMap<String, String> fb_altaEmpresaOK = new HashMap<>();
+      HashMap<String, String> fb_altaEmpresaKO = new HashMap<>();
       
       /**
       * 
@@ -114,6 +122,18 @@ public class HomeController {
             op_ofertesAdmin.put("url","ofertesAdmin");
             op_altaOferta.put("paraula","Crear oferta");
             op_altaOferta.put("url","/altaOferta");
+            
+            // Missatges de feedback reutilitzables a les vistes
+            fb_problemaBBDD.put("missatge",msgErrorBBDD);
+            fb_problemaBBDD.put("classe",classeKO);
+            fb_altaCandidatOK.put("missatge","L'alta del perfil de candidat s'ha realitzat amb èxit.");
+            fb_altaCandidatOK.put("classe",classeOK);
+            fb_altaCandidatKO.put("missatge","L'alta del perfil de candidat no s'ha pogut realitzar.");
+            fb_altaCandidatKO.put("classe",classeKO);
+            fb_altaEmpresaOK.put("missatge","L'alta del perfil d'empresa s'ha realitzat amb èxit.");
+            fb_altaEmpresaOK.put("classe",classeOK);
+            fb_altaEmpresaKO.put("missatge","L'alta del perfil d'empresa no s'ha pogut realitzar.");
+            fb_altaEmpresaKO.put("classe",classeKO);
 
       }
       
@@ -130,8 +150,12 @@ public class HomeController {
             // Creem el modelview
             ModelAndView modelview = new ModelAndView("home");
             
-            // Creem les opcions que aniràn a la barra de navegació
+            // Llista que contindrà les opcions que aniràn a la barra de navegació
             List<Map<String, String>> opcions = new ArrayList<>();
+            
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+            
             
             // Afegim les opcions a l'array          
             switch(role){
@@ -152,7 +176,7 @@ public class HomeController {
                               op_ofertesCandidat.put("usuari","/"+codiCandidat);
                               op_candidatures.put("usuari","/"+codiCandidat);
                               op_perfilCandidat.put("usuari","/"+codiCandidat);
-                              op_baixaCandidat.put("usuari","/"+codiCandidat);
+                              op_baixaCandidat.put("usuari","/"+codiCandidat+"/");
                               
                               opcions.add(op_ofertesCandidat);
                               opcions.add(op_candidatures);
@@ -163,8 +187,8 @@ public class HomeController {
                               // SI no podem recuperar de la bbdd el codi del candidat
                               opcions.add(op_inici);
                               opcions.add(op_logout);
-                              modelview.getModelMap().addAttribute("missatgeFeedback", msgErrorBBDD);
-                              modelview.getModelMap().addAttribute("classeFeedback", "alert-danger");
+                              feedback.add(fb_problemaBBDD);
+                              modelview.getModelMap().addAttribute("feedback", feedback);
                         }                              
                         break;
                         
@@ -172,9 +196,10 @@ public class HomeController {
                         // Hi ha un usuari empresa empresa loguejat
                         try {
                               Integer codiEmpresa = empresaService.getCodiByEmail(nom);
-                              op_altaOferta.put("usuari","/"+codiEmpresa);
+                              op_altaOferta.put("usuari","/"+codiEmpresa+"/");
                               op_ofertesEmpresa.put("usuari","/"+codiEmpresa);
                               op_perfilEmpresa.put("usuari","/"+codiEmpresa);
+                              op_baixaEmpresa.put("usuari","/"+codiEmpresa+"/");
                         } catch (Exception e){
                         }
                               opcions.add(op_altaOferta);
@@ -220,6 +245,7 @@ public class HomeController {
             
             // AQUI LI HEM DE PASSAR ELS LLISTATS PER OMPLIR ELS SELECTS QUE VINDRAN DE LA BBDD
             // PER ARA ESTÀ SIMULAT AIXÍ
+            
             LlistaFormacions llistaFormacions = new LlistaFormacions();
             LlistaOcupacions llistaOcupacions = new LlistaOcupacions();
             
@@ -239,30 +265,32 @@ public class HomeController {
        * @return 
        */
       @RequestMapping(value = "/executaAltaCandidat", method = RequestMethod.POST)
-      public String executaAltaCandidat(@ModelAttribute("formCandidat") CandidatFormulari formCandidat, BindingResult result) {
+      public ModelAndView executaAltaCandidat(@ModelAttribute("formCandidat") CandidatFormulari formCandidat, BindingResult result) {
             
-            System.out.println("--- Ja tenim el candidat a l'objecte formCandidat. Fem amb ell el que faci falta.");
-            System.out.println("--- Data rebuda: "+formCandidat.getDataNaix());
-            /*for (Experiencia exp : formCandidat.getExperiencies()) {
-                  System.out.println("--- Experiencia: "+exp.getDescripcio());
-            }
-            System.out.println("--- Habilitats: "+formCandidat.getHabilitats());*/
-            // System.out.println("--- Propietat d'una de les experiències no omplertes: "+formCandidat.getExperiencies());
+            ModelAndView modelview = new ModelAndView("home");
+            
+            // Creem les opcions que aniràn a la barra de navegació
+            List<Map<String, String>> opcions = new ArrayList<>();
+            opcions.add(op_entrarCandidat);
+            opcions.add(op_entrarEmpresa);
+            
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();            
             
             // Invocarem els mètodes corresponents un cop fets els filtres que calguin
             try {
                   candidatService.addCandidat(aCandidat(formCandidat));
+                  feedback.add(fb_altaCandidatOK);
             } catch(Exception e) {
-                  System.out.println("--- No s'ha fet l'alta del candidat");
+                  feedback.add(fb_altaCandidatKO);
             }
               
             // service.addExperiencies
             //....
-            
-            
-            // segons el resultat de l'execució del mètode...
-            // ... haurem de redirigir a la vista que vulguem passant feedback a l'usuari (alta feta/alta no feta)
-            return "redirect:/";
+            modelview.getModelMap().addAttribute("ubicacio", baseline);
+            modelview.getModelMap().addAttribute("feedback", feedback);
+            modelview.getModelMap().addAttribute("opcions", opcions);
+            return modelview;
     }
       
       
@@ -270,7 +298,7 @@ public class HomeController {
       public ModelAndView altaEmpresa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
           
             // Invoca la vista que mostra el formulari d'alta d'empresa
-            ModelAndView modelview = new ModelAndView("altaEmpresa");     
+            ModelAndView modelview = new ModelAndView("altaEmpresa");
             
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{op_inici};
@@ -301,21 +329,19 @@ public class HomeController {
       public ModelAndView executaAltaEmpresa(@ModelAttribute("formEmpresa") Empresa formEmpresa) {
             ModelAndView modelview = new ModelAndView("home");
             
-            String missatgeFeedback;
-            String classeFeedback;
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
             
             try {
                   empresaService.addEmpresa(formEmpresa);
-                  missatgeFeedback = "L'alta s'ha realitzat amb èxit :)";
-                  classeFeedback = "alert-warning";
+                  feedback.add(fb_altaEmpresaOK);
             } catch (Exception e) {
-                  missatgeFeedback = "L'alta no s'ha pogut realitzar :(";
-                  classeFeedback = "alert-danger";
+                  feedback.add(fb_altaEmpresaKO);
             }
             
             HashMap[] opcions = new HashMap[]{op_entrarCandidat, op_entrarEmpresa};
-            modelview.getModelMap().addAttribute("missatgeFeedback", missatgeFeedback);
-            modelview.getModelMap().addAttribute("classeFeedback", classeFeedback);
+            modelview.getModelMap().addAttribute("ubicacio", baseline);
+            modelview.getModelMap().addAttribute("feedback", feedback);
             modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;

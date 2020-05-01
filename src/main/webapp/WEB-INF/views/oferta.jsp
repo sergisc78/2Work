@@ -79,7 +79,7 @@
                                     <c:if test="${ not propietari}">
                                           <!--- NOMÉS PELS NO PROPIETARIS/CREADORS DE L'OFERTA --->
                                           <h4>Empresa</h4>
-                                          <p>${oferta.nifEmpresa}</p>
+                                          <p>${oferta.codiEmpresa}</p>
                                           <h4>Localitat</h4>
                                           <p>${oferta.poblacio}</p>
                                     </c:if>
@@ -134,7 +134,7 @@
                   <!--- Només per l'admin --->
                   <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
                   <div class="card-footer">
-                        <h4>Candidatures</h4>
+                        <h4>Candidatures (FINS QUE NO S'IMPLEMENTI NO SON REALS)</h4>
                         <ul class="list-group-flush" id="llistat-candidatures">
                               <c:forEach items="${candidatures.llista}" var="candidatura" varStatus="loop">
                               <li class="list-group-item d-flex justify-content-between align-items-center">

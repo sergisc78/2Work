@@ -180,14 +180,6 @@
                               
             </section>
             
-            <section id="esborrar-empresa" class="container-sm">
-                  <div class="alert alert-danger" role="alert">
-                        <h4 class="alert-heading">Baixa de l'empresa</h4>
-                        <p>Si prems el botó estaràs esborrant l'empresa de l'aplicació i totes les seves ofertes associades. Aquesta operació és irreversible.</p>
-                        <hr>
-                        <a href="<spring:url value='/empresa/${empresa.codi}/esborrar'/>" class="text-center btn btn-warning" onclick="return confirm('Segur que vols eliminar l\'empresa?');" role="button">Esborrar empresa</a>
-                  </div>
-            </section>
 
             <%@include  file='/resources/html/footer.html' %>
 
