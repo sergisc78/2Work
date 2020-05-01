@@ -30,6 +30,7 @@
     <body>
 
         <%@include  file='/resources/svg/icones_llistes.svg' %>
+        <%@include  file='/resources/svg/icona_avis.svg' %>
           
         <!--- Barra de navegació -->
         <nav class="navbar navbar-expand-lg navbar-dark">
@@ -60,10 +61,11 @@
         
 
         <section class="container" id="empreses">
+        
+        <c:choose>
+        <c:when test="${not empty empreses}">
 
             <ul class="list-group">
-                  
-                  <!-- PENDENT D'IMPLEMENTAR L'AVÍS QUE MOSTRAREM QUAN NO HI HAGI CAP OFERTA PER ENSENYAR -->
                   
                   <c:forEach items="${empreses}" var="empresa" varStatus="loop">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -78,6 +80,15 @@
                   </c:forEach>
                         
             </ul>
+        </c:when>    
+        <c:otherwise>
+                   
+            <div class="alert alert-danger" role="alert">
+                  <svg class="icona_no_dades"><use xlink:href="#triangle_avis" /></svg>No hi ha dades per mostrar.
+            </div>
+       
+        </c:otherwise>
+        </c:choose>
 
         </section>
 

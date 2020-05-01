@@ -30,6 +30,7 @@
       <body>
 
             <%@include  file='/resources/svg/icones_llistes.svg' %>
+            <%@include  file='/resources/svg/icona_avis.svg' %>
             
             <!--- Barra de navegació -->
             <nav class="navbar navbar-expand-lg navbar-dark">
@@ -42,7 +43,7 @@
 
             <%@include  file='/resources/html/opcions_nav.html' %>
 
-        </nav>
+            </nav>
             
       <sec:authorize access="isAuthenticated()">
             <%@include  file='/resources/html/barra-usuari.html' %>
@@ -61,7 +62,10 @@
         
 
         <section class="container" id="ofertes-empresa">
-
+              
+        <c:choose>
+        <c:when test="${not empty candidatures}">
+                  
             <ul class="list-group">
                   
                   <!-- PENDENT D'IMPLEMENTAR L'AVÍS QUE MOSTRAREM QUAN NO HI HAGI CAP OFERTA PER ENSENYAR -->
@@ -93,7 +97,16 @@
                   </c:forEach>
                         
             </ul>
-
+            </c:when>    
+            <c:otherwise>
+                   
+            <div class="alert alert-danger" role="alert">
+                  <svg class="icona_no_dades"><use xlink:href="#triangle_avis" /></svg>No hi ha dades per mostrar.
+            </div>
+       
+        </c:otherwise>
+        </c:choose>
+              
         </section>
 
         <%@include  file='/resources/html/footer.html' %>

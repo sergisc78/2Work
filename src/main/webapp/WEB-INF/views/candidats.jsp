@@ -23,9 +23,6 @@
             <!-- Estils afegits -->
             <spring:url value="/resources/css/estils.css" var="estilsCSS" />
             <link href="${estilsCSS}" rel="stylesheet" />
-        
-            <!-- JS / Query afegit -->
-            <script type="text/javascript" src="resources/js/auxiliars.js"></script>
 
             <title>2Work - ${ubicacio}</title>
       </head>
@@ -33,6 +30,7 @@
       <body>
             
             <%@include  file='/resources/svg/icones_llistes.svg' %>
+            <%@include  file='/resources/svg/icona_avis.svg' %>
 
             <!--- Barra de navegació -->
             <nav class="navbar navbar-expand-lg navbar-dark">
@@ -63,7 +61,9 @@
         
 
         <section class="container" id="candidats">
-
+              
+        <c:choose>
+        <c:when test="${not empty candidats}">
             <ul class="list-group">
                   
                   <!-- PENDENT D'IMPLEMENTAR L'AVÍS QUE MOSTRAREM QUAN NO HI HAGI CAP CANDIDAT PER ENSENYAR -->
@@ -81,6 +81,13 @@
                   </c:forEach>
                         
             </ul>
+        </c:when>    
+        <c:otherwise>
+              <div class="alert alert-danger" role="alert">
+                  <svg class="icona_no_dades"><use xlink:href="#triangle_avis" /></svg>No hi ha dades per mostrar.
+              </div>
+        </c:otherwise>
+        </c:choose>
 
         </section>
 
