@@ -57,6 +57,19 @@ public class EmpresaDAO implements EmpresaRepository{
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
+    /**
+     * Crear empresa a partir del codi
+     * @param codi
+     * @param preparedStatement
+     * @return l'empresa a partir del codi
+     * @throws Exception 
+     */
+    private int createEmpresa(PreparedStatement preparedStatement) throws Exception {
+           
+        int result=executeUpdateQuery(preparedStatement);
+        
+        return result;
+    }
     
     /**
      * S'encarrega d'obtenir un objecte PreparedStatement ja sigui reutilitzant una connexió 
@@ -75,7 +88,39 @@ public class EmpresaDAO implements EmpresaRepository{
         }
         return getConnection().prepareStatement(query);
     }
-     
+     /**
+     * Afegir empresa 
+     * @param empresa 
+     */
+    @Override
+    public void addEmpresa(Empresa empresa) {
+        
+        try{
+            
+            String qry="INSERT INTO empreses(nom,responsable,dniNif,adreca,poblacio,provincia,telefon,web,tamany,email,observacions,pass,cPass,sector) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement preparedStatement=getPreparedStatement(qry);
+            
+            preparedStatement.setString(1,empresa.getNom());
+            preparedStatement.setString(2,empresa.getResponsable());
+            preparedStatement.setString(3,empresa.getDniNif());           
+            preparedStatement.setString(4,empresa.getAdreca());
+            preparedStatement.setString(5,empresa.getPoblacio());
+            preparedStatement.setString(6,empresa.getProvincia());
+            preparedStatement.setString(7,empresa.getTelefon());
+            preparedStatement.setString(8,empresa.getWeb());            
+            preparedStatement.setInt(9,empresa.getTamany());
+            preparedStatement.setString(10,empresa.getEmail());
+            preparedStatement.setString(11,empresa.getObservacions());
+            preparedStatement.setString(12,empresa.getPass());
+            preparedStatement.setString(13,empresa.getcPass());
+            preparedStatement.setInt(14,empresa.getSector());
+             
+             
+            int result=createEmpresa(preparedStatement);
+        }catch (Exception ex) {
+            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+    }
      /**
       * 
       * @param preparedStatement
@@ -210,52 +255,20 @@ public class EmpresaDAO implements EmpresaRepository{
     }
     
     /**
-     * Crear o actulitzar empresa a partir del codi
+     * Actualitzar empresa a partir del codi
      * @param codi
      * @param preparedStatement
      * @return l'empresa a partir del codi
      * @throws Exception 
      */
-    private Empresa createOrUpdateEmpresa(Integer codi, PreparedStatement preparedStatement) throws Exception {
+    private Empresa updateEmp(Integer codi, PreparedStatement preparedStatement) throws Exception {
            
         int result=executeUpdateQuery(preparedStatement);
         
         return getEmpresaByCodi(codi);
     }
     
-    /**
-     * Afegir empresa 
-     * @param empresa 
-     */
-    @Override
-    public void addEmpresa(Empresa empresa) {
-        
-        try{
-            
-            String qry="INSERT INTO empreses(nom,responsable,dniNif,adreca,poblacio,provincia,telefon,web,tamany,email,observacions,pass,cPass,sector) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            PreparedStatement preparedStatement=getPreparedStatement(qry);
-            
-            preparedStatement.setString(1,empresa.getNom());
-            preparedStatement.setString(2,empresa.getResponsable());
-            preparedStatement.setString(3,empresa.getDniNif());           
-            preparedStatement.setString(4,empresa.getAdreca());
-            preparedStatement.setString(5,empresa.getPoblacio());
-            preparedStatement.setString(6,empresa.getProvincia());
-            preparedStatement.setString(7,empresa.getTelefon());
-            preparedStatement.setString(8,empresa.getWeb());            
-            preparedStatement.setInt(9,empresa.getTamany());
-            preparedStatement.setString(10,empresa.getEmail());
-            preparedStatement.setString(11,empresa.getObservacions());
-            preparedStatement.setString(12,empresa.getPass());
-            preparedStatement.setString(13,empresa.getcPass());
-            preparedStatement.setInt(14,empresa.getSector());
-             
-             
-            createOrUpdateEmpresa(empresa.getCodi(),preparedStatement);
-        }catch (Exception ex) {
-            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }   
-    }
+    
     
     /**
      * Actualitzar les dades de l'empresa
@@ -269,7 +282,7 @@ public class EmpresaDAO implements EmpresaRepository{
         try {
             preparedStatement = getPreparedStatement(qry);
             preparedStatement.setString(1, empresa.getDniNif());
-            createOrUpdateEmpresa(empresa.getCodi(), preparedStatement);
+            updateEmp(empresa.getCodi(), preparedStatement);
             this.addEmpresa(empresa);
         } catch (Exception ex) {
             Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -337,7 +350,7 @@ public class EmpresaDAO implements EmpresaRepository{
             preparedStatement = getPreparedStatement(qry);
             preparedStatement.setString(1, email);
             Empresa e=getEmpresaByEmail(email);
-            createOrUpdateEmpresa(e.getCodi(),preparedStatement);
+            updateEmp(e.getCodi(),preparedStatement);
         } catch (Exception ex) {
             Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -354,7 +367,7 @@ public class EmpresaDAO implements EmpresaRepository{
         try {
             preparedStatement = getPreparedStatement(qry);
             preparedStatement.setInt(1, codi); 
-            createOrUpdateEmpresa(codi, preparedStatement);
+            updateEmp(codi, preparedStatement);
         } catch (Exception ex) {
             Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -373,7 +386,7 @@ public class EmpresaDAO implements EmpresaRepository{
         try {
             preparedStatement = getPreparedStatement(qry);
             preparedStatement.setInt(1, codi); 
-            empEsborrada=createOrUpdateEmpresa(codi, preparedStatement);
+            empEsborrada=updateEmp(codi, preparedStatement);
             
         } catch (Exception ex) {
             Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);

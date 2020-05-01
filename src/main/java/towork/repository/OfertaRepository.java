@@ -24,5 +24,5 @@ public interface OfertaRepository {
         
     List<Oferta> getOfertaByCodiEmpresa(Integer codiEmpresa);       
         
-    void esborrarOferta(Integer codi); 
+     Boolean esborrarOferta(Integer codi); 
 }

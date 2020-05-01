@@ -65,8 +65,20 @@ public class OfertaDAO implements OfertaRepository{
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
-    
-    /**
+       /**
+     * Crear oferta a partir del codi
+     * @param codi
+     * @param preparedStatement
+     * @return l'oferta a partir del codi
+     * @throws Exception 
+     */ 
+    private int createOferta(PreparedStatement preparedStatement) throws Exception {
+           
+        int result=executeUpdateQuery(preparedStatement);
+        
+        return result;
+    }
+     /**
      * S'encarrega d'obtenir un objecte PreparedStatement ja sigui reutilitzant una connexió 
      * existent o creant-ne una nova
      * @param query
@@ -83,7 +95,36 @@ public class OfertaDAO implements OfertaRepository{
         }
         return getConnection().prepareStatement(query);
     }
-     
+    /**
+     * Afegir Oferta
+     * @param oferta 
+     */
+    @Override
+    public void addOferta(Oferta oferta){
+        
+        try{
+            
+            String qry="INSERT INTO ofertes(codiEmpresa,titolOferta,ocupacio,poblacio,provincia,sou,horari,tipusContracte,formacio,estat,descripcio) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement preparedStatement=getPreparedStatement(qry);
+           
+            preparedStatement.setInt(1,oferta.getCodiEmpresa()); //Aquí hem d'aconseguir posar el mètode que dona el codi d'empresa a partir de l'email que s'ha registrat per exemple?
+            preparedStatement.setString(2,oferta.getTitolOferta());           
+            preparedStatement.setInt(3,oferta.getOcupacio());           
+            preparedStatement.setString(4,oferta.getPoblacio());
+            preparedStatement.setString(5,oferta.getProvincia());
+            preparedStatement.setDouble(6,oferta.getSou());
+            preparedStatement.setString(7,oferta.getHorari());
+            preparedStatement.setString(8,oferta.getTipusContracte());            
+            preparedStatement.setInt(9,oferta.getFormacio());
+            preparedStatement.setString(10,oferta.getEstat());
+            preparedStatement.setString(11,oferta.getDescripcio());
+             
+            int result=createOferta(preparedStatement);
+            
+        }catch (Exception ex) {
+            Logger.getLogger(OfertaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+    }
       /**
       * 
       * @param preparedStatement
@@ -192,49 +233,18 @@ public class OfertaDAO implements OfertaRepository{
         }
         return null;
     }
-    
-     /**
-     * Crear o actualitzar oferta a partir del codi
+      /**
+     * Actualitzar oferta a partir del codi
      * @param codi
      * @param preparedStatement
      * @return l'oferta a partir del codi
      * @throws Exception 
      */ 
-    private Oferta createOrUpdateOferta(Integer codi, PreparedStatement preparedStatement) throws Exception {
+    private Oferta updateOfer(Integer codi, PreparedStatement preparedStatement) throws Exception {
            
         int result=executeUpdateQuery(preparedStatement);
         
         return getOfertaByCodi(codi);
-    }
-    
-    /**
-     * Afegir Oferta
-     * @param oferta 
-     */
-    @Override
-    public void addOferta(Oferta oferta){
-        
-        try{
-            
-            String qry="INSERT INTO ofertes(codiEmpresa,titolOferta,ocupacio,poblacio,provincia,sou,horari,tipusContracte,formacio,estat,descripcio) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-            PreparedStatement preparedStatement=getPreparedStatement(qry);
-           
-            preparedStatement.setInt(1,oferta.getCodiEmpresa()); //Aquí hem d'aconseguir posar el mètode que dona el codi d'empresa a partir de l'email que s'ha registrat per exemple?
-            preparedStatement.setString(2,oferta.getTitolOferta());           
-            preparedStatement.setInt(3,oferta.getOcupacio());           
-            preparedStatement.setString(4,oferta.getPoblacio());
-            preparedStatement.setString(5,oferta.getProvincia());
-            preparedStatement.setDouble(6,oferta.getSou());
-            preparedStatement.setString(7,oferta.getHorari());
-            preparedStatement.setString(8,oferta.getTipusContracte());            
-            preparedStatement.setInt(9,oferta.getFormacio());
-            preparedStatement.setString(10,oferta.getEstat());
-            preparedStatement.setString(11,oferta.getDescripcio());
-             
-            createOrUpdateOferta(oferta.getCodiOferta(),preparedStatement);
-        }catch (Exception ex) {
-            Logger.getLogger(OfertaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }   
     }
     
     /**
@@ -249,13 +259,36 @@ public class OfertaDAO implements OfertaRepository{
         try {
             preparedStatement = getPreparedStatement(qry);
             preparedStatement.setInt(1, oferta.getCodiEmpresa());
-            createOrUpdateOferta(oferta.getCodiOferta(), preparedStatement);
+            updateOfer(oferta.getCodiOferta(), preparedStatement);
             this.addOferta(oferta);
         } catch (Exception ex) {
             Logger.getLogger(OfertaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    /**
+     * Esborrar oferta a partir del codi
+     * @param codi 
+     */
+    @Override
+    public Boolean esborrarOferta(Integer codi){
+        Oferta oferEsborrada=new Oferta();
+        String qry = "DELETE FROM ofertes WHERE codiOferta = ?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = getPreparedStatement(qry);
+            preparedStatement.setInt(1, codi); 
+            oferEsborrada=updateOfer(codi, preparedStatement);
+        } catch (Exception ex) {
+            Logger.getLogger(OfertaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(oferEsborrada.getCodiOferta()!=null){
+            return true;
+        }else{
+            return false;        
+        }
     
+    }   
+     
      /**
       * Obtenir totes les ofertes
       * @return totes les ofertes o null
@@ -292,21 +325,5 @@ public class OfertaDAO implements OfertaRepository{
         }
         return null;
     }
-    /**
-     * Esborrar oferta a partir del codi
-     * @param codi 
-     */
-    @Override
-    public void esborrarOferta(Integer codi){
-        String qry = "DELETE FROM ofertes WHERE codiOferta = ?";
-        PreparedStatement preparedStatement;
-        try {
-            preparedStatement = getPreparedStatement(qry);
-            preparedStatement.setInt(1, codi); 
-            createOrUpdateOferta(codi, preparedStatement);
-        } catch (Exception ex) {
-            Logger.getLogger(OfertaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
     
-    }   
 }

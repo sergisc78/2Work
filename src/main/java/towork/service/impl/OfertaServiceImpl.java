@@ -46,8 +46,8 @@ public class OfertaServiceImpl implements OfertaService {
         return ofertaRepository.getOfertaByCodiEmpresa(codiEmpresa);
     }       
         
-    @Override
-    public void esborrarOferta(Integer codi){
-        ofertaRepository.esborrarOferta(codi);
+     @Override
+    public Boolean esborrarOferta(Integer codi){
+        return ofertaRepository.esborrarOferta(codi);
     }
 }
