@@ -43,6 +43,22 @@ public class CandidatDAO implements CandidatRepository {
 
     }
 
+    // Retorna tots els candidats de la bbdd
+    @Override
+    public List<Candidat> getAllCandidats() {
+        String query = "SELECT * from candidats";
+
+        try {
+            PreparedStatement preparedStatement = getPreparedStatement(query);
+            List<Candidat> candidats = executeQuery(preparedStatement);
+            return candidats;
+        } catch (SQLException ex) {
+            Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
+    }
+
     // Retorna el candidat quan es passa el DNI per paràmetre
     public Candidat getCandidatByEmail(String email) {
 
@@ -58,8 +74,8 @@ public class CandidatDAO implements CandidatRepository {
         return null;
 
     }
-    
-     // Retorna el candidat quan es passa el DNI per paràmetre
+
+    // Retorna el candidat quan es passa el DNI per paràmetre
     public Candidat getCandidatByCodi(Integer codi) {
 
         String query = "select * from candidats where codi =? ";
@@ -156,17 +172,13 @@ public class CandidatDAO implements CandidatRepository {
 
     // Mostrar codi del candidat, a partir de l´email
     @Override
-    public Candidat getCodiByEmail(String email) {
-
-        String query = "SELECT codi from candidats WHERE email=?";
-        try {
-            PreparedStatement preparedStatement = getPreparedStatement(query);
-            preparedStatement.setString(1, email);
-            return findUniqueResult(preparedStatement);
-        } catch (Exception ex) {
-            Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
+    public int getCodiByEmail(String email) {
+        Candidat codiCandidat = getCandidatByEmail(email);
+        if (codiCandidat.getCodi() != null) {
+            return 1;
+        } else {
+            return 0;
         }
-        return null;
 
     }
 
@@ -179,7 +191,7 @@ public class CandidatDAO implements CandidatRepository {
             PreparedStatement preparedStatement = getPreparedStatement(query);
             preparedStatement.setInt(1, codi);
             createOrUpdateCandidat2(codi, preparedStatement);
-            
+
         } catch (Exception ex) {
             Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -219,8 +231,8 @@ public class CandidatDAO implements CandidatRepository {
         return getCandidatByEmail(email);
 
     }
-    
-     private Candidat createOrUpdateCandidat2(Integer codi, PreparedStatement preparedStatement) throws Exception {
+
+    private Candidat createOrUpdateCandidat2(Integer codi, PreparedStatement preparedStatement) throws Exception {
 
         executeUpdateQuery(preparedStatement);
         return getCandidatByCodi(codi);

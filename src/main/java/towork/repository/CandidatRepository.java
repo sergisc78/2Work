@@ -13,18 +13,19 @@ import towork.domain.Candidat;
  * @author Sergi
  */
 public interface CandidatRepository {
-    
-   
+
+    List<Candidat> getAllCandidats();
+
     void addCandidat(Candidat candidat);
 
     List<Candidat> selectCandidat();
 
     void updateCandidat(Candidat candidat);
-    
+
     void deletePerfil(Candidat candidat);
-    
-    Candidat getCodiByEmail(String email);
-    
-    void deleteByCodi (Integer codi);
+
+    int getCodiByEmail(String email);
+
+    void deleteByCodi(Integer codi);
 
 }

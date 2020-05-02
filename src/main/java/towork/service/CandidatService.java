@@ -14,11 +14,12 @@ import towork.domain.Candidat;
  */
 public interface CandidatService {
     
+    List<Candidat> getAllCandidats();
     public void addCandidat (Candidat candidat);
     List <Candidat> selectCandidat();
     void updateCandidat(Candidat candidat);
     void deletePerfil (Candidat candidat);
-    Candidat getCodiByEmail(String email);
+    int getCodiByEmail(String email);
     void deleteByCodi (Integer codi);
   
 }
