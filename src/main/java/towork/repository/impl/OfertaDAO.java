@@ -281,12 +281,7 @@ public class OfertaDAO implements OfertaRepository{
         } catch (Exception ex) {
             Logger.getLogger(OfertaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(oferEsborrada.getCodiOferta()!=null){
-            return true;
-        }else{
-            return false;        
-        }
-    
+        return (oferEsborrada==null);
     }   
      
      /**
