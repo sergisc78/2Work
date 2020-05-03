@@ -70,25 +70,22 @@
                   <ul class="list-group">
                       <c:forEach items="${ofertes}" var="oferta">
                       <li class="list-group-item d-flex justify-content-between align-items-center">
-                            
-                                  <!-- PENDENT AFEGIR-HI L'ENLLAÇ -->
-                                  <a href="#" class="icona_accio">
-                                        <svg><use xlink:href="#esborrar" /></svg>
-                                  </a>
-                                  
-                                  <sec:authorize access="hasRole('ROLE_USER')">
-                                        <a href="<spring:url value= "/oferta/${oferta.codiOferta}" />" class="flex-grow-1"><p>${oferta.titolOferta}</p></a>
-                                  </sec:authorize>
-                                        
+                                   
                                   <sec:authorize access="hasRole('ROLE_EMPRESA')">
+                                        <a href="<spring:url value= '/eliminaOferta/${codiEmpresa}/${oferta.codiOferta}' />" class="icona_accio" onclick="return confirm('Segur que vols eliminar l\'oferta?');">
+                                          <svg><use xlink:href="#esborrar" /></svg>
+                                       </a>
                                         <a href="<spring:url value= "/ofertaPropietari/${oferta.codiOferta}" />" class="flex-grow-1"><p>${oferta.titolOferta}</p></a>
                                   </sec:authorize>
                                         
                                   <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                        <a href="<spring:url value= "/ofertaAdmin/${oferta.codiOferta}" />" class="flex-grow-1"><p>${oferta.titolOferta}</p></a>
+                                        <a href="<spring:url value= '/eliminaOfertaAdmin/${oferta.codiOferta}' />" class="icona_accio" onclick="return confirm('Segur que vols eliminar l\'oferta?');">
+                                          <svg><use xlink:href="#esborrar" /></svg>
+                                        </a>
+                                        <a href="<spring:url value= "/ofertaAdmin/${oferta.codiOferta}/" />" class="flex-grow-1"><p>${oferta.titolOferta}</p></a>
                                   </sec:authorize>
 
-                                 <span class="badge badge-primary badge-pill">${oferta.estat}</span>
+                                  <span class="badge badge-pill badge-primary">${oferta.estat}</span>
                             
                       </li>
                       </c:forEach>

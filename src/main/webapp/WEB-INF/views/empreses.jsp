@@ -70,7 +70,7 @@
                   <c:forEach items="${empreses}" var="empresa" varStatus="loop">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                               
-                              <a href="<spring:url value= '/empresa/${empresa.codi}/esborrar' />" class="icona_accio" onclick="return confirm('Segur que vols eliminar l\'empresa?');" >
+                              <a href="<spring:url value= '/eliminaEmpresaAdmin/${empresa.codi}' />" class="icona_accio" onclick="return confirm('Segur que vols eliminar l\'empresa?');" >
                                     <svg><use xlink:href="#esborrar" /></svg>
                               </a>
                                     

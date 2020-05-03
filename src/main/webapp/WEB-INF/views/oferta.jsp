@@ -156,17 +156,33 @@
                     
             </div>
               
-            <!--- Només per l'admin --->
+            <!--- CANVI D'ESTAT DE L'OFERTA. NOMÉS PER L'ADMIN --->
             <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-                  <c:if test="${oferta.estat='per revisar'}">
-                        <a href="<spring:url value='/oferta/${oferta.codiOferta}/validar'/>" class="text-center btn btn-primary" role="button">Validar l'oferta</a>
-                  </c:if>
-                  <a href="<spring:url value='/oferta/${oferta.codiOferta}/esborrar'/>" class="text-center btn btn-warning" role="button">Esborrar l'oferta</a>
+                  <h4>Canvi d'estat de l'oferta</h4>
+                  <spring:url value="desaEstat" var="desa" />
+                  <form:form id="formulariEstatOferta" modelAttribute="oferta" method="post" action="${desa}">
+                        <form:select path="estat">
+                              <form:options items="${estatsPossiblesOfertes.llista}" />
+                        </form:select>
+                        <form:hidden path="titolOferta" value="${oferta.titolOferta}"></form:hidden>
+                        <form:hidden path="codiEmpresa" value="${oferta.codiEmpresa}"></form:hidden>
+                        <form:hidden path="ocupacio" value="${oferta.ocupacio}"></form:hidden>
+                        <form:hidden path="poblacio" value="${oferta.poblacio}"></form:hidden>
+                        <form:hidden path="provincia" value="${oferta.provincia}"></form:hidden>
+                        <form:hidden path="sou" value="${oferta.sou}"></form:hidden>
+                        <form:hidden path="horari" value="${oferta.horari}"></form:hidden>
+                        <form:hidden path="descripcio" value="${oferta.descripcio}"></form:hidden>
+                        <form:hidden path="tipusContracte" value="${oferta.tipusContracte}"></form:hidden>
+                        <form:hidden path="formacio" value="${oferta.formacio}"></form:hidden>
+                  </form:form>
+                  <input form="formulariEstatOferta" class="text-center btn btn-primary" type="submit"  role="button" value="Desar nou estat" />
+                  <a href="<spring:url value= '/eliminaOfertaAdmin/${oferta.codiOferta}' />" class="text-center btn btn-warning" role="button" onclick="return confirm('Segur que vols eliminar l\'oferta?');">Eliminar l'oferta</a>
             </sec:authorize>
             
             <!--- NOMÉS PEL PROPIETARI/CREADOR DE L'OFERTA --->
             <c:if test="${propietari}">
             <p>
+                  <a href="<spring:url value= '/eliminaOferta/${oferta.codiEmpresa}/${oferta.codiOferta}' />" class="text-center btn btn-warning" role="button" onclick="return confirm('Segur que vols eliminar l\'oferta?');">Eliminar l'oferta</a>
                   <input form="formulariCandidatures" class="text-center btn btn-primary" type="submit"  role="button" value="Desar els canvis" />
             </p>
             </c:if>

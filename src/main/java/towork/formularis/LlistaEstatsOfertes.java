@@ -3,34 +3,28 @@ package towork.formularis;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import towork.domain.Formacio;
 
-public final class LlistaFormacions  implements Serializable{
+public final class LlistaEstatsOfertes  implements Serializable{
  
-      private List<Formacio> llista;
+      private List<String> llista;
       
-      public LlistaFormacions() {
-            List<Formacio> forms = new ArrayList<>();
-            forms.add(new Formacio(1,"Sense estudis finalitzats"));
-            forms.add(new Formacio(2,"Graduat escolar"));
-            forms.add(new Formacio(3,"ESO"));
-            forms.add(new Formacio(4,"Batxillerat"));
-            forms.add(new Formacio(5,"Grau mig en conducció Activitats Físicoesportives en el Medi Natural"));
-            forms.add(new Formacio(6,"Grau mig en Jardineria i Floristeria"));
-            // Hauriem de seguir omplint la llista
-            
-            this.setLlista(forms);
+      public LlistaEstatsOfertes() {
+            List<String> estats = new ArrayList<>();
+            // A la bbdd tenim assignat un màxim de 10 caracters a aquest valor. Si ens passem petarà.
+            estats.add("Pública");
+            estats.add("No pública");
+            this.setLlista(estats);
       }
       
-      public LlistaFormacions(List<Formacio> llista) {
+      public LlistaEstatsOfertes(List<String> llista) {
             this.llista = llista;
       }
 
-      public List<Formacio> getLlista() {
+      public List<String> getLlista() {
             return llista;
       }
 
-      public void setLlista(List<Formacio> llista) {
+      public void setLlista(List<String> llista) {
             this.llista = llista;
       }
          

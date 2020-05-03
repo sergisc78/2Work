@@ -32,6 +32,7 @@ import towork.domain.Habilitat;
 import towork.formularis.LlistaCandidatures;
 import towork.formularis.LlistaHabilitats;
 import towork.domain.Oferta;
+import towork.formularis.LlistaEstatsOfertes;
 import towork.formularis.LlistaFormacions;
 import towork.formularis.LlistaOcupacions;
 import towork.formularis.LlistaSectors;
@@ -88,6 +89,8 @@ public class EspaiController {
       HashMap<String, String> fb_baixaEmpresaKO = new HashMap<>();
       HashMap<String, String> fb_baixaCandidatOK = new HashMap<>();
       HashMap<String, String> fb_baixaCandidatKO = new HashMap<>();
+      HashMap<String, String> fb_baixaOfertaOK = new HashMap<>();
+      HashMap<String, String> fb_baixaOfertaKO = new HashMap<>();
       HashMap<String, String> fb_baixaCandidatCorreuNoValid = new HashMap<>();
       HashMap<String, String> fb_baixaEmpresaCorreuNoValid = new HashMap<>();
       HashMap<String, String> fb_logoutOK  = new HashMap<>();
@@ -187,8 +190,12 @@ public class EspaiController {
             fb_baixaEmpresaKO.put("classe",classeKO);
             fb_baixaCandidatOK.put("missatge","La baixa de l'usuari s'ha realitzat correctament.");
             fb_baixaCandidatOK.put("classe",classeOK);
-            fb_baixaCandidatKO.put("missatge","La baixa de l'usuari no s'ha pogut realitzar. Contacta amb l'administrador");
+            fb_baixaCandidatKO.put("missatge","La baixa de l'usuari no s'ha pogut realitzar. Contacta amb l'administrador.");
             fb_baixaCandidatKO.put("classe",classeKO);
+            fb_baixaOfertaOK.put("missatge","L'oferta ha estat eliminada de l'aplicació.");
+            fb_baixaOfertaOK.put("classe",classeOK);
+            fb_baixaOfertaKO.put("missatge","L'oferta no ha pogut ésser eliminada de l'aplicació.");
+            fb_baixaOfertaKO.put("classe",classeKO);
             fb_baixaCandidatCorreuNoValid.put("missatge","La baixa del perfil no s'ha realitzat. El correu introduït no correspon amb el del perfil.");
             fb_baixaCandidatCorreuNoValid.put("classe",classeKO);
             fb_baixaEmpresaCorreuNoValid.put("missatge","La baixa del perfil no s'ha realitzat. El correu introduït no correspon amb el del perfil.");
@@ -237,9 +244,9 @@ public class EspaiController {
             of.setEstat("Pendent");
             of.setFormacio(1);
             of.setHabilitats(habs);
-            of.setHorari("De 9 a 15h"); // Això crec està pendent d'acabar de definir bé al domini.
+            of.setHorari("De 9 a 15h");
             of.setPoblacio("Cardona");
-            of.setCodiEmpresa(1); // Aquesta dada haurà de servir de PK per extreure el nom de l'empresa de la bbdd? Mostrarem el nom i no el 
+            of.setCodiEmpresa(1);
             of.setSou(25000d);
             of.setTipusContracte("Indefinit");
             of.setTitolOferta("Títol de l'oferta");
@@ -329,7 +336,7 @@ public class EspaiController {
             try {
                   // Provem de recuperar el codi del candidat loguejat per afegir-lo a les urls del menú de navegació
                   System.out.println("--- Correu de l'usuari loguejat: "+username);
-                  codiCandidat = candidatService.getCodiByEmail(username).getCodi(); // ARA NO FUNCIONA
+                  codiCandidat = candidatService.getCodiByEmail(username);
                   System.out.println("--- Codi de l'usuari loguejat: "+codiCandidat);
             } catch (Exception e) {
                   modelview.setViewName("home");
@@ -597,10 +604,16 @@ public class EspaiController {
             // Llista que conté els missatges de feedback que passarem a la vista
             List<Map<String, String>> feedback = new ArrayList<>();
             
+            // Llista dels possibles estats de les ofertes
+            LlistaEstatsOfertes estatsPossiblesOfertes = new LlistaEstatsOfertes();
+            
             Oferta oferta = new Oferta();
             
             try{
                   oferta = ofertaService.getOfertaByCodi(codiOferta);
+                  System.out.println("--- Codi de l'empresa que ha creat l'oferta de l'objecte que li passem a la vista: "+oferta.getCodiEmpresa());
+                  System.out.println("--- Títol de l'oferta de l'objecte que li passem a la vista: "+oferta.getTitolOferta());
+                  System.out.println("----------------- ");
             } catch (Exception e) {      
                   feedback.add(fb_problemaBBDD);
                   modelview.getModelMap().addAttribute("feedback", feedback);
@@ -609,6 +622,68 @@ public class EspaiController {
             modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
             modelview.getModelMap().addAttribute("candidatures", llistaCandidatures);
             modelview.getModelMap().addAttribute("oferta", oferta);
+            modelview.getModelMap().addAttribute("estatsPossiblesOfertes", estatsPossiblesOfertes);
+            modelview.getModelMap().addAttribute("opcions", opcions);
+            
+            return modelview;
+      }
+      
+      
+      /**
+       *
+       * Gestiona l'acció que executa el botó de desar nou estat de l'oferta
+       * Només pot canviar l'estat de l'oferta l'admin
+       * 
+       * @param codiOferta El codi de l'oferta
+       * @param formOferta L'objecte de tipus Oferta que rebem del formulari de la vista
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Un objecte ModelAndView que fa referència a la següent vista que mostrarem a l'usuari
+       * @throws ServletException
+       * @throws IOException 
+       */
+      @RequestMapping(value = "/ofertaAdmin/{codiOferta}/desaEstat", method = RequestMethod.POST)
+      public ModelAndView desaEstatOferta(@PathVariable("codiOferta") Integer codiOferta, @ModelAttribute("oferta") Oferta formOferta, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            
+            ModelAndView modelview = new ModelAndView("ofertesAdminEmpresa");
+            
+            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
+            HashMap[] opcions = new HashMap[]{op_iniciAdmin, op_candidats, op_empreses, op_logout};  
+            
+            // Llista que conté els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+            
+            // Llista d'ofertes
+            List<Oferta> ofertes = new ArrayList<>();
+            
+            // NO ENS ESTÀ ARRIBANT BÉ L'OBJECTE DEL FORMULARI DE LA VISTA
+            
+            System.out.println("--- Codi de l'oferta: "+formOferta.getCodiOferta());
+            System.out.println("--- Estat de l'oferta: "+formOferta.getEstat());
+            System.out.println("--- Codi de l'empresa que ha creat l'oferta: "+formOferta.getCodiEmpresa());
+            System.out.println("--- Títol de l'oferta: "+formOferta.getTitolOferta());
+            System.out.println("--- Descripció de l'oferta: "+formOferta.getDescripcio());
+            
+            try{
+                  // Provem d'actualitzar la base de dades amb l'objecte Oferta rebut del formulari
+                  // Estaria bé poder saber si el canvi s'ha executat correctament, però ara per ara el mètode retorna void
+                  ofertaService.updateOferta(formOferta);
+                  feedback.add(fb_canvisOK);
+            }catch (Exception e){
+                  // Si no ha estat possible
+                  feedback.add(fb_canvisKO);
+            }
+            
+            try {
+                  // Provem de recuperar de la bbdd el llistat de totes les ofertes
+                  ofertes = ofertaService.getAllOfertes();
+            } catch (Exception e) {
+                  feedback.add(fb_problemaBBDD);
+            }
+            
+            modelview.getModelMap().addAttribute("ubicacio", "Ofertes donades d'alta a l'aplicació");
+            modelview.getModelMap().addAttribute("feedback", feedback);
+            modelview.getModelMap().addAttribute("ofertes", ofertes);
             modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;
@@ -864,9 +939,6 @@ public class EspaiController {
                   // No hem pogut recuperar totes les ofertes generades per l'empresa de la bbdd
                   feedback.add(fb_problemaBBDD);
             }
-            
-            // Aquesta vista en principi haurà de mostrar totes les ofertes
-            // Les hem d'obtenir de la bbdd mitjançant el mètode de la capa servei
 
             // Llista que contindrà les opcions que hi haurà a la barra de navegació
             List<Map<String , String>> opcions  = new ArrayList<>();
@@ -876,7 +948,7 @@ public class EspaiController {
             opcions.add(op_empreses);
             opcions.add(op_logout);
         
-            modelview.getModelMap().addAttribute("ubicacio", "Vista general de les ofertes");
+            modelview.getModelMap().addAttribute("ubicacio", "Ofertes donades d'alta a l'aplicació");
             modelview.getModelMap().addAttribute("feedback", feedback);
             modelview.getModelMap().addAttribute("ofertes", ofertes);
             modelview.getModelMap().addAttribute("opcions", opcions);
@@ -1255,6 +1327,7 @@ public class EspaiController {
             modelview.getModelMap().addAttribute("ubicacio", "Ofertes generades");
             modelview.getModelMap().addAttribute("feedback", feedback);
             modelview.getModelMap().addAttribute("ofertes", ofertes);
+            modelview.getModelMap().addAttribute("codiEmpresa", codiEmpresa);
             modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;
@@ -1656,13 +1729,14 @@ public class EspaiController {
             
             // Afegim a l'oferta els atributs que no venen del mètode
             formOferta.setCodiEmpresa(codiEmpresa);
-            formOferta.setEstat("Publicable"); // Estat que donem a les ofertes quan s'acaben de donar d'alta
+            formOferta.setEstat("Publicada"); // Estat que donem a les ofertes quan s'acaben de donar d'alta
             
+            op_altaOferta.put("usuari","/"+codiEmpresa+"/");
             op_ofertesEmpresa.put("usuari","/"+codiEmpresa);
             op_perfilEmpresa.put("usuari","/"+codiEmpresa);
             op_baixaEmpresa.put("usuari","/"+codiEmpresa+"/");
             // Hashmap que conté les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{op_inici,op_ofertesEmpresa,op_perfilEmpresa,op_baixaEmpresa,op_logout};
+            HashMap[] opcions = new HashMap[]{op_inici, op_altaOferta, op_ofertesEmpresa, op_perfilEmpresa, op_baixaEmpresa, op_logout};
             
             // Llista que contindrà els missatges de feedback que passarem a la vista
             List<Map<String, String>> feedback = new ArrayList<>();
@@ -1776,7 +1850,7 @@ public class EspaiController {
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{op_iniciAdmin,op_ofertesAdmin,op_candidats,op_logout};
             
-            modelview.getModelMap().addAttribute("ubicacio", "Empreses donades d'alta");
+            modelview.getModelMap().addAttribute("ubicacio", "Empreses donades d'alta a l'aplicació");
             modelview.getModelMap().addAttribute("empreses", empreses);
             modelview.getModelMap().addAttribute("opcions", opcions);
             
@@ -1946,15 +2020,45 @@ public class EspaiController {
       public ModelAndView eliminaCandidatAdmin(@PathVariable("codiCandidat") Integer codiCandidat, HttpServletRequest request, HttpServletResponse response) {
             
             ModelAndView modelview = new ModelAndView("candidats");
-
             
-            // NOMÉS PER L'ADMIN
-            // PENDENT
+            // Creem les opcions que aniràn a la barra de navegació
+            List<Map<String, String>> opcions = new ArrayList<>();
             
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
             
-            // Li passarem a la vista una llista de candidats que en realitat haurem de rebre de la bbd mitjançant el corresponent mètode del servei
+            try{
+                  // Provem d'eliminar el candidat
+                  // També caldria verificar el resultat de l'operació. Ara per ara el mètode retorna void.
+                  candidatService.deleteByCodi(codiCandidat);
+                  feedback.add(fb_baixaCandidatOK);
+            } catch(Exception e){
+                  // Si no hem pogut
+                  feedback.add(fb_baixaCandidatKO);
+            }
+            
+            try {
+                  // Provem de recuperar la llista de candidats
+                  // 
+                  // ESTEM A L'ÉSPERA DE DISPOSAR DEL MÈTODE getAllCandidats()
+                  //
+                  //
+            } catch(Exception e){
+                  feedback.add(fb_problemaBBDD);
+            }
+            
+            opcions.add(op_iniciAdmin);
+            opcions.add(op_empreses);
+            opcions.add(op_ofertesAdmin);
+            opcions.add(op_logout);
+            
+            // Li passarem a la vista una llista de candidats que hem de rebre de la bbd mitjançant el corresponent mètode del servei
             // Aquesta llista està iniciliatitzada a l'inici, i al constructor, de la classe
             
+            modelview.getModelMap().addAttribute("feedback", feedback);
+            // modelview.getModelMap().addAttribute("candidats", cands); TAMBÉ LI HEM DE PASSAR LA LLISTA DE CANDIDATS. ESTEM PENDENTS DEL MÈTODE.
+            modelview.getModelMap().addAttribute("ubicacio", baseline);
+            modelview.getModelMap().addAttribute("opcions", opcions);
             return modelview;
       }
       
@@ -2093,11 +2197,160 @@ public class EspaiController {
       public ModelAndView eliminaEmpresaAdmin(@PathVariable("codiEmpresa") Integer codiEmpresa, HttpServletRequest request, HttpServletResponse response) {
             
             ModelAndView modelview = new ModelAndView("empreses");
-
             
-            // NOMÉS PER L'ADMIN
-            // PENDENT
+            List<Empresa> empreses = new ArrayList<>();
             
+            // Creem les opcions que aniràn a la barra de navegació
+            List<Map<String, String>> opcions = new ArrayList<>();
+            
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+            
+            try {
+                  empresaService.esborrarEmpresa(codiEmpresa);
+                  feedback.add(fb_baixaEmpresaOK);
+            } catch (Exception e) {
+                  feedback.add(fb_baixaEmpresaKO);
+            }
+            
+            try {
+                  // Provem de recuperar la llista de les empreses tal com està en aquest punt
+                  empreses = empresaService.getAllEmpreses();
+            } catch (Exception e) {
+                  feedback.add(fb_problemaBBDD);
+                  
+            }
+            
+            opcions.add(op_iniciAdmin);
+            opcions.add(op_candidats);
+            opcions.add(op_empreses);
+            opcions.add(op_ofertesAdmin);
+            opcions.add(op_logout);
+            
+            modelview.getModelMap().addAttribute("ubicacio", "Empreses donades d'alta a l'aplicació");
+            modelview.getModelMap().addAttribute("feedback", feedback);
+            modelview.getModelMap().addAttribute("empreses", empreses);
+            modelview.getModelMap().addAttribute("opcions", opcions);
+            
+            return modelview;
+      }
+      
+      
+      /**
+       * 
+       * Mètode que gestiona la baixa d'una oferta per part de l'administrador
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param codiOferta El codi de l'oferta que s'ha d'eliminar
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Un objecte ModelAndView que conté la referència a la vista que mostrarem a l'usuari
+       */
+      @RequestMapping(value = "/eliminaOfertaAdmin/{codiOferta}", method = RequestMethod.GET)
+      public ModelAndView eliminaOfertaAdmin(@PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) {
+            
+            ModelAndView modelview = new ModelAndView("ofertesAdminEmpresa");
+            
+            List<Oferta> ofertes = new ArrayList<>();
+            
+            // Creem les opcions que aniràn a la barra de navegació
+            List<Map<String, String>> opcions = new ArrayList<>();
+            
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+            
+            ofertaService.esborrarOferta(codiOferta);
+            
+            
+            try{
+                  // Provem d'eliminar l'oferta de la base de dades
+                  if (ofertaService.esborrarOferta(codiOferta)){
+                        feedback.add(fb_baixaOfertaOK);
+                  } else { 
+                        feedback.add(fb_baixaOfertaKO);
+                  }
+                  
+            } catch (Exception e){
+                  // Si no s'ha pogut fer
+                  feedback.add(fb_baixaOfertaKO);
+            }
+            
+            try{
+                  // Provem de recuperar la llista d'ofertes
+                  ofertes = ofertaService.getAllOfertes();
+            } catch (Exception e){
+                  // Si no s'ha pogut fer
+                  feedback.add(fb_problemaBBDD);
+            }
+            
+            opcions.add(op_iniciAdmin);
+            opcions.add(op_candidats);
+            opcions.add(op_empreses);            
+            opcions.add(op_logout);
+            
+            modelview.getModelMap().addAttribute("ubicacio", "Ofertes donades d'alta a l'aplicació");
+            modelview.getModelMap().addAttribute("feedback", feedback);
+            modelview.getModelMap().addAttribute("ofertes", ofertes);
+            modelview.getModelMap().addAttribute("opcions", opcions);
+            
+            return modelview;
+      }
+      
+      
+      /**
+       * 
+       * Mètode que gestiona la baixa d'una oferta per part de l'empresa que l'ha creat
+       * 
+       * @author Daniel Sevilla i Junyent
+       * @param codiEmpresa El codi de l'empresa que ha generat l'oferta i que l'esborra
+       * @param codiOferta El codi de l'oferta
+       * @param request La petició http
+       * @param response La resposta http
+       * @return Un objecte ModelAndView que conté la referència a la vista que es mostrarà a l'usuari
+       */
+      @RequestMapping(value = "/eliminaOferta/{codiEmpresa}/{codiOferta}", method = RequestMethod.GET)
+      public ModelAndView eliminaOfertaAdmin(@PathVariable("codiEmpresa") Integer codiEmpresa, @PathVariable("codiOferta") Integer codiOferta, HttpServletRequest request, HttpServletResponse response) {
+            
+            ModelAndView modelview = new ModelAndView("ofertesAdminEmpresa");
+            
+            List<Oferta> ofertes = new ArrayList<>();
+            
+            // Creem les opcions que aniràn a la barra de navegació
+            List<Map<String, String>> opcions = new ArrayList<>();
+            
+            // Llista que contindrà els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+            
+            try{
+                  // Provem d'eliminar l'oferta de la base de dades
+                  ofertaService.esborrarOferta(codiOferta);
+                  feedback.add(fb_baixaOfertaOK);
+            } catch (Exception e){
+                  // Si no s'ha pogut fer
+                  feedback.add(fb_baixaOfertaKO);
+            }
+            
+            try{
+                  // Provem de recuperar la llista d'ofertes
+                  ofertes = ofertaService.getOfertaByCodiEmpresa(codiEmpresa);
+            } catch (Exception e){
+                  // Si no s'ha pogut fer
+                  feedback.add(fb_problemaBBDD);
+            }
+            
+            op_altaOferta.put("usuari","/"+codiEmpresa+"/");
+            op_perfilEmpresa.put("usuari","/"+codiEmpresa);
+            op_baixaEmpresa.put("usuari","/"+codiEmpresa+"/");
+            
+            opcions.add(op_altaOferta);
+            opcions.add(op_perfilEmpresa);
+            opcions.add(op_baixaEmpresa);
+            opcions.add(op_logout);
+            
+            modelview.getModelMap().addAttribute("ubicacio", "Ofertes generades");
+            modelview.getModelMap().addAttribute("feedback", feedback);
+            modelview.getModelMap().addAttribute("ofertes", ofertes);
+            modelview.getModelMap().addAttribute("opcions", opcions);
             
             return modelview;
       }
