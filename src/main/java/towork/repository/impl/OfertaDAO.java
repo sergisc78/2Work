@@ -254,13 +254,14 @@ public class OfertaDAO implements OfertaRepository{
            
     @Override
     public void updateOferta(Oferta oferta){
-        String qry = "DELETE FROM ofertes WHERE codiEmpresa = ?";
+        String qry = "DELETE FROM ofertes WHERE codiOferta = ?";
         PreparedStatement preparedStatement;
         try {
             preparedStatement = getPreparedStatement(qry);
-            preparedStatement.setInt(1, oferta.getCodiEmpresa());
+            preparedStatement.setInt(1, oferta.getCodiOferta());
             updateOfer(oferta.getCodiOferta(), preparedStatement);
-            this.addOferta(oferta);
+            System.out.println("--- Codi de l'empresa que ha creat l'oferta: "+oferta.getCodiEmpresa());
+            addOferta(oferta);
         } catch (Exception ex) {
             Logger.getLogger(OfertaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
