@@ -2130,7 +2130,7 @@ public class EspaiController {
                   
                   try {
                         // Tractem d'esborrar l'empresa de la bbdd
-                        empresaService.esborrarEmpresa(codiEmpresa);
+                        empresaService.esborrarEmpresaBoolean(codiEmpresa);
                         // Fem el logout
                         HttpSession session= request.getSession(false);
                         SecurityContextHolder.clearContext();
@@ -2207,7 +2207,7 @@ public class EspaiController {
             List<Map<String, String>> feedback = new ArrayList<>();
             
             try {
-                  empresaService.esborrarEmpresa(codiEmpresa);
+                  empresaService.esborrarEmpresaBoolean(codiEmpresa);
                   feedback.add(fb_baixaEmpresaOK);
             } catch (Exception e) {
                   feedback.add(fb_baixaEmpresaKO);

@@ -337,45 +337,10 @@ public class EmpresaDAO implements EmpresaRepository{
         Empresa empCodi=getEmpresaByEmail(email);
         return empCodi.getCodi();
     }
-    /**
-     * Mètode per esborrar una empresa a partir de l'email
-     * @param email 
-     */
-    @Override
-    public void deleteEmpresa(String email){
-        String qry = "DELETE FROM empreses WHERE email = ?";
-        PreparedStatement preparedStatement;
-        try {
-            preparedStatement = getPreparedStatement(qry);
-            preparedStatement.setString(1, email);
-            Empresa e=getEmpresaByEmail(email);
-            updateEmp(e.getCodi(),preparedStatement);
-        } catch (Exception ex) {
-            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
-    /**
-     * Mètode per esborrar una empresa a partir del codi
-     * @param codi 
-     */
-    @Override
-    public void esborrarEmpresa(Integer codi){
-        String qry = "DELETE FROM empreses WHERE codi = ?";
-        PreparedStatement preparedStatement;
-        try {
-            preparedStatement = getPreparedStatement(qry);
-            preparedStatement.setInt(1, codi); 
-            updateEmp(codi, preparedStatement);
-        } catch (Exception ex) {
-            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-    }
-    /**
-     * Mètode per esborrar empresa retornant si s'ha fet l'eliminació a la bd amb true o false
+     /**
+     * Mètode per esborrar empresa retornant si s'ha fet l'eliminació a la bd 
      * @param codi
-     * @return true o false
+     * @return null si no s'ha fet l'eliminació
      */
       @Override
     public Boolean esborrarEmpresaBoolean(Integer codi){
@@ -390,10 +355,6 @@ public class EmpresaDAO implements EmpresaRepository{
         } catch (Exception ex) {
             Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-       if (empEsborrada.getCodi()!=null){
-           return true;
-       }else{
-           return false;
-       }
+       return (empEsborrada==null);
     }
 }

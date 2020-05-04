@@ -28,9 +28,5 @@ public interface EmpresaService {
     
     Integer getCodiByEmail(String email);
     
-    void deleteEmpresa(String email);
-    
-    void esborrarEmpresa(Integer codi);
-    
     Boolean esborrarEmpresaBoolean(Integer codi);
 }

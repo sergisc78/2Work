@@ -50,15 +50,6 @@ public class EmpresaServiceImpl implements EmpresaService{
     public Integer getCodiByEmail(String email){
         return empresaRepository.getCodiByEmail(email);
     }
-    
-    @Override
-    public void deleteEmpresa(String email){
-        empresaRepository.deleteEmpresa(email);
-    }
-    @Override
-    public void esborrarEmpresa(Integer codi){
-        empresaRepository.esborrarEmpresa(codi);    
-    }
     @Override
     public Boolean esborrarEmpresaBoolean(Integer codi){
         return empresaRepository.esborrarEmpresaBoolean(codi);
