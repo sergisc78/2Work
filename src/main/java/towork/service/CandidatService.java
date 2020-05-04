@@ -17,7 +17,7 @@ public interface CandidatService {
     List<Candidat> getAllCandidats();
     public void addCandidat (Candidat candidat);
     List <Candidat> selectCandidat();
-    void updateCandidat(Candidat candidat);
+    boolean updateCandidat(Integer codi,Candidat candidat);
     void deletePerfil (Candidat candidat);
     int getCodiByEmail(String email);
     void deleteByCodi (Integer codi);

@@ -20,7 +20,7 @@ public interface CandidatRepository {
 
     List<Candidat> selectCandidat();
 
-    void updateCandidat(Candidat candidat);
+    boolean updateCandidat(Integer codi,Candidat candidat);
 
     void deletePerfil(Candidat candidat);
 

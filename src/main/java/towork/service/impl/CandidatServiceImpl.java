@@ -34,8 +34,9 @@ public class CandidatServiceImpl implements CandidatService {
     }
 
     @Override
-    public void updateCandidat(Candidat candidat) {
-        candidatRepository.updateCandidat(candidat);
+    public boolean updateCandidat(Integer codi, Candidat candidat) {
+        return candidatRepository.updateCandidat(codi, candidat);
+
     }
 
     @Override

@@ -138,25 +138,26 @@ public class CandidatDAO implements CandidatRepository {
 
     }
 
-    // Actualitzar perfil
+    // Actualitzar perfil a través del codi del candidat
     @Override
-    public void updateCandidat(Candidat candidat) {
+    public boolean updateCandidat(Integer codi, Candidat candidat) {
 
-        String query = "UPDATE candidats SET email=?";
-        /* try {
+        String query = "UPDATE candidats SET codi=?";
+        try {
             PreparedStatement preparedStatement = getPreparedStatement(query);
-            preparedStatement.setString(1, newMail);
-            createOrUpdateCandidat(candidat.getEmail(), preparedStatement);
+            preparedStatement.setInt(1, codi);
+            createOrUpdateCandidat3(candidat.getCodi(), preparedStatement);
             this.addCandidat(candidat);
         } catch (Exception ex) {
             Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-
+        }
+        return candidat.getCodi() != null;
     }
 
     // Esborrar perfil a través de l´email
     @Override
-    public void deletePerfil(Candidat candidat) {
+    public void deletePerfil(Candidat candidat
+    ) {
 
         String query = "DELETE  from candidats where email=?";
 
@@ -172,7 +173,8 @@ public class CandidatDAO implements CandidatRepository {
 
     // Mostrar codi del candidat, a partir de l´email
     @Override
-    public int getCodiByEmail(String email) {
+    public int getCodiByEmail(String email
+    ) {
         Candidat codiCandidat = getCandidatByEmail(email);
         if (codiCandidat.getCodi() != null) {
             return 1;
@@ -184,7 +186,8 @@ public class CandidatDAO implements CandidatRepository {
 
     // Esborrar un candidat a través de codi
     @Override
-    public void deleteByCodi(Integer codi) {
+    public void deleteByCodi(Integer codi
+    ) {
 
         String query = "DELETE from candidats where codi=?";
         try {
@@ -196,9 +199,11 @@ public class CandidatDAO implements CandidatRepository {
             Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     // Relaciona candidat amb ofertes
+
     public void selectOferta() {
+
+        String query = "SELECT habilitats from candidats where habilitats=(SELECT habilitats from oferta)";
 
     }
 
@@ -233,6 +238,13 @@ public class CandidatDAO implements CandidatRepository {
     }
 
     private Candidat createOrUpdateCandidat2(Integer codi, PreparedStatement preparedStatement) throws Exception {
+
+        executeUpdateQuery(preparedStatement);
+        return getCandidatByCodi(codi);
+
+    }
+
+    private Candidat createOrUpdateCandidat3(Integer codi, PreparedStatement preparedStatement) throws Exception {
 
         executeUpdateQuery(preparedStatement);
         return getCandidatByCodi(codi);
