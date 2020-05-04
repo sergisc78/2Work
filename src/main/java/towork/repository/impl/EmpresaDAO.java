@@ -58,10 +58,9 @@ public class EmpresaDAO implements EmpresaRepository{
         this.connection = connection;
     }
     /**
-     * Crear empresa a partir del codi
-     * @param codi
+     * Crear empresa 
      * @param preparedStatement
-     * @return l'empresa a partir del codi
+     * @return result
      * @throws Exception 
      */
     private int createEmpresa(PreparedStatement preparedStatement) throws Exception {

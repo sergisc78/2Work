@@ -66,10 +66,9 @@ public class OfertaDAO implements OfertaRepository{
         this.connection = connection;
     }
        /**
-     * Crear oferta a partir del codi
-     * @param codi
+     * Crear oferta 
      * @param preparedStatement
-     * @return l'oferta a partir del codi
+     * @return result
      * @throws Exception 
      */ 
     private int createOferta(PreparedStatement preparedStatement) throws Exception {
