@@ -112,7 +112,7 @@ public class EspaiController {
       public Oferta of = new Oferta();
       public List<Candidatura> candidatures;
       public LlistaCandidatures llistaCandidatures = new LlistaCandidatures();
-      public ArrayList<Candidat> candidats = new ArrayList();
+      // public ArrayList<Candidat> candidats = new ArrayList();
       List <String> llistaTipusContracte = new ArrayList();
       
       
@@ -224,14 +224,14 @@ public class EspaiController {
             c6.setNom("Francina"); c6.setCognoms("Franch Floridablanca"); c6.setCodi(6);
             c7.setNom("Guerau"); c7.setCognoms("Guiu Gallifa"); c7.setCodi(7);
             c8.setNom("Helena"); c8.setCognoms("Humet Herrera"); c8.setCodi(8);
-            candidats.add(c1);
-            candidats.add(c2);
-            candidats.add(c3);
-            candidats.add(c4);
-            candidats.add(c5);
-            candidats.add(c6);
-            candidats.add(c7);
-            candidats.add(c8);
+            // candidats.add(c1);
+            // candidats.add(c2);
+            // candidats.add(c3);
+            // candidats.add(c4);
+            // candidats.add(c5);
+            // candidats.add(c6);
+            // candidats.add(c7);
+            // candidats.add(c8);
                
             // Omplo un arrayList amb les habilitats de prova per afegir-lo a l'objecte de prova
             habs.add(h1.getCodiHab());
@@ -1215,7 +1215,7 @@ public class EspaiController {
        * @return Un objecte modelandview que representa el model i la vista que mostrarem a l'usuari un cop provada d'executar l'actualització a la base de dades
        */
       @RequestMapping(value = "/perfilCandidat/{codiCandidat}/actualitza", method = RequestMethod.POST)
-      public ModelAndView executaModifCandidat( @ModelAttribute("formCandidat") CandidatFormulari formCandidat) {
+      public ModelAndView executaModifCandidat(@PathVariable("codiCandidat") int codiCandidat, @ModelAttribute("formCandidat") CandidatFormulari formCandidat) {
             
             // proves que podrem carregar-nos...
             //
@@ -1244,10 +1244,7 @@ public class EspaiController {
             
             try {
                   // Tractem de recuperar el codi del candidat a partir del nom de l'usuari loguejat
-                  // codiCandidat=candidatService.getCodiByEmail(nom);
-                  
-                  // PENDENTS DE TENIR EL MÈTODE QUE TORNI EL CODI D'USUARI PASSANT-LI L'E-MAIL                  
-                  Integer codiCandidat=1; // de prova
+
                   // Afegim el codi d'usuari a les urls de les opcions
                   op_ofertesCandidat.put("usuari","/"+codiCandidat);
                   op_candidatures.put("usuari","/"+codiCandidat);
@@ -1267,7 +1264,8 @@ public class EspaiController {
             
             try {
                   // PENDENT DE PROVAR
-                  candidatService.updateCandidat(aCandidat(formCandidat)); // Abans de passar-lo el converteixo a objecte de la classe Candidat
+                  // candidatService.updateCandidat(aCandidat(formCandidat)); // Abans de passar-lo el converteixo a objecte de la classe Candidat
+                  candidatService.updateCandidat(codiCandidat, aCandidat(formCandidat));
                   feedback.add(fb_canvisOK);
             } catch (Exception e) {
                   // No s'ha pogut fer l'update
@@ -1874,7 +1872,7 @@ public class EspaiController {
                         
             // Li passarem a la vista una llista de candidats que en realitat haurem de rebre de la bbd mitjançant el corresponent mètode del servei
             // Aquesta llista està iniciliatitzada a l'inici, i al constructor, de la classe
-            // List<Candidat> candidats = candidatService...
+            List<Candidat> candidats = candidatService.getAllCandidats();
             
             // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
             HashMap[] opcions = new HashMap[]{op_inici,op_empreses,op_ofertesAdmin,op_logout};
