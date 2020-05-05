@@ -95,6 +95,18 @@ public class OfertaDAO implements OfertaRepository{
         return getConnection().prepareStatement(query);
     }
     /**
+     * 
+     * @param preparedStatement
+     * @return result
+     * @throws Exception 
+     */
+    private int create(PreparedStatement preparedStatement) throws Exception {
+
+        int result=executeUpdateQuery(preparedStatement);
+        return result;
+
+    }
+    /**
      * Afegir Oferta
      * @param oferta 
      */
@@ -117,9 +129,16 @@ public class OfertaDAO implements OfertaRepository{
             preparedStatement.setInt(9,oferta.getFormacio());
             preparedStatement.setString(10,oferta.getEstat());
             preparedStatement.setString(11,oferta.getDescripcio());
-             
+            
             int result=createOferta(preparedStatement);
             
+             
+            for(int i=0;i<oferta.getHabilitats().size();i++){
+                String query="INSERT INTO habilitatsOfertes(codiOferta,codiHab) values ((select codiOferta from ofertes),?)";
+                PreparedStatement prepStatement = getPreparedStatement(query);                
+                prepStatement.setInt(1,oferta.getHabilitats().get(i));
+                int resultat=create(prepStatement);
+            }
         }catch (Exception ex) {
             Logger.getLogger(OfertaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }   

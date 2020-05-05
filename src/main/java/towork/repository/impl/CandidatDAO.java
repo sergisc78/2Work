@@ -106,7 +106,18 @@ public class CandidatDAO implements CandidatRepository {
         return null;
 
     }
+    /**
+     * 
+     * @param preparedStatement
+     * @return result
+     * @throws Exception 
+     */
+    private int create(PreparedStatement preparedStatement) throws Exception {
 
+        int result=executeUpdateQuery(preparedStatement);
+        return result;
+
+    }
     // Donar-se d´alta a l´aplicació
     @Override
     public void addCandidat(Candidat candidat) {
@@ -129,9 +140,24 @@ public class CandidatDAO implements CandidatRepository {
             preparedStatement.setString(11, candidat.getPass());
             preparedStatement.setString(12, candidat.getcPass());
             preparedStatement.setInt(13, candidat.getFormacio());
-            preparedStatement.setInt(14, candidat.getOcupacio());
+            preparedStatement.setInt(14, candidat.getOcupacio());           
             createOrUpdateCandidat(candidat.getDniNif(), preparedStatement);
-
+            
+            for(int i=0;i<candidat.getHabilitats().size();i++){
+                String qry="INSERT INTO habilitatsPersonals(codiCandidat,codiHab) values ((select codi from candidats),?)";
+                PreparedStatement prepStatement = getPreparedStatement(qry);                
+                prepStatement.setInt(1,candidat.getHabilitats().get(i));
+                int result=create(prepStatement);
+            }
+            for(int i=0;i<candidat.getExperiencies().size();i++){
+                String qury="INSERT INTO experiencies(anys,nomEmpresa,codiCandidat,descripcio) values (?,?,(select codi from candidats),?)";
+                PreparedStatement preStatement = getPreparedStatement(qury);               
+                preStatement.setInt(1,candidat.getExperiencies().get(i).getAnys());
+                preStatement.setString(2,candidat.getExperiencies().get(i).getNomEmpresa());
+                preStatement.setString(3,candidat.getExperiencies().get(i).getDescripcio());
+                int result=create(preStatement);
+            }
+           
         } catch (Exception ex) {
             Logger.getLogger(CandidatDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
