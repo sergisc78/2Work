@@ -93,7 +93,7 @@
                               <img src="<spring:url value='/resources/svg/cor.svg'/>" class="mr-3" alt="bullet">
                         <div class="media-body">
                               <h5 class="mt-0 mb-1">No discriminem</h5>
-                              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                              Evitem que dades com l'edat i el sexe del candidat siguin visibles per l'empresa, de manera que la seva decisió no estigui condicionada, almenys en primera instància, per característiques que van més enllà de la vàlua acadèmica i professional.
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                         <img src="<spring:url value='/resources/svg/somriure.svg'/>" class="mr-3" alt="bullet">
                         <div class="media-body">
                             <h5 class="mt-0 mb-1">Treballem per uns sous justos</h5>
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                            Si una oferta no compleix els nostres requisits mínims pel que fa a la remuneració serà despublicada per l'administrador de la plataforma. Serem estrictes en aquest sentit i defensarem des de la nostra posició els drets dels treballadors.
                         </div>
                     </div>
                 </div>
@@ -116,8 +116,8 @@
                     <div class="media">
                         <img src="<spring:url value='/resources/svg/euro_ok.svg'/>" class="mr-3" alt="bullet">
                         <div class="media-body">
-                            <h5 class="mt-0 mb-1">Preu just</h5>
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                            <h5 class="mt-0 mb-1">Preu just per un servei just</h5>
+                            Garantim a l'empresa un nombre limitat de perfils rebuts. De la mateixa manera que aquests estaran seleccionats, per la plataforma però també pels candidats que s'hi han inscrit, assegurem a l'empresa preus justos per donar d'alta les seves ofertes.
                         </div>
                     </div>
                 </div>
@@ -127,7 +127,7 @@
                         <img src="<spring:url value='/resources/svg/lupa_ok.svg'/>" class="mr-3" alt="bullet">
                         <div class="media-body">
                             <h5 class="mt-0 mb-1">Trobes allò que busques</h5>
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                            Les ofertes que publiquem estan generades prenent un sector o ocupació com a referència. El nostre algorisme relaciona les característiques de les ofertes amb els perfils professionals i de formació dels candidats que cerquen un nou lloc de feina.
                         </div>
                     </div>
                 </div>
