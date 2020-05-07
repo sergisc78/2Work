@@ -53,5 +53,10 @@ public class CandidatServiceImpl implements CandidatService {
     public void deleteByCodi(Integer codi) {
         candidatRepository.deleteByCodi(codi);
     }
+    @Override
+    public Candidat getCandidatByCodi(Integer codi){
+        return candidatRepository.getCandidatByCodi(codi);
+        
+    }
 
 }

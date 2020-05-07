@@ -75,7 +75,8 @@ public class CandidatDAO implements CandidatRepository {
 
     }
 
-    // Retorna el candidat quan es passa el DNI per paràmetre
+    // Retorna el candidat quan es passa el codi per paràmetre
+    @Override
     public Candidat getCandidatByCodi(Integer codi) {
 
         String query = "select * from candidats where codi =? ";
