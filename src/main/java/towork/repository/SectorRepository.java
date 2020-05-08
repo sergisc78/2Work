@@ -15,4 +15,5 @@ import towork.domain.Sector;
 public interface SectorRepository {
     Sector getSector(Integer codiSector);
     List<Sector> getAllSectors();
+    String getNomSector(Integer codiSector);
 }

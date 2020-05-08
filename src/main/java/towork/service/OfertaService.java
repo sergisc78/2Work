@@ -24,5 +24,7 @@ public interface OfertaService {
         
     List<Oferta> getOfertaByCodiEmpresa(Integer codiEmpresa);       
         
-    Boolean esborrarOferta(Integer codi); 
+    Boolean esborrarOferta(Integer codi);
+    
+    List<Oferta> getOfertesPerCandidat();
 }

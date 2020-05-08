@@ -14,4 +14,5 @@ import towork.domain.Ocupacio;
  */
 public interface OcupacioRepository {
     List<Ocupacio> getAllOcupacions();
+    String getNomOcupacio(Integer codiOcupacio);
 }

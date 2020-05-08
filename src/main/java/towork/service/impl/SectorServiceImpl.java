@@ -28,4 +28,7 @@ public class SectorServiceImpl implements SectorService{
     public List<Sector> getAllSectors(){
         return sectorRepository.getAllSectors();
     }
+     public String getNomSector(Integer codiSector){
+        return sectorRepository.getNomSector(codiSector);
+    }
 }

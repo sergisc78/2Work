@@ -133,4 +133,49 @@ public class OcupacioDAO implements OcupacioRepository{
         }
         return null;
     }
+     /**
+     * Examina la llista retornada per executeQuery
+     * @param preparedStatement
+     * @return un objecte null si no hi ha cap resultat per a la consulta i 
+     * un objecte Habilitat,si hi és, troba un resultat
+     * @throws Exception 
+     */
+    private Ocupacio findUniqueResult(PreparedStatement preparedStatement) throws Exception {
+             
+        List<Ocupacio> ocupacions=executeQuery(preparedStatement);
+        if(ocupacions.isEmpty()){
+            return null;
+        }
+        if(ocupacions.size()>1){
+            throw new Exception("Només s'espera 1 resultat");
+        }
+        return ocupacions.get(0);
+    }
+    /**
+    * Mètode per obtenir l'ocupació a partir del codiOcupacio
+    * @param codiOcupacio
+    * @return Ocupacio o null
+    */ 
+    public Ocupacio getOcupacioByCodiOcupacio(Integer codiOcupacio){
+        String qry = "select * from ocupacions where codiOcupacio = ?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = getPreparedStatement(qry);
+            preparedStatement.setInt(1, codiOcupacio);
+            return findUniqueResult(preparedStatement);
+        } catch (Exception ex) {
+            Logger.getLogger(OcupacioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+     /**
+     * Mètode per obtenir el nom d'una ocupació a partir del codiOcupacio
+     * @param codiOcupacio
+     * @return nom de l'ocupació 
+     */
+    @Override
+    public String getNomOcupacio(Integer codiOcupacio){
+        Ocupacio ocup=getOcupacioByCodiOcupacio(codiOcupacio);
+        return ocup.getNomOcupacio();
+    }
 }

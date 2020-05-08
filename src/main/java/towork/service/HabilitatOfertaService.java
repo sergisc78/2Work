@@ -6,13 +6,12 @@
 package towork.service;
 
 import java.util.List;
-import towork.domain.Ocupacio;
+import towork.domain.HabilitatOferta;
 
 /**
  *
  * @author gonem
  */
-public interface OcupacioService {
-    List<Ocupacio> getAllOcupacions();
-    String getNomOcupacio(Integer codiOcupacio);
+public interface HabilitatOfertaService {
+    List<HabilitatOferta> getHabilitatPerOferta(Integer codiOferta);
 }

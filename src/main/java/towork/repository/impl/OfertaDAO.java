@@ -339,5 +339,17 @@ public class OfertaDAO implements OfertaRepository{
         }
         return null;
     }
-    
+     @Override
+    public List<Oferta> getOfertesPerCandidat(){
+        String qry="select * from ofertes WHERE codiOferta = (select codiOferta from habilitatsofertes o , habilitatspersonals p where o.codiHab = p.codiHab)";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = getPreparedStatement(qry);
+            List<Oferta> ofertes = executeQuery(preparedStatement);
+            return ofertes;
+        } catch (SQLException ex) {
+            Logger.getLogger(OfertaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

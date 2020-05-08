@@ -24,5 +24,7 @@ public class OcupacioServiceImpl implements OcupacioService{
     public List<Ocupacio> getAllOcupacions(){
         return ocupacioRepository.getAllOcupacions();
     }
-    
+    public String getNomOcupacio(Integer codiOcupacio){
+        return ocupacioRepository.getNomOcupacio(codiOcupacio);
+    }
 }

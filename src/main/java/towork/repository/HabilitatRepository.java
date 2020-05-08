@@ -14,4 +14,6 @@ import towork.domain.Habilitat;
  */
 public interface HabilitatRepository {
     List<Habilitat> getHabilitatsPerOcupacio(Integer ocupacio);
+    List<Habilitat> getAllHabilitats(); 
+    String getNomHabilitat(Integer codiHab);
 }

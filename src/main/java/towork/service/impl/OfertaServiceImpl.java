@@ -50,4 +50,9 @@ public class OfertaServiceImpl implements OfertaService {
     public Boolean esborrarOferta(Integer codi){
         return ofertaRepository.esborrarOferta(codi);
     }
+    
+    @Override
+    public  List<Oferta> getOfertesPerCandidat(){
+        return ofertaRepository.getOfertesPerCandidat();
+    }
 }

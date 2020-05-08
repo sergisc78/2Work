@@ -20,7 +20,6 @@ import org.springframework.stereotype.Repository;
 import towork.domain.Habilitat;
 import towork.repository.HabilitatRepository;
 import towork.service.impl.HabilitatServiceImpl;
-import towork.service.impl.OcupacioServiceImpl;
 
 /**
  *
@@ -122,6 +121,7 @@ public class HabilitatDAO implements HabilitatRepository{
      * @param ocupacio
      * @return habilitats
      */
+    @Override
     public List<Habilitat> getHabilitatsPerOcupacio(Integer ocupacio){
         String qry = "select * from habilitats WHERE ocupacio = ?";
         PreparedStatement preparedStatement;
@@ -134,5 +134,66 @@ public class HabilitatDAO implements HabilitatRepository{
             Logger.getLogger(HabilitatDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+      /**
+     * Mètode per obtenir totes les habilitats
+     * @return totes les habilitats
+     */
+    public List<Habilitat> getAllHabilitats(){
+        String qry = "select * from habilitats";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = getPreparedStatement(qry);            
+            List<Habilitat> habilitats = executeQuery(preparedStatement);
+            return habilitats;
+        } catch (SQLException ex) {
+            Logger.getLogger(HabilitatDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    /**
+     * Examina la llista retornada per executeQuery
+     * @param preparedStatement
+     * @return un objecte null si no hi ha cap resultat per a la consulta i 
+     * un objecte Habilitat,si hi és, troba un resultat
+     * @throws Exception 
+     */
+    private Habilitat findUniqueResult(PreparedStatement preparedStatement) throws Exception {
+             
+        List<Habilitat> habilitats=executeQuery(preparedStatement);
+        if(habilitats.isEmpty()){
+            return null;
+        }
+        if(habilitats.size()>1){
+            throw new Exception("Només s'espera 1 resultat");
+        }
+        return habilitats.get(0);
+    }
+   /**
+    * Mètode per obtenir l'habilitat a partir del codiHab
+    * @param codiHab
+    * @return Habilitat o null
+    */ 
+    public Habilitat getHabilitatByCodiHab(Integer codiHab){
+         String qry = "select * from habilitats where codiHab = ?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = getPreparedStatement(qry);
+            preparedStatement.setInt(1, codiHab);
+            return findUniqueResult(preparedStatement);
+        } catch (Exception ex) {
+            Logger.getLogger(HabilitatDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    /**
+     * Mètode per obtenir el nom d'una habilitat a partir del codiHab
+     * @param codiHab
+     * @return nom de l'habilitat 
+     */
+    @Override
+    public String getNomHabilitat(Integer codiHab){
+        Habilitat hab=getHabilitatByCodiHab(codiHab);
+        return hab.getNomHab();
     }
 }

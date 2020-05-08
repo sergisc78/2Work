@@ -162,4 +162,14 @@ public class SectorDAO implements SectorRepository{
         }
         return null;
     }
+     /**
+     * Mètode per obtenir el nom d'un sector a partir del codiSector
+     * @param codiSector
+     * @return nom del sector
+     */
+    @Override
+    public String getNomSector(Integer codiSector){
+        Sector sect=getSector(codiSector);
+        return sect.getNomSector();
+    }
 }

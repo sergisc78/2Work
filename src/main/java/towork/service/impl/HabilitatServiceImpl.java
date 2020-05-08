@@ -24,4 +24,12 @@ public class HabilitatServiceImpl implements HabilitatService{
     public List<Habilitat> getHabilitatsPerOcupacio(Integer ocupacio){
         return habilitatRepository.getHabilitatsPerOcupacio(ocupacio);
     }
+     
+    public List<Habilitat> getAllHabilitats(){
+        return habilitatRepository.getAllHabilitats();
+    }
+    
+    public String getNomHabilitat(Integer codiHab){
+        return habilitatRepository.getNomHabilitat(codiHab);
+    }
 }

@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package towork.service;
+package towork.repository;
 
 import java.util.List;
-import towork.domain.Ocupacio;
+import towork.domain.HabilitatPersonal;
 
 /**
  *
  * @author gonem
  */
-public interface OcupacioService {
-    List<Ocupacio> getAllOcupacions();
-    String getNomOcupacio(Integer codiOcupacio);
+public interface HabilitatPersonalRepository {
+    List<HabilitatPersonal> getHabilitatsPerCandidat(Integer codiCandidat);
 }
