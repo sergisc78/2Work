@@ -276,6 +276,33 @@ footer {
     content: " | ";
     color: #666; }
 
+.avisgaletes {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin: 0 !important;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  border-radius: 0;
+  transform: translateY(100%);
+  transition: all 500ms ease-out;
+  color: #f5f5f5;
+  padding: 1em 0;
+  background: #444444; }
+  .avisgaletes.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0%);
+    transition-delay: 1000ms; }
+  .avisgaletes a:hover {
+    color: #2daae1;
+    text-decoration: none; }
+  .avisgaletes .acceptagaletes {
+    margin-left: 10px;
+    vertical-align: baseline; }
+
 /* 
     Created on : 01/04/2020, 07:27:41
     Author     : Daniel Sevilla i Junyent

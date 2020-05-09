@@ -1,0 +1,33 @@
+.avisgaletes {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin: 0 !important;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    border-radius: 0;
+    transform: translateY(100%);
+    transition: all 500ms ease-out;
+    color: $color-basic-gris-clar;
+    padding: 1em 0;
+    background: #444444;
+
+    &.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0%);
+        transition-delay: 1000ms;
+    }
+
+    a:hover {
+        color:$color-basic-blau-clar;
+        text-decoration: none;
+    }
+
+    .acceptagaletes {
+        margin-left: 10px;
+        vertical-align: baseline;
+    }
+}

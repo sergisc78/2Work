@@ -23,6 +23,7 @@
             <!-- Estils afegits -->
             <spring:url value="/resources/css/estils.css" var="estilsCSS" />
             <link href="${estilsCSS}" rel="stylesheet" />
+            
 
             <title>2Work - ${ubicacio}</title>
       </head>
@@ -137,6 +138,15 @@
         </section>
 
         <%@include  file='/resources/html/footer.html' %>
+        
+        <!-- INICI Avís galetes -->
+        <div class="alert text-center avisgaletes" role="alert">
+            <b>T'agraden les galetes?</b> Utilitzem galetes per assegurar-nos que tens la millor experiència a la nostra web. <a href="https://cookiesandyou.com/" target="_blank">Més informació</a>
+            <button type="button" class="btn btn-primary btn-sm acceptagaletes">D'acord</button>
+        </div>
+        
+        <!-- JS / Query afegit (galetes ) -->
+        <script type="text/javascript" src="<spring:url value="/resources/js/galetes.js"/>"></script>
         
     </body>
 

@@ -76,6 +76,13 @@
                   <h3 class="text-center blau">Informació sobre protecció de dades</h3>
                   <%@include  file='/resources/html/proteccioDadesPrivacitat.html' %>
               </section>
+
+            <section class="container-sm" id="galetes">
+                <h3 class="text-center blau">Informació sobre galetes</h3>
+                <p>Les galetes constitueixen procediments automàtics de recollida d'informació relativa a les preferències determinades per un usuari d'internet durant la teva visita a un determinat web amb la finalitat de reconèixer-te com a usuari recurrent, personalitzar-ne l'ús i facilitar una navegació més ràpida.</p>
+                <p>La majoria dels navegadors web accepten galetes, però podeu canviar la configuració del navegador web perquè rebutgi noves galetes, desactivi les que ja existeixen o bé que us comuniqui quan algú us envia una nova galeta al vostre dispositiu.</p>
+                <p>Bloquejar l'ús de les galetes en la vostra navegació pot fer que alguns serveis o característiques del lloc web no estiguin disponibles.</p>
+            </section>
               
       </section>
 
