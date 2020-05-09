@@ -41,41 +41,48 @@
             <div class="collapse navbar-collapse" id="navbarHomeToggler">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                         <a class="nav-link" href="<spring:url value='/'/>">Inici</a>
+                        <a class="nav-link" href="<spring:url value='/'/>">Inici</a>
                     </li>
                 </ul>
             </div>  
 
         </nav>
 
-      <sec:authorize access="isAuthenticated()">
+        <sec:authorize access="isAuthenticated()">
             <%@include  file='/resources/html/barra-usuari.html' %>
-      </sec:authorize>
-                    
-      <section class="container" id="info">
-              
-              <section class="container-sm" id="nosaltres">
-                  <h3 class="text-center blau">Informació sobre nosaltres</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac elit sed nisl sollicitudin facilisis. Cras non luctus ante. Mauris mollis fermentum turpis, sit amet cursus libero egestas eu. Integer euismod odio sit amet erat scelerisque vulputate. Duis eu ante cursus, fermentum ipsum in, cursus augue. Praesent hendrerit maximus purus, eu porta libero bibendum ut. Cras suscipit mi vel consequat consequat. Maecenas faucibus non massa sit amet luctus. Fusce congue augue non arcu cursus iaculis. Proin nisl est, sollicitudin nec condimentum sed, pharetra dignissim nisl.</p>
-                  <p>Proin ut nisl id felis iaculis blandit. Sed ac posuere nibh. Praesent lobortis, enim ac interdum tempor, purus ante blandit mauris, sit amet malesuada nunc purus eu tortor. Maecenas aliquet libero sed dolor suscipit ultricies. Aliquam iaculis orci sed est commodo vulputate. Donec laoreet id nunc id scelerisque. Phasellus lorem nunc, semper sit amet ipsum a, suscipit porttitor nisi. Ut feugiat aliquet sem sit amet ornare. Curabitur rhoncus arcu sed eros bibendum, id facilisis sem finibus.</p>
-                  <p>Ut mauris enim, tempor eu dui eget, malesuada lacinia justo. Nam accumsan maximus diam eu faucibus. Fusce non ipsum convallis nibh lacinia malesuada. Phasellus scelerisque, nibh at maximus venenatis, quam elit hendrerit est, at interdum ligula turpis vel justo. Ut sagittis commodo eros quis tempor. Aliquam a enim nulla. Donec faucibus, nisi eu pulvinar luctus, massa dolor vestibulum odio, quis tincidunt leo nisl vehicula sem. Nulla consequat orci eget sem ultricies sollicitudin. In condimentum, metus quis vestibulum posuere, lectus metus pharetra dui, et suscipit mi magna ut justo. Morbi sit amet tortor arcu. Morbi a felis ut elit commodo scelerisque id pharetra tellus. Sed posuere arcu tristique elit sollicitudin, ut eleifend diam tristique.</p>
-                  <p> Aenean lacinia finibus pulvinar. Aliquam erat volutpat. Donec rhoncus lobortis dapibus. Curabitur iaculis magna at tempor eleifend. Sed a nulla quis odio venenatis euismod. Sed vitae diam lorem. Donec et mauris molestie, bibendum sapien eget, cursus sapien.</p>
-                  <p>Proin luctus, justo elementum semper pharetra, lacus nunc dapibus ante, ut gravida tellus erat at justo. Duis lacinia, justo vitae fermentum consequat, nunc quam euismod metus, non mollis mi arcu a metus. Donec ut mi augue. Sed consectetur porta velit, quis faucibus elit luctus in. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce sagittis metus at egestas auctor. Etiam eget metus tellus. In pellentesque pellentesque feugiat. Pellentesque pharetra odio sed congue tincidunt. Cras at risus odio. Sed ultricies suscipit tempus. Proin euismod blandit diam, non malesuada augue blandit quis. Cras et risus quis dolor cursus tempor. Sed justo felis, ullamcorper sit amet sem et, eleifend faucibus eros. Vivamus feugiat felis vitae felis aliquet, sit amet rhoncus sem dapibus.</p>
-              </section>
-              
-              <section class="container-sm" id="newsletter">
-                  <h3 class="text-center blau">Dona't d'alta a la newsletter de 2Work</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac elit sed nisl sollicitudin facilisis. Cras non luctus ante. Mauris mollis fermentum turpis, sit amet cursus libero egestas eu. Integer euismod odio sit amet erat scelerisque vulputate. Duis eu ante cursus, fermentum ipsum in, cursus augue. Praesent hendrerit maximus purus, eu porta libero bibendum ut. Cras suscipit mi vel consequat consequat. Maecenas faucibus non massa sit amet luctus. Fusce congue augue non arcu cursus iaculis. Proin nisl est, sollicitudin nec condimentum sed, pharetra dignissim nisl.</p>
-                  <p>Proin ut nisl id felis iaculis blandit. Sed ac posuere nibh. Praesent lobortis, enim ac interdum tempor, purus ante blandit mauris, sit amet malesuada nunc purus eu tortor. Maecenas aliquet libero sed dolor suscipit ultricies. Aliquam iaculis orci sed est commodo vulputate. Donec laoreet id nunc id scelerisque. Phasellus lorem nunc, semper sit amet ipsum a, suscipit porttitor nisi. Ut feugiat aliquet sem sit amet ornare. Curabitur rhoncus arcu sed eros bibendum, id facilisis sem finibus.</p>
-                  <p>Ut mauris enim, tempor eu dui eget, malesuada lacinia justo. Nam accumsan maximus diam eu faucibus. Fusce non ipsum convallis nibh lacinia malesuada. Phasellus scelerisque, nibh at maximus venenatis, quam elit hendrerit est, at interdum ligula turpis vel justo. Ut sagittis commodo eros quis tempor. Aliquam a enim nulla. Donec faucibus, nisi eu pulvinar luctus, massa dolor vestibulum odio, quis tincidunt leo nisl vehicula sem. Nulla consequat orci eget sem ultricies sollicitudin. In condimentum, metus quis vestibulum posuere, lectus metus pharetra dui, et suscipit mi magna ut justo. Morbi sit amet tortor arcu. Morbi a felis ut elit commodo scelerisque id pharetra tellus. Sed posuere arcu tristique elit sollicitudin, ut eleifend diam tristique.</p>
-                  <p> Aenean lacinia finibus pulvinar. Aliquam erat volutpat. Donec rhoncus lobortis dapibus. Curabitur iaculis magna at tempor eleifend. Sed a nulla quis odio venenatis euismod. Sed vitae diam lorem. Donec et mauris molestie, bibendum sapien eget, cursus sapien.</p>
-                  <p>Proin luctus, justo elementum semper pharetra, lacus nunc dapibus ante, ut gravida tellus erat at justo. Duis lacinia, justo vitae fermentum consequat, nunc quam euismod metus, non mollis mi arcu a metus. Donec ut mi augue. Sed consectetur porta velit, quis faucibus elit luctus in. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce sagittis metus at egestas auctor. Etiam eget metus tellus. In pellentesque pellentesque feugiat. Pellentesque pharetra odio sed congue tincidunt. Cras at risus odio. Sed ultricies suscipit tempus. Proin euismod blandit diam, non malesuada augue blandit quis. Cras et risus quis dolor cursus tempor. Sed justo felis, ullamcorper sit amet sem et, eleifend faucibus eros. Vivamus feugiat felis vitae felis aliquet, sit amet rhoncus sem dapibus.</p>
-              </section>
-              
+        </sec:authorize>
+
+        <section class="container" id="info">
+
+            <section class="container-sm" id="nosaltres">
+                <h3 class="text-center blau">Informació sobre nosaltres</h3>
+                <p>2Work va ser creada per tres emprenedors entusiastes del disseny i la programació. Amb formació en desenvolupament d´aplicacions web i disseny gràfic, sempre havíem somiat tenir la nostra pròpia empresa.</p><p>Després d´analitzar força webs relacionades amb la cerca de treball, vam arribar a la conclusió que la gran majoria admenten ofertes amb sous baixos o molt baixos, contractes abusius i/o descripcions ambigües i excessivament exigents pel que després oferia l´empresa o discriminar per sexe o edat. </p>
+                <p>Per això vam decidir crear 2Work, una web amb valors socials, que no admet cap tipus de discriminació i que lluita contra la precarierat laboral i els sous baixos.</p>
+                <p>2Work el forma: Dani Sevilla, dissenyador gràfic, Mónica González, desenvolupadora frontend i Sergi Sánchez, desenvolupador backend.</p>
+
+            </section>
+
+            <section class="container-sm" id="newsletter">
+                <h3 class="text-center blau">Dona't d'alta a la newsletter de 2Work</h3>
+                <p>Si vols rebre informació mensual sobre la nostre aplicació, introdueix el teu email. Si vols donar-te de baixa, encriu-nos a la nostra direcció de email que trobaràs més abaix.</p>
+                <div style="text-align: center">
+                <label>Email: <input type="email" id="newsletter"/><label>
+                <button class="btn-primary">Enviar</button>
+                </div>
+            </section>
+
             <section class="container-sm" id="politicaprivacitat">
-                  <h3 class="text-center blau">Informació sobre protecció de dades</h3>
-                  <%@include  file='/resources/html/proteccioDadesPrivacitat.html' %>
-              </section>
+                <h3 class="text-center blau">Informació sobre protecció de dades</h3>
+                <%@include  file='/resources/html/proteccioDadesPrivacitat.html' %>
+            </section>
+
+            <section class="container-sm" id="contacte">
+                <h3 class="text-center blau">Contacta´ns</h3>
+                <p>Si us plau si tens qualsevol dubte o vols informació, escriu-nos o truca´ns !
+                <p>Email de contacte: <a href="#">2work@2work.cat</a></p>
+                <p>Telèfon de contacte: 658940123</p>
+            </section>
+
 
             <section class="container-sm" id="galetes">
                 <h3 class="text-center blau">Informació sobre galetes</h3>
@@ -83,10 +90,10 @@
                 <p>La majoria dels navegadors web accepten galetes, però podeu canviar la configuració del navegador web perquè rebutgi noves galetes, desactivi les que ja existeixen o bé que us comuniqui quan algú us envia una nova galeta al vostre dispositiu.</p>
                 <p>Bloquejar l'ús de les galetes en la vostra navegació pot fer que alguns serveis o característiques del lloc web no estiguin disponibles.</p>
             </section>
-              
-      </section>
 
-      <%@include  file='/resources/html/footer.html' %>
-        
+        </section>
+
+        <%@include  file='/resources/html/footer.html' %>
+
     </body>
 </html>
