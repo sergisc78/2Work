@@ -62,12 +62,7 @@
             <div class="card">
                   
                   <div class="card-header">
-                        <sec:authorize access="hasRole('ROLE_ADMIN')">
-                              <h1>${candidat.nom} ${candidat.cognoms}<h1>
-                        </sec:authorize>
-                        <sec:authorize access="hasRole('ROLE_EMPRESA')">
                           <h1>Candidat ${candidat.email}<h1>
-                        </sec:authorize>
                   </div>
                   
                   <div class="card-body container">
@@ -81,11 +76,11 @@
                               </div>
                               <div class="col">
                                     <h4>Formació</h4>
-                                    <p>${formacio}</p>
+                                    <p>Nom de la formació amb número ${candidat.formacio}</p>
                                     <h4>Habilitats addicionals</h4>
                                     <p>
-                                    <c:forEach items="${habilitats}" var="hab" varStatus="loop">
-                                          ${hab}
+                                    <c:forEach items="${candidat.habilitats}" var="map" varStatus="loop">
+                                          ${map.nomHab}
                                           <c:if test="${!loop.last}">, </c:if>
                                     </c:forEach>
                                     </p>
