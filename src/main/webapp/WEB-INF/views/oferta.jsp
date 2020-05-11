@@ -62,7 +62,7 @@
               <div class="card">
                     
                     <div class="card-header">
-                          <h1>${oferta.titolOferta}<h1>
+                          <h1>${oferta.titolOferta}</h1>
                     </div>
                     
                     <div class="card-body container">
@@ -79,7 +79,7 @@
                                     <c:if test="${ not propietari}">
                                           <!--- NOMÉS PELS NO PROPIETARIS/CREADORS DE L'OFERTA --->
                                           <h4>Empresa</h4>
-                                          <p>${oferta.codiEmpresa}</p>
+                                          <p>${nomEmp}</p>
                                           <h4>Localitat</h4>
                                           <p>${oferta.poblacio}</p>
                                     </c:if>
@@ -94,11 +94,11 @@
                                 
                                 <div class="col">
                                       <h4>Formació requerida</h4>
-                                      <p>${oferta.formacio}</p>
+                                      <p>${nomFormac}</p>
                                       <h4>Habilitats addicionals requerides</h4>
                                       <p>
-                                            <c:forEach items="${oferta.habilitats}" var="map" varStatus="loop">
-                                                  Habilitat nº ${map}
+                                            <c:forEach items="${nomsHabilitats}" var="map" varStatus="loop">
+                                                   ${map}
                                                   <c:if test="${!loop.last}">, </c:if>
                                             </c:forEach>
                                       </p>

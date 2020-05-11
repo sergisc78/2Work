@@ -29,6 +29,7 @@ import towork.domain.Empresa;
 import towork.domain.Experiencia;
 import towork.domain.Formacio;
 import towork.domain.Habilitat;
+import towork.domain.HabilitatOferta;
 import towork.domain.HabilitatPersonal;
 import towork.formularis.LlistaCandidatures;
 import towork.formularis.LlistaHabilitats;
@@ -39,6 +40,8 @@ import towork.formularis.LlistaOcupacions;
 import towork.formularis.LlistaSectors;
 import towork.service.CandidatService;
 import towork.service.EmpresaService;
+import towork.service.FormacioService;
+import towork.service.HabilitatOfertaService;
 import towork.service.HabilitatPersonalService;
 import towork.service.HabilitatService;
 import towork.service.OfertaService;
@@ -56,6 +59,10 @@ public class EspaiController {
     HabilitatPersonalService habilitatPersonalService;
     @Autowired
     HabilitatService habilitatService;
+    @Autowired
+    HabilitatOfertaService habilitatOfertaService;
+    @Autowired
+    FormacioService formacioService;
 
     // Opcions reutilitzables per la barra de navegació
     HashMap<String, String> op_entrarCandidat = new HashMap<>();
@@ -337,7 +344,8 @@ public class EspaiController {
 
         // PER ACABAR QUAN TINGUEM EL GETCODIBY EMAIL DE L'EMPRESA OK
         try {
-            ofertes = ofertaService.getAllOfertes();
+            //ofertes = ofertaService.getAllOfertes();
+            ofertes=ofertaService.getOfertesPerCandidat();
         } catch (Exception e) {
             System.out.println("--- Error en rebre les ofertes");
         }
@@ -505,9 +513,28 @@ public class EspaiController {
         Oferta oferta = new Oferta();
         System.out.println("Codi d'una oferta acabada de crear, sense contingut: " + oferta.getCodiOferta());
 
+        List<HabilitatOferta> habOferta=new ArrayList<>();
+        //Per aconseguir que a la vista oferta.jsp surti el nom de l'empresa en lloc del codi
+        Empresa emp=new Empresa();
+        String nomEmp="";
+        //Per aconseguir que a la vista oferta.jsp surti el nom de la formació en lloc del codi
+        String nomFormac="";
+        //Per aconseguir que a la vista oferta.jsp surti el nom de les habilitats en lloc del codi
+        List<String> nomsHabilitats=new ArrayList<>();
         // PER ACABAR
+        
         try {
             oferta = ofertaService.getOfertaByCodi(codiOferta);
+            habOferta=habilitatOfertaService.getHabilitatPerOferta(codiOferta);
+            //Per aconseguir que a la vista oferta.jsp surti el nom de l'empresa en lloc del codi
+            emp=empresaService.getEmpresaByCodi(oferta.getCodiEmpresa());
+            nomEmp=emp.getNom();
+            //Per aconseguir que a la vista oferta.jsp surti el nom de la formació en lloc del codi
+            nomFormac=formacioService.getNomFormacio(oferta.getFormacio());
+            //Per aconseguir que a la vista oferta.jsp surti el nom de les habilitats en lloc del codi
+            for(HabilitatOferta h:habOferta){                
+               nomsHabilitats.add(habilitatService.getNomHabilitat(h.getCodiHab()));
+            }
         } catch (Exception e) {
             feedback.add(fb_problemaBBDD);
         }
@@ -517,8 +544,8 @@ public class EspaiController {
             case "ROLE_USER":
                 // HI ha un usuari candidat loguejat
                 try {
-                    // Integer codiCandidat = candidatService.getCodiByEmail(nom);
-                    Integer codiCandidat = 1; // DE PROVA
+                     Integer codiCandidat = candidatService.getCodiByEmail(nom);
+                    //Integer codiCandidat = 1; // DE PROVA
                     op_candidatures.put("usuari", "/" + codiCandidat);
                     op_ofertesCandidat.put("usuari", "/" + codiCandidat);
                     op_perfilCandidat.put("usuari", "/" + codiCandidat);
@@ -530,7 +557,10 @@ public class EspaiController {
                     opcions.add(op_baixaCandidat);
                     opcions.add(op_logout);
                     modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
-                    modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
+                    modelview.getModelMap().addAttribute("oferta", oferta);
+                    modelview.getModelMap().addAttribute("nomsHabilitats",nomsHabilitats);
+                    modelview.getModelMap().addAttribute("nomEmp",nomEmp);
+                    modelview.getModelMap().addAttribute("nomFormac",nomFormac);
                     modelview.getModelMap().addAttribute("opcions", opcions);
 
                 } catch (Exception e) {
@@ -563,7 +593,10 @@ public class EspaiController {
                     opcions.add(op_baixaEmpresa);
                     opcions.add(op_logout);
                     modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
-                    modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
+                    modelview.getModelMap().addAttribute("oferta", oferta);
+                    modelview.getModelMap().addAttribute("nomsHabilitats",nomsHabilitats);
+                    modelview.getModelMap().addAttribute("nomEmp",nomEmp);
+                    modelview.getModelMap().addAttribute("nomFormac",nomFormac);
                     modelview.getModelMap().addAttribute("opcions", opcions);
 
                 } catch (Exception e) {
@@ -587,7 +620,10 @@ public class EspaiController {
         // Afegeixo els atributs per passar a la vista
         modelview.getModelMap().addAttribute("ubicacio", "Detall de l'oferta");
         modelview.getModelMap().addAttribute("feedback", feedback);
-        modelview.getModelMap().addAttribute("oferta", of); // Passem a la vista l'oferta de prova. Haurà de ser la que agafem de la bbdd.
+        modelview.getModelMap().addAttribute("oferta", oferta);
+        modelview.getModelMap().addAttribute("nomsHabilitats",nomsHabilitats);
+        modelview.getModelMap().addAttribute("nomEmp",nomEmp);
+        modelview.getModelMap().addAttribute("nomFormac",nomFormac);
         modelview.getModelMap().addAttribute("opcions", opcions);
 
         return modelview;
