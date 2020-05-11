@@ -2,11 +2,11 @@ package towork.controller;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +29,7 @@ import towork.domain.Empresa;
 import towork.domain.Experiencia;
 import towork.domain.Formacio;
 import towork.domain.Habilitat;
+import towork.domain.HabilitatPersonal;
 import towork.formularis.LlistaCandidatures;
 import towork.formularis.LlistaHabilitats;
 import towork.domain.Oferta;
@@ -38,6 +39,8 @@ import towork.formularis.LlistaOcupacions;
 import towork.formularis.LlistaSectors;
 import towork.service.CandidatService;
 import towork.service.EmpresaService;
+import towork.service.HabilitatPersonalService;
+import towork.service.HabilitatService;
 import towork.service.OfertaService;
 
 @Controller
@@ -49,6 +52,10 @@ public class EspaiController {
     CandidatService candidatService;
     @Autowired
     OfertaService ofertaService;
+    @Autowired
+    HabilitatPersonalService habilitatPersonalService;
+    @Autowired
+    HabilitatService habilitatService;
 
     // Opcions reutilitzables per la barra de navegació
     HashMap<String, String> op_entrarCandidat = new HashMap<>();
@@ -1435,33 +1442,138 @@ public class EspaiController {
             // Passem a la vista les opcions de la barra de navegacó PER USUARI EMPRESA
             // Aquesta mateixa vista l'hauria de poder veure com a mínim l'admin, probablement amb altres opcions a la barra de navegació
             // Queda pendent veure en quin moment podem passar unes o altres opcions segons el tipus d'usuari, i implementar-ho
-            // Opció perfil a la barra de navegació
-            HashMap<String, String> perfil = new HashMap<>();
-            perfil.put("paraula", "Perfil");
-            perfil.put("url", "/perfil");
-
-            // Hashmap que contindrà les opcions que hi haurà a la barra de navegació
-            HashMap[] opcions = new HashMap[]{perfil, op_ofertesEmpresa, op_logout};
-
-            ///// Inici dels objectes de prova que genero per poder muntar la vista ////////////////////////////////////////////////////////////////////////////////////////////
-            // Genero objecte Formacio de prova
-            Formacio formacio = new Formacio();
-            formacio.setNomFormacio("Nom de la formació1");
-            formacio.setCodiFormacio(1);
-
-            // Genero un objecte Candidat DE PROVA mentre no fem el getCandidatPerCodi, o com sigui
-            // Només hi poso les dades que han de sortir a la vista
-            Candidat cand = new Candidat();
-            cand.setCodi(1);
-            cand.setFormacio(1);
-            cand.setEmail("e@mail.cat");
-            cand.setTelefon("969996633");
-            cand.setHabilitats(habs);
+            
+            
+            // Obtenim el rol de l'usuari loguejat
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String role = auth.getAuthorities().iterator().next().toString(); // El primer element dela collection auth.getAuthorities. Assumim que només conté un element.
+            // Obtenim el nom de l'usuari loguejat
+            String nom = auth.getName();
 
             ModelAndView modelview = new ModelAndView("candidat");
+
+            // Llista que contindrà les opcions que hi haurà a la barra de navegació
+            List<Map<String, String>> opcions = new ArrayList<>();
+
+            // Llista que conté els missatges de feedback que passarem a la vista
+            List<Map<String, String>> feedback = new ArrayList<>();
+
+            // Llista de les formacions possibles (que conté els Strings)
+            LlistaFormacions formacions = new LlistaFormacions(); 
+
+            Integer codiEmpresa=null;
+            String formacio = null;
+            Candidat candidat = null;
+            List<String> habilitats = null;
+
+            // Si l'usuari loguejat és una empresa cal recuperar el seu codi
+            if (role.equals("ROLE_EMPRESA")) {
+                  try {
+                        codiEmpresa = empresaService.getCodiByEmail(nom);
+                  } catch(Exception e){
+                        // No hem pogut recuperar el codi de l'empresa, enviem l'usuari a la home amb feedback i només opció d'inici
+                        modelview.setViewName("home");
+                        feedback.add(fb_problemaBBDD);
+                        opcions.add(op_logout);
+                        modelview.getModelMap().addAttribute("ubicacio", baseline);
+                        modelview.getModelMap().addAttribute("feedback", feedback);
+                        modelview.getModelMap().addAttribute("opcions", opcions);
+                        return modelview;
+                  }
+            }
+            
+            
+            try {
+	// Provem de recuperar les dades de la base de dades
+	candidat = candidatService.getCandidatByCodi(codiCandidat);
+	List<HabilitatPersonal> h = habilitatPersonalService.getHabilitatsPerCandidat(codiCandidat);
+                  for (HabilitatPersonal item : h){
+                        habilitats.add(habilitatService.getNomHabilitat(item.getCodiHab()));
+                  }
+        
+	for (Formacio item : formacions.getLlista()){
+		// Busquem la formació en format String (l'objecte candidat porta el codi, no l'String)
+		if (Objects.equals(item.getCodiFormacio(), candidat.getFormacio())) {
+			formacio = item.getNomFormacio();
+		}
+	}
+	// FALTA EL MÈTODE PER REBRE LES EXPERIÈNCIES DEL CANDIDAT
+
+	// Si funciona, segons el rol de l'usuari loguejat...
+	switch (role) {
+                        case "ROLE_EMPRESA":
+                              op_altaOferta.put("usuari", "/" + codiEmpresa + "/");
+                              op_ofertesEmpresa.put("usuari", "/" + codiEmpresa);
+                              op_perfilEmpresa.put("usuari", "/" + codiEmpresa);
+                              op_baixaEmpresa.put("usuari", "/" + codiEmpresa + "/");
+                              opcions.add(op_altaOferta);
+                              opcions.add(op_ofertesEmpresa);
+                              opcions.add(op_perfilEmpresa);
+                              opcions.add(op_baixaEmpresa);
+                              opcions.add(op_logout);
+                              modelview.getModelMap().addAttribute("ubicacio", "Detall del candidat");
+                              break;
+
+                        case "ROLE_ADMIN":
+                              opcions.add(op_iniciAdmin);
+                              opcions.add(op_candidats);
+                              opcions.add(op_empreses);
+                              opcions.add(op_ofertesAdmin);
+                              opcions.add(op_logout);
+                              break;
+	}
+	
+            } catch(Exception e){
+	// No hem pogut recuperar les dades de la base de dades
+	modelview.setViewName("home");
+	feedback.add(fb_problemaBBDD);
+
+	// Segons el rol de l'usuari loguejat...
+	switch (role) {
+                        case "ROLE_EMPRESA":
+                              // No hem pogut recuperar les dades del candidat, enviem l'usuari a la home amb feedback
+                              modelview.setViewName("home");
+                              feedback.add(fb_problemaBBDD);
+                              op_altaOferta.put("usuari", "/" + codiEmpresa + "/");
+                              op_ofertesEmpresa.put("usuari", "/" + codiEmpresa);
+                              op_perfilEmpresa.put("usuari", "/" + codiEmpresa);
+                              op_baixaEmpresa.put("usuari", "/" + codiEmpresa + "/");
+                              opcions.add(op_altaOferta);
+                              opcions.add(op_ofertesEmpresa);
+                              opcions.add(op_perfilEmpresa);
+                              opcions.add(op_baixaEmpresa);
+                              opcions.add(op_logout);
+                              modelview.getModelMap().addAttribute("ubicacio", baseline);
+                              modelview.getModelMap().addAttribute("feedback", feedback);
+                              modelview.getModelMap().addAttribute("opcions", opcions);
+                              return modelview;
+   
+                        case "ROLE_ADMIN":
+                              // No hem pogut recuperar les dades del candidat, enviem l'admin a la home amb feedback
+                              modelview.setViewName("home");
+                              feedback.add(fb_problemaBBDD);
+                              opcions.add(op_iniciAdmin);
+                              opcions.add(op_candidats);
+                              opcions.add(op_empreses);
+                              opcions.add(op_ofertesAdmin);
+                              opcions.add(op_logout);
+                              modelview.getModelMap().addAttribute("ubicacio", baseline);
+                              modelview.getModelMap().addAttribute("feedback", feedback);
+                              modelview.getModelMap().addAttribute("opcions", opcions);
+                              return modelview;	
+                  } // del switch
+
+
+            } // del catch
+            
+            
+             // Si arriba aquest punt ja tenim el candidat);
             modelview.getModelMap().addAttribute("ubicacio", "Detall del candidat");
             modelview.getModelMap().addAttribute("opcions", opcions);
-            modelview.getModelMap().addAttribute("candidat", cand);
+            modelview.getModelMap().addAttribute("candidat", candidat);
+            modelview.getModelMap().addAttribute("habilitats", habilitats);
+            modelview.getModelMap().addAttribute("formacio", formacio);
+            // modelview.getModelMap().addAttribute("experiencies", experiencies);
             modelview.getModelMap().addAttribute("referer", request.getHeader("Referer"));
 
             return modelview;
